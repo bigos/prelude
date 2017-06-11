@@ -123,7 +123,12 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
   (load (expand-file-name "~/quicklisp/slime-helper.el"))
   ;; Set your lisp system and, optionally, some contribs
   (setq inferior-lisp-program "sbcl")
+
   (setq slime-contribs '(slime-fancy))
+  (slime-setup '(slime-repl slime-fancy))
+
+  (setq common-lisp-hyperspec-root
+        "file:/home/jacek/Documents/Manuals/Lisp/HyperSpec-7-0/HyperSpec/")
 
   (defun swap-paredit ()
     "Replace smartparens with superior paredit."
