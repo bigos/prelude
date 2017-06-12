@@ -125,10 +125,10 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
   (setq inferior-lisp-program "sbcl")
 
   (setq slime-contribs '(slime-fancy))
-  (slime-setup '(slime-repl slime-fancy))
 
   (slime-setup '(slime-asdf
                  slime-editing-commands
+                 slime-fancy
                  slime-fancy-inspector
                  slime-fontifying-fu
                  slime-fuzzy
