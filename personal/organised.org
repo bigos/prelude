@@ -118,12 +118,8 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
 #+END_SRC
 
 *** Lisp
-
+**** Slime
 #+BEGIN_SRC emacs-lisp
-  (load (expand-file-name "~/quicklisp/slime-helper.el"))
-  ;; Set your lisp system and, optionally, some contribs
-  (setq inferior-lisp-program "sbcl")
-
   (setq slime-contribs '(slime-fancy))
 
   (slime-setup '(slime-asdf
@@ -145,10 +141,10 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
         slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
 
   (require 'slime)
+#+END_SRC
 
-  (setq common-lisp-hyperspec-root
-        "file:/home/jacek/Documents/Manuals/Lisp/HyperSpec-7-0/HyperSpec/")
-
+**** Paredit
+#+BEGIN_SRC emacs-lisp
   (defun swap-paredit ()
     "Replace smartparens with superior paredit."
     (smartparens-mode -1)
@@ -164,6 +160,17 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
   (add-hook 'slime-repl-mode-hook 'rainbow-delimiters-mode)
   (add-hook 'clojure-mode-hook (lambda () (swap-paredit)))
   (add-hook 'cider-repl-mode-hook (lambda () (swap-paredit)))
+#+END_SRC
+
+**** The rest
+#+BEGIN_SRC emacs-lisp
+  (load (expand-file-name "~/quicklisp/slime-helper.el"))
+  ;; Set your lisp system and, optionally, some contribs
+  (setq inferior-lisp-program "sbcl")
+
+  (setq common-lisp-hyperspec-root
+        "file:/home/jacek/Documents/Manuals/Lisp/HyperSpec-7-0/HyperSpec/")
+
 
   (require 'redshank-loader)
   (eval-after-load "redshank-loader"
@@ -180,7 +187,6 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
     (newline-and-indent))
 
     (global-set-key (kbd "s-0") 'unfold-lisp)
-
 #+END_SRC
 
 *** Parenthseses coloring
