@@ -127,6 +127,25 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
   (setq slime-contribs '(slime-fancy))
   (slime-setup '(slime-repl slime-fancy))
 
+  (slime-setup '(slime-asdf
+                 slime-editing-commands
+                 slime-fancy-inspector
+                 slime-fontifying-fu
+                 slime-fuzzy
+                 slime-indentation
+                 slime-mdot-fu
+                 slime-package-fu
+                 slime-references
+                 slime-repl
+                 slime-sbcl-exts
+                 slime-scratch
+                 slime-xref-browser))
+  (slime-autodoc-mode)
+  (setq slime-complete-symbol*-fancy t
+        slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
+
+  (require 'slime)
+
   (setq common-lisp-hyperspec-root
         "file:/home/jacek/Documents/Manuals/Lisp/HyperSpec-7-0/HyperSpec/")
 
@@ -160,7 +179,7 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
     (search-forward " ")
     (newline-and-indent))
 
-  (global-set-key (kbd "s-0") 'unfold-lisp)
+    (global-set-key (kbd "s-0") 'unfold-lisp)
 
 #+END_SRC
 
