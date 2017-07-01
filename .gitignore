@@ -25,3 +25,4 @@ tramp
 .emacs.desktop.lock
 /personal/organised.el
 eww-bookmarks
+*.org#
