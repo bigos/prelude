@@ -1,6 +1,13 @@
 [![License GPL 3][badge-license]](http://www.gnu.org/licenses/gpl-3.0.txt)
 [![Gratipay Team](https://img.shields.io/gratipay/team/prelude.svg?maxAge=2592000)](https://gratipay.com/prelude/)
 
+About this fork
+===============
+
+This fork is an attempt to use org mode for personal configuration. It tries to
+use as much Prelude as possible, only adding customised user settings in
+personal folder and slightly modified init.el.
+
 Emacs Prelude
 =============
 
