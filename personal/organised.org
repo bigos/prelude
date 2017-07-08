@@ -164,7 +164,10 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
 
 **** The rest
 #+BEGIN_SRC emacs-lisp
-  (load (expand-file-name "~/quicklisp/slime-helper.el"))
+  (defvar slime-helper-el "~/quicklisp/slime-helper.el")
+  (when (file-exists-p slime-helper-el)
+    (load (expand-file-name slime-helper-el)))
+
   ;; Set your lisp system and, optionally, some contribs
   (setq inferior-lisp-program "sbcl")
 
