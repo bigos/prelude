@@ -34,43 +34,58 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
 *** Basic configuration
 
 #+BEGIN_SRC emacs-lisp
-  (setq prelude-guru nil) ;; better for slime
-  ;; (setq guru-warn-only t) ;; not suitable for slime
+      (setq prelude-guru nil) ;; better for slime
+      ;; (setq guru-warn-only t) ;; not suitable for slime
 
-  (menu-bar-mode 1)
-  (global-hl-line-mode -1)
-  ;; (setq prelude-flyspell nil)
-  ;;(smartparens-global-mode -1)
+      (menu-bar-mode 1)
+      (global-hl-line-mode -1)
+      ;; (setq prelude-flyspell nil)
+      ;;(smartparens-global-mode -1)
 
-  (global-set-key (kbd "M-s-g") 'vc-git-grep)
+      (global-set-key (kbd "M-s-g") 'vc-git-grep)
 
-  (prelude-require-packages '(buffer-move paredit underwater-theme projectile
-                                          rubocop rvm rinari ruby-block
-                                          ruby-hash-syntax
-                                          ruby-refactor rspec-mode rails-log-mode
-                                          ido-ubiquitous helm-projectile
-                                          slime web-mode switch-window
-                                          helm-descbinds load-theme-buffer-local
-                                          projectile-rails magit kurecolor
-                                          redshank rainbow-delimiters))
+    (prelude-require-packages '(buffer-move
+                                helm-descbinds
+                                helm-projectile
+                                ido-completing-read+
+                                kurecolor
+                                load-theme-buffer-local
+                                magit
+                                paredit
+                                projectile
+                                projectile-rails
+                                rails-log-mode
+                                rainbow-delimiters
+                                redshank
+                                rinari
+                                rspec-mode
+                                rubocop
+                                ruby-block
+                                ruby-hash-syntax
+                                ruby-refactor
+                                rvm
+                                slime
+                                switch-window
+                                underwater-theme
+                                web-mode))
 
-  (setq org-src-fontify-natively t)
+      (setq org-src-fontify-natively t)
 
-  (helm-descbinds-mode)
-  (require 'load-theme-buffer-local)
+      (helm-descbinds-mode)
+      (require 'load-theme-buffer-local)
 
-    ;;; get rid of utf-8 warning in Ruby mode
-  (setq ruby-insert-encoding-magic-comment nil)
+        ;;; get rid of utf-8 warning in Ruby mode
+      (setq ruby-insert-encoding-magic-comment nil)
 
-  ;; magit warning silencing
-  (setq magit-auto-revert-mode nil)
-  (setq magit-last-seen-setup-instructions "1.4.0")
+      ;; magit warning silencing
+      (setq magit-auto-revert-mode nil)
+      (setq magit-last-seen-setup-instructions "1.4.0")
 
-  (load "server")
-  (unless (server-running-p)
-    (server-start))
+      (load "server")
+      (unless (server-running-p)
+        (server-start))
 
-  (add-hook 'prog-mode-hook 'linum-mode)
+      (add-hook 'prog-mode-hook 'linum-mode)
 
 #+END_SRC
 
