@@ -34,7 +34,7 @@
 (prelude-require-packages '(flx-ido ido-ubiquitous smex))
 
 (require 'ido)
-(require 'ido-ubiquitous)
+(require 'ido-completing-read+)
 (require 'flx-ido)
 
 (setq ido-enable-prefix nil
