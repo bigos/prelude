@@ -116,6 +116,21 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
   ;;; switch-window
   (global-set-key (kbd "C-x o") 'switch-window)
 
+  ;;; for Haskell
+  (defun capitalize-and-join-backwards ()
+    (interactive)
+    (search-backward " ")
+    (right-char)
+    (right-char)
+    (insert " ")
+    (left-char)
+    (left-char)
+    (capitalize-word 1)
+    (paredit-forward-delete)
+    (left-char)
+    (paredit-backward-delete))
+
+  (global-set-key (kbd "s-2") 'capitalize-and-join-backwards)
 #+END_SRC
 
 *** Web mode
