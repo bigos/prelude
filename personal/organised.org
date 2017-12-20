@@ -34,6 +34,9 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
 *** Basic configuration
 
 #+BEGIN_SRC emacs-lisp
+  ;;; make sure Emacs uses stack in Haskell Projects by default
+  (setq haskell-process-type 'stack-ghci)
+
   (setq prelude-guru nil) ;; better for slime
   ;; (setq guru-warn-only t) ;; not suitable for slime
 
@@ -137,6 +140,27 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
 #+BEGIN_SRC emacs-lisp
   (setq slime-contribs '(slime-fancy))
 
+  (defun slime-contrib-directory ()
+    (let* ((slime-folder-prefix "slime-20")
+           (folder-length (length slime-folder-prefix))
+           (slime-folder (car (seq-filter (lambda(x) (and (>= (length x)
+                                                              folder-length)
+                                                          (equal slime-folder-prefix
+                                                                 (subseq x 0 folder-length))) )
+                                          (directory-files "~/.emacs.d/elpa")))))
+      (concat "~/.emacs.d/elpa/" slime-folder "/contrib/")))
+
+  (if (file-exists-p (concat (slime-contrib-directory)
+                             "slime-repl-ansi-color.el"))
+      (push 'slime-repl-ansi-color slime-contribs)
+  (print  (concat
+     "Optional file useful with slime missing\n"
+     "download it from  https://raw.githubusercontent.com/enriquefernandez/slime-repl-ansi-color/master/slime-repl-ansi-color.el\n"
+     "and drop it in:\n"
+     (slime-contrib-directory))))
+
+  (slime-setup)
+
   (slime-setup '(slime-asdf
                  slime-editing-commands
                  slime-fancy
@@ -151,9 +175,15 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
                  slime-sbcl-exts
                  slime-scratch
                  slime-xref-browser))
+
   (slime-autodoc-mode)
   (setq slime-complete-symbol*-fancy t
         slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
+
+
+  (defvar slime-helper-el "~/quicklisp/slime-helper.el")
+  (when (file-exists-p slime-helper-el)
+    (load (expand-file-name slime-helper-el)))
 
   (require 'slime)
 #+END_SRC
@@ -179,16 +209,11 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
 
 **** The rest
 #+BEGIN_SRC emacs-lisp
-  (defvar slime-helper-el "~/quicklisp/slime-helper.el")
-  (when (file-exists-p slime-helper-el)
-    (load (expand-file-name slime-helper-el)))
-
   ;; Set your lisp system and, optionally, some contribs
   (setq inferior-lisp-program "sbcl")
 
   (setq common-lisp-hyperspec-root
         "file:/home/jacek/Documents/Manuals/Lisp/HyperSpec-7-0/HyperSpec/")
-
 
   (require 'redshank-loader)
   (eval-after-load "redshank-loader"
@@ -204,10 +229,10 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
     (search-forward " ")
     (newline-and-indent))
 
-    (global-set-key (kbd "s-0") 'unfold-lisp)
+  (global-set-key (kbd "s-0") 'unfold-lisp)
 #+END_SRC
 
-*** Parenthseses coloring
+*** Parentheses coloring
 
 #+BEGIN_SRC emacs-lisp
   ;;; this add capability to define your own hook for responding to theme changes
