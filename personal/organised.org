@@ -27,8 +27,8 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
 #+BEGIN_SRC emacs-lisp
   (defun load-acl2 ()
     (interactive)
-    (load "~/Documents/acl2-7.4/emacs/emacs-acl2.el")
-    (setq inferior-acl2-program "~/Documents/acl2-7.4/saved_acl2"))
+    (load "~/Documents/acl2-8.0/emacs/emacs-acl2.el")
+    (setq inferior-acl2-program "~/Documents/acl2-8.0/saved_acl2"))
 #+END_SRC
 
 *** Basic configuration
@@ -45,7 +45,7 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
   ;; (setq prelude-flyspell nil)
   ;;(smartparens-global-mode -1)
 
-  (global-set-key (kbd "M-s-g") 'vc-git-grep)
+  (global-set-key (kbd "s-f") 'vc-git-grep)
 
   (prelude-require-packages '(buffer-move
                               helm-descbinds
@@ -89,6 +89,7 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
     (server-start))
 
   (add-hook 'prog-mode-hook 'linum-mode)
+  (add-hook 'haskell-mode-hook (lambda () (setq-local company-dabbrev-downcase nil)))
 
 #+END_SRC
 
@@ -151,6 +152,12 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
 #+END_SRC
 
 *** Lisp
+
+**** Geiser
+#+BEGIN_SRC emacs-lisp
+  (setq geiser-active-implementations '(chez))
+#+END_SRC
+
 **** Slime
 #+BEGIN_SRC emacs-lisp
   (setq slime-contribs '(slime-fancy))
@@ -168,15 +175,17 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
   (if (file-exists-p (concat (slime-contrib-directory)
                              "slime-repl-ansi-color.el"))
       (push 'slime-repl-ansi-color slime-contribs)
-  (print  (concat
-     "Optional file useful with slime missing\n"
-     "download it from  https://raw.githubusercontent.com/enriquefernandez/slime-repl-ansi-color/master/slime-repl-ansi-color.el\n"
-     "and drop it in:\n"
-     (slime-contrib-directory))))
+    (print  (concat
+             "Optional file useful with slime missing\n"
+             "download it from  https://raw.githubusercontent.com/enriquefernandez/slime-repl-ansi-color/master/slime-repl-ansi-color.el\n"
+             "and drop it in:\n"
+             (slime-contrib-directory))))
 
-  (slime-setup)
+  ;; (slime-setup)
 
-  (slime-setup '(slime-asdf
+  ;; this is causing an error
+  (slime-setup '(
+                 ;; slime-asdf ;; is causing an error
                  slime-editing-commands
                  slime-fancy
                  slime-fancy-inspector
