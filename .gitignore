@@ -15,7 +15,8 @@ custom.el
 places
 .smex-items
 savefile/
-/prelude-modules.el
+# I will track the modules file for now
+# /prelude-modules.el
 projectile-bookmarks.eld
 session*
 .cask
