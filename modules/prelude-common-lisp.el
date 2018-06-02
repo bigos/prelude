@@ -34,6 +34,7 @@
 
 (require 'prelude-lisp)
 
+;;; don't use melpa version, but another version provided by quicklisp
 ;(prelude-require-package 'slime)
 
 ;; the SBCL configuration file is in Common Lisp
