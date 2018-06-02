@@ -380,7 +380,8 @@ indent yanked text (with prefix arg don't indent)."
 (prelude-global-mode t)
 
 ;; sensible undo
-(global-undo-tree-mode)
+; that interferes with my fork
+; (global-undo-tree-mode)
 (diminish 'undo-tree-mode)
 
 ;; enable winner-mode to manage window configurations

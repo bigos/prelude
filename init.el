@@ -131,7 +131,13 @@ by Prelude.")
 ;; load the personal settings (this includes `custom-file')
 (when (file-exists-p prelude-personal-dir)
   (message "Loading personal configuration files in %s..." prelude-personal-dir)
-  (mapc 'load (directory-files prelude-personal-dir 't "^[^#\.].*el$")))
+  (mapc 'load (directory-files prelude-personal-dir 't "^[^#\.].*el$"))
+  ;;(message "Loading personal org-mode configuration files in %s..." prelude-personal-dir)
+  ;; include org-mode settings
+  (require 'org)
+  (mapc 'org-babel-load-file
+        (directory-files prelude-personal-dir 't "^[^#\.].*org$")))
+(mapc 'load (directory-files prelude-personal-dir 't "^[^#\.].*el$"))
 
 (message "Prelude is ready to do thy bidding, Master %s!" current-user)
 

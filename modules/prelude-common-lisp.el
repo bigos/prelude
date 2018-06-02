@@ -34,7 +34,7 @@
 
 (require 'prelude-lisp)
 
-(prelude-require-package 'slime)
+;(prelude-require-package 'slime)
 
 ;; the SBCL configuration file is in Common Lisp
 (add-to-list 'auto-mode-alist '("\\.sbclrc\\'" . lisp-mode))
