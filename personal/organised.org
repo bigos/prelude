@@ -210,11 +210,6 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
         slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
 
 
-  (defvar slime-helper-el "~/quicklisp/slime-helper.el")
-  (when (file-exists-p slime-helper-el)
-    (load (expand-file-name slime-helper-el)))
-
-  (require 'slime)
 #+END_SRC
 
 **** Paredit
@@ -376,14 +371,13 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
   (global-set-key (kbd "<M-s-right>")  'buf-move-right)
 #+END_SRC
 
-
 *** Global Undo
 #+BEGIN_SRC emacs-lisp
   (global-undo-tree-mode)
 #+END_SRC
 
-
 *** Conclusion
+
 
 #+BEGIN_SRC emacs-lisp
   (provide 'personal)

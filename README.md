@@ -10,13 +10,6 @@ This fork is an attempt to use org mode for personal configuration. It tries to
 use as much Prelude as possible, only adding customised user settings in
 personal folder and slightly modified init.el.
 
-About this fork
-===============
-
-This fork is an attempt to use org mode for personal configuration. It tries to
-use as much Prelude as possible, only adding customised user settings in
-personal folder and slightly modified init.el.
-
 Emacs Prelude
 =============
 
