@@ -375,7 +375,7 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
 
 *** Global Undo
 #+BEGIN_SRC emacs-lisp
-  (global-undo-tree-mode)
+  ;(global-undo-tree-mode)
 #+END_SRC
 
 *** Conclusion
