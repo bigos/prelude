@@ -35,6 +35,7 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
 
 #+BEGIN_SRC emacs-lisp
   ;;; make sure Emacs uses stack in Haskell Projects by default
+  ;; (setq haskell-process-type 'auto)
   (setq haskell-process-type 'stack-ghci)
 
   (setq prelude-guru nil) ;; better for slime
@@ -64,6 +65,7 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
                               rspec-mode
                               rubocop
                               ruby-hash-syntax
+                              slime
                               ruby-refactor
                               rvm
                               switch-window
@@ -159,9 +161,9 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
 **** Slime
 #+BEGIN_SRC emacs-lisp
 
-  (defvar slime-helper-el "~/quicklisp/slime-helper.el")
-  (when (file-exists-p slime-helper-el)
-    (load (expand-file-name slime-helper-el)))
+  ;; (defvar slime-helper-el "~/quicklisp/slime-helper.el")
+  ;; (when (file-exists-p slime-helper-el)
+  ;;   (load (expand-file-name slime-helper-el)))
 
   (require 'slime)
 
@@ -186,7 +188,7 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
              "and drop it in:\n"
              (slime-contrib-directory))))
 
-  ;; (slime-setup)
+  (slime-setup)
 
   ;; this is causing an error
   (slime-setup '(
