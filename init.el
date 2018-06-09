@@ -151,4 +151,5 @@ by Prelude.")
  ;; greet the use with some useful tip
  (run-at-time 5 nil 'prelude-tip-of-the-day))
 
+(global-undo-tree-mode)
 ;;; init.el ends here
