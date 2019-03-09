@@ -1,6 +1,15 @@
+#+PROPERTY:    header-args:emacs-lisp  :tangle yes
+
 * Org mode Emacs configuration for Prelude
-This file is a personal configuration file for a modified version of Prelude
+
+This  file is a personal configuration file for a modified version of Prelude
 starter kit.
+
+To create *.el file run:
+#+BEGIN_EXAMPLE
+Mx org-babel-tangle
+#+END_EXAMPLE
+
 
 ** Configuration
 
@@ -17,7 +26,8 @@ And warn the user againg editing the tangled *.el file.
 
   ;;; WARNING! this *.el file has been generated automatically from
   ;;; a corresponding *.org file. Do not edit this *.el file, but edit
-  ;;; the *.org file which will generate the *.el file upon Emacs load.
+  ;;; the *.org file which will generate the *.el file upon executing
+  ;;; Mx org-babel-tangle.
 #+END_SRC
 
 *** ACL2
