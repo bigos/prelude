@@ -1,6 +1,15 @@
+#+PROPERTY:    header-args:emacs-lisp  :tangle yes
+
 * Org mode Emacs configuration for Prelude
-This file is a personal configuration file for a modified version of Prelude
+
+This  file is a personal configuration file for a modified version of Prelude
 starter kit.
+
+To create *.el file run:
+#+BEGIN_EXAMPLE
+Mx org-babel-tangle
+#+END_EXAMPLE
+
 
 ** Configuration
 
@@ -17,7 +26,8 @@ And warn the user againg editing the tangled *.el file.
 
   ;;; WARNING! this *.el file has been generated automatically from
   ;;; a corresponding *.org file. Do not edit this *.el file, but edit
-  ;;; the *.org file which will generate the *.el file upon Emacs load.
+  ;;; the *.org file which will generate the *.el file upon executing
+  ;;; Mx org-babel-tangle.
 #+END_SRC
 
 *** ACL2
@@ -35,7 +45,6 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
 
 #+BEGIN_SRC emacs-lisp
   ;;; make sure Emacs uses stack in Haskell Projects by default
-  ;; (setq haskell-process-type 'auto)
   (setq haskell-process-type 'stack-ghci)
 
   (setq prelude-guru nil) ;; better for slime
@@ -64,10 +73,11 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
                               rinari
                               rspec-mode
                               rubocop
+                              ruby-block
                               ruby-hash-syntax
-                              slime
                               ruby-refactor
                               rvm
+                              slime
                               switch-window
                               underwater-theme
                               web-mode))
@@ -160,13 +170,6 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
 
 **** Slime
 #+BEGIN_SRC emacs-lisp
-
-  ;; (defvar slime-helper-el "~/quicklisp/slime-helper.el")
-  ;; (when (file-exists-p slime-helper-el)
-  ;;   (load (expand-file-name slime-helper-el)))
-
-  (require 'slime)
-
   (setq slime-contribs '(slime-fancy))
 
   (defun slime-contrib-directory ()
@@ -188,7 +191,7 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
              "and drop it in:\n"
              (slime-contrib-directory))))
 
-  (slime-setup)
+  ;; (slime-setup)
 
   ;; this is causing an error
   (slime-setup '(
@@ -212,6 +215,11 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
         slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
 
 
+  (defvar slime-helper-el "~/quicklisp/slime-helper.el")
+  (when (file-exists-p slime-helper-el)
+    (load (expand-file-name slime-helper-el)))
+
+  (require 'slime)
 #+END_SRC
 
 **** Paredit
@@ -373,13 +381,7 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
   (global-set-key (kbd "<M-s-right>")  'buf-move-right)
 #+END_SRC
 
-*** Global Undo
-#+BEGIN_SRC emacs-lisp
-  ;(global-undo-tree-mode)
-#+END_SRC
-
 *** Conclusion
-
 
 #+BEGIN_SRC emacs-lisp
   (provide 'personal)

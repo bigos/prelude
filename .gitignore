@@ -15,8 +15,6 @@ custom.el
 places
 .smex-items
 savefile/
-# I will track the modules file for now
-# /prelude-modules.el
 projectile-bookmarks.eld
 session*
 .cask
@@ -28,6 +26,3 @@ network-security.data
 prelude-cheatsheet.el
 prelude-cheatsheet.aux
 prelude-cheatsheet.log
-/personal/organised.el
-eww-bookmarks
-*.org
