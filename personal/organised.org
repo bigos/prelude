@@ -73,7 +73,7 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
                               projectile-rails
                               rspec-mode
                               rubocop
-                              ruby-block
+                              ;; ruby-block
                               ruby-hash-syntax
                               ruby-refactor
                               rvm
