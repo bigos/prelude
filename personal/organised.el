@@ -39,7 +39,6 @@
                             projectile-rails
                             rspec-mode
                             rubocop
-                            ruby-block
                             ruby-hash-syntax
                             ruby-refactor
                             rvm
