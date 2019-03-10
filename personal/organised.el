@@ -35,8 +35,8 @@
                             projectile-rails
                             rails-log-mode
                             rainbow-delimiters
-                            redshank
-                            rinari
+                            ;; redshank
+                            projectile-rails
                             rspec-mode
                             rubocop
                             ruby-block
@@ -46,7 +46,8 @@
                             slime
                             switch-window
                             underwater-theme
-                            web-mode))
+                            web-mode
+                            ))
 
 (setq org-src-fontify-natively t)
 

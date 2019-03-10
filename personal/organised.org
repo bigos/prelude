@@ -69,8 +69,8 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
                               projectile-rails
                               rails-log-mode
                               rainbow-delimiters
-                              redshank
-                              rinari
+                              ;; redshank
+                              projectile-rails
                               rspec-mode
                               rubocop
                               ruby-block
@@ -80,7 +80,8 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
                               slime
                               switch-window
                               underwater-theme
-                              web-mode))
+                              web-mode
+                              ))
 
   (setq org-src-fontify-natively t)
 
@@ -100,7 +101,6 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
 
   (add-hook 'prog-mode-hook 'linum-mode)
   (add-hook 'haskell-mode-hook (lambda () (setq-local company-dabbrev-downcase nil)))
-
 #+END_SRC
 
 *** MacOSX specific settings
