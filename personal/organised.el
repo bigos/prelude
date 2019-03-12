@@ -7,7 +7,7 @@
 
 (defun load-acl2 ()
   (interactive)
-  (load "~/Documents/acl2-8.0/emacs/emacs-acl2.el")
+  (load "~/Documents/acl2-8.1/emacs/emacs-acl2.el")
   (setq inferior-acl2-program "~/Documents/acl2-8.0/saved_acl2"))
 
 ;;; make sure Emacs uses stack in Haskell Projects by default
