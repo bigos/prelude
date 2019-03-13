@@ -26,6 +26,7 @@
 (prelude-require-packages '(buffer-move
                             helm-descbinds
                             helm-projectile
+                            restclient-helm
                             ido-completing-read+
                             kurecolor
                             load-theme-buffer-local
