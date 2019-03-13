@@ -60,6 +60,7 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
   (prelude-require-packages '(buffer-move
                               helm-descbinds
                               helm-projectile
+                              restclient-helm
                               ido-completing-read+
                               kurecolor
                               load-theme-buffer-local

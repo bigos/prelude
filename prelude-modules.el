@@ -12,7 +12,7 @@
 
 ;;; Programming languages support
 (require 'prelude-c)
-;; (require 'prelude-clojure)
+(require 'prelude-clojure)
 ;; (require 'prelude-coffee)
 (require 'prelude-common-lisp)
 (require 'prelude-css)
@@ -28,7 +28,7 @@
 ;; (require 'prelude-ocaml)
 (require 'prelude-org) ;; Org-mode helps you keep TODO lists, notes and more
 (require 'prelude-perl)
-;; (require 'prelude-python)
+(require 'prelude-python)
 (require 'prelude-ruby)
 ;; (require 'prelude-rust)
 ;; (require 'prelude-scala)
