@@ -10,6 +10,11 @@
   (load "~/Documents/acl2-8.1/emacs/emacs-acl2.el")
   (setq inferior-acl2-program "~/Documents/acl2-8.0/saved_acl2"))
 
+(defun acl2-goodies ()
+  (interactive)
+  (rainbow-delimiters-mode)
+  (paredit-mode))
+
 ;;; make sure Emacs uses stack in Haskell Projects by default
 (setq haskell-process-type 'stack-ghci)
 
