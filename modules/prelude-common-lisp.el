@@ -54,7 +54,7 @@
         '((ccl ("ccl"))
           (clisp ("clisp" "-q"))
           (cmucl ("cmucl" "-quiet"))
-          (sbcl ("sbcl" "--noinform --dynamic-space-size 4096") :coding-system utf-8-unix)))
+          (sbcl ("sbcl" "--noinform") :coding-system utf-8-unix)))
 
   ;; select the default value from slime-lisp-implementations
   (if (and (eq system-type 'darwin)
