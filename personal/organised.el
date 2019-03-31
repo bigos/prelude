@@ -187,9 +187,6 @@
 (add-hook 'clojure-mode-hook (lambda () (swap-paredit)))
 (add-hook 'cider-repl-mode-hook (lambda () (swap-paredit)))
 
-;; Set your lisp system and, optionally, some contribs
-(setq inferior-lisp-program "sbcl --dynamic-space-size 4096")
-
 (setq common-lisp-hyperspec-root
       "file:/home/jacek/Documents/Manuals/Lisp/HyperSpec-7-0/HyperSpec/")
 
