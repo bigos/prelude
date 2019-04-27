@@ -168,10 +168,29 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
 *** Lisp
 
 **** Geiser
-#+BEGIN_SRC emacs-lisp
-  (setq geiser-active-implementations '(chez racket))
-  ;; (setq geiser-racket-binary "/usr/bin/racket")
-#+END_SRC
+
+***** Problem explanation and fix not executed by Emacs
+ Until better solution is found modify:
+
+ #+BEGIN_EXAMPLE
+ ~/.emacs.d/modules/prelude-scheme.el
+ #+END_EXAMPLE
+
+ as per my comment on:
+ https://gitlab.com/jaor/geiser/issues/156#note_164897206
+ to have the beginning fragment like:
+
+ #+BEGIN_EXAMPLE
+ (require 'prelude-lisp)
+ (require 'geiser)
+ (require 'geiser-racket)
+ #+END_EXAMPLE
+
+***** the Emacs init code
+ #+BEGIN_SRC emacs-lisp
+   (setq geiser-active-implementations '(chez racket))
+   ;; (setq geiser-racket-binary "/usr/bin/racket")
+ #+END_SRC
 
 **** Slime
 #+BEGIN_SRC emacs-lisp
