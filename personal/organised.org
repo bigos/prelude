@@ -169,7 +169,8 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
 
 **** Geiser
 #+BEGIN_SRC emacs-lisp
-  (setq geiser-active-implementations '(chez))
+  (setq geiser-active-implementations '(chez racket))
+  ;; (setq geiser-racket-binary "/usr/bin/racket")
 #+END_SRC
 
 **** Slime
@@ -236,11 +237,17 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
   (autoload 'paredit-mode "paredit"
     "Minor mode for pseudo-structurally editing Lisp code." t)
   (add-hook 'emacs-lisp-mode-hook (lambda () (swap-paredit)))
+
   (add-hook 'lisp-mode-hook (lambda () (swap-paredit)))
   (add-hook 'lisp-interaction-mode-hook (lambda () (swap-paredit)))
+
   (add-hook 'scheme-mode-hook (lambda () (swap-paredit)))
+  (add-hook 'geiser-repl-mode-hook (lambda () (swap-paredit)))
+  (add-hook 'geiser-repl-mode-hook 'rainbow-delimiters-mode)
+
   (add-hook 'slime-repl-mode-hook (lambda () (swap-paredit)))
   (add-hook 'slime-repl-mode-hook 'rainbow-delimiters-mode)
+
   (add-hook 'clojure-mode-hook (lambda () (swap-paredit)))
   (add-hook 'cider-repl-mode-hook (lambda () (swap-paredit)))
 #+END_SRC

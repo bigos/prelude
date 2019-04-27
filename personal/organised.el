@@ -118,7 +118,8 @@
 (fset 'insert-rails-erb-tag [?< ?% ])
 (global-set-key (kbd "s-=") 'insert-rails-erb-tag)
 
-(setq geiser-active-implementations '(chez))
+(setq geiser-active-implementations '(chez racket))
+;; (setq geiser-racket-binary "/usr/bin/racket")
 
 (setq slime-contribs '(slime-fancy))
 
@@ -179,11 +180,17 @@
 (autoload 'paredit-mode "paredit"
   "Minor mode for pseudo-structurally editing Lisp code." t)
 (add-hook 'emacs-lisp-mode-hook (lambda () (swap-paredit)))
+
 (add-hook 'lisp-mode-hook (lambda () (swap-paredit)))
 (add-hook 'lisp-interaction-mode-hook (lambda () (swap-paredit)))
+
 (add-hook 'scheme-mode-hook (lambda () (swap-paredit)))
+(add-hook 'geiser-repl-mode-hook (lambda () (swap-paredit)))
+(add-hook 'geiser-repl-mode-hook 'rainbow-delimiters-mode)
+
 (add-hook 'slime-repl-mode-hook (lambda () (swap-paredit)))
 (add-hook 'slime-repl-mode-hook 'rainbow-delimiters-mode)
+
 (add-hook 'clojure-mode-hook (lambda () (swap-paredit)))
 (add-hook 'cider-repl-mode-hook (lambda () (swap-paredit)))
 
