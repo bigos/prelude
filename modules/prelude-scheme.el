@@ -35,7 +35,6 @@
 
 (require 'prelude-lisp)
 (require 'geiser)
-(require 'geiser-racket)
 
 ;; geiser replies on a REPL to provide autodoc and completion
 (setq geiser-mode-start-repl-p t)
