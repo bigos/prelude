@@ -48,10 +48,22 @@
                             ruby-hash-syntax
                             ruby-refactor
                             rvm
+                            rufo
+                            enh-ruby-mode
                             slime
                             switch-window
                             underwater-theme
                             web-mode))
+
+; (add-to-list 'load-path "/home/jacek/.emacs.d/elpa/enh-ruby-mode-20190513.254/enh-ruby-mode.el") ; must be added after any path containing old ruby-mode
+(autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
+(add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
+(add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))                                          ;
+(add-to-list 'auto-mode-alist
+             '("\\(?:\\.rb\\|ru\\|rake\\|thor\\|jbuilder\\|gemspec\\|podspec\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'" . enh-ruby-mode))
+
+(setq rufo-enable-format-on-save t)
+(add-hook 'enh-ruby-mode-hook 'rufo-minor-mode)
 
 (setq org-src-fontify-natively t)
 
