@@ -121,6 +121,12 @@
 (setq geiser-active-implementations '(chez racket))
 ;; (setq geiser-racket-binary "/usr/bin/racket")
 
+(defvar slime-helper-el "~/quicklisp/slime-helper.el")
+(when (file-exists-p slime-helper-el)
+  (load (expand-file-name slime-helper-el)))
+
+(require 'slime)
+
 (setq slime-contribs '(slime-fancy))
 
 (defun slime-contrib-directory ()
@@ -164,13 +170,6 @@
 (slime-autodoc-mode)
 (setq slime-complete-symbol*-fancy t
       slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
-
-
-(defvar slime-helper-el "~/quicklisp/slime-helper.el")
-(when (file-exists-p slime-helper-el)
-  (load (expand-file-name slime-helper-el)))
-
-(require 'slime)
 
 (defun swap-paredit ()
   "Replace smartparens with superior paredit."
