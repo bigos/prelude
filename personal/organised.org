@@ -205,6 +205,12 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
 
 **** Slime
 #+BEGIN_SRC emacs-lisp
+  (defvar slime-helper-el "~/quicklisp/slime-helper.el")
+  (when (file-exists-p slime-helper-el)
+    (load (expand-file-name slime-helper-el)))
+
+  (require 'slime)
+
   (setq slime-contribs '(slime-fancy))
 
   (defun slime-contrib-directory ()
@@ -249,12 +255,6 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
   (setq slime-complete-symbol*-fancy t
         slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
 
-
-  (defvar slime-helper-el "~/quicklisp/slime-helper.el")
-  (when (file-exists-p slime-helper-el)
-    (load (expand-file-name slime-helper-el)))
-
-  (require 'slime)
 #+END_SRC
 
 **** Paredit
