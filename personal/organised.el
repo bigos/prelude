@@ -15,6 +15,11 @@
   (rainbow-delimiters-mode)
   (paredit-mode))
 
+(fset 'line-split-at-80
+      (lambda (&optional arg) "Keyboard macro." (interactive "p")
+        (kmacro-exec-ring-item
+         (quote ([5 1 1 21 56 48 6 18 32 6 return] 0 "%d")) arg)))
+
 ;;; make sure Emacs uses stack in Haskell Projects by default
 (setq haskell-process-type 'stack-ghci)
 
