@@ -86,7 +86,6 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
                               ruby-hash-syntax
                               ruby-refactor
                               rvm
-                              rufo
                               enh-ruby-mode
                               slime
                               switch-window
@@ -100,8 +99,9 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
   (add-to-list 'auto-mode-alist
                '("\\(?:\\.rb\\|ru\\|rake\\|thor\\|jbuilder\\|gemspec\\|podspec\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'" . enh-ruby-mode))
 
-  (setq rufo-enable-format-on-save t)
-  (add-hook 'enh-ruby-mode-hook 'rufo-minor-mode)
+  ;;; ignore rufo for now
+  ;; (setq rufo-enable-format-on-save t)
+  ;; (add-hook 'enh-ruby-mode-hook 'rufo-minor-mode)
 
   (setq org-src-fontify-natively t)
 
