@@ -53,7 +53,6 @@
                             ruby-hash-syntax
                             ruby-refactor
                             rvm
-                            rufo
                             enh-ruby-mode
                             slime
                             switch-window
@@ -67,8 +66,9 @@
 (add-to-list 'auto-mode-alist
              '("\\(?:\\.rb\\|ru\\|rake\\|thor\\|jbuilder\\|gemspec\\|podspec\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'" . enh-ruby-mode))
 
-(setq rufo-enable-format-on-save t)
-(add-hook 'enh-ruby-mode-hook 'rufo-minor-mode)
+;;; ignore rufo for now
+;; (setq rufo-enable-format-on-save t)
+;; (add-hook 'enh-ruby-mode-hook 'rufo-minor-mode)
 
 (setq org-src-fontify-natively t)
 
@@ -88,6 +88,14 @@
 
 (add-hook 'prog-mode-hook 'linum-mode)
 (add-hook 'haskell-mode-hook (lambda () (setq-local company-dabbrev-downcase nil)))
+
+(defun open-buffer-in-vscode ()
+  (interactive)
+  (let ((fn (buffer-file-name)))
+    (when fn (let ((com (concatenate 'string "code " fn)))
+               (shell-command com)))))
+
+(global-set-key [f9] 'open-buffer-in-vscode)
 
 ;; Allow hash to be entered on MacOSX
 (fset 'insertPound "#")

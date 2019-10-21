@@ -18,7 +18,7 @@ This is still work in progress.
 
 Try to generate the code that passed lint test.
 
-And warn the user againg editing the tangled *.el file.
+And Warn The user againg editing the tangled *.el file.
 
 #+BEGIN_SRC emacs-lisp
   ;;; code:
@@ -121,6 +121,18 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
 
   (add-hook 'prog-mode-hook 'linum-mode)
   (add-hook 'haskell-mode-hook (lambda () (setq-local company-dabbrev-downcase nil)))
+#+END_SRC
+
+*** vscode interaction
+
+#+BEGIN_SRC emacs-lisp
+(defun open-buffer-in-vscode ()
+  (interactive)
+  (let ((fn (buffer-file-name)))
+    (when fn (let ((com (concatenate 'string "code " fn)))
+               (shell-command com)))))
+
+(global-set-key [f9] 'open-buffer-in-vscode)
 #+END_SRC
 
 *** MacOSX specific settings
