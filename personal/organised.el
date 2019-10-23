@@ -91,7 +91,10 @@
 
 (defun open-buffer-in-vscode ()
   (interactive)
-  (save-buffer)
+
+  ;; this possibly crashes emacs
+  ;; (save-buffer)
+
   (let ((fn (buffer-file-name)))
     (when fn (let ((com (concatenate 'string "code " fn)))
                (shell-command com)))))
