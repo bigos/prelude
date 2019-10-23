@@ -126,13 +126,14 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
 *** vscode interaction
 
 #+BEGIN_SRC emacs-lisp
-(defun open-buffer-in-vscode ()
-  (interactive)
-  (let ((fn (buffer-file-name)))
-    (when fn (let ((com (concatenate 'string "code " fn)))
-               (shell-command com)))))
+  (defun open-buffer-in-vscode ()
+    (interactive)
+    (save-buffer)
+    (let ((fn (buffer-file-name)))
+      (when fn (let ((com (concatenate 'string "code " fn)))
+                 (shell-command com)))))
 
-(global-set-key [f9] 'open-buffer-in-vscode)
+  (global-set-key [f9] 'open-buffer-in-vscode)
 #+END_SRC
 
 *** MacOSX specific settings

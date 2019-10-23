@@ -91,6 +91,7 @@
 
 (defun open-buffer-in-vscode ()
   (interactive)
+  (save-buffer)
   (let ((fn (buffer-file-name)))
     (when fn (let ((com (concatenate 'string "code " fn)))
                (shell-command com)))))
