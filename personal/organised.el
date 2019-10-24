@@ -150,9 +150,10 @@
 (setq geiser-active-implementations '(chez racket))
 ;; (setq geiser-racket-binary "/usr/bin/racket")
 
-(defvar slime-helper-el "~/quicklisp/slime-helper.el")
-(when (file-exists-p slime-helper-el)
-  (load (expand-file-name slime-helper-el)))
+;;; this code has been responsible for slime version problem
+;; (defvar slime-helper-el "~/quicklisp/slime-helper.el")
+;; (when (file-exists-p slime-helper-el)
+;;   (load (expand-file-name slime-helper-el)))
 
 (require 'slime)
 
