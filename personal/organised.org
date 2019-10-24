@@ -226,9 +226,10 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
 
 **** Slime
 #+BEGIN_SRC emacs-lisp
-  (defvar slime-helper-el "~/quicklisp/slime-helper.el")
-  (when (file-exists-p slime-helper-el)
-    (load (expand-file-name slime-helper-el)))
+  ;;; this code has been responsible for slime version problem
+  ;; (defvar slime-helper-el "~/quicklisp/slime-helper.el")
+  ;; (when (file-exists-p slime-helper-el)
+  ;;   (load (expand-file-name slime-helper-el)))
 
   (require 'slime)
 
