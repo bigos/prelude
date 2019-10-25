@@ -89,6 +89,17 @@
 (add-hook 'prog-mode-hook 'linum-mode)
 (add-hook 'haskell-mode-hook (lambda () (setq-local company-dabbrev-downcase nil)))
 
+(require 'org)
+(org-add-link-type "pdf" 'org-pdf-open nil)
+
+(defun org-pdf-open (link)
+  "Where page number is 105, the link should look like:
+   [[pdf:/path/to/file.pdf#105][My description.]]"
+  (let* ((path+page (split-string link "#"))
+         (pdf-file (car path+page))
+         (page (car (cdr path+page))))
+    (start-process "view-pdf" nil "evince" "--page-index" page pdf-file)))
+
 (defun open-buffer-in-vscode ()
   (interactive)
 

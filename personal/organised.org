@@ -126,6 +126,7 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
 
 *** Org mode config
 #+BEGIN_SRC emacs-lisp
+(require 'org)
 (org-add-link-type "pdf" 'org-pdf-open nil)
 
 (defun org-pdf-open (link)
