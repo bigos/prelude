@@ -123,8 +123,8 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
   (add-hook 'haskell-mode-hook (lambda () (setq-local company-dabbrev-downcase nil)))
 #+END_SRC
 
-
 *** Org mode config
+
 #+BEGIN_SRC emacs-lisp
 (require 'org)
 (org-add-link-type "pdf" 'org-pdf-open nil)
@@ -137,6 +137,7 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
          (page (car (cdr path+page))))
     (start-process "view-pdf" nil "evince" "--page-index" page pdf-file)))
 #+END_SRC
+
 *** vscode interaction
 
 #+BEGIN_SRC emacs-lisp
