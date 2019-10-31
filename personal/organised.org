@@ -70,6 +70,7 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
                               helm-descbinds
                               helm-projectile
                               restclient-helm
+                              ob-restclient
                               ido-completing-read+
                               kurecolor
                               load-theme-buffer-local
@@ -80,6 +81,7 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
                               rails-log-mode
                               rainbow-delimiters
                               redshank
+                              ob-restclient
                               projectile-rails
                               rspec-mode
                               rubocop
@@ -125,6 +127,8 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
 
 *** Org mode config
 
+**** pdf link to page index
+
 #+BEGIN_SRC emacs-lisp
 (require 'org)
 (org-add-link-type "pdf" 'org-pdf-open nil)
@@ -136,6 +140,21 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
          (pdf-file (car path+page))
          (page (car (cdr path+page))))
     (start-process "view-pdf" nil "evince" "--page-index" page pdf-file)))
+#+END_SRC
+
+**** ob-restclient
+
+An extension to restclient.el for emacs that provides org-babel support.
+
+To get started, install ob-restclient.el and add (restclient . t) to
+org-babel-load-languages:
+
+#+BEGIN_SRC emacs-lisp
+  (require 'restclient)
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((restclient . t)))
 #+END_SRC
 
 *** vscode interaction
