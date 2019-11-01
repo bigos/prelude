@@ -81,7 +81,6 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
                               rails-log-mode
                               rainbow-delimiters
                               redshank
-                              ob-restclient
                               projectile-rails
                               rspec-mode
                               rubocop
