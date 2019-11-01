@@ -59,6 +59,7 @@
                               slime
                               switch-window
                               underwater-theme
+                              string-inflection
                               web-mode))
 
   ; (add-to-list 'load-path "/home/jacek/.emacs.d/elpa/enh-ruby-mode-20190513.254/enh-ruby-mode.el") ; must be added after any path containing old ruby-mode
@@ -90,6 +91,16 @@
 
   (add-hook 'prog-mode-hook 'linum-mode)
   (add-hook 'haskell-mode-hook (lambda () (setq-local company-dabbrev-downcase nil)))
+
+(require 'string-inflection)
+
+;; default
+(global-set-key [f5] 'string-inflection-all-cycle)
+
+;; for ruby
+(add-hook 'ruby-mode-hook
+          '(lambda ()
+             (local-set-key [f6] 'string-inflection-ruby-style-cycle)))
 
 (require 'org)
 (org-add-link-type "pdf" 'org-pdf-open nil)

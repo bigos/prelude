@@ -92,6 +92,7 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
                               slime
                               switch-window
                               underwater-theme
+                              string-inflection
                               web-mode))
 
   ; (add-to-list 'load-path "/home/jacek/.emacs.d/elpa/enh-ruby-mode-20190513.254/enh-ruby-mode.el") ; must be added after any path containing old ruby-mode
@@ -123,6 +124,20 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
 
   (add-hook 'prog-mode-hook 'linum-mode)
   (add-hook 'haskell-mode-hook (lambda () (setq-local company-dabbrev-downcase nil)))
+#+END_SRC
+
+*** String inflection
+
+#+BEGIN_SRC emacs-lisp
+(require 'string-inflection)
+
+;; default
+(global-set-key [f5] 'string-inflection-all-cycle)
+
+;; for ruby
+(add-hook 'ruby-mode-hook
+          '(lambda ()
+             (local-set-key [f6] 'string-inflection-ruby-style-cycle)))
 #+END_SRC
 
 *** Org mode config
