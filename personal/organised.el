@@ -101,6 +101,8 @@
           '(lambda ()
              (local-set-key [f6] 'string-inflection-ruby-style-cycle)))
 
+(setq string-inflection-skip-backward-when-done t)
+
 (require 'org)
 (org-add-link-type "pdf" 'org-pdf-open nil)
 

@@ -128,15 +128,17 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
 *** String inflection
 
 #+BEGIN_SRC emacs-lisp
-(require 'string-inflection)
+  (require 'string-inflection)
 
-;; default
-(global-set-key [f5] 'string-inflection-all-cycle)
+  ;; default
+  (global-set-key [f5] 'string-inflection-all-cycle)
 
-;; for ruby
-(add-hook 'ruby-mode-hook
-          '(lambda ()
-             (local-set-key [f6] 'string-inflection-ruby-style-cycle)))
+  ;; for ruby
+  (add-hook 'ruby-mode-hook
+            '(lambda ()
+               (local-set-key [f6] 'string-inflection-ruby-style-cycle)))
+
+  (setq string-inflection-skip-backward-when-done t)
 #+END_SRC
 
 *** Org mode config
