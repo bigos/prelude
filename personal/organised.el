@@ -13,7 +13,11 @@
 (defun acl2-goodies ()
   (interactive)
   (rainbow-delimiters-mode)
-  (paredit-mode))
+  (paredit-mode)
+
+  (let ((scriptBuf (get-buffer-create "script")))
+    (set-buffer scriptBuf)
+    (lisp-mode)))
 
 (fset 'line-split-at-80
       (lambda (&optional arg) "Keyboard macro." (interactive "p")

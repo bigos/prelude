@@ -31,10 +31,6 @@ And Warn The user againg editing the tangled *.el file.
 
 *** ACL2
 
-
-
-Run M-x lisp-mode when you see the prompt to get paredit and the rest.
-
 #+BEGIN_SRC emacs-lisp
   (defun load-acl2 ()
     (interactive)
@@ -44,12 +40,34 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
   (defun acl2-goodies ()
     (interactive)
     (rainbow-delimiters-mode)
-    (paredit-mode))
+    (paredit-mode)
+
+    (let ((scriptBuf (get-buffer-create "script")))
+      (set-buffer scriptBuf)
+      (lisp-mode)))
 #+END_SRC
 
 **** Additional advice about setting up Emacs
 
+This is a very old document, but it gives important clues.
+
 http://www.cs.utexas.edu/users/moore/publications/acl2-programming-exercises1.html
+
+One is Emacs, where the ACL2 image is run in Emacs' *shell* buffer, thereby
+allowing the user to cut-and-paste between a script buffer containing an
+evolving file of ACL2 commands and the Lisp execution environment in which
+those commands are carried out.
+
+***** steps
+
+start Emacs
+M-x load-acl2
+you will get buffer *shell*
+
+in *shell* do ~/Documents/acl2-8.2/saved_acl2
+acl2 prompt will appear
+
+M-x acl2 goodies
 
 *** Basic configuration
 
