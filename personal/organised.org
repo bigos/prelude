@@ -31,6 +31,8 @@ And Warn The user againg editing the tangled *.el file.
 
 *** ACL2
 
+
+
 Run M-x lisp-mode when you see the prompt to get paredit and the rest.
 
 #+BEGIN_SRC emacs-lisp
@@ -44,6 +46,10 @@ Run M-x lisp-mode when you see the prompt to get paredit and the rest.
     (rainbow-delimiters-mode)
     (paredit-mode))
 #+END_SRC
+
+**** Additional advice about setting up Emacs
+
+http://www.cs.utexas.edu/users/moore/publications/acl2-programming-exercises1.html
 
 *** Basic configuration
 
