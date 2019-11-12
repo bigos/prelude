@@ -68,7 +68,7 @@
   ; (add-to-list 'load-path "/home/jacek/.emacs.d/elpa/enh-ruby-mode-20190513.254/enh-ruby-mode.el") ; must be added after any path containing old ruby-mode
   (autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
 
-  (global-set-key "s-'" (quote ruby-toggle-string-quotes))
+  (global-set-key [8388647] (quote ruby-toggle-string-quotes))
 
   (add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
   (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))                                          ;
