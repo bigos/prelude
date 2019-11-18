@@ -14,7 +14,7 @@
   (interactive)
   (rainbow-delimiters-mode)
   (paredit-mode)
-  (setq *acl2-doc-link-color* "#88ff22")
+  (setq *acl2-doc-link-color* "#aaff00")
 
   (let ((scriptBuf (get-buffer-create "script")))
     (set-buffer scriptBuf)
