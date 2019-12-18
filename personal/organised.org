@@ -386,7 +386,7 @@ org-babel-load-languages:
 #+BEGIN_SRC emacs-lisp
 
   (setq common-lisp-hyperspec-root
-        "file:/home/jacek/Documents/Manuals/Lisp/HyperSpec-7-0/HyperSpec/")
+        "Documents/Manuals/Lisp/HyperSpec-7-0/HyperSpec/")
 
   (require 'redshank-loader)
   (eval-after-load "redshank-loader"
