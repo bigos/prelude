@@ -262,8 +262,10 @@
   (add-hook 'clojure-mode-hook (lambda () (swap-paredit)))
   (add-hook 'cider-repl-mode-hook (lambda () (swap-paredit)))
 
-  (setq common-lisp-hyperspec-root
-        "Documents/Manuals/Lisp/HyperSpec-7-0/HyperSpec/")
+(setq common-lisp-hyperspec-root
+      (format
+       "file:/home/%s/Documents/Manuals/Lisp/HyperSpec-7-0/HyperSpec/"
+       user-login-name))
 
   (require 'redshank-loader)
   (eval-after-load "redshank-loader"
