@@ -244,7 +244,6 @@
 ;;; useful for expressions like (in-package #:whatever)
 (defun slime-copy-last-expression-to-repl (string)
   (interactive (list (slime-last-expression)))
-  (print string)
   (slime-switch-to-output-buffer)
   (goto-char (point-max))
   (insert string))
