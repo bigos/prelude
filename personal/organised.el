@@ -240,6 +240,17 @@
 (setq slime-complete-symbol*-fancy t
       slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
 
+;;; copy last s-expression to repl
+;;; useful for expressions like (in-package #:whatever)
+(defun slime-copy-last-expression-to-repl (string)
+  (interactive (list (slime-last-expression)))
+  (print string)
+  (slime-switch-to-output-buffer)
+  (goto-char (point-max))
+  (insert string))
+
+(global-set-key (kbd "s-e") 'slime-copy-last-expression-to-repl)
+
 (defun swap-paredit ()
   "Replace smartparens with superior paredit."
   (smartparens-mode -1)
