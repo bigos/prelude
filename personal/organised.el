@@ -240,8 +240,11 @@
 (setq slime-complete-symbol*-fancy t
       slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
 
+
 ;;; copy last s-expression to repl
 ;;; useful for expressions like (in-package #:whatever)
+;;; alternatively you can use C-c ~ with cursor after (in-package :some-package)
+;;; https://www.reddit.com/r/lisp/comments/ehs12v/copying_last_expression_to_repl_in_emacsslime/
 (defun slime-copy-last-expression-to-repl (string)
   (interactive (list (slime-last-expression)))
   (slime-switch-to-output-buffer)
