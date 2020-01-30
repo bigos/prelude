@@ -153,6 +153,18 @@ M-x acl2 goodies
   (add-hook 'haskell-mode-hook (lambda () (setq-local company-dabbrev-downcase nil)))
 #+END_SRC
 
+*** Tabs
+
+#+begin_src emacs-lisp
+  (defun my/ibuffer-visit-buffers-other-tab ()
+    "Open buffers marked with m in other tabs."
+    (interactive)
+    (mapc
+     #'switch-to-buffer-other-tab
+     (or (ibuffer-get-marked-buffers)
+         (list (ibuffer-current-buffer)))))
+#+end_src
+
 *** String inflection
 
 #+BEGIN_SRC emacs-lisp
