@@ -99,6 +99,14 @@
 (add-hook 'prog-mode-hook 'linum-mode)
 (add-hook 'haskell-mode-hook (lambda () (setq-local company-dabbrev-downcase nil)))
 
+(defun my/ibuffer-visit-buffers-other-tab ()
+  "Open buffers marked with m in other tabs."
+  (interactive)
+  (mapc
+   #'switch-to-buffer-other-tab
+   (or (ibuffer-get-marked-buffers)
+       (list (ibuffer-current-buffer)))))
+
 (require 'string-inflection)
 
 ;; default
