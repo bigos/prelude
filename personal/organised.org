@@ -165,6 +165,15 @@ M-x acl2 goodies
          (list (ibuffer-current-buffer)))))
 #+end_src
 
+*** PlantUML
+
+Fancy diagram making took that has to be explored further
+https://plantuml.com/
+
+#+begin_src emacs-lisp
+  ;;; finish me
+#+end_src
+
 *** String inflection
 
 #+BEGIN_SRC emacs-lisp
