@@ -170,9 +170,7 @@ M-x acl2 goodies
 Fancy diagram making took that has to be explored further
 https://plantuml.com/
 
-#+begin_src emacs-lisp
-  ;;; finish me
-#+end_src
+Just install ~plantuml-mode~
 
 *** String inflection
 
