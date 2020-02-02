@@ -170,7 +170,12 @@ M-x acl2 goodies
 Fancy diagram making took that has to be explored further
 https://plantuml.com/
 
+https://github.com/skuro/plantuml-mode
+
 Just install ~plantuml-mode~
+
+M-x plantuml-set-output-type change to png to make preview work, because svg has
+parsing error
 
 *** String inflection
 
