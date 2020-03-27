@@ -351,8 +351,9 @@ org-babel-load-languages:
   ;;   (load (expand-file-name slime-helper-el)))
 
   (require 'slime)
+  (require 'slime-autoloads)
 
-  (setq slime-contribs '(slime-fancy))
+  (setq slime-contribs '(slime-fancy slime-fancy-inspector))
 
   (defun slime-contrib-directory ()
     (let* ((slime-folder-prefix "slime-20")
@@ -373,26 +374,7 @@ org-babel-load-languages:
              "and drop it in:\n"
              (slime-contrib-directory))))
 
-  ;; (slime-setup)
 
-  ;; this is causing an error
-  (slime-setup '(
-                 ;; slime-asdf ;; is causing an error
-                 slime-editing-commands
-                 slime-fancy
-                 slime-fancy-inspector
-                 slime-fontifying-fu
-                 slime-fuzzy
-                 slime-indentation
-                 slime-mdot-fu
-                 slime-package-fu
-                 slime-references
-                 slime-repl
-                 slime-sbcl-exts
-                 slime-scratch
-                 slime-xref-browser))
-
-  (slime-autodoc-mode)
   (setq slime-complete-symbol*-fancy t
         slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
 
