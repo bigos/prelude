@@ -20,6 +20,26 @@
     (set-buffer scriptBuf)
     (lisp-mode)))
 
+(defun cleanup-80 ()
+(interactive
+  (beginning-of-line)
+  ;; clean up the beginning of line
+  (if (eql (char-after) #x20)
+      (progn
+        (just-one-space)
+        (backward-char)
+        (delete-char 1)))
+  ;; move 80 chars
+  (forward-char 80)
+  ;; depending if the character we are at is a space
+  (when (not (eql (char-after) #x20))
+    (search-backward " "))
+  (just-one-space)
+  ;; insert new line char
+  (insert-char ?\C-j))
+
+(global-set-key (kbd "s-9") 'cleanup-80)
+
 (fset 'line-split-at-80
       (lambda (&optional arg) "Keyboard macro." (interactive "p")
         (kmacro-exec-ring-item
