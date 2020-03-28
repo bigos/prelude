@@ -75,29 +75,24 @@ M-x acl2 goodies
 #+BEGIN_SRC emacs-lisp
 
   (defun cleanup-80 ()
-  (interactive
-    (beginning-of-line)
-    ;; clean up the beginning of line
-    (if (eql (char-after) #x20)
-        (progn
-          (just-one-space)
-          (backward-char)
-          (delete-char 1)))
-    ;; move 80 chars
-    (forward-char 80)
-    ;; depending if the character we are at is a space
-    (when (not (eql (char-after) #x20))
-      (search-backward " "))
-    (just-one-space)
-    ;; insert new line char
-    (insert-char ?\C-j))
+    (interactive)
+     (beginning-of-line)
+     ;; clean up the beginning of line
+     (if (eql (char-after) #x20)
+         (progn
+           (just-one-space)
+           (backward-char)
+           (delete-char 1)))
+     ;; move 80 chars
+     (forward-char 80)
+     ;; depending if the character we are at is a space
+     (when (not (eql (char-after) #x20))
+       (search-backward " "))
+     (just-one-space)
+     ;; insert new line char
+     (insert-char ?\C-j))
 
-  (global-set-key (kbd "s-9") 'cleanup-80)
-
-  (fset 'line-split-at-80
-        (lambda (&optional arg) "Keyboard macro." (interactive "p")
-          (kmacro-exec-ring-item
-           (quote ([5 1 1 21 56 48 6 18 32 6 return] 0 "%d")) arg)))
+  (global-set-key (kbd "s-8") 'cleanup-80)
 
   ;;; make sure Emacs uses stack in Haskell Projects by default
   (setq haskell-process-type 'stack-ghci)
