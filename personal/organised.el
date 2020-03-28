@@ -273,6 +273,9 @@
 
 (global-set-key (kbd "s-e") 'slime-copy-last-expression-to-repl)
 
+(add-hook 'minibuffer-inactive-mode-hook #'paredit-mode)
+(add-hook 'minibuffer-inactive-mode-hook #'rainbow-delimiters-mode)
+
 (defun swap-paredit ()
   "Replace smartparens with superior paredit."
   (smartparens-mode -1)
