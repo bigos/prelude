@@ -7,8 +7,8 @@
 
 (defun load-acl2 ()
   (interactive)
-  (load "~/Documents/acl2-8.2/emacs/emacs-acl2.el")
-  (setq inferior-acl2-program "~/Documents/acl2-8.2/saved_acl2"))
+  (load "~/Documents/acl2-8.3/emacs/emacs-acl2.el")
+  (setq inferior-acl2-program "~/Documents/acl2-8.3/saved_acl2"))
 
 (defun acl2-goodies ()
   (interactive)
