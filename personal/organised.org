@@ -122,7 +122,6 @@ M-x acl2 goodies
                                 projectile-rails
                                 rspec-mode
                                 rubocop
-
                                 ruby-hash-syntax
                                 ruby-refactor
                                 rvm
@@ -130,7 +129,6 @@ M-x acl2 goodies
                                 slime
                                 slime-repl-ansi-color
                                 switch-window
-                                underwater-theme
                                 string-inflection
                                 web-mode))
 
@@ -318,7 +316,7 @@ org-babel-load-languages:
   (global-set-key (kbd "s-=") 'insert-rails-erb-tag)
 #+END_SRC
 
-*** Haskell todo
+*** Haskell
 #+BEGIN_SRC emacs-lisp
   ;;; make sure Emacs uses stack in Haskell Projects by default
   (setq haskell-process-type 'stack-ghci)
