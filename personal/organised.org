@@ -122,11 +122,13 @@ M-x acl2 goodies
                                 projectile-rails
                                 rspec-mode
                                 rubocop
+
                                 ruby-hash-syntax
                                 ruby-refactor
                                 rvm
                                 enh-ruby-mode
                                 slime
+                                slime-repl-ansi-color
                                 switch-window
                                 underwater-theme
                                 string-inflection
