@@ -121,7 +121,7 @@
 
   (add-hook 'prog-mode-hook 'linum-mode)
 
-  (add-hook 'overwrite-mode-hook #'(lambda () (double-flash-mode-line))
+  (add-hook 'overwrite-mode-hook #'(lambda () (double-flash-mode-line)))
 
 (defun my/ibuffer-visit-buffers-other-tab ()
   "Open buffers marked with m in other tabs."
