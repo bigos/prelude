@@ -20,7 +20,14 @@
     (set-buffer scriptBuf)
     (lisp-mode)))
 
-(defun cleanup-80 ()
+(defun double-flash-mode-line ()
+    (let ((flash-sec (/ 1.0 20)))
+      (invert-face 'mode-line)
+      (run-with-timer flash-sec nil #'invert-face 'mode-line)
+      (run-with-timer (* 2 flash-sec) nil #'invert-face 'mode-line)
+      (run-with-timer (* 3 flash-sec) nil #'invert-face 'mode-line)))
+
+  (defun cleanup-80 ()
     (interactive)
      (beginning-of-line)
      ;; clean up the beginning of line
@@ -114,7 +121,7 @@
 
   (add-hook 'prog-mode-hook 'linum-mode)
 
-  (add-hook 'overwrite-mode-hook #'(lambda () )
+  (add-hook 'overwrite-mode-hook #'(lambda () (double-flash-mode-line)
 
 (defun my/ibuffer-visit-buffers-other-tab ()
   "Open buffers marked with m in other tabs."
