@@ -113,6 +113,7 @@ M-x acl2 goodies
                                 kurecolor
                                 load-theme-buffer-local
                                 magit
+                                mode-line-bell
                                 paredit
                                 projectile
                                 projectile-rails
@@ -166,6 +167,8 @@ M-x acl2 goodies
   ;; (add-hook 'scheme-mode-hook (lambda () (swap-paredit)))
 
     (add-hook 'prog-mode-hook 'linum-mode)
+
+    (add-hook 'overwrite-mode-hook #'(lambda () )
 #+END_SRC
 
 *** Tabs

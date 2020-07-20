@@ -59,6 +59,7 @@
                               kurecolor
                               load-theme-buffer-local
                               magit
+                              mode-line-bell
                               paredit
                               projectile
                               projectile-rails
@@ -112,6 +113,8 @@
 ;; (add-hook 'scheme-mode-hook (lambda () (swap-paredit)))
 
   (add-hook 'prog-mode-hook 'linum-mode)
+
+  (add-hook 'overwrite-mode-hook #'(lambda () )
 
 (defun my/ibuffer-visit-buffers-other-tab ()
   "Open buffers marked with m in other tabs."
