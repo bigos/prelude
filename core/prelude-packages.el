@@ -32,7 +32,7 @@
 ;; Boston, MA 02110-1301, USA.
 
 ;;; Code:
-(require 'cl)
+(require 'cl-lib)
 (require 'package)
 
 ;; accessing a package repo over https on Windows is a no go, so we
@@ -90,7 +90,7 @@
 
 (defun prelude-packages-installed-p ()
   "Check if all packages in `prelude-packages' are installed."
-  (every #'package-installed-p prelude-packages))
+  (cl-every #'package-installed-p prelude-packages))
 
 (defun prelude-require-package (package)
   "Install PACKAGE unless already installed."
