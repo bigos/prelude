@@ -377,6 +377,14 @@ org-babel-load-languages:
    ;; (setq geiser-racket-binary "/usr/bin/racket")
  #+END_SRC
 
+**** Clojure
+ #+BEGIN_SRC emacs-lisp
+   (add-to-list 'auto-mode-alist '("\\.boot\\'" . clojure-mode))
+
+   ;; To recognize script files using shebang:
+   (add-to-list 'magic-mode-alist '(".* boot" . clojure-mode))
+ #+END_SRC
+
 **** Slime
 #+BEGIN_SRC emacs-lisp
   ;;; this code has been responsible for slime version problem
