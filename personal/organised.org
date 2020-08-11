@@ -379,10 +379,7 @@ org-babel-load-languages:
 
 **** Clojure
  #+BEGIN_SRC emacs-lisp
-   (add-to-list 'auto-mode-alist '("\\.boot\\'" . clojure-mode))
-
-   ;; To recognize script files using shebang:
-   (add-to-list 'magic-mode-alist '(".* boot" . clojure-mode))
+   (add-to-list 'auto-mode-alist '("\\.edn\\'" . clojure-mode))
  #+END_SRC
 
 **** Slime

@@ -240,10 +240,7 @@
 (setq geiser-active-implementations '(chez racket))
 ;; (setq geiser-racket-binary "/usr/bin/racket")
 
-(add-to-list 'auto-mode-alist '("\\.boot\\'" . clojure-mode))
-
-;; To recognize script files using shebang:
-(add-to-list 'magic-mode-alist '(".* boot" . clojure-mode))
+(add-to-list 'auto-mode-alist '("\\.edn\\'" . clojure-mode))
 
 ;;; this code has been responsible for slime version problem
 ;; (defvar slime-helper-el "~/quicklisp/slime-helper.el")
