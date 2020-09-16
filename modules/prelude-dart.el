@@ -1,15 +1,15 @@
-;;; prelude-css.el --- Emacs Prelude: css support
+;;; prelude-dart.el --- Emacs Prelude: Dart programming configuration.
 ;;
 ;; Copyright © 2011-2020 Bozhidar Batsov
 ;;
-;; Author: Bozhidar Batsov <bozhidar@batsov.com>
+;; Author: Rafael Medina <rafaelmedina789@gmail.com>
 ;; URL: https://github.com/bbatsov/prelude
 
 ;; This file is not part of GNU Emacs.
 
 ;;; Commentary:
 
-;; Some basic configuration for css-mode.
+;; Some basic configuration for prelude-dart.
 
 ;;; License:
 
@@ -30,19 +30,27 @@
 
 ;;; Code:
 
-(with-eval-after-load 'css-mode
-  (prelude-require-packages '(rainbow-mode))
+(require 'prelude-lsp)
+(prelude-require-packages '(lsp-dart))
 
-  (setq css-indent-offset 2)
+(with-eval-after-load 'lsp-dart
+  (add-hook 'dart-mode-hook #'lsp))
 
-  (defun prelude-css-mode-defaults ()
-    (rainbow-mode +1)
-    (run-hooks 'prelude-prog-mode-hook))
+(with-eval-after-load 'dart-mode
+  (defun prelude-dart-mode-defaults ()
 
-  (setq prelude-css-mode-hook 'prelude-css-mode-defaults)
+    (setq dap-launch-configuration-providers  '(dap-debug-template-configurations-provider))
 
-  (add-hook 'css-mode-hook (lambda ()
-                             (run-hooks 'prelude-css-mode-hook))))
+    ;; Add to default dart-mode key bindings
+    (lsp-dart-define-key "s o" #'lsp-dart-show-outline)
+    (lsp-dart-define-key "s f" #'lsp-dart-show-flutter-outline)
+    (dap-dart-setup))
 
-(provide 'prelude-css)
-;;; prelude-css.el ends here
+  (setq prelude-dart-mode-hook 'prelude-dart-mode-defaults)
+
+  (add-hook 'dart-mode-hook (lambda ()
+                            (run-hooks 'prelude-dart-mode-hook))))
+
+(provide 'prelude-dart)
+
+;;; prelude-dart.el ends here

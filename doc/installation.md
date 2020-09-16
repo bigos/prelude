@@ -1,46 +1,74 @@
 # Installation
 
-## Installing Emacs
+## Prerequisites
 
 Obviously to use the Emacs Prelude you have to install Emacs
-first. Have a look at
-the
-[WikEmacs articles on installing Emacs](http://wikemacs.org/index.php/Installing_Emacs).
+first. We'll assume you can manage this part on your own.
+Aim for the newest stable Emacs release, although as a rule of
+thumb Prelude aims to support the last 2-3 stable releases.
+
+For spell-checking to work you should install `aspell`, together with its
+dictionaries for the languages you wish to check.
+
+You'll also do well to install some of the following:
+
+* `git` (needed by Magit)
+* `ag` (`the_silver_searcher`) or `ripgrep` (Projectile has nice integration with them and they are much faster than `grep`)
+* your favorite lint tools (for Flycheck)
+
+All those tools are completely optional, though.
+
+!!! Note
+
+    Additional external tools might be needed by some of the modules (e.g. tools specific to particular programming languages, etc).
 
 ## Installation
 
 ### Automated
 
-You can install **Emacs Prelude** via the command line with either `curl` or
+You can install Emacs Prelude via the command line with either `curl` or
 `wget`. Naturally `git` is also required.
+
+The installer script will do the following:
+
+* Clone Prelude's GitHub repo
+* Check your Emacs version
+* Backup any existing `.emacs` or `.emacs.d` you might have
+* Create any additional folders if necessary (e.g. for storing package-specific data)
+
+If you have a `.emacs` file it will backed up as `.emacs.pre-prelude` and if you have
+a `.emacs.d` folder, it will be backed up as `.emacs.d.pre-prelude.tar`.
 
 #### Via Curl
 
 If you're using `curl` type the following command:
 
-```bash
-curl -L https://github.com/bbatsov/prelude/raw/master/utils/installer.sh | sh
+```shellsession
+$ curl -L https://github.com/bbatsov/prelude/raw/master/utils/installer.sh | sh
 ```
 
 #### Via Wget
 
 If you're using `wget` type:
 
-```bash
-wget --no-check-certificate https://github.com/bbatsov/prelude/raw/master/utils/installer.sh -O - | sh
+```shellsession
+$ wget --no-check-certificate https://github.com/bbatsov/prelude/raw/master/utils/installer.sh -O - | sh
 ```
 
 ### Manual
 
-Make sure you do not have any `~/.emacs` file present.
+Make sure you do not have any `~/.emacs` file or `~/.emacs.d` folder present.
 
-```bash
-git clone git://github.com/bbatsov/prelude.git path/to/local/repo
-ln -s path/to/local/repo ~/.emacs.d
-cd ~/.emacs.d
+```shellsession
+$ git clone git://github.com/bbatsov/prelude.git path/to/local/repo
+$ ln -s path/to/local/repo ~/.emacs.d
+$ cd ~/.emacs.d
 ```
 
-If you are using Windows, you should check what Emacs thinks the `~` directory is by running Emacs and typing `C-x d ~/<RET>`, and then adjust the command appropriately.
+!!! Note
+
+    If you are using Windows, you should check what Emacs thinks the `~` directory is by running Emacs
+    and typing `C-x d ~/<RET>`, and then adjust the command appropriately.
 
 ## Updating Prelude
 
@@ -54,9 +82,9 @@ Just run <kbd>M-x package-list-packages RET U x</kbd>.
 
 #### Update Prelude's code
 
-```bash
-cd path/to/prelude/installation
-git pull
+```shellsession
+$ cd path/to/prelude/installation
+$ git pull
 ```
 
 The `path/to/prelude/installation` is usually `~/.emacs.d` (at least
@@ -124,3 +152,9 @@ adjust that one.
 
 After you've uncommented a module you should either restart Emacs or evaluate the module
 `require` expression with <kbd>C-x C-e</kbd>.
+
+## Uninstalling Prelude
+
+Provided you've installed Prelude in `.emacs.d`, all you need to do is delete that folder.
+If you opted for the manual installation and making `.emacs.d` a symlink - you remove/update
+the link. Yeah, it's as simple as that. No fancy uninstaller required!

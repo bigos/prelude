@@ -4,8 +4,6 @@
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
-;; Version: 1.0.0
-;; Keywords: convenience
 
 ;; This file is not part of GNU Emacs.
 
@@ -46,7 +44,8 @@
     ;; electric-layout-mode doesn't play nice with smartparens
     (setq-local electric-layout-rules '((?\; . after)))
     (setq mode-name "JS2")
-    (js2-imenu-extras-mode +1))
+    (js2-imenu-extras-mode +1)
+    (subword-mode +1))
 
   (setq prelude-js-mode-hook 'prelude-js-mode-defaults)
 

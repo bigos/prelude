@@ -4,8 +4,6 @@
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
-;; Version: 1.0.0
-;; Keywords: convenience
 
 ;; This file is not part of GNU Emacs.
 
@@ -35,7 +33,6 @@
 
 (require 'prelude-lisp)
 (require 'geiser)
-(require 'geiser-racket)
 
 ;; geiser replies on a REPL to provide autodoc and completion
 (setq geiser-mode-start-repl-p t)
