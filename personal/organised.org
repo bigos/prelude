@@ -219,6 +219,18 @@ parsing error
 (add-to-list
  'org-src-lang-modes '("plantuml" . plantuml))
 #+end_src
+
+*** Graphviz
+
+Use this mode for editing files in the dot-language, see
+
+#+begin_src emacs-lisp
+  (prelude-require-packages '(graphviz-dot-mode))
+
+  (use-package graphviz-dot-mode
+    :ensure t)
+#+end_src
+
 *** String inflection
 
 #+BEGIN_SRC emacs-lisp

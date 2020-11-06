@@ -146,6 +146,11 @@
 (add-to-list
  'org-src-lang-modes '("plantuml" . plantuml))
 
+(prelude-require-packages '(graphviz-dot-mode))
+
+(use-package graphviz-dot-mode
+  :ensure t)
+
 (require 'string-inflection)
 
 ;; default
