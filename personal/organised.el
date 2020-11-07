@@ -58,6 +58,7 @@
   (global-set-key (kbd "s-f") 'vc-git-grep)
 
   (prelude-require-packages '(buffer-move
+                              graphviz-dot-mode
                               helm-descbinds
                               helm-projectile
                               restclient-helm
@@ -145,11 +146,6 @@
 (require 'org)
 (add-to-list
  'org-src-lang-modes '("plantuml" . plantuml))
-
-(prelude-require-packages '(graphviz-dot-mode))
-
-(use-package graphviz-dot-mode
-  :ensure t)
 
 (require 'string-inflection)
 
