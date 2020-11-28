@@ -238,6 +238,18 @@ parsing error
   (setq string-inflection-skip-backward-when-done t)
 #+END_SRC
 
+*** Graphviz
+
+#+begin_src emacs-lisp
+  (defun insert-graph-arrow ()
+    (interactive)
+    (insert " -> "))
+
+  (add-hook 'graphviz-dot-mode-hook
+              '(lambda ()
+                 (local-set-key (kbd "C-]") 'insert-graph-arrow)))
+#+end_src
+
 *** Org mode config
 
 **** pdf link to page index

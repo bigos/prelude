@@ -159,6 +159,14 @@
 
 (setq string-inflection-skip-backward-when-done t)
 
+(defun insert-graph-arrow ()
+  (interactive)
+  (insert " -> "))
+
+(add-hook 'graphviz-dot-mode-hook
+            '(lambda ()
+               (local-set-key (kbd "C-]") 'insert-graph-arrow)))
+
 (require 'org)
 (org-add-link-type "pdf" 'org-pdf-open nil)
 
