@@ -29,6 +29,16 @@ And Warn The user againg editing the tangled *.el file.
   ;;; Mx org-babel-tangle.
 #+END_SRC
 
+*** Elisp definitions
+
+This section will contain definitions used by multiple sections
+
+#+begin_src emacs-lisp
+(defun insert-graph-arrow ()
+  (interactive)
+  (insert " -> "))
+#+end_src
+
 *** ACL2
 
 #+BEGIN_SRC emacs-lisp
@@ -241,10 +251,6 @@ parsing error
 *** Graphviz
 
 #+begin_src emacs-lisp
-  (defun insert-graph-arrow ()
-    (interactive)
-    (insert " -> "))
-
   (add-hook 'graphviz-dot-mode-hook
               '(lambda ()
                  (local-set-key (kbd "C-]") 'insert-graph-arrow)))
@@ -364,6 +370,10 @@ org-babel-load-languages:
 
   (global-set-key (kbd "s-2") 'capitalize-and-join-backwards)
 
+
+  (add-hook 'haskell-mode-hook
+              '(lambda ()
+                 (local-set-key (kbd "C-]") 'insert-graph-arrow)))
 #+END_SRC
 
 *** Lisp

@@ -5,6 +5,10 @@
 ;;; the *.org file which will generate the *.el file upon executing
 ;;; Mx org-babel-tangle.
 
+(defun insert-graph-arrow ()
+  (interactive)
+  (insert " -> "))
+
 (defun load-acl2 ()
   (interactive)
   (load "~/Documents/acl2-8.3/emacs/emacs-acl2.el")
@@ -159,10 +163,6 @@
 
 (setq string-inflection-skip-backward-when-done t)
 
-(defun insert-graph-arrow ()
-  (interactive)
-  (insert " -> "))
-
 (add-hook 'graphviz-dot-mode-hook
             '(lambda ()
                (local-set-key (kbd "C-]") 'insert-graph-arrow)))
@@ -245,6 +245,11 @@
   (paredit-backward-delete))
 
 (global-set-key (kbd "s-2") 'capitalize-and-join-backwards)
+
+
+(add-hook 'haskell-mode-hook
+            '(lambda ()
+               (local-set-key (kbd "C-]") 'insert-graph-arrow)))
 
 (setq geiser-active-implementations '(chez racket))
 ;; (setq geiser-racket-binary "/usr/bin/racket")
