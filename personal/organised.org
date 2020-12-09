@@ -374,6 +374,10 @@ org-babel-load-languages:
   (add-hook 'haskell-mode-hook
               '(lambda ()
                  (local-set-key (kbd "C-]") 'insert-graph-arrow)))
+
+  (add-hook 'haskell-mode-hook
+            '(lambda ()
+               (local-set-key (kbd "C-c C-d h") 'haskell-hoogle)))
 #+END_SRC
 
 *** Lisp

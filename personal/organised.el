@@ -251,6 +251,10 @@
             '(lambda ()
                (local-set-key (kbd "C-]") 'insert-graph-arrow)))
 
+(add-hook 'haskell-mode-hook
+          '(lambda ()
+             (local-set-key (kbd "C-c C-d h") 'haskell-hoogle)))
+
 (setq geiser-active-implementations '(chez racket))
 ;; (setq geiser-racket-binary "/usr/bin/racket")
 
