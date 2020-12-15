@@ -251,7 +251,15 @@
             '(lambda ()
                (local-set-key (kbd "C-]") 'insert-graph-arrow)))
 
+(add-hook 'haskell-interactive-mode-hook
+            '(lambda ()
+               (local-set-key (kbd "C-]") 'insert-graph-arrow)))
+
 (add-hook 'haskell-mode-hook
+          '(lambda ()
+             (local-set-key (kbd "C-c C-d h") 'haskell-hoogle)))
+
+(add-hook 'haskell-interactive-mode-hook
           '(lambda ()
              (local-set-key (kbd "C-c C-d h") 'haskell-hoogle)))
 
