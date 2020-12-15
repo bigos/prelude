@@ -255,6 +255,11 @@
           '(lambda ()
              (local-set-key (kbd "C-c C-d h") 'haskell-hoogle)))
 
+(add-hook 'haskell-interactive-mode-hook
+          '(lambda ()
+             (prelude-mode -1)
+             (local-set-key (kbd "C-a") 'haskell-interactive-mode-bol)))
+
 (setq geiser-active-implementations '(chez racket))
 ;; (setq geiser-racket-binary "/usr/bin/racket")
 
