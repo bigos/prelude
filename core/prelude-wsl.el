@@ -1,15 +1,14 @@
-;;; prelude-xml.el --- Emacs Prelude: XML editing configuration.
+;;; prelude-wsl.el --- Emacs Prelude: WSL-specific setup.
 ;;
 ;; Copyright © 2011-2020 Bozhidar Batsov
 ;;
-;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
 
 ;; This file is not part of GNU Emacs.
 
 ;;; Commentary:
 
-;; Some basic nxml-mode configuration.
+;; Additional setup that's useful when running Emacs in WSL.
 
 ;;; License:
 
@@ -30,19 +29,14 @@
 
 ;;; Code:
 
-(require 'nxml-mode)
+;; teach Emacs how to open links with your default browser
+(let ((cmd-exe "/mnt/c/Windows/System32/cmd.exe")
+      (cmd-args '("/c" "start")))
+  (when (file-exists-p cmd-exe)
+    (setq browse-url-generic-program  cmd-exe
+          browse-url-generic-args     cmd-args
+          browse-url-browser-function 'browse-url-generic
+          search-web-default-browser 'browse-url-generic)))
 
-(push '("<\\?xml" . nxml-mode) magic-mode-alist)
-
-;; pom files should be treated as xml files
-(add-to-list 'auto-mode-alist '("\\.pom\\'" . nxml-mode))
-
-(setq nxml-child-indent 4)
-(setq nxml-attribute-indent 4)
-(setq nxml-auto-insert-xml-declaration-flag nil)
-(setq nxml-bind-meta-tab-to-complete-flag t)
-(setq nxml-slash-auto-complete-flag t)
-
-(provide 'prelude-xml)
-
-;;; prelude-xml.el ends here
+(provide 'prelude-wsl)
+;;; prelude-wsl.el ends here

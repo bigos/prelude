@@ -1,4 +1,4 @@
-;;; prelude-ruby.el --- Emacs Prelude: A nice setup for Ruby (and Rails) devs.
+;;; prelude-selectrum.el --- Selectrum setup
 ;;
 ;; Copyright © 2011-2020 Bozhidar Batsov
 ;;
@@ -9,7 +9,8 @@
 
 ;;; Commentary:
 
-;; Some basic configuration for Ruby and Rails development.
+;; Selectrum-related config.  Selectrum is a smart framework for minibuffer
+;; completion/filtering/selection (think of ivy/ido).
 
 ;;; License:
 
@@ -29,30 +30,25 @@
 ;; Boston, MA 02110-1301, USA.
 
 ;;; Code:
+(prelude-require-packages '(selectrum selectrum-prescient))
 
-(require 'prelude-programming)
+;;; Selectrum
+;;
+;; selectrum is a powerful alternative to the popular ido-mode and ivy-mode.
 
-(prelude-require-packages '(inf-ruby yari))
+(require 'selectrum)
+(require 'selectrum-prescient)
+(require 'diminish)
 
-;; We never want to edit Rubinius bytecode
-(add-to-list 'completion-ignored-extensions ".rbc")
+(selectrum-mode 1)
+(diminish 'selectrum-mode)
 
-;; Map yari to C-h R
-(define-key 'help-command (kbd "R") 'yari)
+;; to make sorting and filtering more intelligent
+(selectrum-prescient-mode +1)
 
-(with-eval-after-load 'ruby-mode
-  (defun prelude-ruby-mode-defaults ()
-    ;; Don't auto-insert encoding comments
-    ;; Those are almost never needed in Ruby 2+
-    (setq ruby-insert-encoding-magic-comment nil)
-    (inf-ruby-minor-mode +1)
-    ;; CamelCase aware editing operations
-    (subword-mode +1))
+;; to save your command history on disk, so the sorting gets more
+;; intelligent over time
+(prescient-persist-mode +1)
 
-  (setq prelude-ruby-mode-hook 'prelude-ruby-mode-defaults)
-
-  (add-hook 'ruby-mode-hook (lambda ()
-                              (run-hooks 'prelude-ruby-mode-hook))))
-
-(provide 'prelude-ruby)
-;;; prelude-ruby.el ends here
+(provide 'prelude-selectrum)
+;;; prelude-selectrum.el ends here
