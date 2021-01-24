@@ -30,6 +30,8 @@
 
 ;;; Code:
 
+(load (expand-file-name "~/.roswell/helper.el"))
+
 (require 'prelude-lisp)
 
 (prelude-require-package 'slime)
@@ -50,6 +52,7 @@
   ;; argument, M-- M-x slime, you can select a program from that list.
   (setq slime-lisp-implementations
         '((ccl ("ccl"))
+          (ros ("ros" "-Q" "run"))
           (clisp ("clisp" "-q"))
           (cmucl ("cmucl" "-quiet"))
           (sbcl ("sbcl" "--noinform") :coding-system utf-8-unix)))
@@ -60,7 +63,7 @@
       ;; default to Clozure CL on macOS
       (setq slime-default-lisp 'ccl)
     ;; default to SBCL on Linux and Windows
-    (setq slime-default-lisp 'sbcl))
+    (setq slime-default-lisp 'ros))
 
   ;; Add fancy slime contribs
   (setq slime-contribs '(slime-fancy slime-cl-indent))
