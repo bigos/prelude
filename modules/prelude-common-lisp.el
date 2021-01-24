@@ -62,8 +62,10 @@
            (executable-find "ccl"))
       ;; default to Clozure CL on macOS
       (setq slime-default-lisp 'ccl)
+    ;; instead of defaulft sbcl we can use roswell
+    (setq slime-default-lisp 'ros)
     ;; default to SBCL on Linux and Windows
-    (setq slime-default-lisp 'ros))
+    (setq slime-default-lisp 'sbcl))
 
   ;; Add fancy slime contribs
   (setq slime-contribs '(slime-fancy slime-cl-indent))
