@@ -30,7 +30,8 @@
 
 ;;; Code:
 
-(load (expand-file-name "~/.roswell/helper.el"))
+(when (file-exists-p      "~/.roswell/helper.el")
+  (load (expand-file-name "~/.roswell/helper.el")))
 
 (require 'prelude-lisp)
 
