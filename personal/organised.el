@@ -89,7 +89,7 @@
                               slime-repl-ansi-color
                               string-inflection
                               switch-window
-                              vterm
+                              vterm     ;needs: sudo apt install libvterm-dev
                               vterm-toggle
                               web-mode))
 
