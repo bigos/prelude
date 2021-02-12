@@ -148,7 +148,7 @@ M-x acl2 goodies
                                 slime-repl-ansi-color
                                 string-inflection
                                 switch-window
-                                vterm     ;needs: sudo apt install libvterm-dev
+                                vterm     ;needs: sudo apt install libvterm-dev cmake
                                 vterm-toggle
                                 web-mode))
 
