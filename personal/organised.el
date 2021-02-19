@@ -197,7 +197,7 @@
        (kill-new
         (message the-link))))
 
-(global-set-key (kbd "C-x C-f C-l") 'my-file-line-link)
+(global-set-key (kbd "C-c C-f C-l") 'my-file-line-link)
 
 (require 'restclient)
 
