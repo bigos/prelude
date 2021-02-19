@@ -181,21 +181,23 @@
     (start-process "view-pdf" nil "evince" "--page-index" page pdf-file)))
 
 (defun my-file-line-link ()
-  "Copy the buffer full path and line number into a clipboard
-for pasting into *.org file."
-  (interactive)
-  (let ((the-link
-         (let ((file-link
-                (concatenate 'string
-                             "file:"
-                             (buffer-file-name)
-                             "::"
-                             (subseq  (what-line) 5))))
-           (if (position ?\s file-link)
-               (concatenate 'string "[[" file-link "]]")
-             file-link))))
-    (kill-new
-     (message the-link))))
+     "Copy the buffer full path and line number into a clipboard
+   for pasting into *.org file."
+     (interactive)
+     (let ((the-link
+            (let ((file-link
+                   (concatenate 'string
+                                "file:"
+                                (buffer-file-name)
+                                "::"
+                                (subseq  (what-line) 5))))
+              (if (position ?\s file-link)
+                  (concatenate 'string "[[" file-link "]]")
+                file-link))))
+       (kill-new
+        (message the-link))))
+
+(global-set-key (kbd "C-x C-f C-l") 'my-file-line-link)
 
 (require 'restclient)
 

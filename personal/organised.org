@@ -293,6 +293,8 @@ parsing error
                     file-link))))
            (kill-new
             (message the-link))))
+
+    (global-set-key (kbd "C-x C-f C-l") 'my-file-line-link)
      #+end_src
 
 **** ob-restclient
