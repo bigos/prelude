@@ -181,21 +181,27 @@
     (start-process "view-pdf" nil "evince" "--page-index" page pdf-file)))
 
 (defun my-file-line-link ()
-     "Copy the buffer full path and line number into a clipboard
-   for pasting into *.org file."
-     (interactive)
-     (let ((the-link
-            (let ((file-link
-                   (concatenate 'string
-                                "file:"
-                                (buffer-file-name)
-                                "::"
-                                (subseq  (what-line) 5))))
-              (if (position ?\s file-link)
-                  (concatenate 'string "[[" file-link "]]")
-                file-link))))
-       (kill-new
-        (message the-link))))
+  "Copy the buffer full path and line number into a clipboard
+          for pasting into *.org file."
+  (interactive)
+  (let* ((home-part (concatenate 'string "/home/"
+                                 (user-login-name)))
+         (the-link
+          (let ((file-link
+                 (concatenate 'string
+                              "file:"
+                              (let ((bfn buffer-file-name))
+                                (if (string-prefix-p home-part bfn)
+                                    (concatenate 'string "~"
+                                                 (subseq bfn (length home-part)))
+                                  bfn))
+                              "::"
+                              (subseq  (what-line) 5))))
+            (if (position ?\s file-link)
+                (concatenate 'string "[[" file-link "]]")
+              file-link))))
+    (kill-new
+     (message the-link))))
 
 ;; we had to cheat to have s-\ as a shortcut
 (global-set-key (kbd (format "%s-%c" "s" 92)) 'my-file-line-link)
