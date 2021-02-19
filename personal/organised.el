@@ -197,7 +197,8 @@
        (kill-new
         (message the-link))))
 
-(global-set-key (kbd "C-c C-f C-f") 'my-file-line-link)
+;; we had to cheat to have s-\ as a shortcut
+(global-set-key (kbd (format "%s-%c" "s" 92)) 'my-file-line-link)
 
 (require 'restclient)
 
