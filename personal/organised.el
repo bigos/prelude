@@ -192,11 +192,11 @@
                          (let ((bfn buffer-file-name))
                            (if (string-prefix-p home-part bfn)
                                (concat "~"
-                                       (subseq bfn (length home-part)))
+                                       (substring bfn (length home-part)))
                              bfn))
                          "::"
-                         (subseq  (what-line) 5))))
-            (if (position ?\s file-link)
+                         (substring  (what-line) 5))))
+            (if (string-match " " file-link)
                 (concat "[[" file-link "]]")
               file-link))))
     (kill-new
