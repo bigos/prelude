@@ -318,7 +318,31 @@ org-babel-load-languages:
    '((restclient . t)))
 #+END_SRC
 
+**** org-roam
 
+***** basic config
+      Ensure you have use-package and org-roam installed.
+      M-x package-refresh-contents RET
+      M-x package-install RET use-package RET
+      M-x package-install RET org-roam RET
+
+#+begin_src emacs-lisp
+  (use-package org-roam
+        :ensure t
+        :hook
+        (after-init . org-roaqm-mode)
+        :custom
+        (org-roam-directory "~/Documents/org-roam/")
+        :bind (:map org-roam-mode-map
+                (("C-c n l" . org-roam)
+                 ("C-c n f" . org-roam-find-file)
+                 ("C-c n g" . org-roam-graph))
+                :map org-mode-map
+                (("C-c n i" . org-roam-insert))
+                (("C-c n I" . org-roam-insert-immediate))))
+
+  (add-hook 'after-init-hook 'org-roam-mode)
+#+end_src
 *** vscode interaction
 
 #+BEGIN_SRC emacs-lisp
