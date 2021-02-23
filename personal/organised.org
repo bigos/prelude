@@ -330,18 +330,16 @@ org-babel-load-languages:
   (use-package org-roam
         :ensure t
         :hook
-        (after-init . org-roaqm-mode)
+        (after-init . org-roam-mode)
         :custom
         (org-roam-directory "~/Documents/org-roam/")
         :bind (:map org-roam-mode-map
-                (("C-c n l" . org-roam)
-                 ("C-c n f" . org-roam-find-file)
-                 ("C-c n g" . org-roam-graph))
+                (("C-c q l" . org-roam)
+                 ("C-c q f" . org-roam-find-file)
+                 ("C-c q g" . org-roam-graph))
                 :map org-mode-map
-                (("C-c n i" . org-roam-insert))
-                (("C-c n I" . org-roam-insert-immediate))))
-
-  (add-hook 'after-init-hook 'org-roam-mode)
+                (("C-c q i" . org-roam-insert))
+                (("C-c q I" . org-roam-insert-immediate))))
 #+end_src
 *** vscode interaction
 
