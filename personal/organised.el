@@ -211,24 +211,6 @@
    'org-babel-load-languages
    '((restclient . t)))
 
-(let ((rp "~/Documents/org-roam/"))
-  (unless (file-exists-p rp)
-    (make-directory rp)))
-
-(use-package org-roam
-  :ensure t
-  :hook
-  (after-init . org-roam-mode)
-  :custom
-  (org-roam-directory "~/Documents/org-roam/")
-  :bind (:map org-roam-mode-map
-              (("C-c q l" . org-roam)
-               ("C-c q f" . org-roam-find-file)
-               ("C-c q g" . org-roam-graph))
-              :map org-mode-map
-              (("C-c q i" . org-roam-insert))
-              (("C-c q I" . org-roam-insert-immediate))))
-
   (defun open-buffer-in-vscode ()
     (interactive)
 
