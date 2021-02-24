@@ -319,32 +319,9 @@ org-babel-load-languages:
 #+END_SRC
 
 **** org-roam
+For the time being we will skip on org-roam, since it is buggy and seems to
+disagree with magit.
 
-***** basic config
-      Ensure you have use-package and org-roam installed.
-      M-x package-refresh-contents RET
-      M-x package-install RET use-package RET
-      M-x package-install RET org-roam RET
-
-#+begin_src emacs-lisp
-(let ((rp "~/Documents/org-roam/"))
-  (unless (file-exists-p rp)
-    (make-directory rp)))
-
-(use-package org-roam
-  :ensure t
-  :hook
-  (after-init . org-roam-mode)
-  :custom
-  (org-roam-directory "~/Documents/org-roam/")
-  :bind (:map org-roam-mode-map
-              (("C-c q l" . org-roam)
-               ("C-c q f" . org-roam-find-file)
-               ("C-c q g" . org-roam-graph))
-              :map org-mode-map
-              (("C-c q i" . org-roam-insert))
-              (("C-c q I" . org-roam-insert-immediate))))
-#+end_src
 *** vscode interaction
 
 #+BEGIN_SRC emacs-lisp
