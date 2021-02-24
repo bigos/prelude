@@ -12,7 +12,7 @@ Mx org-babel-tangle
 
 ** Configuration
 
-This is still work in progress.
+   This is still work in progress.
 
 *** Prologue
 
