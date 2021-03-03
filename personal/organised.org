@@ -322,6 +322,17 @@ org-babel-load-languages:
 For the time being we will skip on org-roam, since it is buggy and seems to
 disagree with magit.
 
+***** basic config
+      For now we are not going to use org-roam.
+      But now and the we will see if it made any improvement.
+      If we come back to using it, the following instructions may be useful in
+      the installation and copying the example configuration.
+
+      Ensure you have use-package and org-roam installed.
+      M-x package-refresh-contents RET
+      M-x package-install RET use-package RET
+      M-x package-install RET org-roam RET
+
 *** vscode interaction
 
 #+BEGIN_SRC emacs-lisp
