@@ -304,6 +304,10 @@
           '(lambda ()
              (local-set-key (kbd "C-c M-k") 'cider-repl-clear-buffer)))
 
+(add-hook 'cider-repl-mode-hook
+          '(lambda ()
+             (local-set-key (kbd "C-c M-a") 'cider-load-all-files)))
+
 ;;; this code has been responsible for slime version problem
 ;; (defvar slime-helper-el "~/quicklisp/slime-helper.el")
 ;; (when (file-exists-p slime-helper-el)

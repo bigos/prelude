@@ -464,11 +464,15 @@ org-babel-load-languages:
 
 **** Clojure
  #+BEGIN_SRC emacs-lisp
-(add-to-list 'auto-mode-alist '("\\.edn\\'" . clojure-mode))
+   (add-to-list 'auto-mode-alist '("\\.edn\\'" . clojure-mode))
 
-(add-hook 'cider-repl-mode-hook
-          '(lambda ()
-             (local-set-key (kbd "C-c M-k") 'cider-repl-clear-buffer)))
+   (add-hook 'cider-repl-mode-hook
+             '(lambda ()
+                (local-set-key (kbd "C-c M-k") 'cider-repl-clear-buffer)))
+
+   (add-hook 'cider-repl-mode-hook
+             '(lambda ()
+                (local-set-key (kbd "C-c M-a") 'cider-load-all-files)))
  #+END_SRC
 
 **** Slime
