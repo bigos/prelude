@@ -180,6 +180,10 @@
          (page (car (cdr path+page))))
     (start-process "view-pdf" nil "evince" "--page-index" page pdf-file)))
 
+(add-hook 'org-mode-hook
+          '(lambda ()
+             (local-set-key [f5] 'verse-link)))
+
 (defun my-file-line-link ()
   "Copy the buffer full path and line number into a clipboard
                  for pasting into *.org file."

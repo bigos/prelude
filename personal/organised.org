@@ -258,7 +258,7 @@ parsing error
                  (local-set-key (kbd "C-]") 'insert-graph-arrow)))
 #+end_src
 
-*** Org mode config
+*** Org mode configuration
 
 **** pdf link to page index
 
@@ -274,6 +274,13 @@ parsing error
          (page (car (cdr path+page))))
     (start-process "view-pdf" nil "evince" "--page-index" page pdf-file)))
 #+END_SRC
+
+**** link to bible verse
+#+begin_src emacs-lisp
+   (add-hook 'org-mode-hook
+             '(lambda ()
+                (local-set-key [f5] 'verse-link)))
+#+end_src
 
 **** link to a file and line
      #+begin_src emacs-lisp
