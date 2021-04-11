@@ -310,6 +310,31 @@ parsing error
 (global-set-key (kbd (format "%s-%c" "s" 92)) 'my-file-line-link)
      #+end_src
 
+**** md-to-org-cleanup
+     We can export Freeplane mind maps to ~*.md~ file format. The we can use
+     pandoc to export the files to org mode.
+
+     ~pandoc -f markdown -t org -o ./TheFile.org ./TheFile.md~
+
+     Now we need to clean up the file removing properties drawers
+
+     #+begin_src emacs-lisp
+
+       (defun md-to-org-cleanup ()
+         "After we use pandoc to concert md file, we need to
+                        remove PROPERTIES drawers"
+         (interactive)
+         (search-forward ":END:")
+         (search-backward ":PROPERTIES:")
+         (beginning-of-line)
+         ;; we remove 3 lines
+         ;; 6 because we 1 clear then 2 remove empty line
+         (dotimes (n 6)
+           (kill-line)))
+
+       (global-set-key (kbd "s-9") 'md-to-org-cleanup)
+     #+end_src
+
 **** ob-restclient
 
 An extension to restclient.el for emacs that provides org-babel support.
