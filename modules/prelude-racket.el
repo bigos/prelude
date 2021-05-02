@@ -1,15 +1,15 @@
-;;; prelude-haskell.el --- Emacs Prelude: Nice config for Haskell programming.
+;;; prelude-racket.el --- Emacs Prelude: Racket programming support.
 ;;
 ;; Copyright © 2011-2021 Bozhidar Batsov
 ;;
-;; Author: Bozhidar Batsov <bozhidar@batsov.com>
+;; Author: Xiongfei Shi <xiongfei.shi@icloud.com>
 ;; URL: https://github.com/bbatsov/prelude
 
 ;; This file is not part of GNU Emacs.
 
 ;;; Commentary:
 
-;; Nice config for Haskell programming.
+;; Basic configuration for Racket programming.
 
 ;;; License:
 
@@ -30,21 +30,23 @@
 
 ;;; Code:
 
-(require 'prelude-programming)
-(prelude-require-packages '(haskell-mode))
+(prelude-require-packages '(racket-mode))
 
-(with-eval-after-load 'haskell-mode
-  (defun prelude-haskell-mode-defaults ()
-    (subword-mode +1)
-    (eldoc-mode +1)
-    (haskell-indentation-mode +1)
-    (interactive-haskell-mode +1))
+(require 'prelude-lisp)
 
-  (setq prelude-haskell-mode-hook 'prelude-haskell-mode-defaults)
+(with-eval-after-load 'racket-mode
+  (define-key racket-mode-map (kbd "M-RET") 'racket-run)
+  (define-key racket-mode-map (kbd "M-.") 'racket-repl-visit-definition)
 
-  (add-hook 'haskell-mode-hook (lambda ()
-                                 (run-hooks 'prelude-haskell-mode-hook))))
+  ;; Enable the common Lisp coding hook
+  (add-hook 'racket-mode-hook (lambda () (run-hooks 'prelude-lisp-coding-hook)))
 
-(provide 'prelude-haskell)
+  (add-hook 'racket-mode-hook #'racket-unicode-input-method-enable)
+  (add-hook 'racket-repl-mode-hook #'racket-unicode-input-method-enable))
 
-;;; prelude-haskell.el ends here
+(add-to-list 'auto-mode-alist '("\\.rkt?\\'" . racket-mode))
+(add-to-list 'auto-mode-alist '("\\.rkt\\'" . racket-mode))
+
+(provide 'prelude-racket)
+
+;;; prelude-racket ends here

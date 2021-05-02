@@ -1,6 +1,6 @@
 ;;; prelude-lsp.el --- lsp-mode setup
 ;;
-;; Copyright © 2011-2020 Bozhidar Batsov
+;; Copyright © 2011-2021 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov, Ben Alex
 ;; URL: https://github.com/bbatsov/prelude
@@ -30,8 +30,7 @@
 
 ;;; Code:
 
-(prelude-require-packages '(helm-lsp
-                            lsp-mode
+(prelude-require-packages '(lsp-mode
                             lsp-ui))
 
 (require 'lsp-ui)

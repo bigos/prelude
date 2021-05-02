@@ -14,8 +14,6 @@ ede-projects.el
 custom.el
 places
 .smex-items
-smex-items
-image-dired/
 savefile/
 projectile-bookmarks.eld
 session*
@@ -32,4 +30,3 @@ transient/
 var/
 .cache/
 .lsp-session*
-org-roam.db

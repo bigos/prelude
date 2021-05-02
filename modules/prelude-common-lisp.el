@@ -1,6 +1,6 @@
 ;;; prelude-common-lisp.el --- Emacs Prelude: lisp-mode and SLIME config.
 ;;
-;; Copyright © 2011-2020 Bozhidar Batsov
+;; Copyright © 2011-2021 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -30,9 +30,6 @@
 
 ;;; Code:
 
-(when (file-exists-p      "~/.roswell/helper.el")
-  (load (expand-file-name "~/.roswell/helper.el")))
-
 (require 'prelude-lisp)
 
 (prelude-require-package 'slime)
@@ -53,7 +50,6 @@
   ;; argument, M-- M-x slime, you can select a program from that list.
   (setq slime-lisp-implementations
         '((ccl ("ccl"))
-          (ros ("ros" "-Q" "run"))
           (clisp ("clisp" "-q"))
           (cmucl ("cmucl" "-quiet"))
           (sbcl ("sbcl" "--noinform") :coding-system utf-8-unix)))
@@ -63,8 +59,6 @@
            (executable-find "ccl"))
       ;; default to Clozure CL on macOS
       (setq slime-default-lisp 'ccl)
-    ;; instead of defaulft sbcl we can use roswell
-    (setq slime-default-lisp 'ros)
     ;; default to SBCL on Linux and Windows
     (setq slime-default-lisp 'sbcl))
 

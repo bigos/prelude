@@ -4,7 +4,24 @@
 
 ### New features
 
-* Enable `nlinum-mode` by default. Can be disabled by setting `prelude-minimalistic-ui` to `t`.
+* Add a Racket module.
+* Add a Lua module.
+* Auto-install `racket-mode` if needed.
+
+### Changes
+
+* Bind all essential `avy` commands to their recommended keybindings.
+* Remove `company-lsp`.
+
+### Bugs fixed
+
+* Fix `company` still being visible in the mode line.
+
+## 1.1.0 (2021-02-14)
+
+### New features
+
+* Enable `nlinum-mode` or `display-line-numbers-mode` by default. Can be disabled by setting `prelude-minimalistic-ui` to `t`.
 * Enable site-wide installation for Prelude.
 * Auto-installs `julia-mode` if needed.
 * Auto-install `adoc-mode` for AsciiDoc files.
@@ -31,7 +48,7 @@
 
 ### Bugs fixed
 
-* [#1302](https://github.com/bbatsov/prelude/issues/1302): C-a should be bound to org-beginning-of-line in org-mode buffers
+* [#1302](https://github.com/bbatsov/prelude/issues/1302): `C-a` should be bound to `org-beginning-of-line` in org-mode buffers.
 
 ## 1.0.0 (2020-09-15)
 
