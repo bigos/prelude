@@ -126,7 +126,7 @@
 ;;; TODO
 ;; (add-hook 'scheme-mode-hook (lambda () (swap-paredit)))
 
-  (add-hook 'prog-mode-hook 'linum-mode)
+  ;; (add-hook 'prog-mode-hook 'linum-mode)
 
   (add-hook 'overwrite-mode-hook #'(lambda () (double-flash-mode-line)))
 
