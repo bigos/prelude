@@ -33,7 +33,7 @@
 (require 'prelude-js)
 ;; (require 'prelude-latex)
 (require 'prelude-lisp)
-(require 'prelude-lsp)
+;; (require 'prelude-lsp)
 ;; (require 'prelude-ocaml)
 (require 'prelude-perl)
 (require 'prelude-python)
