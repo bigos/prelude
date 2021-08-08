@@ -106,7 +106,7 @@
     ;; (setq rufo-enable-format-on-save t)
     ;; (add-hook 'enh-ruby-mode-hook 'rufo-minor-mode)
 
-(setq org-src-fontify-natively )
+(setq org-src-fontify-natively t)
 
 (helm-descbinds-mode)
 (require 'load-theme-buffer-local)
