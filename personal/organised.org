@@ -83,109 +83,108 @@ M-x acl2 goodies
 *** Basic configuration
 
 #+BEGIN_SRC emacs-lisp
-    (defun double-flash-mode-line ()
-      (let ((flash-sec (/ 1.0 20)))
-        (invert-face 'mode-line)
-        (run-with-timer flash-sec nil #'invert-face 'mode-line)
-        (run-with-timer (* 2 flash-sec) nil #'invert-face 'mode-line)
-        (run-with-timer (* 3 flash-sec) nil #'invert-face 'mode-line)))
+  (defun double-flash-mode-line ()
+        (let ((flash-sec (/ 1.0 20)))
+          (invert-face 'mode-line)
+          (run-with-timer flash-sec nil #'invert-face 'mode-line)
+          (run-with-timer (* 2 flash-sec) nil #'invert-face 'mode-line)
+          (run-with-timer (* 3 flash-sec) nil #'invert-face 'mode-line)))
 
-    (defun cleanup-80 ()
-      (interactive)
-       (beginning-of-line)
-       ;; clean up the beginning of line
-       (if (eql (char-after) #x20)
-           (progn
-             (just-one-space)
-             (backward-char)
-             (delete-char 1)))
-       ;; move 80 chars
-       (forward-char 80)
-       ;; depending if the character we are at is a space
-       (when (not (eql (char-after) #x20))
-         (search-backward " "))
-       (just-one-space)
-       ;; insert new line char
-       (insert-char ?\C-j))
+  (defun go-80-word-beginning ()
+    (interactive)
+    (beginning-of-line)
+    (forward-char 80)
+    (forward-word)
+    (backward-word))
 
-    (global-set-key (kbd "s-8") 'cleanup-80)
+  (defun cleanup-80 ()
+    (interactive)
+    (beginning-of-line)
+    (forward-char 80)
+    (forward-word)
+    (backward-word)
 
-    (setq prelude-guru nil) ;; better for slime
-    ;; (setq guru-warn-only t) ;; not suitable for slime
+    ;; insert new line char
+    (insert-char ?\C-j))
 
-    (menu-bar-mode 1)
-    (global-hl-line-mode -1)
-    ;; (setq prelude-flyspell nil)
-    ;;(smartparens-global-mode -1)
+  (global-set-key (kbd "s-8") 'cleanup-80)
 
-    (global-set-key (kbd "s-f") 'vc-git-grep)
+  (setq prelude-guru nil) ;; better for slime
+      ;; (setq guru-warn-only t) ;; not suitable for slime
 
-    (prelude-require-packages '(buffer-move
-                                enh-ruby-mode
-                                graphviz-dot-mode
-                                helm-descbinds
-                                helm-projectile
-                                ido-completing-read+
-                                kurecolor
-                                load-theme-buffer-local
-                                magit
-                                mode-line-bell
-                                ob-restclient
-                                paredit
-                                projectile
-                                projectile-rails
-                                projectile-rails
-                                rails-log-mode
-                                rainbow-delimiters
-                                redshank
-                                restclient-helm
-                                rspec-mode
-                                rubocop
-                                ruby-hash-syntax
-                                ruby-refactor
-                                rvm
-                                slime
-                                slime-repl-ansi-color
-                                string-inflection
-                                switch-window
-                                vterm     ;needs: sudo apt install libvterm-dev cmake
-                                vterm-toggle
-                                web-mode))
+  (menu-bar-mode 1)
+  (global-hl-line-mode -1)
+      ;; (setq prelude-flyspell nil)
+      ;;(smartparens-global-mode -1)
 
-    ; (add-to-list 'load-path "/home/jacek/.emacs.d/elpa/enh-ruby-mode-20190513.254/enh-ruby-mode.el") ; must be added after any path containing old ruby-mode
-    (autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
+  (global-set-key (kbd "s-f") 'vc-git-grep)
 
-    (global-set-key (kbd "s-'") (quote ruby-toggle-string-quotes))
+  (prelude-require-packages '(buffer-move
+                                  enh-ruby-mode
+                                  graphviz-dot-mode
+                                  helm-descbinds
+                                  helm-projectile
+                                  ido-completing-read+
+                                  kurecolor
+                                  load-theme-buffer-local
+                                  magit
+                                  mode-line-bell
+                                  ob-restclient
+                                  paredit
+                                  projectile
+                                  projectile-rails
+                                  projectile-rails
+                                  rails-log-mode
+                                  rainbow-delimiters
+                                  redshank
+                                  restclient-helm
+                                  rspec-mode
+                                  rubocop
+                                  ruby-hash-syntax
+                                  ruby-refactor
+                                  rvm
+                                  slime
+                                  slime-repl-ansi-color
+                                  string-inflection
+                                  switch-window
+                                  vterm     ;needs: sudo apt install libvterm-dev cmake
+                                  vterm-toggle
+                                  web-mode))
 
-    (add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
-    (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))                                          ;
-    (add-to-list 'auto-mode-alist
-                 '("\\(?:\\.rb\\|ru\\|rake\\|thor\\|jbuilder\\|gemspec\\|podspec\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'" . enh-ruby-mode))
+      ; (add-to-list 'load-path "/home/jacek/.emacs.d/elpa/enh-ruby-mode-20190513.254/enh-ruby-mode.el") ; must be added after any path containing old ruby-mode
+  (autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
 
-    ;;; ignore rufo for now
-    ;; (setq rufo-enable-format-on-save t)
-    ;; (add-hook 'enh-ruby-mode-hook 'rufo-minor-mode)
+  (global-set-key (kbd "s-'") (quote ruby-toggle-string-quotes))
 
-    (setq org-src-fontify-natively t)
+  (add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
+  (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))                                          ;
+  (add-to-list 'auto-mode-alist
+                   '("\\(?:\\.rb\\|ru\\|rake\\|thor\\|jbuilder\\|gemspec\\|podspec\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'" . enh-ruby-mode))
 
-    (helm-descbinds-mode)
-    (require 'load-theme-buffer-local)
+      ;;; ignore rufo for now
+      ;; (setq rufo-enable-format-on-save t)
+      ;; (add-hook 'enh-ruby-mode-hook 'rufo-minor-mode)
 
-    ;;; get rid of utf-8 warning in Ruby mode
-    (setq ruby-insert-encoding-magic-comment nil)
+  (setq org-src-fontify-natively )
 
-    ;; magit warning silencing
-    (setq magit-auto-revert-mode nil)
-    (setq magit-last-seen-setup-instructions "1.4.0")
+  (helm-descbinds-mode)
+  (require 'load-theme-buffer-local)
 
-    (load "server")
-    (unless (server-running-p)
-      (server-start))
+      ;;; get rid of utf-8 warning in Ruby mode
+  (setq ruby-insert-encoding-magic-comment nil)
 
-  ;;; TODO
-  ;; (add-hook 'scheme-mode-hook (lambda () (swap-paredit)))
+      ;; magit warning silencing
+  (setq magit-auto-revert-mode nil)
+  (setq magit-last-seen-setup-instructions "1.4.0")
 
-    (add-hook 'overwrite-mode-hook #'(lambda () (double-flash-mode-line)))
+  (load "server")
+   (unless (server-running-p)
+   (server-start))
+
+    ;;; TODO
+    ;; (add-hook 'scheme-mode-hook (lambda () (swap-paredit)))
+
+   (add-hook 'overwrite-mode-hook #'(lambda () (double-flash-mode-line)))
 
 #+END_SRC
 
