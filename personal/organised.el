@@ -46,7 +46,7 @@
   (backward-word)
 
   ;; insert new line char
-  (insert-char ?\C-j))
+  (newline-and-indent))
 
 (global-set-key (kbd "s-8") 'cleanup-80)
 
