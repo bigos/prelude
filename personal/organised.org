@@ -379,7 +379,7 @@ disagree with magit.
   :config
   (org-roam-db-autosync-mode)
   ;; If using org-roam-protocol
-  (require 'org-roam-protocol)
+  (require 'org-roam-protocol))
 #+end_src
 
 *** vscode interaction

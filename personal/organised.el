@@ -242,7 +242,7 @@
   :config
   (org-roam-db-autosync-mode)
   ;; If using org-roam-protocol
-  (require 'org-roam-protocol)
+  (require 'org-roam-protocol))
 
   (defun open-buffer-in-vscode ()
     (interactive)
