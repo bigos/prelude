@@ -119,37 +119,39 @@ M-x acl2 goodies
 
   (global-set-key (kbd "s-f") 'vc-git-grep)
 
-  (prelude-require-packages '(buffer-move
-                                  enh-ruby-mode
-                                  graphviz-dot-mode
-                                  helm-descbinds
-                                  helm-projectile
-                                  ido-completing-read+
-                                  kurecolor
-                                  load-theme-buffer-local
-                                  magit
-                                  mode-line-bell
-                                  ob-restclient
-                                  paredit
-                                  projectile
-                                  projectile-rails
-                                  projectile-rails
-                                  rails-log-mode
-                                  rainbow-delimiters
-                                  redshank
-                                  restclient-helm
-                                  rspec-mode
-                                  rubocop
-                                  ruby-hash-syntax
-                                  ruby-refactor
-                                  rvm
-                                  slime
-                                  slime-repl-ansi-color
-                                  string-inflection
-                                  switch-window
-                                  vterm     ;needs: sudo apt install libvterm-dev cmake
-                                  vterm-toggle
-                                  web-mode))
+(prelude-require-packages '(
+                            buffer-move
+                            enh-ruby-mode
+                            graphviz-dot-mode
+                            helm-descbinds
+                            helm-projectile
+                            ido-completing-read+
+                            kurecolor
+                            load-theme-buffer-local
+                            magit
+                            mode-line-bell
+                            ob-restclient
+                            paredit
+                            projectile
+                            projectile-rails
+                            projectile-rails
+                            rails-log-mode
+                            rainbow-delimiters
+                            redshank
+                            restclient-helm
+                            rspec-mode
+                            rubocop
+                            ruby-hash-syntax
+                            ruby-refactor
+                            rvm
+                            slime
+                            slime-repl-ansi-color
+                            string-inflection
+                            switch-window
+                            use-package
+                            vterm ;needs: sudo apt install libvterm-dev cmake
+                            vterm-toggle
+                            web-mode))
 
       ; (add-to-list 'load-path "/home/jacek/.emacs.d/elpa/enh-ruby-mode-20190513.254/enh-ruby-mode.el") ; must be added after any path containing old ruby-mode
   (autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
