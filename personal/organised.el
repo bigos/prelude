@@ -1,9 +1,9 @@
-  ;;; code:
+;;; code:
 
-  ;;; WARNING! this *.el file has been generated automatically from
-  ;;; a corresponding *.org file. Do not edit this *.el file, but edit
-  ;;; the *.org file which will generate the *.el file upon executing
-  ;;; Mx org-babel-tangle.
+;;; WARNING! this *.el file has been generated automatically from
+;;; a corresponding *.org file. Do not edit this *.el file, but edit
+;;; the *.org file which will generate the *.el file upon executing
+;;; Mx org-babel-tangle.
 
 (defun insert-graph-arrow ()
   (interactive)
@@ -25,11 +25,11 @@
     (lisp-mode)))
 
 (defun double-flash-mode-line ()
-  (let ((flash-sec (/ 1.0 20)))
-    (invert-face 'mode-line)
-    (run-with-timer flash-sec nil #'invert-face 'mode-line)
-    (run-with-timer (* 2 flash-sec) nil #'invert-face 'mode-line)
-    (run-with-timer (* 3 flash-sec) nil #'invert-face 'mode-line)))
+      (let ((flash-sec (/ 1.0 20)))
+        (invert-face 'mode-line)
+        (run-with-timer flash-sec nil #'invert-face 'mode-line)
+        (run-with-timer (* 2 flash-sec) nil #'invert-face 'mode-line)
+        (run-with-timer (* 3 flash-sec) nil #'invert-face 'mode-line)))
 
 (defun go-80-word-beginning ()
   (interactive)
@@ -51,49 +51,48 @@
 (global-set-key (kbd "s-8") 'cleanup-80)
 
 (setq prelude-guru nil) ;; better for slime
-;; (setq guru-warn-only t) ;; not suitable for slime
+    ;; (setq guru-warn-only t) ;; not suitable for slime
 
 (menu-bar-mode 1)
 (global-hl-line-mode -1)
-;; (setq prelude-flyspell nil)
-;;(smartparens-global-mode -1)
+    ;; (setq prelude-flyspell nil)
+    ;;(smartparens-global-mode -1)
 
 (global-set-key (kbd "s-f") 'vc-git-grep)
 
-(prelude-require-packages '(
-                            buffer-move
-                            enh-ruby-mode
-                            graphviz-dot-mode
-                            helm-descbinds
-                            helm-projectile
-                            ido-completing-read+
-                            kurecolor
-                            load-theme-buffer-local
-                            magit
-                            mode-line-bell
-                            ob-restclient
-                            paredit
-                            projectile
-                            projectile-rails
-                            projectile-rails
-                            rails-log-mode
-                            rainbow-delimiters
-                            redshank
-                            restclient-helm
-                            rspec-mode
-                            rubocop
-                            ruby-hash-syntax
-                            ruby-refactor
-                            rvm
-                            slime
-                            slime-repl-ansi-color
-                            string-inflection
-                            switch-window
-                            vterm ;needs: sudo apt install libvterm-dev cmake
-                            vterm-toggle
-                            web-mode))
+(prelude-require-packages '(buffer-move
+                                enh-ruby-mode
+                                graphviz-dot-mode
+                                helm-descbinds
+                                helm-projectile
+                                ido-completing-read+
+                                kurecolor
+                                load-theme-buffer-local
+                                magit
+                                mode-line-bell
+                                ob-restclient
+                                paredit
+                                projectile
+                                projectile-rails
+                                projectile-rails
+                                rails-log-mode
+                                rainbow-delimiters
+                                redshank
+                                restclient-helm
+                                rspec-mode
+                                rubocop
+                                ruby-hash-syntax
+                                ruby-refactor
+                                rvm
+                                slime
+                                slime-repl-ansi-color
+                                string-inflection
+                                switch-window
+                                vterm     ;needs: sudo apt install libvterm-dev cmake
+                                vterm-toggle
+                                web-mode))
 
-                                        ; (add-to-list 'load-path "/home/jacek/.emacs.d/elpa/enh-ruby-mode-20190513.254/enh-ruby-mode.el") ; must be added after any path containing old ruby-mode
+    ; (add-to-list 'load-path "/home/jacek/.emacs.d/elpa/enh-ruby-mode-20190513.254/enh-ruby-mode.el") ; must be added after any path containing old ruby-mode
 (autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
 
 (global-set-key (kbd "s-'") (quote ruby-toggle-string-quotes))
@@ -101,32 +100,32 @@
 (add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
 (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))                                          ;
 (add-to-list 'auto-mode-alist
-             '("\\(?:\\.rb\\|ru\\|rake\\|thor\\|jbuilder\\|gemspec\\|podspec\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'" . enh-ruby-mode))
+                 '("\\(?:\\.rb\\|ru\\|rake\\|thor\\|jbuilder\\|gemspec\\|podspec\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'" . enh-ruby-mode))
 
-      ;;; ignore rufo for now
-;; (setq rufo-enable-format-on-save t)
-;; (add-hook 'enh-ruby-mode-hook 'rufo-minor-mode)
+    ;;; ignore rufo for now
+    ;; (setq rufo-enable-format-on-save t)
+    ;; (add-hook 'enh-ruby-mode-hook 'rufo-minor-mode)
 
 (setq org-src-fontify-natively t)
 
 (helm-descbinds-mode)
 (require 'load-theme-buffer-local)
 
-      ;;; get rid of utf-8 warning in Ruby mode
+    ;;; get rid of utf-8 warning in Ruby mode
 (setq ruby-insert-encoding-magic-comment nil)
 
-;; magit warning silencing
+    ;; magit warning silencing
 (setq magit-auto-revert-mode nil)
 (setq magit-last-seen-setup-instructions "1.4.0")
 
 (load "server")
-(unless (server-running-p)
-  (server-start))
+ (unless (server-running-p)
+ (server-start))
 
-    ;;; TODO
-;; (add-hook 'scheme-mode-hook (lambda () (swap-paredit)))
+  ;;; TODO
+  ;; (add-hook 'scheme-mode-hook (lambda () (swap-paredit)))
 
-(add-hook 'overwrite-mode-hook #'(lambda () (double-flash-mode-line)))
+ (add-hook 'overwrite-mode-hook #'(lambda () (double-flash-mode-line)))
 
 (defun my/ibuffer-visit-buffers-other-tab ()
   "Open buffers marked with m in other tabs."
@@ -164,8 +163,8 @@
 (setq string-inflection-skip-backward-when-done t)
 
 (add-hook 'graphviz-dot-mode-hook
-          '(lambda ()
-             (local-set-key (kbd "C-]") 'insert-graph-arrow)))
+            '(lambda ()
+               (local-set-key (kbd "C-]") 'insert-graph-arrow)))
 
 (require 'org)
 (org-add-link-type "pdf" 'org-pdf-open nil)
@@ -204,12 +203,12 @@
     (kill-new
      (message the-link))))
 
-;; we had to cheat to have s-\ as a shortcut
+       ;; we had to cheat to have s-\ as a shortcut
 (global-set-key (kbd (format "%s-%c" "s" 92)) 'my-file-line-link)
 
 (defun md-to-org-cleanup ()
   "After we use pandoc to concert md file, we need to
-                        remove PROPERTIES drawers"
+                 remove PROPERTIES drawers"
   (interactive)
   (search-forward ":END:")
   (search-backward ":PROPERTIES:")
@@ -227,23 +226,6 @@
  'org-babel-load-languages
  '((restclient . t)))
 
-;(require 'org-roam)
-
-
-;; (global-set-key (kbd "C-c n l") 'org-roam-buffer-toggle)
-;; (global-set-key (kbd "C-c n f") 'org-roam-node-find)
-;; (global-set-key (kbd "C-c n g") 'org-roam-graph)
-;; (global-set-key (kbd "C-c n i") 'org-roam-node-insert)
-;; (global-set-key (kbd "C-c n c") 'org-roam-capture)
-
-;; (global-set-key (kbd "C-c n j") 'org-roam-dailies-capture-today)
-
-;; (setq org-roam-directory (file-truename "~/Documents/org-roam/"))
-;; (org-roam-db-autosync-mode)
-;; (require 'org-roam-protocol)
-
-;; (setq org-roam-v2-ack t)
-
 (defun open-buffer-in-vscode ()
   (interactive)
 
@@ -260,20 +242,20 @@
 (fset 'insertPound "#")
 (global-set-key (kbd "M-3") 'insertPound)
 
-  ;;; MacOSX style shortcuts
+;;; MacOSX style shortcuts
 (global-set-key (kbd "s-z") 'undo)
 (global-set-key (kbd "s-x") 'clipboard-kill-region)
 (global-set-key (kbd "s-c") 'clipboard-kill-ring-save)
 (global-set-key (kbd "s-v") 'clipboard-yank)
 
-  ;;; MacOSX F keys
+;;; MacOSX F keys
 (global-set-key (kbd "s-3") 'kmacro-start-macro-or-insert-counter)
 (global-set-key (kbd "s-4") 'kmacro-end-or-call-macro)
 
 (global-set-key (kbd "s-a") 'bs-cycle-previous)
 (global-set-key (kbd "s-s") 'bs-cycle-next)
 
-  ;;; switch-window
+;;; switch-window
 (global-set-key (kbd "C-x o") 'switch-window)
 
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
@@ -282,11 +264,11 @@
 (setq web-mode-css-indent-offset 2)
 (add-hook 'web-mode-hook #'(lambda () (smartparens-mode -1)))
 
-  ;;; insert only <% side of erb tag, autopairing wi
+;;; insert only <% side of erb tag, autopairing wi
 (fset 'insert-rails-erb-tag [?< ?% ])
 (global-set-key (kbd "s-=") 'insert-rails-erb-tag)
 
-  ;;; make sure Emacs uses stack in Haskell Projects by default
+;;; make sure Emacs uses stack in Haskell Projects by default
 (setq haskell-process-type 'stack-ghci)
 
 (add-hook 'haskell-mode-hook (lambda () (setq-local company-dabbrev-downcase nil)))
@@ -308,12 +290,12 @@
 
 
 (add-hook 'haskell-mode-hook
-          '(lambda ()
-             (local-set-key (kbd "C-]") 'insert-graph-arrow)))
+            '(lambda ()
+               (local-set-key (kbd "C-]") 'insert-graph-arrow)))
 
 (add-hook 'haskell-interactive-mode-hook
-          '(lambda ()
-             (local-set-key (kbd "C-]") 'insert-graph-arrow)))
+            '(lambda ()
+               (local-set-key (kbd "C-]") 'insert-graph-arrow)))
 
 (add-hook 'haskell-mode-hook
           '(lambda ()
@@ -341,7 +323,7 @@
           '(lambda ()
              (local-set-key (kbd "C-c M-a") 'cider-load-all-files)))
 
-  ;;; this code has been responsible for slime version problem
+;;; this code has been responsible for slime version problem
 ;; (defvar slime-helper-el "~/quicklisp/slime-helper.el")
 ;; (when (file-exists-p slime-helper-el)
 ;;   (load (expand-file-name slime-helper-el)))
@@ -364,10 +346,10 @@
       slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
 
 
-  ;;; copy last s-expression to repl
-  ;;; useful for expressions like (in-package #:whatever)
-  ;;; alternatively you can use C-c ~ with cursor after (in-package :some-package)
-  ;;; https://www.reddit.com/r/lisp/comments/ehs12v/copying_last_expression_to_repl_in_emacsslime/
+;;; copy last s-expression to repl
+;;; useful for expressions like (in-package #:whatever)
+;;; alternatively you can use C-c ~ with cursor after (in-package :some-package)
+;;; https://www.reddit.com/r/lisp/comments/ehs12v/copying_last_expression_to_repl_in_emacsslime/
 (defun slime-copy-last-expression-to-repl (string)
   (interactive (list (slime-last-expression)))
   (slime-switch-to-output-buffer)
@@ -406,23 +388,23 @@
        "file:/home/%s/Documents/Manuals/Lisp/HyperSpec-7-0/HyperSpec/"
        user-login-name))
 
-(require 'redshank-loader)
-(eval-after-load "redshank-loader"
-  `(redshank-setup '(lisp-mode-hook
-                     slime-repl-mode-hook)
-                   t))
+  (require 'redshank-loader)
+  (eval-after-load "redshank-loader"
+    `(redshank-setup '(lisp-mode-hook
+                       slime-repl-mode-hook)
+                     t))
 
-(defun unfold-lisp ()
-  "Unfold lisp code."
-  (interactive)
-  (search-forward ")")
-  (backward-char)
-  (search-forward " ")
-  (newline-and-indent))
+  (defun unfold-lisp ()
+    "Unfold lisp code."
+    (interactive)
+    (search-forward ")")
+    (backward-char)
+    (search-forward " ")
+    (newline-and-indent))
 
-(global-set-key (kbd "s-0") 'unfold-lisp)
+  (global-set-key (kbd "s-0") 'unfold-lisp)
 
-  ;;; this add capability to define your own hook for responding to theme changes
+;;; this add capability to define your own hook for responding to theme changes
 (defvar after-load-theme-hook nil
   "Hook run after a color theme is loaded using `load-theme'.")
 (defadvice load-theme (after run-after-load-theme-hook activate)
@@ -519,13 +501,13 @@
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'after-load-theme-hook 'colorise-brackets)
 
-  ;; moving buffers
-  (require 'buffer-move)
-  ;; need to find unused shortcuts for moving up and down
-  (global-set-key (kbd "<M-s-up>")     'buf-move-up)
-  (global-set-key (kbd "<M-s-down>")   'buf-move-down)
-  (global-set-key (kbd "<M-s-left>")   'buf-move-left)
-  (global-set-key (kbd "<M-s-right>")  'buf-move-right)
+;; moving buffers
+(require 'buffer-move)
+;; need to find unused shortcuts for moving up and down
+(global-set-key (kbd "<M-s-up>")     'buf-move-up)
+(global-set-key (kbd "<M-s-down>")   'buf-move-down)
+(global-set-key (kbd "<M-s-left>")   'buf-move-left)
+(global-set-key (kbd "<M-s-right>")  'buf-move-right)
 
-  (provide 'personal)
-  ;;; personal ends here
+(provide 'personal)
+;;; personal ends here
