@@ -489,7 +489,7 @@ disagree with magit.
 
 ***** the Emacs init code
  #+BEGIN_SRC emacs-lisp
-   (setq geiser-active-implementations '(chez racket))
+   (setq geiser-active-implementations '(scheme chezscheme racket))
    ;; (setq geiser-racket-binary "/usr/bin/racket")
  #+END_SRC
 
