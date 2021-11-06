@@ -84,11 +84,11 @@ M-x acl2 goodies
 
 #+BEGIN_SRC emacs-lisp
   (defun double-flash-mode-line ()
-        (let ((flash-sec (/ 1.0 20)))
-          (invert-face 'mode-line)
-          (run-with-timer flash-sec nil #'invert-face 'mode-line)
-          (run-with-timer (* 2 flash-sec) nil #'invert-face 'mode-line)
-          (run-with-timer (* 3 flash-sec) nil #'invert-face 'mode-line)))
+    (let ((flash-sec (/ 1.0 20)))
+      (invert-face 'mode-line)
+      (run-with-timer flash-sec nil #'invert-face 'mode-line)
+      (run-with-timer (* 2 flash-sec) nil #'invert-face 'mode-line)
+      (run-with-timer (* 3 flash-sec) nil #'invert-face 'mode-line)))
 
   (defun go-80-word-beginning ()
     (interactive)
@@ -120,36 +120,42 @@ M-x acl2 goodies
   (global-set-key (kbd "s-f") 'vc-git-grep)
 
   (prelude-require-packages '(buffer-move
-                                  enh-ruby-mode
-                                  graphviz-dot-mode
-                                  helm-descbinds
-                                  helm-projectile
-                                  ido-completing-read+
-                                  kurecolor
-                                  load-theme-buffer-local
-                                  magit
-                                  mode-line-bell
-                                  ob-restclient
-                                  paredit
-                                  projectile
-                                  projectile-rails
-                                  projectile-rails
-                                  rails-log-mode
-                                  rainbow-delimiters
-                                  redshank
-                                  restclient-helm
-                                  rspec-mode
-                                  rubocop
-                                  ruby-hash-syntax
-                                  ruby-refactor
-                                  rvm
-                                  slime
-                                  slime-repl-ansi-color
-                                  string-inflection
-                                  switch-window
-                                  vterm     ;needs: sudo apt install libvterm-dev cmake
-                                  vterm-toggle
-                                  web-mode))
+                              enh-ruby-mode
+                              graphviz-dot-mode
+                              helm-descbinds
+                              helm-projectile
+                              ido-completing-read+
+                              kurecolor
+                              load-theme-buffer-local
+                              magit
+                              mode-line-bell
+                              ob-restclient
+                              paredit
+                              projectile
+                              projectile-rails
+                              projectile-rails
+                              rails-log-mode
+                              rainbow-delimiters
+                              redshank
+                              restclient-helm
+                              rspec-mode
+                              rubocop
+                              ruby-hash-syntax
+                              ruby-refactor
+                              rvm
+                              slime
+                              slime-repl-ansi-color
+                              string-inflection
+                              switch-window
+                              vterm ;needs: sudo apt install libvterm-dev cmake
+                              vterm-toggle
+                              use-package
+                              web-mode))
+
+  (eval-when-compile
+    (require 'use-package))
+      (require 'diminish)                ;; if you use :diminish
+      (require 'bind-key)                ;; if you use any :bind variant
 
       ; (add-to-list 'load-path "/home/jacek/.emacs.d/elpa/enh-ruby-mode-20190513.254/enh-ruby-mode.el") ; must be added after any path containing old ruby-mode
   (autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
@@ -352,15 +358,30 @@ For the time being we will skip on org-roam, since it is buggy and seems to
 disagree with magit.
 
 ***** basic config
-      For now we are not going to use org-roam.
-      But now and the we will see if it made any improvement.
-      If we come back to using it, the following instructions may be useful in
-      the installation and copying the example configuration.
 
-      Ensure you have use-package and org-roam installed.
-      M-x package-refresh-contents RET
-      M-x package-install RET use-package RET
-      M-x package-install RET org-roam RET
+#+begin_src emacs-lisp
+  ;; Org-Roam basic configuration
+  (setq org-directory (concat (getenv "HOME") "/Documents/org-roam/"))
+
+  (use-package org-roam
+    :ensure t
+    :after org
+    :init (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
+    :custom
+    (org-roam-directory (file-truename org-directory))
+    :config
+    (org-roam-db-autosync-enable)
+    (setq org-roam-completion-everywhere t)
+    :bind (("C-c n f" . org-roam-node-find)
+           ("C-c n g" . org-roam-graph)
+           ("C-c n r" . org-roam-node-random)
+           (:map org-mode-map
+                 (("C-c n i" . org-roam-node-insert)
+                  ("C-c n o" . org-id-get-create)
+                  ("C-c n t" . org-roam-tag-add)
+                  ("C-c n a" . org-roam-alias-add)
+                  ("C-c n l" . org-roam-buffer-toggle)))))
+#+end_src
 
 *** vscode interaction
 

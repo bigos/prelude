@@ -49,7 +49,7 @@
     (define-key map [(control shift down)]  'move-text-down)
     (define-key map [(meta shift up)]  'move-text-up)
     (define-key map [(meta shift down)]  'move-text-down)
-    (define-key map (kbd "C-c n") 'crux-cleanup-buffer-or-region)
+    ;(define-key map (kbd "C-c n") 'crux-cleanup-buffer-or-region)
     (define-key map (kbd "C-c f")  'crux-recentf-find-file)
     (define-key map (kbd "C-M-z") 'crux-indent-defun)
     (define-key map (kbd "C-c u") 'crux-view-url)
