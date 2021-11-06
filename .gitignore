@@ -30,3 +30,5 @@ transient/
 var/
 .cache/
 .lsp-session*
+
+org-roam.db
