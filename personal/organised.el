@@ -236,7 +236,7 @@
 (setq org-directory (concat (getenv "HOME") "/Documents/org-roam/"))
 
 (use-package org-roam
-  :ensure nil
+  :ensure t
   :after org
   :init (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
   :custom
