@@ -102,16 +102,18 @@
               (goto-char cpoint)
               ;; print debugging information
               ;; TODO add handling for book with numbers
-              (print
-               (list 'verse-components
-                     'book-number book-number
-                     'book book-name
-                     'chapter chapter
-                     'verse verse))
+
+              ;; (print
+              ;;  (list 'verse-components
+              ;;        'book-number book-number
+              ;;        'book book-name
+              ;;        'chapter chapter
+              ;;        'verse verse))
               (replace-region-contents (1+ book-starts) cpoint
                                        (lambda ()
                                          (verse-page-link link-book chapter verse)))
-              (goto-char (1+ cpoint)))))))))
+              (goto-char (1+ cpoint))
+              (search-forward "]]"))))))))
 
 (defun verse-page-link (book-name chapter verse)
   "Take strings BOOK-NAME CHAPTER and VERSE to create a string for org link."
