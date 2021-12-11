@@ -103,12 +103,14 @@
               ;; print debugging information
               ;; TODO add handling for book with numbers
 
-              ;; (print
+              (print (format "%s %s %s:%s <<<" book-number book-name chapter verse))
+              ;; (print    ;debugging
               ;;  (list 'verse-components
               ;;        'book-number book-number
               ;;        'book book-name
               ;;        'chapter chapter
               ;;        'verse verse))
+
               (replace-region-contents (1+ book-starts) cpoint
                                        (lambda ()
                                          (verse-page-link link-book chapter verse)))
