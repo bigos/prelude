@@ -31,6 +31,47 @@
 ;;; Code:
 (require 'cl)
 (require 'ido-completing-read+)
+(require 'parsec)
+
+(let ((inputs (list "ps133:3"
+                    " ps133:3  "
+                    "   ps 11:12 "
+                    "ps 11:12"
+                    "Err00r"
+                    )))
+  (dolist (i inputs)
+    (condition-case err
+
+        (let ((val (parsec-with-input i
+                 (parsec-collect
+                  (parsec-many (parsec-one-of ?\s ?\t))
+                  (parsec-many-as-string (parsec-letter))
+                  (parsec-and
+                      (parsec-many (parsec-one-of ?\s ?\t))
+                    (parsec-many-as-string
+                     (parsec-digit)))
+
+                  (parsec-ch ?:)
+                  (parsec-many-as-string
+                   (parsec-digit))
+                  ))))
+          (print (format "input %S was parsed as %S" i val)))
+      (error (print (format "the error was %s" err))))
+    ))
+
+;;; debugging in progress
+(defun verse-number ()
+  (parsec-return
+      (parsec-many1
+       (parsec-digit))))
+
+(defun verse-whitespace ()
+  (parsec-return
+      (parsec-one-of ?\s ?\t ?\n ?\r)))
+  ;; ------------------------------------------------
+
+
+
 
 (defun verse-books ()
   "List of Bible books and abbreviations."
@@ -103,7 +144,7 @@
               ;; print debugging information
               ;; TODO add handling for book with numbers
 
-              (print (format "%s %s %s:%s <<<" book-number book-name chapter verse))
+              (print (format ">>> bn %s book %s chapter %s verse %s <<<" book-number book-name chapter verse))
               ;; (print    ;debugging
               ;;  (list 'verse-components
               ;;        'book-number book-number
