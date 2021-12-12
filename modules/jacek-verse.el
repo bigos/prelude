@@ -91,7 +91,12 @@
   (cl-loop for p in (verse-tokenizer-positions str)
            for outcome = (verse-parse-location (subseq str (1- p)))
            until (consp (car outcome))
-           finally (return outcome)))
+           finally (return (list :position p
+                                 :parsed outcome
+                                 :book-number (caar (nth 0 outcome))
+                                 :book-name (cadadr (nth 0 outcome))
+                                 :chapter (car (nth 1 outcome))
+                                 :verse (caddr (nth 1 outcome))))))
 
 
 (defun verse-tokenizer (string)
