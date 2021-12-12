@@ -90,30 +90,26 @@
 ;; (verse-parse-line "please read psalm 37:11 and 1 john 4:18 ")
 (defun verse-parse-line (str)
   "Parse line fragment in a STR."
-  (cl-loop for p in (verse-tokenizer-positions str)
-           for outcome = (verse-parse-location (subseq str (1- p)))
-           when (consp (car outcome))
-           collect (list :position p
-                            :parsed outcome
-                            :book-number (caar (nth 0 outcome))
-                            :book-name (cadadr (nth 0 outcome))
-                            :chapter (car (nth 1 outcome))
-                            :verse (caddr (nth 1 outcome)))))
-
-(defun verse-parse-line2 (str)
-  "Parse line fragment in a STR."
   (let ((outcomes (-take 3
                          (-filter (lambda (x) (consp (caadr x)))
                                   (-map (lambda (p)
                                           (list p (verse-parse-location (subseq str (1- p)))))
                                         (reverse (verse-tokenizer-positions str)))))))
-    (if (= (length outcomes) 1)
-        (nth 0 outcomes)
-      (if (equalp
-           (verse-outcome-partial (nth 0 outcomes))
-           (verse-outcome-partial (nth 1 outcomes)))
-          (nth 1 outcomes)
-        (nth 0 outcomes)))))
+
+    (let ((result
+           (if (= (length outcomes) 1)
+               (nth 0 outcomes)
+             (if (equalp
+                  (verse-outcome-partial (nth 0 outcomes))
+                  (verse-outcome-partial (nth 1 outcomes)))
+                 (nth 1 outcomes)
+               (nth 0 outcomes)))))
+      (list
+       :position (nth 0 result)
+       :book-number (caar (nth 0 (nth 1 result)))
+       :book-name  (cadadr (nth 0 (nth 1 result)))
+       :chapter (nth 0 (nth 1 (nth 1 result)))
+       :verse (nth 2 (nth 1 (nth 1 result)))))))
 
 (defun verse-outcome-partial (outcome)
   "Get the data without the book number from the OUTCOME."
