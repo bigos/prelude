@@ -37,19 +37,6 @@
 
 ; (load "~/.emacs.d/modules/jacek-verse.el")
 
-;;; debugging in progress
-
-(defun test-inputs ()
-  "Provide test cases."
-  (list "ps133:3"
-        "ps133:3  "
-        "ps 11:12 "
-        "ps 11:12"
-        "ps 37:12"
-        "J4:1"
-        "1 John 4:18 "
-        "Err00r!"))
-
 (defun tokenin ()
   "please read the verse 1J4:18")
 
@@ -142,40 +129,7 @@
                      :beg)
                     (parsec-one-of ?\s ?, ?.))))))
 
-(progn
-  (print "============================================")
-  (dolist (i (test-inputs))
-    (condition-case err
-        (let ((val
-
-               (verse-parse-location i)
-
-               ))
-          (print "")
-          (princ (format "input %S was parsed as %S" i val)))
-      (error (print (format "the error was %s" err))))))
-
-
-(progn
-  (dolist (i (list "123abc456" "abc123def"))
-    (condition-case err
-        (let ((val (parsec-with-input i
-                     (parsec-count 3
-                                   (parsec-collect*
-                                    (parsec-or
-                                     (parsec-many1-s (parsec-letter))
-                                     (parsec-many1-s (parsec-digit))
-                                     ))))))
-          (print (format "input %S was parsed as %S" i val)))
-      (error (print (format "the error was %s" err))))))
-
-
-
-  ;; ------------------------------------------------
-
-
-
-
+;; ------------------------------------------------
 (defun verse-books ()
   "List of Bible books and abbreviations."
   '(("Genesis" "Ge") ("Exodus" "Ex") ("Leviticus" "Le") ("Numbers" "Nu") ("Deuteronomy" "De")
