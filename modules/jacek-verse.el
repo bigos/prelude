@@ -33,41 +33,56 @@
 (require 'ido-completing-read+)
 (require 'parsec)
 
-(let ((inputs (list "ps133:3"
-                    " ps133:3  "
-                    "   ps 11:12 "
-                    "ps 11:12"
-                    "Err00r"
-                    )))
-  (dolist (i inputs)
-    (condition-case err
-
-        (let ((val (parsec-with-input i
-                 (parsec-collect
-                  (parsec-many (parsec-one-of ?\s ?\t))
-                  (parsec-many-as-string (parsec-letter))
-                  (parsec-and
-                      (parsec-many (parsec-one-of ?\s ?\t))
-                    (parsec-many-as-string
-                     (parsec-digit)))
-
-                  (parsec-ch ?:)
-                  (parsec-many-as-string
-                   (parsec-digit))
-                  ))))
-          (print (format "input %S was parsed as %S" i val)))
-      (error (print (format "the error was %s" err))))
-    ))
+; (load "~/.emacs.d/modules/jacek-verse.el")
 
 ;;; debugging in progress
-(defun verse-number ()
-  (parsec-return
-      (parsec-many1
-       (parsec-digit))))
 
-(defun verse-whitespace ()
-  (parsec-return
-      (parsec-one-of ?\s ?\t ?\n ?\r)))
+(defun test-inputs ()
+  "Provide test cases."
+  (list "ps133:3"
+        " ps133:3  "
+        "   ps 11:12 "
+        "ps 11:12"
+        "abcdefghij ps 37:12"
+        " abcdefghij ps 37:12"
+        "abc def ghij ps 37:12"
+        " abc def ghij ps 37:12"
+        "Err00r"))
+
+(progn
+  (dolist (i (test-inputs))
+    (condition-case err
+        (let ((val (parsec-with-input i
+                     (parsec-collect
+                      (parsec-or
+                       (parsec-many-as-string
+                        (parsec-letter))
+                       (parsec-many-as-string
+                        (parsec-digit))
+                       (parsec-many-as-string
+                        (parsec-any-ch)))
+                      )
+
+                     )))
+          (print (format "input %S was parsed as %S" i val)))
+      (error (print (format "the error was %s" err))))))
+
+
+(progn
+  (dolist (i (list "123abc456" "abc123def"))
+    (condition-case err
+        (let ((val (parsec-with-input i
+                     (parsec-count 3
+                                   (parsec-collect*
+                                    (parsec-or
+                                     (parsec-many1-s (parsec-letter))
+                                     (parsec-many1-s (parsec-digit))
+                                     ))))))
+          (print (format "input %S was parsed as %S" i val)))
+      (error (print (format "the error was %s" err))))))
+
+
+
   ;; ------------------------------------------------
 
 
