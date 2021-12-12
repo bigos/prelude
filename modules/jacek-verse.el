@@ -93,10 +93,14 @@
                (nth 0 outcomes)))))
       (list
        :position (nth 0 result)
-       :book-number (caar (nth 0 (nth 1 result)))
-       :book-name  (cadadr (nth 0 (nth 1 result)))
+       :book (concat
+              (caar (nth 0 (nth 1 result)))
+              (caadr (nth 0 (nth 1 result)))
+              (cadadr (nth 0 (nth 1 result))))
        :chapter (nth 0 (nth 1 (nth 1 result)))
-       :verse (nth 2 (nth 1 (nth 1 result)))))))
+       :verse   (nth 2 (nth 1 (nth 1 result)))
+       ;; :all result
+       ))))
 
 (defun verse-outcome-partial (outcome)
   "Get the data without the book number from the OUTCOME."
