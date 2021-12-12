@@ -48,6 +48,9 @@
         "1 John 4:18 "
         "Err00r!"))
 
+(defun tokenin ()
+  "please read the verse 1J4:18")
+
 (defun verse-location ()
   (parsec-collect
    (parsec-many1-s
@@ -79,27 +82,40 @@
      (parsec-many-s
       (parsec-one-of ?\s)))))
 
+;;; we have success
+;;; we can parse verses in fancy strings
+;; (verse-parse-line "please read psaml 1:1 ")
+(defun verse-parse-line (str)
+  "Parse line fragment in a STR."
+  (dolist (p (verse-tokenizer-positions str))
+    (print "------------")
+    (print (subseq str (1- p)))
+    (print (verse-parse-location(subseq str
+                                        (1- p))))))
+
 (defun verse-tokenizer (string)
   "Get positions of interesting parts of our STRING."
-  (parsec-with-input string
-    (parsec-collect
-     (parsec-sepby
-      (parsec-many-s (parsec-or (parsec-letter)
-                                (parsec-digit)
-                                (parsec-one-of ?:)))
+  (car
+   (parsec-with-input string
+     (parsec-collect
+      (parsec-sepby
+       (parsec-many-s (parsec-or (parsec-letter)
+                                 (parsec-digit)
+                                 (parsec-one-of ?:)))
 
-      (parsec-one-of ?\s ?, ?.)))))
+       (parsec-one-of ?\s ?, ?.))))))
 
 (defun verse-tokenizer-positions (string)
   "Get positions of interesting parts of our STRING."
-  (parsec-with-input string
-    (parsec-collect
-     (parsec-sepby (parsec-query
-                    (parsec-many-s (parsec-or (parsec-letter)
-                                              (parsec-digit)
-                                              (parsec-one-of ?:)))
-                    :beg)
-                   (parsec-one-of ?\s ?, ?.)))))
+  (car
+   (parsec-with-input string
+     (parsec-collect
+      (parsec-sepby (parsec-query
+                     (parsec-many-s (parsec-or (parsec-letter)
+                                               (parsec-digit)
+                                               (parsec-one-of ?:)))
+                     :beg)
+                    (parsec-one-of ?\s ?, ?.))))))
 
 (progn
   (print "============================================")
