@@ -85,6 +85,7 @@
 ;;; we have success
 ;;; we can parse verses in fancy strings
 ;; (verse-parse-line "please read psaml 1:1 ")
+;; (verse-parse-line "please read 1 john 4:18 ")
 (defun verse-parse-line (str)
   "Parse line fragment in a STR."
   (dolist (p (verse-tokenizer-positions str))
