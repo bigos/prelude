@@ -88,11 +88,11 @@
 ;; (verse-parse-line "please read 1 john 4:18 ")
 (defun verse-parse-line (str)
   "Parse line fragment in a STR."
-  (dolist (p (verse-tokenizer-positions str))
-    (print "------------")
-    (print (subseq str (1- p)))
-    (print (verse-parse-location(subseq str
-                                        (1- p))))))
+  (cl-loop for p in (verse-tokenizer-positions str)
+           for outcome = (verse-parse-location (subseq str (1- p)))
+           until (consp (car outcome))
+           finally (return outcome)))
+
 
 (defun verse-tokenizer (string)
   "Get positions of interesting parts of our STRING."
