@@ -162,14 +162,19 @@
     (-map (lambda (x) (incf c) (cons c x)) (verse-books))))
 
 
+;; (load "~/.emacs.d/modules/jacek-verse.el")
 (defun verse-link ()                    ;TODO
   "Find components."
   (interactive)
   ;; enable mode for ido-completing-read+
   (ido-ubiquitous-mode 1)
   (let* ((cpoint (point))
-         (the-line "the line from cursor to lines beginning")
-         (parsed (verse-parse-line the-line)))
+         (bpoint (progn (beginning-of-line) (point)))
+         (the-line (buffer-substring-no-properties bpoint cpoint))
+         (parsed (verse-parse-line the-line))
+         )
+
+    (print (format "parsed is %s for >%s<" parsed the-line))
 
     (let* ((book-name (plist-get parsed :book))
            (chapter (plist-get parsed :chapter))
@@ -184,7 +189,7 @@
                                               book-name))))
       (goto-char cpoint)
 
-      (let ((startpoint 1234567))
+      (let ((startpoint (search-backward (plist-get parsed :all))))
         (replace-region-contents startpoint
                                  cpoint
                                  (lambda ()
