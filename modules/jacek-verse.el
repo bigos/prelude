@@ -40,31 +40,78 @@
 (defun test-inputs ()
   "Provide test cases."
   (list "ps133:3"
-        " ps133:3  "
-        "   ps 11:12 "
+        "ps133:3  "
+        "ps 11:12 "
         "ps 11:12"
-        "abcdefghij ps 37:12"
-        " abcdefghij ps 37:12"
-        "abc def ghij ps 37:12"
-        " abc def ghij ps 37:12"
-        "Err00r"))
+        "ps 37:12"
+        "J4:1"
+        "1 John 4:18 "
+        "Err00r!"))
+
+(defun verse-location ()
+  (parsec-collect
+   (parsec-many1-s
+    (parsec-digit))
+   (parsec-str ":")
+   (parsec-many1-s
+    (parsec-digit))))
+
+(defun verse-book ()
+  (parsec-collect
+   (parsec-many-s
+    (parsec-str " "))
+   (parsec-many1-s
+    (parsec-letter))
+   (parsec-many-s
+    (parsec-str " "))))
+
+(defun verse-parse-location (str)
+  (parsec-with-input str
+    (parsec-collect
+     (parsec-collect
+      (parsec-optional
+       (parsec-collect
+        (parsec-one-of ?1 ?2 ?3)))
+      (verse-book))
+
+     (verse-location)
+
+     (parsec-many-s
+      (parsec-one-of ?\s)))))
+
+(defun verse-tokenizer (string)
+  "Get positions of interesting parts of our STRING."
+  (parsec-with-input string
+    (parsec-collect
+     (parsec-sepby
+      (parsec-many-s (parsec-or (parsec-letter)
+                                (parsec-digit)
+                                (parsec-one-of ?:)))
+
+      (parsec-one-of ?\s ?, ?.)))))
+
+(defun verse-tokenizer-positions (string)
+  "Get positions of interesting parts of our STRING."
+  (parsec-with-input string
+    (parsec-collect
+     (parsec-sepby (parsec-query
+                    (parsec-many-s (parsec-or (parsec-letter)
+                                              (parsec-digit)
+                                              (parsec-one-of ?:)))
+                    :beg)
+                   (parsec-one-of ?\s ?, ?.)))))
 
 (progn
+  (print "============================================")
   (dolist (i (test-inputs))
     (condition-case err
-        (let ((val (parsec-with-input i
-                     (parsec-collect
-                      (parsec-or
-                       (parsec-many-as-string
-                        (parsec-letter))
-                       (parsec-many-as-string
-                        (parsec-digit))
-                       (parsec-many-as-string
-                        (parsec-any-ch)))
-                      )
+        (let ((val
 
-                     )))
-          (print (format "input %S was parsed as %S" i val)))
+               (verse-parse-location i)
+
+               ))
+          (print "")
+          (princ (format "input %S was parsed as %S" i val)))
       (error (print (format "the error was %s" err))))))
 
 
