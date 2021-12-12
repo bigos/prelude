@@ -7,6 +7,8 @@
 
 ;; This file is not part of GNU Emacs.
 
+;; Package-Requires: ((dash "2.19.1") ido-completing-read+ parsec)
+
 ;;; Commentary:
 
 ;; Some basic functionality for adding Bible verse links
@@ -85,19 +87,40 @@
 ;;; we have success
 ;;; we can parse verses in fancy strings
 ;; (verse-parse-line "please read psaml 1:1 ")
-;; (verse-parse-line "please read 1 john 4:18 ")
+;; (verse-parse-line "please read psalm 37:11 and 1 john 4:18 ")
 (defun verse-parse-line (str)
   "Parse line fragment in a STR."
   (cl-loop for p in (verse-tokenizer-positions str)
            for outcome = (verse-parse-location (subseq str (1- p)))
-           until (consp (car outcome))
-           finally (return (list :position p
-                                 :parsed outcome
-                                 :book-number (caar (nth 0 outcome))
-                                 :book-name (cadadr (nth 0 outcome))
-                                 :chapter (car (nth 1 outcome))
-                                 :verse (caddr (nth 1 outcome))))))
+           when (consp (car outcome))
+           collect (list :position p
+                            :parsed outcome
+                            :book-number (caar (nth 0 outcome))
+                            :book-name (cadadr (nth 0 outcome))
+                            :chapter (car (nth 1 outcome))
+                            :verse (caddr (nth 1 outcome)))))
 
+(defun verse-parse-line2 (str)
+  "Parse line fragment in a STR."
+  (let ((outcomes (-take 3
+                         (-filter (lambda (x) (consp (caadr x)))
+                                  (-map (lambda (p)
+                                          (list p (verse-parse-location (subseq str (1- p)))))
+                                        (reverse (verse-tokenizer-positions str)))))))
+    (if (= (length outcomes) 1)
+        (nth 0 outcomes)
+      (if (equalp
+           (verse-outcome-partial (nth 0 outcomes))
+           (verse-outcome-partial (nth 1 outcomes)))
+          (nth 1 outcomes)
+        (nth 0 outcomes)))))
+
+(defun verse-outcome-partial (outcome)
+  "Get the data without the book number from the OUTCOME."
+  (list
+   (cadr (cadar  (nth 1 outcome)))
+   (car   (cadr (nth 1 outcome)))
+   (caddr (cadr (nth 1 outcome)))))
 
 (defun verse-tokenizer (string)
   "Get positions of interesting parts of our STRING."

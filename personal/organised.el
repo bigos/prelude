@@ -61,6 +61,7 @@
 (global-set-key (kbd "s-f") 'vc-git-grep)
 
 (prelude-require-packages '(buffer-move
+                            dash
                             enh-ruby-mode
                             graphviz-dot-mode
                             helm-descbinds
@@ -72,6 +73,7 @@
                             mode-line-bell
                             ob-restclient
                             paredit
+                            parsec
                             projectile
                             projectile-rails
                             projectile-rails
