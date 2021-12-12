@@ -169,8 +169,7 @@
   (ido-ubiquitous-mode 1)
   (let* ((cpoint (point))
          (the-line "the line from cursor to lines beginning")
-         (parsed (verse-parse-line the-line))
-         )
+         (parsed (verse-parse-line the-line)))
 
     (let* ((book-name (plist-get parsed :book))
            (chapter (plist-get parsed :chapter))
@@ -184,20 +183,12 @@
                                               t
                                               book-name))))
       (goto-char cpoint)
-      ;; print debugging information
-      ;; TODO add handling for book with numbers
 
-      (print (format ">>> bn %s book %s chapter %s verse %s <<<" book-number book-name chapter verse))
-      ;; (print    ;debugging
-      ;;  (list 'verse-components
-      ;;        'book-number book-number
-      ;;        'book book-name
-      ;;        'chapter chapter
-      ;;        'verse verse))
-
-      (replace-region-contents (1+ book-starts) cpoint
-                               (lambda ()
-                                 (verse-page-link link-book chapter verse)))
+      (let ((startpoint 1234567))
+        (replace-region-contents startpoint
+                                 cpoint
+                                 (lambda ()
+                                   (verse-page-link link-book chapter verse))))
       (goto-char (1+ cpoint))
       (search-forward "]]"))))
 
