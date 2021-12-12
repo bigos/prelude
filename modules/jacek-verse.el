@@ -99,7 +99,9 @@
               (cadadr (nth 0 (nth 1 result))))
        :chapter (nth 0 (nth 1 (nth 1 result)))
        :verse   (nth 2 (nth 1 (nth 1 result)))
-       ;; :all result
+       :all (apply 'concat
+                   (-flatten
+                    (cdr result)))
        ))))
 
 (defun verse-outcome-partial (outcome)
@@ -159,65 +161,45 @@
   (let ((c 0))
     (-map (lambda (x) (incf c) (cons c x)) (verse-books))))
 
-(defun verse-previous-verse-separator ()
-  "Find verse separator."
-  (interactive)
-  (search-backward ":")
-  (point))
 
-(defun verse-link ()
+(defun verse-link ()                    ;TODO
   "Find components."
   (interactive)
   ;; enable mode for ido-completing-read+
   (ido-ubiquitous-mode 1)
   (let* ((cpoint (point))
-         (cseparator (verse-previous-verse-separator))
-         (chapt-ends (1- cseparator))
-         (chapt-starts chapt-ends))
-    (while (/= 32 (char-after chapt-starts)) (incf chapt-starts -1))
-    (let* ((cspace-ends chapt-starts)
-           (cspace-starts cspace-ends))
-      (while (= 32 (char-after cspace-starts)) (incf cspace-starts -1))
-      (let* ((book-ends cspace-starts)
-             (book-starts book-ends))
-        (while (/= 32 (char-after book-starts)) (incf book-starts -1))
-        (let* ((bspace-ends book-starts)
-               (bspace-starts bspace-ends))
-          (while (= 32 (char-after bspace-starts)) (incf bspace-starts -1))
-          (let* ((bnumber-ends  bspace-starts)
-                 (bnumber-starts bnumber-ends))
-            (while (/= 32 (char-after bnumber-starts)) (incf bnumber-starts -1))
+         (the-line "the line from cursor to lines beginning")
+         (parsed (verse-parse-line the-line))
+         )
 
-            (let* ((book-number (buffer-substring (1+ bnumber-starts) (1+ bnumber-ends)))
-                   (book-name (capitalize (buffer-substring  (1+ book-starts)  (1+ book-ends))))
-                   (chapter (buffer-substring  (1+ chapt-starts) (1+ chapt-ends)))
-                   (verse (string-trim
-                           (buffer-substring (1+ cseparator) cpoint)))
-                   (long-books (-map 'car (verse-books)))
-                   (link-book (if (member book-name long-books)
-                                  book-name
-                                (ido-completing-read+ (format "select correction for %S" book-name)
-                                                      long-books
-                                                      nil
-                                                      t
-                                                      book-name))))
-              (goto-char cpoint)
-              ;; print debugging information
-              ;; TODO add handling for book with numbers
+    (let* ((book-name (plist-get parsed :book))
+           (chapter (plist-get parsed :chapter))
+           (verse (plist-get parsed :verse))
+           (long-books (-map 'car (verse-books)))
+           (link-book (if (member book-name long-books)
+                          book-name
+                        (ido-completing-read+ (format "select correction for %S" book-name)
+                                              long-books
+                                              nil
+                                              t
+                                              book-name))))
+      (goto-char cpoint)
+      ;; print debugging information
+      ;; TODO add handling for book with numbers
 
-              (print (format ">>> bn %s book %s chapter %s verse %s <<<" book-number book-name chapter verse))
-              ;; (print    ;debugging
-              ;;  (list 'verse-components
-              ;;        'book-number book-number
-              ;;        'book book-name
-              ;;        'chapter chapter
-              ;;        'verse verse))
+      (print (format ">>> bn %s book %s chapter %s verse %s <<<" book-number book-name chapter verse))
+      ;; (print    ;debugging
+      ;;  (list 'verse-components
+      ;;        'book-number book-number
+      ;;        'book book-name
+      ;;        'chapter chapter
+      ;;        'verse verse))
 
-              (replace-region-contents (1+ book-starts) cpoint
-                                       (lambda ()
-                                         (verse-page-link link-book chapter verse)))
-              (goto-char (1+ cpoint))
-              (search-forward "]]"))))))))
+      (replace-region-contents (1+ book-starts) cpoint
+                               (lambda ()
+                                 (verse-page-link link-book chapter verse)))
+      (goto-char (1+ cpoint))
+      (search-forward "]]"))))
 
 (defun verse-page-link (book-name chapter verse)
   "Take strings BOOK-NAME CHAPTER and VERSE to create a string for org link."
