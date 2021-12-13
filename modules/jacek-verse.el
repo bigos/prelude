@@ -54,7 +54,7 @@
                          (parsec-str "2")
                          (parsec-str "3")))
                        (parsec-many-s (parsec-str " "))))))
-    ;(print (format "preparsed %S" pre-parsed))
+    ;; (print (format "preparsed %S" pre-parsed))
     (let ((final-spaces   (nth 0 pre-parsed))
           (ver      (reverse (nth 1 pre-parsed)))
           (chap     (reverse (nth 3 pre-parsed)))
@@ -98,7 +98,7 @@
 
 
 ;; (load "~/.emacs.d/modules/jacek-verse.el")
-(defun verse-link ()                    ;TODO
+(defun verse-link ()
   "Find components."
   (interactive)
   ;; enable mode for ido-completing-read+
@@ -107,8 +107,7 @@
          (bpoint (progn (beginning-of-line) (point)))
          (the-line (buffer-substring-no-properties bpoint cpoint))
          (parsed (verse-parse-line the-line)))
-
-    ;(print (format ">>> parsed is %S for >%s<" parsed the-line))
+    ;; (print (format ">>> parsed is %S for >%s<" parsed the-line))
 
     (let* ((book-name (string-trim
                        (concat
