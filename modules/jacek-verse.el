@@ -78,10 +78,20 @@
 (defun verse-parse-line (str)
   "Parse line fragment in a STR."
   (let ((outcomes (-take 3
-                         (-filter (lambda (x) (consp (caadr x)))
-                                  (-map (lambda (p)
-                                          (list p (verse-parse-location (subseq str (1- p)))))
-                                        (reverse (verse-tokenizer-positions str)))))))
+                         (cl-loop
+                          for prev = nil then r
+                          for x from 0 below (length str)
+                          for r = (verse-parse-location (subseq str x))
+                          when (and
+                                (not (eql (car r) 'parsec-error))
+                                (or (null prev)
+                                    (and prev
+                                         (eql (car prev) 'parsec-error))))
+                          collect (list x r)))))
+    (print (format "parsing %s" str))
+                                        ; (print (format "outcomes %S" outcomes))
+    (cl-loop for o in outcomes
+             do (print (format "outcome %s" o)))
 
     (let ((result
            (if (= (length outcomes) 1)
@@ -91,6 +101,7 @@
                   (verse-outcome-partial (nth 1 outcomes)))
                  (nth 1 outcomes)
                (nth 0 outcomes)))))
+      (print "going to create the list of results")
       (list
        :position (nth 0 result)
        :book (concat
