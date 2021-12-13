@@ -177,8 +177,10 @@
       (goto-char cpoint)
 
       (let ((startpoint (search-backward (plist-get parsed :all))))
-        (replace-region-contents startpoint
-                                 cpoint
+        (insert " "); ensure we have the gap after inserting
+
+        (replace-region-contents (+ 1 startpoint)
+                                 (1+  cpoint)
                                  (lambda ()
                                    (verse-page-link link-book chapter verse))))
       (goto-char (1+ cpoint))
