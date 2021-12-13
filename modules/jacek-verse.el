@@ -37,9 +37,6 @@
 
 ; (load "~/.emacs.d/modules/jacek-verse.el")
 
-(defun tokenin ()
-  "please read the verse 1J4:18")
-
 (defun verse-location ()
   (parsec-collect
    (parsec-many1-s
@@ -50,8 +47,6 @@
 
 (defun verse-book ()
   (parsec-collect
-   (parsec-many-s
-    (parsec-str " "))
    (parsec-many1-s
     (parsec-letter))
    (parsec-many-s
@@ -63,13 +58,10 @@
      (parsec-collect
       (parsec-optional
        (parsec-collect
-        (parsec-one-of ?1 ?2 ?3)))
+        (parsec-one-of ?1 ?2 ?3)
+        (parsec-many-s (parsec-str " "))))
       (verse-book))
-
-     (verse-location)
-
-     (parsec-many-s
-      (parsec-one-of ?\s)))))
+     (verse-location))))
 
 ;;; we have success
 ;;; we can parse verses in fancy strings
@@ -88,10 +80,10 @@
                                              (and prev
                                                   (eql (car prev) 'parsec-error))))
                                    collect (list x r))))))
-    (print (format "parsing %s" str))
+    (print (format "parsing %S" str))
                                         ; (print (format "outcomes %S" outcomes))
     (cl-loop for o in outcomes
-             do (print (format "outcome %s" o)))
+             do (print (format "outcome %S" o)))
 
     (let ((result
            (if (= (length outcomes) 1)
@@ -161,7 +153,7 @@
          (parsed (verse-parse-line the-line))
          )
 
-    (print (format "parsed is %S for >%s<" parsed the-line))
+    (print (format ">>> parsed is %S for >%s<" parsed the-line))
 
     (let* ((book-name (string-trim (plist-get parsed :book)))
            (chapter (plist-get parsed :chapter))
