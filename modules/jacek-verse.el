@@ -37,6 +37,46 @@
 
 ; (load "~/.emacs.d/modules/jacek-verse.el")
 
+(defun verse-find-verse (str)
+  (let ((pre-parsed (parsec-with-input (reverse str)
+                      (parsec-collect
+                       (parsec-many-s (parsec-str " "))
+                       (parsec-many1-s (parsec-digit))
+                       (parsec-str ":")
+                       (parsec-many1-s (parsec-digit))
+                       (parsec-many-s (parsec-str " "))
+                       (parsec-many-s (parsec-letter))
+                       (parsec-many-s (parsec-str " "))
+                       (parsec-optional
+                        (parsec-or
+                         (parsec-str "1")
+                         (parsec-str "2")
+                         (parsec-str "3")))
+                       (parsec-many-s (parsec-str " "))))))
+    (print (format "preparsed %S" pre-parsed))
+    (let ((initial-spaces (last pre-parsed))
+          (final-spaces  (first pre-parsed))
+          (post-parse (parsec-with-input (reverse (apply 'concat pre-parsed))
+                        (parsec-collect
+                         (parsec-many-s (parsec-str " "))
+                         (parsec-optional
+                          (parsec-or
+                           (parsec-str "1")
+                           (parsec-str "2")
+                           (parsec-str "3")))
+                         (parsec-many-s (parsec-str " "))
+                         (parsec-many-s (parsec-letter))
+                         (parsec-many-s (parsec-str " "))
+                         (parsec-many1-s (parsec-digit))
+                         (parsec-str ":")
+                         (parsec-many1-s (parsec-digit))
+                         (parsec-many-s (parsec-str " "))))))
+      (list :parsed post-parse :initial-spaces initial-spaces :final-spaces final-spaces))
+
+    ))
+
+
+
 (defun verse-location ()
   (parsec-collect
    (parsec-many1-s
@@ -169,10 +209,10 @@
       (goto-char cpoint)
 
       (let ((startpoint (search-backward (plist-get parsed :all))))
-        (insert " "); ensure we have the gap after inserting
+        (insert ""); ensure we have the gap after inserting
 
-        (replace-region-contents (+ 1 startpoint)
-                                 (1+  cpoint)
+        (replace-region-contents (+ 0 startpoint)
+                                 (+ 0 cpoint)
                                  (lambda ()
                                    (verse-page-link link-book chapter verse))))
       (goto-char (1+ cpoint))
