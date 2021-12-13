@@ -37,7 +37,8 @@
 
 ; (load "~/.emacs.d/modules/jacek-verse.el")
 
-(defun verse-find-verse (str)
+(defun verse-parse-line (str)
+  "Parse STR to get verse components."
   (let ((pre-parsed (parsec-with-input (reverse str)
                       (parsec-collect
                        (parsec-many-s (parsec-str " "))
@@ -53,106 +54,21 @@
                          (parsec-str "2")
                          (parsec-str "3")))
                        (parsec-many-s (parsec-str " "))))))
-    (print (format "preparsed %S" pre-parsed))
-    (let ((initial-spaces (last pre-parsed))
-          (final-spaces  (first pre-parsed))
-          (post-parse (parsec-with-input (reverse (apply 'concat pre-parsed))
-                        (parsec-collect
-                         (parsec-many-s (parsec-str " "))
-                         (parsec-optional
-                          (parsec-or
-                           (parsec-str "1")
-                           (parsec-str "2")
-                           (parsec-str "3")))
-                         (parsec-many-s (parsec-str " "))
-                         (parsec-many-s (parsec-letter))
-                         (parsec-many-s (parsec-str " "))
-                         (parsec-many1-s (parsec-digit))
-                         (parsec-str ":")
-                         (parsec-many1-s (parsec-digit))
-                         (parsec-many-s (parsec-str " "))))))
-      (list :parsed post-parse :initial-spaces initial-spaces :final-spaces final-spaces))
-
-    ))
-
-
-
-(defun verse-location ()
-  (parsec-collect
-   (parsec-many1-s
-    (parsec-digit))
-   (parsec-str ":")
-   (parsec-many1-s
-    (parsec-digit))))
-
-(defun verse-book ()
-  (parsec-collect
-   (parsec-many1-s
-    (parsec-letter))
-   (parsec-many-s
-    (parsec-str " "))))
-
-(defun verse-parse-location (str)
-  (parsec-with-input str
-    (parsec-collect
-     (parsec-collect
-      (parsec-optional
-       (parsec-collect
-        (parsec-one-of ?1 ?2 ?3)
-        (parsec-many-s (parsec-str " "))))
-      (verse-book))
-     (verse-location))))
-
-;;; we have success
-;;; we can parse verses in fancy strings
-;; (verse-parse-line "please read psaml 1:1 ")
-;; (verse-parse-line "please read psalm 37:11 and 1 john 4:18 ")
-(defun verse-parse-line (str)
-  "Parse line fragment in a STR."
-  (let ((outcomes (reverse (-take 3
-                                  (cl-loop
-                                   for prev = nil then r
-                                   for x from 0 below (length str)
-                                   for r = (verse-parse-location (subseq str x))
-                                   when (and
-                                         (not (eql (car r) 'parsec-error))
-                                         (or (null prev)
-                                             (and prev
-                                                  (eql (car prev) 'parsec-error))))
-                                   collect (list x r))))))
-    (print (format "parsing %S" str))
-                                        ; (print (format "outcomes %S" outcomes))
-    (cl-loop for o in outcomes
-             do (print (format "outcome %S" o)))
-
-    (let ((result
-           (if (= (length outcomes) 1)
-               (nth 0 outcomes)
-             (if (equalp
-                  (verse-outcome-partial (nth 0 outcomes))
-                  (verse-outcome-partial (nth 1 outcomes)))
-                 (nth 1 outcomes)
-               (nth 0 outcomes)))))
-      (print "going to create the list of results")
-      (list
-       :position (nth 0 result)
-       :book (concat
-              (caar (nth 0 (nth 1 result)))
-              (caadr (nth 0 (nth 1 result)))
-              (cadadr (nth 0 (nth 1 result))))
-       :chapter (nth 0 (nth 1 (nth 1 result)))
-       :verse   (nth 2 (nth 1 (nth 1 result)))
-       :all (apply 'concat
-                   (-flatten
-                    (cdr result)))
-       ))))
-
-(defun verse-outcome-partial (outcome)
-  "Get the data without the book number from the OUTCOME."
-  (list
-   (cadr (cadar  (nth 1 outcome)))
-   (car   (cadr (nth 1 outcome)))
-   (caddr (cadr (nth 1 outcome)))))
+    ;(print (format "preparsed %S" pre-parsed))
+    (let ((final-spaces   (nth 0 pre-parsed))
+          (ver      (reverse (nth 1 pre-parsed)))
+          (chap     (reverse (nth 3 pre-parsed)))
+          (book     (reverse (nth 5 pre-parsed)))
+          (book-num (reverse (nth 7 pre-parsed))))
+      (list :initial-spaces (if book-num ; correct for variant w/o book number
+                                (nth 8 pre-parsed)
+                              (nth 6 pre-parsed))
+            :book-num book-num
+            :book book
+            :chapter chap
+            :verse ver
+            :final-spaces final-spaces
+            :all (reverse (apply 'concat pre-parsed))))))
 
 ;; ------------------------------------------------
 (defun verse-books ()
@@ -190,12 +106,16 @@
   (let* ((cpoint (point))
          (bpoint (progn (beginning-of-line) (point)))
          (the-line (buffer-substring-no-properties bpoint cpoint))
-         (parsed (verse-parse-line the-line))
-         )
+         (parsed (verse-parse-line the-line)))
 
-    (print (format ">>> parsed is %S for >%s<" parsed the-line))
+    ;(print (format ">>> parsed is %S for >%s<" parsed the-line))
 
-    (let* ((book-name (string-trim (plist-get parsed :book)))
+    (let* ((book-name (string-trim
+                       (concat
+                        (plist-get parsed :book-num)
+                        " "
+                        (capitalize
+                         (plist-get parsed :book)))))
            (chapter (plist-get parsed :chapter))
            (verse (plist-get parsed :verse))
            (long-books (-map 'car (verse-books)))
@@ -208,24 +128,34 @@
                                               book-name))))
       (goto-char cpoint)
 
-      (let ((startpoint (search-backward (plist-get parsed :all))))
-        (insert ""); ensure we have the gap after inserting
-
+      (let ((startpoint (search-backward (plist-get parsed :all)))
+            (vpl (verse-page-link link-book chapter verse
+                                  (plist-get parsed :initial-spaces)
+                                  (plist-get parsed :final-spaces))))
+        ;(print (format "going to replace with >%S<" vpl))
         (replace-region-contents (+ 0 startpoint)
                                  (+ 0 cpoint)
-                                 (lambda ()
-                                   (verse-page-link link-book chapter verse))))
+                                 (lambda () vpl)))
       (goto-char (1+ cpoint))
-      (search-forward "]]"))))
+      (search-forward "]]")
+      (forward-char (length (plist-get parsed :final-spaces))))))
 
-(defun verse-page-link (book-name chapter verse)
-  "Take strings BOOK-NAME CHAPTER and VERSE to create a string for org link."
+(defun verse-page-link (book-name chapter verse initial-spaces final-spaces)
+  "Take strings BOOK-NAME CHAPTER and VERSE to create a string for org link obeying the INITIAL-SPACES and FINAL-SPACES."
   (let ((book-name-number (caar (-filter (lambda (x)
                                            (equalp book-name (cadr x)))
                                          (verse-books-numbered)))))
-    (format "[[https://wol.jw.org/en/wol/b/r1/lp-e/nwtsty/%d/%s#v=%d:%s:%s][%s %s:%s]]"
-            book-name-number chapter book-name-number chapter verse
-            book-name chapter verse )))
+    (format "%s[[https://wol.jw.org/en/wol/b/r1/lp-e/nwtsty/%d/%s#v=%d:%s:%s][%s %s:%s]]%s"
+            initial-spaces
+            book-name-number
+            chapter
+            book-name-number
+            chapter
+            verse
+            book-name
+            chapter
+            verse
+            final-spaces)))
 
 (provide 'jacek-verse)
 ;;; jacek-verse.el ends here
