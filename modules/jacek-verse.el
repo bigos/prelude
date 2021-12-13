@@ -77,17 +77,17 @@
 ;; (verse-parse-line "please read psalm 37:11 and 1 john 4:18 ")
 (defun verse-parse-line (str)
   "Parse line fragment in a STR."
-  (let ((outcomes (-take 3
-                         (cl-loop
-                          for prev = nil then r
-                          for x from 0 below (length str)
-                          for r = (verse-parse-location (subseq str x))
-                          when (and
-                                (not (eql (car r) 'parsec-error))
-                                (or (null prev)
-                                    (and prev
-                                         (eql (car prev) 'parsec-error))))
-                          collect (list x r)))))
+  (let ((outcomes (reverse (-take 3
+                                  (cl-loop
+                                   for prev = nil then r
+                                   for x from 0 below (length str)
+                                   for r = (verse-parse-location (subseq str x))
+                                   when (and
+                                         (not (eql (car r) 'parsec-error))
+                                         (or (null prev)
+                                             (and prev
+                                                  (eql (car prev) 'parsec-error))))
+                                   collect (list x r))))))
     (print (format "parsing %s" str))
                                         ; (print (format "outcomes %S" outcomes))
     (cl-loop for o in outcomes
@@ -121,30 +121,6 @@
    (cadr (cadar  (nth 1 outcome)))
    (car   (cadr (nth 1 outcome)))
    (caddr (cadr (nth 1 outcome)))))
-
-(defun verse-tokenizer (string)
-  "Get positions of interesting parts of our STRING."
-  (car
-   (parsec-with-input string
-     (parsec-collect
-      (parsec-sepby
-       (parsec-many-s (parsec-or (parsec-letter)
-                                 (parsec-digit)
-                                 (parsec-one-of ?:)))
-
-       (parsec-one-of ?\s ?, ?.))))))
-
-(defun verse-tokenizer-positions (string)
-  "Get positions of interesting parts of our STRING."
-  (car
-   (parsec-with-input string
-     (parsec-collect
-      (parsec-sepby (parsec-query
-                     (parsec-many-s (parsec-or (parsec-letter)
-                                               (parsec-digit)
-                                               (parsec-one-of ?:)))
-                     :beg)
-                    (parsec-one-of ?\s ?, ?.))))))
 
 ;; ------------------------------------------------
 (defun verse-books ()
@@ -185,9 +161,9 @@
          (parsed (verse-parse-line the-line))
          )
 
-    (print (format "parsed is %s for >%s<" parsed the-line))
+    (print (format "parsed is %S for >%s<" parsed the-line))
 
-    (let* ((book-name (plist-get parsed :book))
+    (let* ((book-name (string-trim (plist-get parsed :book)))
            (chapter (plist-get parsed :chapter))
            (verse (plist-get parsed :verse))
            (long-books (-map 'car (verse-books)))
