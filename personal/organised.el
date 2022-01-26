@@ -462,7 +462,11 @@
   (let ((color (face-attribute 'default :background)))
     (if (equal (substring color 0 1) "#")
         color
-      (apply 'color-rgb-to-hex (color-name-to-rgb color)))))
+      (apply 'color-rgb-to-hex
+             (let ((color-rgb (color-name-to-rgb color)))
+               (if (null color-rgb)
+                 '(0.0 0.0 0.0)
+                 color-rgb))))))
 
 (defun bg-light ()
   "Calculate background brightness."
