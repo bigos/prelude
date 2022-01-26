@@ -69,7 +69,7 @@
     expand-region
     flycheck
     gist
-
+    git-modes
     guru-mode
     hl-todo
     imenu-anywhere
