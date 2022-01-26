@@ -645,12 +645,17 @@ disagree with magit.
                   (substring hex 3 5)
                   (substring hex 5 7))))
 
+
   (defun bg-color ()
-    "Return COLOR or it's hexvalue."
-    (let ((color (face-attribute 'default :background)))
-      (if (equal (substring color 0 1) "#")
-          color
-        (apply 'color-rgb-to-hex (color-name-to-rgb color)))))
+     "Return COLOR or it's hexvalue."
+     (let ((color (face-attribute 'default :background)))
+       (if (equal (substring color 0 1) "#")
+           color
+         (apply 'color-rgb-to-hex
+                (let ((color-rgb (color-name-to-rgb color)))
+                  (if (null color-rgb)
+                      '(0.0 0.0 0.0)
+                    color-rgb))))))
 
   (defun bg-light ()
     "Calculate background brightness."
