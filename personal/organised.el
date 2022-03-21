@@ -344,7 +344,7 @@
  :hook (haskell-mode . ormolu-format-on-save-mode)
  :bind
  (:map haskell-mode-map
-   ("C-c r" . ormolu-format-buffer)))
+   ("s-h" . ormolu-format-buffer)))
 
 (setq geiser-active-implementations '(scheme chezscheme racket))
 ;; (setq geiser-racket-binary "/usr/bin/racket")

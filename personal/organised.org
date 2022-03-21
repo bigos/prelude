@@ -495,7 +495,7 @@ disagree with magit.
    :hook (haskell-mode . ormolu-format-on-save-mode)
    :bind
    (:map haskell-mode-map
-     ("C-c r" . ormolu-format-buffer)))
+     ("s-h" . ormolu-format-buffer)))
 
 #+end_src
 
