@@ -492,10 +492,11 @@ disagree with magit.
 **** ormolu
 #+begin_src emacs-lisp
   (use-package ormolu
-   :hook (haskell-mode . ormolu-format-on-save-mode)
-   :bind
-   (:map haskell-mode-map
-     ("s-h" . ormolu-format-buffer)))
+    :ensure t
+    :hook (haskell-mode . ormolu-format-on-save-mode)
+    :bind
+    (:map haskell-mode-map
+          ("s-h" . ormolu-format-buffer)))
 
 #+end_src
 

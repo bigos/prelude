@@ -341,10 +341,11 @@
              (local-set-key (kbd "C-a") 'haskell-interactive-mode-bol)))
 
 (use-package ormolu
- :hook (haskell-mode . ormolu-format-on-save-mode)
- :bind
- (:map haskell-mode-map
-   ("s-h" . ormolu-format-buffer)))
+  :ensure t
+  :hook (haskell-mode . ormolu-format-on-save-mode)
+  :bind
+  (:map haskell-mode-map
+        ("s-h" . ormolu-format-buffer)))
 
 (setq geiser-active-implementations '(scheme chezscheme racket))
 ;; (setq geiser-racket-binary "/usr/bin/racket")
