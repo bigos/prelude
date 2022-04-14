@@ -82,6 +82,23 @@ M-x acl2 goodies
 
 *** Basic configuration
 
+taken from
+https://emacs.stackexchange.com/a/9486/8952
+#+begin_src emacs-lisp
+(defun jump-to-file-and-line ()
+  "Reads a line in the form FILENAME:LINE and, assuming a
+relative path, opens that file in another window and jumps to the
+line."
+  (interactive)
+  (let ((line (buffer-substring-no-properties (point-at-bol) (point-at-eol))))
+    (string-match "\\(.*\\):\\([0-9]+\\)" line)
+    (let ((file (match-string 1 line))
+          (lnum (match-string 2 line)))
+      (when (and file (file-exists-p (concat default-directory file)))
+        (find-file-other-window (concat default-directory file))
+        (and lnum (goto-line (string-to-number lnum)))))))
+#+end_src
+
 #+BEGIN_SRC emacs-lisp
   (defun double-flash-mode-line ()
     (let ((flash-sec (/ 1.0 20)))
