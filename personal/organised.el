@@ -24,18 +24,18 @@
       (set-buffer scriptBuf)
       (lisp-mode)))
 
-(defun jump-to-file-and-line ()
-  "Reads a line in the form FILENAME:LINE and, assuming a
-relative path, opens that file in another window and jumps to the
-line."
+(defun jump-to-line-in-file ()
+  "Describe me"
   (interactive)
-  (let ((line (buffer-substring-no-properties (point-at-bol) (point-at-eol))))
-    (string-match "\\(.*\\):\\([0-9]+\\)" line)
-    (let ((file (match-string 1 line))
-          (lnum (match-string 2 line)))
-      (when (and file (file-exists-p (concat default-directory file)))
-        (find-file-other-window (concat default-directory file))
-        (and lnum (goto-line (string-to-number lnum)))))))
+  (let ((line (thing-at-point 'filename)))
+    (let ((line-components (split-string line ":")))
+      (let ((file (nth 0 line-components))
+            (path (nth 1 line-components))
+            (line (nth 3 line-components)))
+        (message (format "line components %s > %s > %s" file path line))
+        (progn
+          (find-file-other-window path)
+          (goto-line (string-to-number line)))))))
 
   (defun double-flash-mode-line ()
     (let ((flash-sec (/ 1.0 20)))
