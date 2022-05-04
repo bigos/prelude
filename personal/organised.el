@@ -67,6 +67,7 @@
 
 (setq prelude-guru nil) ;; better for slime
     ;; (setq guru-warn-only t) ;; not suitable for slime
+(setq prelude-whitespace nil)
 
 (menu-bar-mode 1)
 (global-hl-line-mode -1)
