@@ -220,7 +220,7 @@ https://emacs.stackexchange.com/a/9486/8952
 file:~/.emacs.d-prelude/core/prelude-editor.el::193
 
 #+begin_src emacs-lisp
-  (setq whitespace-line-column 240)
+  (setq whitespace-line-column 480)
 #+end_src
 
 *** Tabs
