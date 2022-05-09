@@ -150,7 +150,7 @@
 
    (add-hook 'overwrite-mode-hook #'(lambda () (double-flash-mode-line)))
 
-  (setq whitespace-line-column 240)
+  (setq whitespace-line-column 480)
 
   (defun my/ibuffer-visit-buffers-other-tab ()
     "Open buffers marked with m in other tabs."
