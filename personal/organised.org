@@ -131,7 +131,6 @@ https://emacs.stackexchange.com/a/9486/8952
 
   (setq prelude-guru nil) ;; better for slime
       ;; (setq guru-warn-only t) ;; not suitable for slime
-  (setq prelude-whitespace nil)
 
   (menu-bar-mode 1)
   (global-hl-line-mode -1)
@@ -216,6 +215,13 @@ https://emacs.stackexchange.com/a/9486/8952
    (add-hook 'overwrite-mode-hook #'(lambda () (double-flash-mode-line)))
 
 #+END_SRC
+
+*** White space
+file:~/.emacs.d-prelude/core/prelude-editor.el::193
+
+#+begin_src emacs-lisp
+  (setq whitespace-line-column 240)
+#+end_src
 
 *** Tabs
 
