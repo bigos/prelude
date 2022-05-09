@@ -248,7 +248,6 @@ M-x plantuml-set-output-type change to png to make preview work, because svg has
 parsing error
 
 #+begin_src emacs-lisp
-
 ;;; basic plantuml config
 
 (prelude-require-packages '(flycheck-plantuml))
