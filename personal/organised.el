@@ -191,6 +191,22 @@
               '(lambda ()
                  (local-set-key (kbd "C-]") 'insert-graph-arrow)))
 
+;;; org-mode source code blocks
+(defun insert-named-source-block (language)
+  "Insert source block with LANGUAGE string provided."
+  (insert "#+begin_src ")
+  (insert language)
+  (insert "\n")
+  (insert "#+end_src"))
+
+(defun insert-emacs-lisp-source-block ()
+  (interactive)
+  (insert-named-source-block "emacs-lisp"))
+
+(add-hook 'org-mode-hook
+          '(lambda ()
+             (local-set-key (kbd "s-#") 'insert-emacs-lisp-source-block)))
+
 (require 'org)
 (org-add-link-type "pdf" 'org-pdf-open nil)
 

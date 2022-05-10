@@ -39,6 +39,7 @@ This section will contain definitions used by multiple sections
   (insert " -> "))
 #+end_src
 
+
 *** ACL2
 
 #+BEGIN_SRC emacs-lisp
@@ -291,8 +292,28 @@ parsing error
 
 *** Org mode configuration
 
-**** pdf link to page index
+**** insert source code block
+This fragment [[*graph arrow][graph arrow]] is an example of inserting text into buffer.
 
+#+begin_src emacs-lisp
+;;; org-mode source code blocks
+(defun insert-named-source-block (language)
+  "Insert source block with LANGUAGE string provided."
+  (insert "#+begin_src ")
+  (insert language)
+  (insert "\n")
+  (insert "#+end_src"))
+
+(defun insert-emacs-lisp-source-block ()
+  (interactive)
+  (insert-named-source-block "emacs-lisp"))
+
+(add-hook 'org-mode-hook
+          '(lambda ()
+             (local-set-key (kbd "s-#") 'insert-emacs-lisp-source-block)))
+#+end_src
+
+**** pdf link to page index
 #+BEGIN_SRC emacs-lisp
 (require 'org)
 (org-add-link-type "pdf" 'org-pdf-open nil)
