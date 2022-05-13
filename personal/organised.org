@@ -146,6 +146,7 @@ https://emacs.stackexchange.com/a/9486/8952
                               graphviz-dot-mode
                               helm-descbinds
                               helm-projectile
+                              htmlize
                               ido-completing-read+
                               kurecolor
                               load-theme-buffer-local
