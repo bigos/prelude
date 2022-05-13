@@ -81,6 +81,7 @@
                               graphviz-dot-mode
                               helm-descbinds
                               helm-projectile
+                              htmlize
                               ido-completing-read+
                               kurecolor
                               load-theme-buffer-local
