@@ -26,7 +26,7 @@
 
 (global-set-key (kbd "s-l s") 'org-store-link)
 (global-set-key (kbd "s-l i") 'org-insert-link)
-(global-set-key (kbd "s-l o") 'org-open-at-mouse)
+(global-set-key (kbd "s-l o") 'org-open-at-point)
 
 (defun jump-to-line-in-file ()
   "Describe me"

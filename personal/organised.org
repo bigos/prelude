@@ -83,7 +83,7 @@ M-x acl2 goodies
 
 *** Basic configuration
 
-global org-mode links
+Global org-mode links can be used to jump to org file from source comments.
 #+begin_src emacs-lisp
   (global-set-key (kbd "s-l s") 'org-store-link)
   (global-set-key (kbd "s-l i") 'org-insert-link)
