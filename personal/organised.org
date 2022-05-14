@@ -656,16 +656,16 @@ disagree with magit.
 
 **** The rest
 #+BEGIN_SRC emacs-lisp
-(setq common-lisp-hyperspec-root
-      (format
-       "file:/home/%s/Documents/Manuals/Lisp/HyperSpec-7-0/HyperSpec/"
-       user-login-name))
+  (setq common-lisp-hyperspec-root
+        (format
+         "file:/home/%s/Documents/Manuals/Lisp/HyperSpec-7-0/HyperSpec/"
+         user-login-name))
 
-  (require 'redshank-loader)
-  (eval-after-load "redshank-loader"
-    `(redshank-setup '(lisp-mode-hook
-                       slime-repl-mode-hook)
-                     t))
+      (require 'redshank-loader)
+      (eval-after-load "redshank-loader"
+        `(redshank-setup '(lisp-mode-hook
+                           slime-repl-mode-hook)
+                         t))
 
   (defun unfold-lisp ()
     "Unfold lisp code."
@@ -676,6 +676,19 @@ disagree with magit.
     (newline-and-indent))
 
   (global-set-key (kbd "s-0") 'unfold-lisp)
+
+  ;;; balanced comments
+  (defun insert-balanced-comment ()
+    "Insert balanced comment '#||#'."
+    (interactive)
+    (insert "#||#")
+    (backward-char)
+    (backward-char))
+
+  (add-hook 'lisp-mode-hook
+            '(lambda ()
+               (local-set-key (kbd "s-;") 'insert-balanced-comment)))
+
 #+END_SRC
 
 *** Parentheses coloring
