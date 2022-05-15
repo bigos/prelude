@@ -85,9 +85,9 @@ M-x acl2 goodies
 
 Global org-mode links can be used to jump to org file from source comments.
 #+begin_src emacs-lisp
-  (global-set-key (kbd "s-l s") 'org-store-link)
-  (global-set-key (kbd "s-l i") 'org-insert-link)
-  (global-set-key (kbd "s-l o") 'org-open-at-point)
+  (global-set-key (kbd "C-S-l s") 'org-store-link)
+  (global-set-key (kbd "C-S-l i") 'org-insert-link)
+  (global-set-key (kbd "C-S-l o") 'org-open-at-point)
 #+end_src
 
 jumping to line taken from
