@@ -1,0 +1,13 @@
+* README
+
+The package folders dropped here are automatically added to load-path.
+
+** running idris-mode
+
+#+begin_src smacs-lisp
+  (require 'idris-mode)
+#+end_src
+
+and in *.idr file M-x idris-mode
+
+That does not make the interpreter work but the syntax looks OK.
