@@ -385,6 +385,11 @@
   (:map haskell-mode-map
         ("s-h" . ormolu-format-buffer)))
 
+(use-package idris2-mode
+  :ensure nil
+  :load-path "vendor/idris2-mode"
+  :init (setq company-global-modes '(not idris2-mode idris2-repl-mode)))
+
 (setq geiser-active-implementations '(scheme chezscheme racket))
 ;; (setq geiser-racket-binary "/usr/bin/racket")
 

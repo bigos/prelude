@@ -555,6 +555,14 @@ disagree with magit.
 
 #+end_src
 
+*** Idris
+#+begin_src emacs-lisp
+  (use-package idris2-mode
+    :ensure nil
+    :load-path "vendor/idris2-mode"
+    :init (setq company-global-modes '(not idris2-mode idris2-repl-mode)))
+#+end_src
+
 *** Lisp
 
 **** Geiser
