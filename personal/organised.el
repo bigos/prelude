@@ -386,7 +386,8 @@
           ("s-h" . ormolu-format-buffer)))
 
 (require 'idris2-mode)
-(setq company-global-modes '(not idris2-mode idris2-repl-mode))
+(setq company-global-modes  '(not idris2-mode idris2-repl-mode))
+(setq flycheck-global-modes '(not idris2-mode idris2-repl-mode))
 
    (setq geiser-active-implementations '(scheme chezscheme racket))
    ;; (setq geiser-racket-binary "/usr/bin/racket")

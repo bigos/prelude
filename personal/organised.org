@@ -1,5 +1,3 @@
-#+PROPERTY:    header-args:emacs-lisp  :tangle yes
-
 * Org mode Emacs configuration for Prelude
 
 This  file is a personal configuration file for a modified version of Prelude
@@ -558,7 +556,8 @@ disagree with magit.
 *** Idris
 #+begin_src emacs-lisp
 (require 'idris2-mode)
-(setq company-global-modes '(not idris2-mode idris2-repl-mode))
+(setq company-global-modes  '(not idris2-mode idris2-repl-mode))
+(setq flycheck-global-modes '(not idris2-mode idris2-repl-mode))
 #+end_src
 
 *** Lisp
