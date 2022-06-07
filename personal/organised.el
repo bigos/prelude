@@ -196,6 +196,11 @@
             '(lambda ()
                (local-set-key (kbd "C-]") 'insert-graph-arrow)))
 
+(use-package origami
+  :ensure t
+  :demand
+  :bind (("C-q t" . origami-toggle-node)))
+
 ;;; org-mode source code blocks
 (defun insert-named-source-block (language)
   "Insert source block with LANGUAGE string provided."
