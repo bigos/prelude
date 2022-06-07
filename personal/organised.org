@@ -456,6 +456,12 @@ disagree with magit.
   (global-set-key [f9] 'open-buffer-in-vscode)
 #+END_SRC
 
+*** origami
+#+begin_src emacs-lisp
+  (use-package origami
+    :ensure t
+    :bind (("C-q t". origami-toggle-node))
+#+end_src
 *** MacOSX specific settings
 
 #+BEGIN_SRC emacs-lisp
