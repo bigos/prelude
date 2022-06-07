@@ -700,7 +700,7 @@ disagree with magit.
 
   (add-hook 'lisp-mode-hook
             '(lambda ()
-               (local-set-key (kbTangled 0 code blocksd "s-;") 'insert-balanced-comment)))
+               (local-set-key (kbd "s-;") 'insert-balanced-comment)))
 
 #+END_SRC
 
