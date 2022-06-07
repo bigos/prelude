@@ -199,7 +199,7 @@
 (use-package origami
   :ensure t
   :demand
-  :bind (("C-q t" . origami-toggle-node)))
+  )
 
 ;;; org-mode source code blocks
 (defun insert-named-source-block (language)
