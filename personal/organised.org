@@ -10,7 +10,6 @@ Mx org-babel-tangle
 
 ** Configuration
 
-
    This is still work in progress.
 
 *** Prologue
@@ -295,15 +294,6 @@ parsing error
   (add-hook 'graphviz-dot-mode-hook
               '(lambda ()
                  (local-set-key (kbd "C-]") 'insert-graph-arrow)))
-#+end_src
-
-*** Origami
-https://gitea.polonkai.eu/gergely/my-emacs-d/commit/6938f579817ceb4ebccfad3b15f42181c7070b09?style=unified&whitespace=
-#+begin_src emacs-lisp
-  (use-package origami
-    :ensure t
-    :demand
-    :bind (("C-q t" . origami-toggle-node)))
 #+end_src
 
 *** Org mode configuration
