@@ -82,7 +82,6 @@ M-x acl2 goodies
 *** Basic configuration
 
 Global org-mode links can be used to jump to org file from source comments.
-
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-S-l s") 'org-store-link)
   (global-set-key (kbd "C-S-l i") 'org-insert-link)
@@ -91,7 +90,6 @@ Global org-mode links can be used to jump to org file from source comments.
 
 jumping to line taken from
 https://emacs.stackexchange.com/a/9486/8952
-
 #+begin_src emacs-lisp
   (defun jump-to-line-in-file ()
     "Describe me"
@@ -159,7 +157,7 @@ https://emacs.stackexchange.com/a/9486/8952
                               load-theme-buffer-local
                               magit
                               mode-line-bell
-                              ;ob-restclient
+                              ob-restclient
                               paredit
                               parsec
                               projectile
@@ -343,7 +341,7 @@ This fragment [[*graph arrow][graph arrow]] is an example of inserting text into
 #+end_src
 
 **** link to a file and line
-#+begin_src emacs-lisp
+     #+begin_src emacs-lisp
 (defun my-file-line-link ()
   "Copy the buffer full path and line number into a clipboard
                  for pasting into *.org file."
@@ -368,7 +366,7 @@ This fragment [[*graph arrow][graph arrow]] is an example of inserting text into
 
        ;; we had to cheat to have s-\ as a shortcut
 (global-set-key (kbd (format "%s-%c" "s" 92)) 'my-file-line-link)
-#+end_src
+     #+end_src
 
 **** md-to-org-cleanup
      We can export Freeplane mind maps to ~*.md~ file format. The we can use
@@ -378,7 +376,7 @@ This fragment [[*graph arrow][graph arrow]] is an example of inserting text into
 
      Now we need to clean up the file removing properties drawers
 
-#+begin_src emacs-lisp
+     #+begin_src emacs-lisp
 
        (defun md-to-org-cleanup ()
          "After we use pandoc to concert md file, we need to
@@ -393,7 +391,7 @@ This fragment [[*graph arrow][graph arrow]] is an example of inserting text into
            (kill-line)))
 
        (global-set-key (kbd "s-9") 'md-to-org-cleanup)
-#+end_src
+     #+end_src
 
 **** ob-restclient
 
@@ -402,7 +400,13 @@ An extension to restclient.el for emacs that provides org-babel support.
 To get started, install ob-restclient.el and add (restclient . t) to
 org-babel-load-languages:
 
+#+BEGIN_SRC emacs-lisp
+  (require 'restclient)
 
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((restclient . t)))
+#+END_SRC
 
 **** org-roam
 For the time being we will skip on org-roam, since it is buggy and seems to
@@ -563,28 +567,28 @@ disagree with magit.
 ***** Problem explanation and fix not executed by Emacs
  Until better solution is found modify:
 
-#+BEGIN_EXAMPLE
+ #+BEGIN_EXAMPLE
  ~/.emacs.d/modules/prelude-scheme.el
-#+END_EXAMPLE
+ #+END_EXAMPLE
 
  as per my comment on:
  https://gitlab.com/jaor/geiser/issues/156#note_164897206
  to have the beginning fragment like:
 
-#+BEGIN_EXAMPLE
+ #+BEGIN_EXAMPLE
  (require 'prelude-lisp)
  (require 'geiser)
  (require 'geiser-racket)
-#+END_EXAMPLE
+ #+END_EXAMPLE
 
 ***** the Emacs init code
-#+BEGIN_SRC emacs-lisp
+ #+BEGIN_SRC emacs-lisp
    (setq geiser-active-implementations '(scheme chezscheme racket))
    ;; (setq geiser-racket-binary "/usr/bin/racket")
-#+END_SRC
+ #+END_SRC
 
 **** Clojure
-#+BEGIN_SRC emacs-lisp
+ #+BEGIN_SRC emacs-lisp
    (add-to-list 'auto-mode-alist '("\\.edn\\'" . clojure-mode))
 
    (add-hook 'cider-repl-mode-hook
@@ -594,7 +598,7 @@ disagree with magit.
    (add-hook 'cider-repl-mode-hook
              '(lambda ()
                 (local-set-key (kbd "C-c M-a") 'cider-load-all-files)))
-#+END_SRC
+ #+END_SRC
 
 **** Slime
 #+BEGIN_SRC emacs-lisp
