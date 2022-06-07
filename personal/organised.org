@@ -159,7 +159,7 @@ https://emacs.stackexchange.com/a/9486/8952
                               load-theme-buffer-local
                               magit
                               mode-line-bell
-                              ob-restclient
+                              ;ob-restclient
                               paredit
                               parsec
                               projectile
@@ -402,13 +402,7 @@ An extension to restclient.el for emacs that provides org-babel support.
 To get started, install ob-restclient.el and add (restclient . t) to
 org-babel-load-languages:
 
-#+BEGIN_SRC emacs-lisp
-  (require 'restclient)
 
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((restclient . t)))
-#+END_SRC
 
 **** org-roam
 For the time being we will skip on org-roam, since it is buggy and seems to
