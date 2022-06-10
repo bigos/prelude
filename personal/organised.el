@@ -1,20 +1,20 @@
-  ;;; code:
+;;; code:
 
-  ;;; WARNING! this *.el file has been generated automatically from
-  ;;; a corresponding *.org file. Do not edit this *.el file, but edit
-  ;;; the *.org file which will generate the *.el file upon executing
-  ;;; Mx org-babel-tangle.
+;;; WARNING! this *.el file has been generated automatically from
+;;; a corresponding *.org file. Do not edit this *.el file, but edit
+;;; the *.org file which will generate the *.el file upon executing
+;;; Mx org-babel-tangle.
 
 (defun insert-graph-arrow ()
   (interactive)
   (insert " -> "))
 
-  (defun load-acl2 ()
+(defun load-acl2 ()
     (interactive)
     (load "~/Documents/acl2-8.4/emacs/emacs-acl2.el")
     (setq inferior-acl2-program "~/Documents/acl2-8.4/saved_acl2"))
 
-  (defun acl2-goodies ()
+(defun acl2-goodies ()
     (interactive)
     (rainbow-delimiters-mode)
     (paredit-mode)
@@ -28,7 +28,7 @@
   (global-set-key (kbd "C-S-l i") 'org-insert-link)
   (global-set-key (kbd "C-S-l o") 'org-open-at-point)
 
-  (defun jump-to-line-in-file ()
+(defun jump-to-line-in-file ()
     "Describe me"
     (interactive)
     (let ((line (thing-at-point 'filename)))
@@ -43,21 +43,21 @@
 
   (global-set-key (kbd "C-x j l") 'jump-to-line-in-file)
 
-  (defun double-flash-mode-line ()
+(defun double-flash-mode-line ()
     (let ((flash-sec (/ 1.0 20)))
       (invert-face 'mode-line)
       (run-with-timer flash-sec nil #'invert-face 'mode-line)
       (run-with-timer (* 2 flash-sec) nil #'invert-face 'mode-line)
       (run-with-timer (* 3 flash-sec) nil #'invert-face 'mode-line)))
 
-  (defun go-80-word-beginning ()
+(defun go-80-word-beginning ()
     (interactive)
     (beginning-of-line)
     (forward-char 80)
     (forward-word)
     (backward-word))
 
-  (defun cleanup-80 ()
+(defun cleanup-80 ()
     (interactive)
     (beginning-of-line)
     (forward-char 80)
@@ -67,19 +67,19 @@
     ;; insert new line char
     (newline-and-indent))
 
-  (global-set-key (kbd "s-8") 'cleanup-80)
+(global-set-key (kbd "s-8") 'cleanup-80)
 
-  (setq prelude-guru nil) ;; better for slime
-      ;; (setq guru-warn-only t) ;; not suitable for slime
+(setq prelude-guru nil) ;; better for slime
+;; (setq guru-warn-only t) ;; not suitable for slime
 
-  (menu-bar-mode 1)
-  (global-hl-line-mode -1)
-      ;; (setq prelude-flyspell nil)
-      ;;(smartparens-global-mode -1)
+(menu-bar-mode 1)
+(global-hl-line-mode -1)
+;; (setq prelude-flyspell nil)
+;;(smartparens-global-mode -1)
 
-  (global-set-key (kbd "s-f") 'vc-git-grep)
+(global-set-key (kbd "s-f") 'vc-git-grep)
 
-  (prelude-require-packages '(buffer-move
+(prelude-require-packages '(buffer-move
                               dash
                               enh-ruby-mode
                               graphviz-dot-mode
@@ -115,49 +115,49 @@
                               use-package
                               web-mode))
 
-  (eval-when-compile
+(eval-when-compile
     (require 'use-package))
-      (require 'diminish)                ;; if you use :diminish
-      (require 'bind-key)                ;; if you use any :bind variant
+(require 'diminish)                ;; if you use :diminish
+(require 'bind-key)                ;; if you use any :bind variant
 
-      ; (add-to-list 'load-path "/home/jacek/.emacs.d/elpa/enh-ruby-mode-20190513.254/enh-ruby-mode.el") ; must be added after any path containing old ruby-mode
-  (autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
+; (add-to-list 'load-path "/home/jacek/.emacs.d/elpa/enh-ruby-mode-20190513.254/enh-ruby-mode.el") ; must be added after any path containing old ruby-mode
+(autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
 
-  (global-set-key (kbd "s-'") (quote ruby-toggle-string-quotes))
+(global-set-key (kbd "s-'") (quote ruby-toggle-string-quotes))
 
-  (add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
-  (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))                                          ;
-  (add-to-list 'auto-mode-alist
+(add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
+(add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))                                          ;
+(add-to-list 'auto-mode-alist
                    '("\\(?:\\.rb\\|ru\\|rake\\|thor\\|jbuilder\\|gemspec\\|podspec\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'" . enh-ruby-mode))
 
-      ;;; ignore rufo for now
-      ;; (setq rufo-enable-format-on-save t)
-      ;; (add-hook 'enh-ruby-mode-hook 'rufo-minor-mode)
+;;; ignore rufo for now
+;; (setq rufo-enable-format-on-save t)
+;; (add-hook 'enh-ruby-mode-hook 'rufo-minor-mode)
 
-  (setq org-src-fontify-natively t)
+(setq org-src-fontify-natively t)
 
-  (helm-descbinds-mode)
-  (require 'load-theme-buffer-local)
+(helm-descbinds-mode)
+(require 'load-theme-buffer-local)
 
-      ;;; get rid of utf-8 warning in Ruby mode
-  (setq ruby-insert-encoding-magic-comment nil)
+;;; get rid of utf-8 warning in Ruby mode
+(setq ruby-insert-encoding-magic-comment nil)
 
-      ;; magit warning silencing
-  (setq magit-auto-revert-mode nil)
-  (setq magit-last-seen-setup-instructions "1.4.0")
+;; magit warning silencing
+(setq magit-auto-revert-mode nil)
+(setq magit-last-seen-setup-instructions "1.4.0")
 
-  (load "server")
-   (unless (server-running-p)
-   (server-start))
+(load "server")
+(unless (server-running-p)
+(server-start))
 
-    ;;; TODO
-    ;; (add-hook 'scheme-mode-hook (lambda () (swap-paredit)))
+;;; TODO
+;; (add-hook 'scheme-mode-hook (lambda () (swap-paredit)))
 
-   (add-hook 'overwrite-mode-hook #'(lambda () (double-flash-mode-line)))
+(add-hook 'overwrite-mode-hook #'(lambda () (double-flash-mode-line)))
 
-  (setq whitespace-line-column 480)
+(setq whitespace-line-column 480)
 
-  (defun my/ibuffer-visit-buffers-other-tab ()
+(defun my/ibuffer-visit-buffers-other-tab ()
     "Open buffers marked with m in other tabs."
     (interactive)
     (mapc
@@ -180,19 +180,19 @@
 (add-to-list
  'org-src-lang-modes '("plantuml" . plantuml))
 
-  (require 'string-inflection)
+(require 'string-inflection)
 
-  ;; default
-  (global-set-key [f5] 'string-inflection-all-cycle)
+;; default
+(global-set-key [f5] 'string-inflection-all-cycle)
 
-  ;; for ruby
-  (add-hook 'ruby-mode-hook
+;; for ruby
+(add-hook 'ruby-mode-hook
             '(lambda ()
                (local-set-key [f6] 'string-inflection-ruby-style-cycle)))
 
-  (setq string-inflection-skip-backward-when-done t)
+(setq string-inflection-skip-backward-when-done t)
 
-  (add-hook 'graphviz-dot-mode-hook
+(add-hook 'graphviz-dot-mode-hook
               '(lambda ()
                  (local-set-key (kbd "C-]") 'insert-graph-arrow)))
 
@@ -264,18 +264,18 @@
          (dotimes (n 6)
            (kill-line)))
 
-       (global-set-key (kbd "s-9") 'md-to-org-cleanup)
+(global-set-key (kbd "s-9") 'md-to-org-cleanup)
 
-  (require 'restclient)
+(require 'restclient)
 
-  (org-babel-do-load-languages
+(org-babel-do-load-languages
    'org-babel-load-languages
    '((restclient . t)))
 
-  ;; Org-Roam basic configuration
-  (setq org-directory (concat (getenv "HOME") "/Documents/org-roam/"))
+;; Org-Roam basic configuration
+(setq org-directory (concat (getenv "HOME") "/Documents/org-roam/"))
 
-  (use-package org-roam
+(use-package org-roam
     :ensure t
     :after org
     :init (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
@@ -294,7 +294,7 @@
                   ("C-c n a" . org-roam-alias-add)
                   ("C-c n l" . org-roam-buffer-toggle)))))
 
-  (defun open-buffer-in-vscode ()
+(defun open-buffer-in-vscode ()
     (interactive)
 
     ;; this possibly crashes emacs
@@ -304,44 +304,44 @@
       (when bfn (let ((com (concatenate 'string "code " bfn)))
                   (shell-command com)))))
 
-  (global-set-key [f9] 'open-buffer-in-vscode)
+(global-set-key [f9] 'open-buffer-in-vscode)
 
-  ;; Allow hash to be entered on MacOSX
-  (fset 'insertPound "#")
-  (global-set-key (kbd "M-3") 'insertPound)
+;; Allow hash to be entered on MacOSX
+(fset 'insertPound "#")
+(global-set-key (kbd "M-3") 'insertPound)
 
-  ;;; MacOSX style shortcuts
-  (global-set-key (kbd "s-z") 'undo)
-  (global-set-key (kbd "s-x") 'clipboard-kill-region)
-  (global-set-key (kbd "s-c") 'clipboard-kill-ring-save)
-  (global-set-key (kbd "s-v") 'clipboard-yank)
+;;; MacOSX style shortcuts
+(global-set-key (kbd "s-z") 'undo)
+(global-set-key (kbd "s-x") 'clipboard-kill-region)
+(global-set-key (kbd "s-c") 'clipboard-kill-ring-save)
+(global-set-key (kbd "s-v") 'clipboard-yank)
 
-  ;;; MacOSX F keys
-  (global-set-key (kbd "s-3") 'kmacro-start-macro-or-insert-counter)
-  (global-set-key (kbd "s-4") 'kmacro-end-or-call-macro)
+;;; MacOSX F keys
+(global-set-key (kbd "s-3") 'kmacro-start-macro-or-insert-counter)
+(global-set-key (kbd "s-4") 'kmacro-end-or-call-macro)
 
-  (global-set-key (kbd "s-a") 'bs-cycle-previous)
-  (global-set-key (kbd "s-s") 'bs-cycle-next)
+(global-set-key (kbd "s-a") 'bs-cycle-previous)
+(global-set-key (kbd "s-s") 'bs-cycle-next)
 
-  ;;; switch-window
-  (global-set-key (kbd "C-x o") 'switch-window)
+;;; switch-window
+(global-set-key (kbd "C-x o") 'switch-window)
 
-  (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-  (setq web-mode-code-indent-offset 2)
-  (setq web-mode-markup-indent-offset 2)
-  (setq web-mode-css-indent-offset 2)
-  (add-hook 'web-mode-hook #'(lambda () (smartparens-mode -1)))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(setq web-mode-code-indent-offset 2)
+(setq web-mode-markup-indent-offset 2)
+(setq web-mode-css-indent-offset 2)
+(add-hook 'web-mode-hook #'(lambda () (smartparens-mode -1)))
 
-  ;;; insert only <% side of erb tag, autopairing wi
-  (fset 'insert-rails-erb-tag [?< ?% ])
-  (global-set-key (kbd "s-=") 'insert-rails-erb-tag)
+;;; insert only <% side of erb tag, autopairing wi
+(fset 'insert-rails-erb-tag [?< ?% ])
+(global-set-key (kbd "s-=") 'insert-rails-erb-tag)
 
-  ;;; make sure Emacs uses stack in Haskell Projects by default
-  (setq haskell-process-type 'stack-ghci)
+;;; make sure Emacs uses stack in Haskell Projects by default
+(setq haskell-process-type 'stack-ghci)
 
-  (add-hook 'haskell-mode-hook (lambda () (setq-local company-dabbrev-downcase nil)))
+(add-hook 'haskell-mode-hook (lambda () (setq-local company-dabbrev-downcase nil)))
 
-  (defun capitalize-and-join-backwards ()
+(defun capitalize-and-join-backwards ()
     (interactive)
     (search-backward " ")
     (right-char)
@@ -354,31 +354,31 @@
     (left-char)
     (paredit-backward-delete))
 
-  (global-set-key (kbd "s-2") 'capitalize-and-join-backwards)
+(global-set-key (kbd "s-2") 'capitalize-and-join-backwards)
 
 
-  (add-hook 'haskell-mode-hook
+(add-hook 'haskell-mode-hook
               '(lambda ()
                  (local-set-key (kbd "C-]") 'insert-graph-arrow)))
 
-  (add-hook 'haskell-interactive-mode-hook
+(add-hook 'haskell-interactive-mode-hook
               '(lambda ()
                  (local-set-key (kbd "C-]") 'insert-graph-arrow)))
 
-  (add-hook 'haskell-mode-hook
+(add-hook 'haskell-mode-hook
             '(lambda ()
                (local-set-key (kbd "C-c C-d h") 'haskell-hoogle)))
 
-  (add-hook 'haskell-interactive-mode-hook
+(add-hook 'haskell-interactive-mode-hook
             '(lambda ()
                (local-set-key (kbd "C-c C-d h") 'haskell-hoogle)))
 
-  (add-hook 'haskell-interactive-mode-hook
+(add-hook 'haskell-interactive-mode-hook
             '(lambda ()
                (prelude-mode -1)
                (local-set-key (kbd "C-a") 'haskell-interactive-mode-bol)))
 
-  (use-package ormolu
+(use-package ormolu
     :ensure t
     :hook (haskell-mode . ormolu-format-on-save-mode)
     :bind
@@ -402,16 +402,16 @@
              '(lambda ()
                 (local-set-key (kbd "C-c M-a") 'cider-load-all-files)))
 
-  ;;; this code has been responsible for slime version problem
-  ;; (defvar slime-helper-el "~/quicklisp/slime-helper.el")
-  ;; (when (file-exists-p slime-helper-el)
-  ;;   (load (expand-file-name slime-helper-el)))
+;;; this code has been responsible for slime version problem
+;; (defvar slime-helper-el "~/quicklisp/slime-helper.el")
+;; (when (file-exists-p slime-helper-el)
+;;   (load (expand-file-name slime-helper-el)))
 
-  (require 'slime-autoloads)
+(require 'slime-autoloads)
 
-  (setq slime-contribs '(slime-fancy slime-fancy-inspector))
+(setq slime-contribs '(slime-fancy slime-fancy-inspector))
 
-  (defun slime-contrib-directory ()
+(defun slime-contrib-directory ()
     (let* ((slime-folder-prefix "slime-20")
            (folder-length (length slime-folder-prefix))
            (slime-folder (car (seq-filter (lambda(x) (and (>= (length x)
@@ -421,48 +421,48 @@
                                           (directory-files "~/.emacs.d/elpa")))))
       (concat "~/.emacs.d/elpa/" slime-folder "/contrib/")))
 
-  (setq slime-complete-symbol*-fancy t
+(setq slime-complete-symbol*-fancy t
         slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
 
 
-  ;;; copy last s-expression to repl
-  ;;; useful for expressions like (in-package #:whatever)
-  ;;; alternatively you can use C-c ~ with cursor after (in-package :some-package)
-  ;;; https://www.reddit.com/r/lisp/comments/ehs12v/copying_last_expression_to_repl_in_emacsslime/
-  (defun slime-copy-last-expression-to-repl (string)
+;;; copy last s-expression to repl
+;;; useful for expressions like (in-package #:whatever)
+;;; alternatively you can use C-c ~ with cursor after (in-package :some-package)
+;;; https://www.reddit.com/r/lisp/comments/ehs12v/copying_last_expression_to_repl_in_emacsslime/
+(defun slime-copy-last-expression-to-repl (string)
     (interactive (list (slime-last-expression)))
     (slime-switch-to-output-buffer)
     (goto-char (point-max))
     (insert string))
 
-  (global-set-key (kbd "s-e") 'slime-copy-last-expression-to-repl)
+(global-set-key (kbd "s-e") 'slime-copy-last-expression-to-repl)
 
-  (add-hook 'minibuffer-inactive-mode-hook #'paredit-mode)
-  (add-hook 'minibuffer-inactive-mode-hook #'rainbow-delimiters-mode)
+(add-hook 'minibuffer-inactive-mode-hook #'paredit-mode)
+(add-hook 'minibuffer-inactive-mode-hook #'rainbow-delimiters-mode)
 
-  (defun swap-paredit ()
+(defun swap-paredit ()
     "Replace smartparens with superior paredit."
     (smartparens-mode -1)
     (paredit-mode +1))
 
-  (autoload 'paredit-mode "paredit"
+(autoload 'paredit-mode "paredit"
     "Minor mode for pseudo-structurally editing Lisp code." t)
-  (add-hook 'emacs-lisp-mode-hook (lambda () (swap-paredit)))
+(add-hook 'emacs-lisp-mode-hook (lambda () (swap-paredit)))
 
-  (add-hook 'lisp-mode-hook (lambda () (swap-paredit)))
-  (add-hook 'lisp-interaction-mode-hook (lambda () (swap-paredit)))
+(add-hook 'lisp-mode-hook (lambda () (swap-paredit)))
+(add-hook 'lisp-interaction-mode-hook (lambda () (swap-paredit)))
 
-  (add-hook 'scheme-mode-hook (lambda () (swap-paredit)))
-  (add-hook 'geiser-repl-mode-hook (lambda () (swap-paredit)))
-  (add-hook 'geiser-repl-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'scheme-mode-hook (lambda () (swap-paredit)))
+(add-hook 'geiser-repl-mode-hook (lambda () (swap-paredit)))
+(add-hook 'geiser-repl-mode-hook 'rainbow-delimiters-mode)
 
-  (add-hook 'slime-repl-mode-hook (lambda () (swap-paredit)))
-  (add-hook 'slime-repl-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'slime-repl-mode-hook (lambda () (swap-paredit)))
+(add-hook 'slime-repl-mode-hook 'rainbow-delimiters-mode)
 
-  (add-hook 'clojure-mode-hook (lambda () (swap-paredit)))
-  (add-hook 'cider-repl-mode-hook (lambda () (swap-paredit)))
+(add-hook 'clojure-mode-hook (lambda () (swap-paredit)))
+(add-hook 'cider-repl-mode-hook (lambda () (swap-paredit)))
 
-  (setq common-lisp-hyperspec-root
+(setq common-lisp-hyperspec-root
         (format
          "file:/home/%s/Documents/Manuals/Lisp/HyperSpec-7-0/HyperSpec/"
          user-login-name))
@@ -473,7 +473,7 @@
                            slime-repl-mode-hook)
                          t))
 
-  (defun unfold-lisp ()
+(defun unfold-lisp ()
     "Unfold lisp code."
     (interactive)
     (search-forward ")")
@@ -481,29 +481,29 @@
     (search-forward " ")
     (newline-and-indent))
 
-  (global-set-key (kbd "s-0") 'unfold-lisp)
+(global-set-key (kbd "s-0") 'unfold-lisp)
 
-  ;;; balanced comments
-  (defun insert-balanced-comment ()
+;;; balanced comments
+(defun insert-balanced-comment ()
     "Insert balanced comment '#||#'."
     (interactive)
     (insert "#||#")
     (backward-char)
     (backward-char))
 
-  (add-hook 'lisp-mode-hook
+(add-hook 'lisp-mode-hook
             '(lambda ()
                (local-set-key (kbd "s-;") 'insert-balanced-comment)))
 
-  ;;; this add capability to define your own hook for responding to theme changes
-  (defvar after-load-theme-hook nil
+;;; this add capability to define your own hook for responding to theme changes
+(defvar after-load-theme-hook nil
     "Hook run after a color theme is loaded using `load-theme'.")
-  (defadvice load-theme (after run-after-load-theme-hook activate)
+(defadvice load-theme (after run-after-load-theme-hook activate)
     "Run `after-load-theme-hook'."
     (run-hooks 'after-load-theme-hook))
 
-  (require 'color)
-  (defun hsl-to-hex (h s l)
+(require 'color)
+(defun hsl-to-hex (h s l)
     "Convert H S L to hex colours."
     (let (rgb)
       (setq rgb (color-hsl-to-rgb h s l))
@@ -511,7 +511,7 @@
                         (nth 1 rgb)
                         (nth 2 rgb))))
 
-  (defun hex-to-rgb (hex)
+(defun hex-to-rgb (hex)
     "Convert a 6 digit HEX color to r g b."
     (mapcar #'(lambda (s) (/ (string-to-number s 16) 255.0))
             (list (substring hex 1 3)
@@ -519,7 +519,7 @@
                   (substring hex 5 7))))
 
 
-  (defun bg-color ()
+(defun bg-color ()
      "Return COLOR or it's hexvalue."
      (let ((color (face-attribute 'default :background)))
        (if (equal (substring color 0 1) "#")
@@ -530,14 +530,14 @@
                       '(0.0 0.0 0.0)
                     color-rgb))))))
 
-  (defun bg-light ()
+(defun bg-light ()
     "Calculate background brightness."
     (< (color-distance  "white"
                         (bg-color))
        (color-distance  "black"
                         (bg-color))))
 
-  (defun whitespace-line-bg ()
+(defun whitespace-line-bg ()
     "Calculate long line highlight depending on background brightness."
     (apply 'color-rgb-to-hex
            (apply 'color-hsl-to-rgb
@@ -548,7 +548,7 @@
                                   (bg-color)))
                           '(7))))))
 
-  (defun bracket-colors ()
+(defun bracket-colors ()
     "Calculate the bracket colours based on background."
     (let (hexcolors lightvals)
       (setq lightvals (if (bg-light)
@@ -573,7 +573,7 @@
       (reverse hexcolors)))
 
 
-  (defun colorise-brackets ()
+(defun colorise-brackets ()
     "Apply my own colours to rainbow delimiters."
     (interactive)
     (require 'rainbow-delimiters)
@@ -592,18 +592,18 @@
      `(rainbow-delimiters-unmatched-face ((t (:foreground "white" :background "red"))))
      `(highlight ((t (:foreground "#ff0000" :background "#888"))))))
 
-  (colorise-brackets)
+(colorise-brackets)
 
-  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
-  (add-hook 'after-load-theme-hook 'colorise-brackets)
+(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'after-load-theme-hook 'colorise-brackets)
 
-  ;; moving buffers
-  (require 'buffer-move)
-  ;; need to find unused shortcuts for moving up and down
-  (global-set-key (kbd "<M-s-up>")     'buf-move-up)
-  (global-set-key (kbd "<M-s-down>")   'buf-move-down)
-  (global-set-key (kbd "<M-s-left>")   'buf-move-left)
-  (global-set-key (kbd "<M-s-right>")  'buf-move-right)
+;; moving buffers
+(require 'buffer-move)
+;; need to find unused shortcuts for moving up and down
+(global-set-key (kbd "<M-s-up>")     'buf-move-up)
+(global-set-key (kbd "<M-s-down>")   'buf-move-down)
+(global-set-key (kbd "<M-s-left>")   'buf-move-left)
+(global-set-key (kbd "<M-s-right>")  'buf-move-right)
 
-  (provide 'personal)
-  ;;; personal ends here
+(provide 'personal)
+;;; personal ends here
