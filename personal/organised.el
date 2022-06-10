@@ -5,10 +5,12 @@
 ;;; the *.org file which will generate the *.el file upon executing
 ;;; Mx org-babel-tangle.
 
+;;; *** graph arrow ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun insert-graph-arrow ()
   (interactive)
   (insert " -> "))
 
+;;; *** ACL 2 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun load-acl2 ()
     (interactive)
     (load "~/Documents/acl2-8.4/emacs/emacs-acl2.el")
@@ -24,9 +26,10 @@
       (set-buffer scriptBuf)
       (lisp-mode)))
 
-  (global-set-key (kbd "C-S-l s") 'org-store-link)
-  (global-set-key (kbd "C-S-l i") 'org-insert-link)
-  (global-set-key (kbd "C-S-l o") 'org-open-at-point)
+;;; *** Basic configuration
+(global-set-key (kbd "C-S-l s") 'org-store-link)
+(global-set-key (kbd "C-S-l i") 'org-insert-link)
+(global-set-key (kbd "C-S-l o") 'org-open-at-point)
 
 (defun jump-to-line-in-file ()
     "Describe me"
@@ -155,8 +158,10 @@
 
 (add-hook 'overwrite-mode-hook #'(lambda () (double-flash-mode-line)))
 
+;;; *** Whitespace
 (setq whitespace-line-column 480)
 
+;;; *** Tabs
 (defun my/ibuffer-visit-buffers-other-tab ()
     "Open buffers marked with m in other tabs."
     (interactive)
@@ -165,6 +170,7 @@
      (or (ibuffer-get-marked-buffers)
          (list (ibuffer-current-buffer)))))
 
+;;; *** plantuml
 ;;; basic plantuml config
 
 (prelude-require-packages '(flycheck-plantuml))
@@ -180,6 +186,7 @@
 (add-to-list
  'org-src-lang-modes '("plantuml" . plantuml))
 
+;;; *** string inflection
 (require 'string-inflection)
 
 ;; default
@@ -192,10 +199,12 @@
 
 (setq string-inflection-skip-backward-when-done t)
 
+;;; *** Graphviz
 (add-hook 'graphviz-dot-mode-hook
               '(lambda ()
                  (local-set-key (kbd "C-]") 'insert-graph-arrow)))
 
+;;; *** Org mode configuration
 ;;; org-mode source code blocks
 (defun insert-named-source-block (language)
   "Insert source block with LANGUAGE string provided."
@@ -294,6 +303,7 @@
                   ("C-c n a" . org-roam-alias-add)
                   ("C-c n l" . org-roam-buffer-toggle)))))
 
+;;; *** vscode interaction
 (defun open-buffer-in-vscode ()
     (interactive)
 
@@ -306,6 +316,7 @@
 
 (global-set-key [f9] 'open-buffer-in-vscode)
 
+;;; *** MacOSX specific settings
 ;; Allow hash to be entered on MacOSX
 (fset 'insertPound "#")
 (global-set-key (kbd "M-3") 'insertPound)
@@ -320,12 +331,14 @@
 (global-set-key (kbd "s-3") 'kmacro-start-macro-or-insert-counter)
 (global-set-key (kbd "s-4") 'kmacro-end-or-call-macro)
 
+;;; *** Shortcuts
 (global-set-key (kbd "s-a") 'bs-cycle-previous)
 (global-set-key (kbd "s-s") 'bs-cycle-next)
 
 ;;; switch-window
 (global-set-key (kbd "C-x o") 'switch-window)
 
+;;; *** Web mode
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
 (setq web-mode-code-indent-offset 2)
 (setq web-mode-markup-indent-offset 2)
@@ -336,6 +349,7 @@
 (fset 'insert-rails-erb-tag [?< ?% ])
 (global-set-key (kbd "s-=") 'insert-rails-erb-tag)
 
+;;; *** Haskell
 ;;; make sure Emacs uses stack in Haskell Projects by default
 (setq haskell-process-type 'stack-ghci)
 
@@ -385,13 +399,18 @@
     (:map haskell-mode-map
           ("s-h" . ormolu-format-buffer)))
 
+;;; *** Idris
 (require 'idris2-mode)
 (setq company-global-modes  '(not idris2-mode idris2-repl-mode))
 (setq flycheck-global-modes '(not idris2-mode idris2-repl-mode))
 
+;;; *** Lisp
+
+;;; **** Geiser
    (setq geiser-active-implementations '(scheme chezscheme racket))
    ;; (setq geiser-racket-binary "/usr/bin/racket")
 
+;;; *** Clojure
    (add-to-list 'auto-mode-alist '("\\.edn\\'" . clojure-mode))
 
    (add-hook 'cider-repl-mode-hook
@@ -402,6 +421,7 @@
              '(lambda ()
                 (local-set-key (kbd "C-c M-a") 'cider-load-all-files)))
 
+;;; **** Slime
 ;;; this code has been responsible for slime version problem
 ;; (defvar slime-helper-el "~/quicklisp/slime-helper.el")
 ;; (when (file-exists-p slime-helper-el)
@@ -437,6 +457,7 @@
 
 (global-set-key (kbd "s-e") 'slime-copy-last-expression-to-repl)
 
+;;; **** Paredit
 (add-hook 'minibuffer-inactive-mode-hook #'paredit-mode)
 (add-hook 'minibuffer-inactive-mode-hook #'rainbow-delimiters-mode)
 
@@ -462,6 +483,7 @@
 (add-hook 'clojure-mode-hook (lambda () (swap-paredit)))
 (add-hook 'cider-repl-mode-hook (lambda () (swap-paredit)))
 
+;;; **** The rest
 (setq common-lisp-hyperspec-root
         (format
          "file:/home/%s/Documents/Manuals/Lisp/HyperSpec-7-0/HyperSpec/"
@@ -495,6 +517,7 @@
             '(lambda ()
                (local-set-key (kbd "s-;") 'insert-balanced-comment)))
 
+;;; *** Parentheses coloring
 ;;; this add capability to define your own hook for responding to theme changes
 (defvar after-load-theme-hook nil
     "Hook run after a color theme is loaded using `load-theme'.")
@@ -594,6 +617,7 @@
 
 (colorise-brackets)
 
+;;; *** Buffer movement
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'after-load-theme-hook 'colorise-brackets)
 
@@ -605,5 +629,6 @@
 (global-set-key (kbd "<M-s-left>")   'buf-move-left)
 (global-set-key (kbd "<M-s-right>")  'buf-move-right)
 
+;;; *** Conclusion
 (provide 'personal)
 ;;; personal ends here
