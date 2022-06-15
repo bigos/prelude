@@ -116,7 +116,9 @@
                               vterm ;needs: sudo apt install libvterm-dev cmake
                               vterm-toggle
                               use-package
-                              web-mode))
+                              web-mode
+                              yafolding
+                              ))
 
 (eval-when-compile
     (require 'use-package))
@@ -261,17 +263,17 @@
        ;; we had to cheat to have s-\ as a shortcut
 (global-set-key (kbd (format "%s-%c" "s" 92)) 'my-file-line-link)
 
-       (defun md-to-org-cleanup ()
-         "After we use pandoc to concert md file, we need to
+(defun md-to-org-cleanup ()
+  "After we use pandoc to concert md file, we need to
                         remove PROPERTIES drawers"
-         (interactive)
-         (search-forward ":END:")
-         (search-backward ":PROPERTIES:")
-         (beginning-of-line)
-         ;; we remove 3 lines
-         ;; 6 because we 1 clear then 2 remove empty line
-         (dotimes (n 6)
-           (kill-line)))
+  (interactive)
+  (search-forward ":END:")
+  (search-backward ":PROPERTIES:")
+  (beginning-of-line)
+  ;; we remove 3 lines
+  ;; 6 because we 1 clear then 2 remove empty line
+  (dotimes (n 6)
+    (kill-line)))
 
 (global-set-key (kbd "s-9") 'md-to-org-cleanup)
 
