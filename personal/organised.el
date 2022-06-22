@@ -287,23 +287,40 @@
 (setq org-directory (concat (getenv "HOME") "/Documents/org-roam/"))
 
 (use-package org-roam
-    :ensure t
-    :after org
-    :init (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
-    :custom
-    (org-roam-directory (file-truename org-directory))
-    :config
-    (org-roam-db-autosync-enable)
-    (setq org-roam-completion-everywhere t)
-    :bind (("C-x n f" . org-roam-node-find)
-           ("C-x n g" . org-roam-graph)
-           ("C-x n r" . org-roam-node-random)
-           (:map org-mode-map
-                 (("C-x n i" . org-roam-node-insert)
-                  ("C-x n o" . org-id-get-create)
-                  ("C-x n t" . org-roam-tag-add)
-                  ("C-x n a" . org-roam-alias-add)
-                  ("C-x n l" . org-roam-buffer-toggle)))))
+  :ensure t
+  :after org
+  :init (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
+  :custom
+  (org-roam-directory (file-truename org-directory))
+  :config
+  (org-roam-db-autosync-enable)
+  (setq org-roam-completion-everywhere t)
+  :bind (("C-x n f" . org-roam-node-find)
+         ("C-x n g" . org-roam-graph)
+         ("C-x n r" . org-roam-node-random)
+         (:map org-mode-map
+               (("C-x n i" . org-roam-node-insert)
+                ("C-x n o" . org-id-get-create)
+                ("C-x n t" . org-roam-tag-add)
+                ("C-x n a" . org-roam-alias-add)
+                ("C-x n l" . org-roam-buffer-toggle)))))
+
+(use-package websocket
+  :ensure t
+  :after org-roam)
+
+(use-package org-roam-ui
+  :ensure t
+  :after org-roam ;; or :after org
+  ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
+  ;;         a hookable mode anymore, you're advised to pick something yourself
+  ;;         if you don't care about startup time, use
+  ;;  :hook (after-init . org-roam-ui-mode)
+  :config
+  (setq org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start t))
 
 ;;; *** vscode interaction
 (defun open-buffer-in-vscode ()
