@@ -295,15 +295,15 @@
     :config
     (org-roam-db-autosync-enable)
     (setq org-roam-completion-everywhere t)
-    :bind (("C-c n f" . org-roam-node-find)
-           ("C-c n g" . org-roam-graph)
-           ("C-c n r" . org-roam-node-random)
+    :bind (("C-x n f" . org-roam-node-find)
+           ("C-x n g" . org-roam-graph)
+           ("C-x n r" . org-roam-node-random)
            (:map org-mode-map
-                 (("C-c n i" . org-roam-node-insert)
-                  ("C-c n o" . org-id-get-create)
-                  ("C-c n t" . org-roam-tag-add)
-                  ("C-c n a" . org-roam-alias-add)
-                  ("C-c n l" . org-roam-buffer-toggle)))))
+                 (("C-x n i" . org-roam-node-insert)
+                  ("C-x n o" . org-id-get-create)
+                  ("C-x n t" . org-roam-tag-add)
+                  ("C-x n a" . org-roam-alias-add)
+                  ("C-x n l" . org-roam-buffer-toggle)))))
 
 ;;; *** vscode interaction
 (defun open-buffer-in-vscode ()
