@@ -284,7 +284,10 @@
    '((restclient . t)))
 
 ;; Org-Roam basic configuration
-(setq org-directory (concat (getenv "HOME") "/Documents/org-roam/"))
+(setq
+ org-directory        (concat (getenv "HOME") "/Documents/org-roam/")
+ org-roam-db-location (concat (getenv "HOME") "/Documents/org-roam/org-roam.db"))
+
 
 (use-package org-roam
   :ensure t
@@ -292,6 +295,7 @@
   :init (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
   :custom
   (org-roam-directory (file-truename org-directory))
+  (org-roam-db-location (file-truename org-db-location))
   :config
   (org-roam-db-autosync-enable)
   (setq org-roam-completion-everywhere t)
