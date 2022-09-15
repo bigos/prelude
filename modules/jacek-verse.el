@@ -94,7 +94,7 @@
 (defun verse-books-numbered ()
   "Bible books with numbers."
   (let ((c 0))
-    (-map (lambda (x) (incf c) (cons c x)) (verse-books))))
+    (-map (lambda (x) (cl-incf c) (cons c x)) (verse-books))))
 
 
 ;; (load "~/.emacs.d/modules/jacek-verse.el")
