@@ -32,9 +32,13 @@ var/
 .lsp-session*
 
 org-roam.db
-
 .org-id-locations
+
 tutorial/
 
 eww-bookmarks
 smex-items
+
+gotools/
+eln-cache/
+
