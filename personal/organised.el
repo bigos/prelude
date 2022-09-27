@@ -117,7 +117,6 @@
                               vterm-toggle
                               use-package
                               web-mode
-                              yafolding
                               ))
 
 (eval-when-compile
@@ -288,6 +287,9 @@
  org-directory        (concat (getenv "HOME") "/Documents/org-roam/")
  org-roam-db-location (concat (getenv "HOME") "/Documents/org-roam/org-roam.db"))
 
+(use-package yafolding
+  :ensure t
+  :bind (("C-x y f" . yafolding-mode)))
 
 (use-package org-roam
   :ensure t
