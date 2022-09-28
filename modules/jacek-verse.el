@@ -31,7 +31,7 @@
 ;; Boston, MA 02110-1301, USA.
 
 ;;; Code:
-(require 'cl)
+(require 'cl-lib)
 (require 'ido-completing-read+)
 (require 'parsec)
 
