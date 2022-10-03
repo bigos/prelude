@@ -34,6 +34,7 @@
 (require 'cl-lib)
 (require 'ido-completing-read+)
 (require 'parsec)
+(require 'dash)
 
 ; (load "~/.emacs.d/modules/jacek-verse.el")
 
@@ -141,7 +142,8 @@
       (forward-char (length (plist-get parsed :final-spaces))))))
 
 (defun verse-page-link (book-name chapter verse initial-spaces final-spaces)
-  "Take strings BOOK-NAME CHAPTER and VERSE to create a string for org link obeying the INITIAL-SPACES and FINAL-SPACES."
+  "Take strings BOOK-NAME CHAPTER and VERSE to create a string for org link.
+And maintain the INITIAL-SPACES and FINAL-SPACES."
   (let ((book-name-number (caar (-filter (lambda (x)
                                            (cl-equalp book-name (cadr x)))
                                          (verse-books-numbered)))))

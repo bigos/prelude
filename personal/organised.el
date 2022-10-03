@@ -195,14 +195,14 @@
 
 ;; for ruby
 (add-hook 'ruby-mode-hook
-            '(lambda ()
+            #'(lambda ()
                (local-set-key [f6] 'string-inflection-ruby-style-cycle)))
 
 (setq string-inflection-skip-backward-when-done t)
 
 ;;; *** Graphviz
 (add-hook 'graphviz-dot-mode-hook
-              '(lambda ()
+              #'(lambda ()
                  (local-set-key (kbd "C-]") 'insert-graph-arrow)))
 
 ;;; *** Org mode configuration
@@ -219,7 +219,7 @@
   (insert-named-source-block "emacs-lisp"))
 
 (add-hook 'org-mode-hook
-          '(lambda ()
+          #'(lambda ()
              (local-set-key (kbd "s-#") 'insert-emacs-lisp-source-block)))
 
 (require 'org)
@@ -234,7 +234,7 @@
     (start-process "view-pdf" nil "evince" "--page-index" page pdf-file)))
 
    (add-hook 'org-mode-hook
-             '(lambda ()
+             #'(lambda ()
                 (local-set-key [f5] 'verse-link)))
 
 (defun my-file-line-link ()
@@ -397,23 +397,23 @@
 
 
 (add-hook 'haskell-mode-hook
-              '(lambda ()
+              #'(lambda ()
                  (local-set-key (kbd "C-]") 'insert-graph-arrow)))
 
 (add-hook 'haskell-interactive-mode-hook
-              '(lambda ()
+              #'(lambda ()
                  (local-set-key (kbd "C-]") 'insert-graph-arrow)))
 
 (add-hook 'haskell-mode-hook
-            '(lambda ()
+            #'(lambda ()
                (local-set-key (kbd "C-c C-d h") 'haskell-hoogle)))
 
 (add-hook 'haskell-interactive-mode-hook
-            '(lambda ()
+            #'(lambda ()
                (local-set-key (kbd "C-c C-d h") 'haskell-hoogle)))
 
 (add-hook 'haskell-interactive-mode-hook
-            '(lambda ()
+            #'(lambda ()
                (prelude-mode -1)
                (local-set-key (kbd "C-a") 'haskell-interactive-mode-bol)))
 
@@ -439,11 +439,11 @@
    (add-to-list 'auto-mode-alist '("\\.edn\\'" . clojure-mode))
 
    (add-hook 'cider-repl-mode-hook
-             '(lambda ()
+             #'(lambda ()
                 (local-set-key (kbd "C-c M-k") 'cider-repl-clear-buffer)))
 
    (add-hook 'cider-repl-mode-hook
-             '(lambda ()
+             #'(lambda ()
                 (local-set-key (kbd "C-c M-a") 'cider-load-all-files)))
 
 ;;; **** Slime
@@ -539,7 +539,7 @@
     (backward-char))
 
 (add-hook 'lisp-mode-hook
-            '(lambda ()
+            #'(lambda ()
                (local-set-key (kbd "s-;") 'insert-balanced-comment)))
 
 ;;; *** Parentheses coloring
