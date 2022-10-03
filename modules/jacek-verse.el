@@ -94,7 +94,7 @@
 (defun verse-books-numbered ()
   "Bible books with numbers."
   (-zip
-   (number-sequence 0 (length (verse-books)))
+   (number-sequence 1 (length (verse-books)))
    (verse-books)))
 
 
