@@ -374,6 +374,9 @@
 (fset 'insert-rails-erb-tag [?< ?% ])
 (global-set-key (kbd "s-=") 'insert-rails-erb-tag)
 
+;;; *** Elm
+(add-hook 'elm-mode-hook 'elm-format-on-save-mode)
+
 ;;; *** Haskell
 ;;; make sure Emacs uses stack in Haskell Projects by default
 (setq haskell-process-type 'stack-ghci)
