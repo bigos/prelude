@@ -376,6 +376,9 @@
 
 ;;; *** Elm
 (add-hook 'elm-mode-hook 'elm-format-on-save-mode)
+(add-hook 'elm-mode-hook
+          #'(lambda ()
+              (local-set-key (kbd "C-]") 'insert-graph-arrow)))
 
 ;;; *** Haskell
 ;;; make sure Emacs uses stack in Haskell Projects by default
