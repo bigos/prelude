@@ -491,6 +491,13 @@
 ;;     (goto-char (point-max))
 ;;     (insert string))
 
+;;; find alternative to this mess
+;; (defun sly-copy-last-expression-to-repl (string)
+;;   (interactive (list (sly-last-expression)))
+;;   (sly-switch-to-most-recent)
+;;   (goto-char (point-max))
+;;   (insert string))
+
 ;; (global-set-key (kbd "s-e") 'slime-copy-last-expression-to-repl)
 
 ;;; **** Paredit
