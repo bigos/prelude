@@ -492,13 +492,15 @@
 ;;     (insert string))
 
 ;;; find alternative to this mess
+;; file:~/Programming/prelude/elpa/sly-20221108.2234/contrib/sly-mrepl.el::1227
 ;; (defun sly-copy-last-expression-to-repl (string)
 ;;   (interactive (list (sly-last-expression)))
 ;;   (sly-switch-to-most-recent)
 ;;   (goto-char (point-max))
 ;;   (insert string))
 
-;; (global-set-key (kbd "s-e") 'slime-copy-last-expression-to-repl)
+;; file:~/Programming/prelude/elpa/sly-20221108.2234/contrib/sly-mrepl.el::1227
+(global-set-key (kbd "s-e") 'sly-eval-last-expression)
 
 ;;; **** Paredit
 (add-hook 'minibuffer-inactive-mode-hook #'paredit-mode)
