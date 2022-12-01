@@ -473,7 +473,6 @@
 ;;                                           (directory-files "~/.emacs.d/elpa")))))
 ;;       (concat "~/.emacs.d/elpa/" slime-folder "/contrib/")))
 
-
 ;; (setq slime-complete-symbol*-fancy t
 ;;       slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
 
@@ -483,16 +482,12 @@
 ;;; alternatively you can use C-c ~ with cursor after (in-package :some-package)
 ;;; https://www.reddit.com/r/lisp/comments/ehs12v/copying_last_expression_to_repl_in_emacsslime/
 
-;;; use C-s ~ instead
-
 ;; (defun slime-copy-last-expression-to-repl (string)
 ;;     (interactive (list (slime-last-expression)))
 ;;     (slime-switch-to-output-buffer)
 ;;     (goto-char (point-max))
 ;;     (insert string))
 
-;;; find alternative to this mess
-;; file:~/.emacs.d/elpa/sly-20221108.2234/contrib/sly-mrepl.el::1227
 (defun sly-copy-last-expression-to-repl ()
   (interactive)
   (let  ((le (sly-last-expression)))
@@ -504,8 +499,6 @@
     (goto-char (point-max))
     (insert le)))
 
-
-;; file:~/.emacs.d/elpa/sly-20221108.2234/contrib/sly-mrepl.el::1227
 (global-set-key (kbd "s-e") 'sly-copy-last-expression-to-repl)
 
 ;;; **** Paredit
