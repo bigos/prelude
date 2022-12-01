@@ -523,7 +523,7 @@
 (add-hook 'geiser-repl-mode-hook 'rainbow-delimiters-mode)
 
 ;; (add-hook 'slime-repl-mode-hook (lambda () (swap-paredit)))
-(add-hook 'sly-mrepl-mode-hook (lambda () (swap-paredit)))
+;; (add-hook 'sly-mrepl-mode-hook (lambda () (swap-paredit)))
 
 ;; (add-hook 'slime-repl-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'sly-mrepl-mode-hook 'rainbow-delimiters-mode)
