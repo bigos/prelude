@@ -493,14 +493,13 @@
 
 ;;; find alternative to this mess
 ;; file:~/.emacs.d/elpa/sly-20221108.2234/contrib/sly-mrepl.el::1227
-(defun sly-copy-last-expression-to-repl (string)
+(defun sly-copy-last-expression-to-repl ()
   (interactive)
+  (let  ((le (sly-last-expression)))
+    (message "used expression %s" le)
 
-  (let ((le (sly-last-expression)))
-
-    ;(sly-switch-to-most-recent)
-
-    (sly-mrepl)
+    (switch-to-buffer-other-window
+     (sly-mrepl))
 
     (goto-char (point-max))
     (insert le)))
