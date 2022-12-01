@@ -109,8 +109,9 @@
                               ruby-hash-syntax
                               ruby-refactor
                               rvm
-                              slime
-                              slime-repl-ansi-color
+                              sly
+                              ;; slime
+                              ;; slime-repl-ansi-color
                               string-inflection
                               switch-window
                               vterm ;needs: sudo apt install libvterm-dev cmake
@@ -140,7 +141,7 @@
 
 (setq org-src-fontify-natively t)
 
-(helm-descbinds-mode)
+;;(helm-descbinds-mode)
 (require 'load-theme-buffer-local)
 
 ;;; get rid of utf-8 warning in Ruby mode
@@ -458,35 +459,39 @@
 ;; (when (file-exists-p slime-helper-el)
 ;;   (load (expand-file-name slime-helper-el)))
 
-(require 'slime-autoloads)
+;; (require 'slime-autoloads)
 
-(setq slime-contribs '(slime-fancy slime-fancy-inspector))
+;; (setq slime-contribs '(slime-fancy slime-fancy-inspector))
 
-(defun slime-contrib-directory ()
-    (let* ((slime-folder-prefix "slime-20")
-           (folder-length (length slime-folder-prefix))
-           (slime-folder (car (seq-filter (lambda(x) (and (>= (length x)
-                                                              folder-length)
-                                                          (equal slime-folder-prefix
-                                                                 (subseq x 0 folder-length))) )
-                                          (directory-files "~/.emacs.d/elpa")))))
-      (concat "~/.emacs.d/elpa/" slime-folder "/contrib/")))
+;; (defun slime-contrib-directory ()
+;;     (let* ((slime-folder-prefix "slime-20")
+;;            (folder-length (length slime-folder-prefix))
+;;            (slime-folder (car (seq-filter (lambda(x) (and (>= (length x)
+;;                                                               folder-length)
+;;                                                           (equal slime-folder-prefix
+;;                                                                  (subseq x 0 folder-length))) )
+;;                                           (directory-files "~/.emacs.d/elpa")))))
+;;       (concat "~/.emacs.d/elpa/" slime-folder "/contrib/")))
 
-(setq slime-complete-symbol*-fancy t
-        slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
+
+;; (setq slime-complete-symbol*-fancy t
+;;       slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
 
 
 ;;; copy last s-expression to repl
 ;;; useful for expressions like (in-package #:whatever)
 ;;; alternatively you can use C-c ~ with cursor after (in-package :some-package)
 ;;; https://www.reddit.com/r/lisp/comments/ehs12v/copying_last_expression_to_repl_in_emacsslime/
-(defun slime-copy-last-expression-to-repl (string)
-    (interactive (list (slime-last-expression)))
-    (slime-switch-to-output-buffer)
-    (goto-char (point-max))
-    (insert string))
 
-(global-set-key (kbd "s-e") 'slime-copy-last-expression-to-repl)
+;;; use C-s ~ instead
+
+;; (defun slime-copy-last-expression-to-repl (string)
+;;     (interactive (list (slime-last-expression)))
+;;     (slime-switch-to-output-buffer)
+;;     (goto-char (point-max))
+;;     (insert string))
+
+;; (global-set-key (kbd "s-e") 'slime-copy-last-expression-to-repl)
 
 ;;; **** Paredit
 (add-hook 'minibuffer-inactive-mode-hook #'paredit-mode)
@@ -508,8 +513,8 @@
 (add-hook 'geiser-repl-mode-hook (lambda () (swap-paredit)))
 (add-hook 'geiser-repl-mode-hook 'rainbow-delimiters-mode)
 
-(add-hook 'slime-repl-mode-hook (lambda () (swap-paredit)))
-(add-hook 'slime-repl-mode-hook 'rainbow-delimiters-mode)
+;; (add-hook 'slime-repl-mode-hook (lambda () (swap-paredit)))
+;; (add-hook 'slime-repl-mode-hook 'rainbow-delimiters-mode)
 
 (add-hook 'clojure-mode-hook (lambda () (swap-paredit)))
 (add-hook 'cider-repl-mode-hook (lambda () (swap-paredit)))
