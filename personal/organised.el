@@ -511,8 +511,12 @@
     (smartparens-mode -1)
     (paredit-mode +1))
 
+(defun force-paredit ()
+  (interactive)
+  (swap-paredit))
+
 (autoload 'paredit-mode "paredit"
-    "Minor mode for pseudo-structurally editing Lisp code." t)
+  "Minor mode for pseudo-structurally editing Lisp code." t)
 (add-hook 'emacs-lisp-mode-hook (lambda () (swap-paredit)))
 
 (add-hook 'lisp-mode-hook (lambda () (swap-paredit)))
@@ -523,7 +527,7 @@
 (add-hook 'geiser-repl-mode-hook 'rainbow-delimiters-mode)
 
 ;; (add-hook 'slime-repl-mode-hook (lambda () (swap-paredit)))
-;; (add-hook 'sly-mrepl-mode-hook (lambda () (swap-paredit)))
+(add-hook 'sly-mrepl-mode-hook 'smartparens-mode)
 
 ;; (add-hook 'slime-repl-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'sly-mrepl-mode-hook 'rainbow-delimiters-mode)
