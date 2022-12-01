@@ -4,6 +4,9 @@
 
 ### New features
 
+* Enable org-habits
+* Neatly track TODO state changes in a drawer (LOGBOOK) thereby
+  improving readability
 * Add a module to enable Literate Programming
 * Add a Racket module.
 * Add a Lua module.
@@ -17,6 +20,7 @@
 * Replace `yank-pop` key-binding to `counse-yank-pop` for `ivy-mode`.
 * The keybinding for `proced` is now enabled unconditionally.
 * Replace prelude-go backend with `lsp` instead of unmaintained tools
+* Use `rust-analyzer` as language server for prelude-rust and provide nicer syntax highlighting with `tree-sitter`
 
 ### Bugs fixed
 
@@ -24,6 +28,7 @@
 * [#1335](https://github.com/bbatsov/prelude/issues/1335): Workaround
   for `which-key` bug causing display issues in clients to `emacs --daemon`.
 * Fix **Edit on GitHub** link in ReadTheDocs site.
+* Fix fall back to sample `prelude-modules.el` not working if user has installed to non-default location.
 
 ## 1.1.0 (2021-02-14)
 
