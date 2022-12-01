@@ -437,9 +437,10 @@
 (setq flycheck-global-modes '(not idris2-mode idris2-repl-mode))
 
 ;;; *** Lisp
+(setq inferior-lisp-program "/usr/local/bin/sbcl")
 
 ;;; **** Geiser
-   (setq geiser-active-implementations '(scheme chezscheme racket))
+(setq geiser-active-implementations '(scheme chezscheme racket))
    ;; (setq geiser-racket-binary "/usr/bin/racket")
 
 ;;; *** Clojure
@@ -522,7 +523,10 @@
 (add-hook 'geiser-repl-mode-hook 'rainbow-delimiters-mode)
 
 ;; (add-hook 'slime-repl-mode-hook (lambda () (swap-paredit)))
+(add-hook 'sly-mrepl-mode-hook (lambda () (swap-paredit)))
+
 ;; (add-hook 'slime-repl-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'sly-mrepl-mode-hook 'rainbow-delimiters-mode)
 
 (add-hook 'clojure-mode-hook (lambda () (swap-paredit)))
 (add-hook 'cider-repl-mode-hook (lambda () (swap-paredit)))
