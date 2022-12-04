@@ -432,9 +432,9 @@
           ("s-h" . ormolu-format-buffer)))
 
 ;;; *** Idris
-(require 'idris2-mode)
-(setq company-global-modes  '(not idris2-mode idris2-repl-mode))
-(setq flycheck-global-modes '(not idris2-mode idris2-repl-mode))
+;; (require 'idris2-mode)
+;; (setq company-global-modes  '(not idris2-mode idris2-repl-mode))
+;; (setq flycheck-global-modes '(not idris2-mode idris2-repl-mode))
 
 ;;; *** Lisp
 (setq inferior-lisp-program "/usr/local/bin/sbcl")
