@@ -83,6 +83,7 @@
                               dash
                               enh-ruby-mode
                               graphviz-dot-mode
+                              helm-core
                               helm-descbinds
                               helm-projectile
                               htmlize
