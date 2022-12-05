@@ -452,40 +452,7 @@
              #'(lambda ()
                 (local-set-key (kbd "C-c M-a") 'cider-load-all-files)))
 
-;;; **** Slime
-;;; this code has been responsible for slime version problem
-;; (defvar slime-helper-el "~/quicklisp/slime-helper.el")
-;; (when (file-exists-p slime-helper-el)
-;;   (load (expand-file-name slime-helper-el)))
-
-;; (require 'slime-autoloads)
-
-;; (setq slime-contribs '(slime-fancy slime-fancy-inspector))
-
-;; (defun slime-contrib-directory ()
-;;     (let* ((slime-folder-prefix "slime-20")
-;;            (folder-length (length slime-folder-prefix))
-;;            (slime-folder (car (seq-filter (lambda(x) (and (>= (length x)
-;;                                                               folder-length)
-;;                                                           (equal slime-folder-prefix
-;;                                                                  (subseq x 0 folder-length))) )
-;;                                           (directory-files "~/.emacs.d/elpa")))))
-;;       (concat "~/.emacs.d/elpa/" slime-folder "/contrib/")))
-
-;; (setq slime-complete-symbol*-fancy t
-;;       slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
-
-
-;;; copy last s-expression to repl
-;;; useful for expressions like (in-package #:whatever)
-;;; alternatively you can use C-c ~ with cursor after (in-package :some-package)
-;;; https://www.reddit.com/r/lisp/comments/ehs12v/copying_last_expression_to_repl_in_emacsslime/
-
-;; (defun slime-copy-last-expression-to-repl (string)
-;;     (interactive (list (slime-last-expression)))
-;;     (slime-switch-to-output-buffer)
-;;     (goto-char (point-max))
-;;     (insert string))
+;;; **** Sly
 
 (defun sly-copy-last-expression-to-repl ()
   (interactive)
