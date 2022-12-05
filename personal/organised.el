@@ -535,6 +535,7 @@
               (when (string-prefix-p "*sly-mrepl for"
                                      (buffer-name (current-buffer)))
                 (progn
+                  ;; remove the message when finished testing
                   (message "calling sly-mrepl-return after paredit-RET")
                   (sly-mrepl-return)))))
 
