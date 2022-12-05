@@ -532,6 +532,7 @@
 (add-hook 'sly-mrepl-mode-hook (lambda ()
                                  (paredit-mode +1)))
 
+
 ;; (add-hook 'slime-repl-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'sly-mrepl-mode-hook 'rainbow-delimiters-mode)
 
