@@ -527,17 +527,14 @@
 ;; (add-hook 'slime-repl-mode-hook (lambda () (swap-paredit)))
 (add-hook 'sly-mrepl-mode-hook (lambda () (swap-paredit)))
 
-;;; globally in every buffer and mode check if the buffer is repl and if needed
-;;; call sly-mrepl-return
+;;; globally in every buffer and mode check if paredit-RET was called in
+;;; the repl buffer and call sly-mrepl-return
 (advice-add 'paredit-RET
             :after
             (lambda ()
               (when (string-prefix-p "*sly-mrepl for"
                                      (buffer-name (current-buffer)))
-                (progn
-                  ;; remove the message when finished testing
-                  (message "calling sly-mrepl-return after paredit-RET")
-                  (sly-mrepl-return)))))
+                (sly-mrepl-return))))
 
 ;; (add-hook 'slime-repl-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'sly-mrepl-mode-hook 'rainbow-delimiters-mode)
