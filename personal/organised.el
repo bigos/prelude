@@ -525,7 +525,12 @@
 (add-hook 'geiser-repl-mode-hook 'rainbow-delimiters-mode)
 
 ;; (add-hook 'slime-repl-mode-hook (lambda () (swap-paredit)))
-(add-hook 'sly-mrepl-mode-hook 'smartparens-mode)
+;;
+
+;;; this is temporary solution
+;; https://emacs.stackexchange.com/questions/74841/ho-do-i-disable-paredit-ret-in-sly-mrepl
+(add-hook 'sly-mrepl-mode-hook (lambda ()
+                                 (paredit-mode +1)))
 
 ;; (add-hook 'slime-repl-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'sly-mrepl-mode-hook 'rainbow-delimiters-mode)
