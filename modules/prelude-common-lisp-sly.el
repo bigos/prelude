@@ -42,6 +42,19 @@
 
 (add-hook 'lisp-mode-hook (lambda () (run-hooks 'prelude-lisp-coding-hook)))
 
+(defun sly-copy-last-expression-to-repl ()
+  (interactive)
+  (let  ((le (sly-last-expression)))
+    (message "used expression %s" le)
+
+    (switch-to-buffer-other-window
+     (sly-mrepl))
+
+    (goto-char (point-max))
+    (insert le)))
+
+(global-set-key (kbd "s-e") 'sly-copy-last-expression-to-repl)
+
 (with-eval-after-load "sly"
   ;; a list of alternative Common Lisp implementations that can be
   ;; used with SLIME. Note that their presence render

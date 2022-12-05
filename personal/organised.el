@@ -73,7 +73,7 @@
 (global-set-key (kbd "s-8") 'cleanup-80)
 
 ;;; disable annoying guru
-;; (setq prelude-guru nil)
+(setq prelude-guru nil)
 
 (menu-bar-mode 1)
 (global-hl-line-mode -1)
@@ -438,7 +438,6 @@
 ;; (setq flycheck-global-modes '(not idris2-mode idris2-repl-mode))
 
 ;;; *** Lisp
-(setq inferior-lisp-program "/usr/local/bin/sbcl")
 
 ;;; **** Geiser
 (setq geiser-active-implementations '(scheme chezscheme racket))
@@ -454,21 +453,6 @@
    (add-hook 'cider-repl-mode-hook
              #'(lambda ()
                 (local-set-key (kbd "C-c M-a") 'cider-load-all-files)))
-
-;;; **** Sly
-
-(defun sly-copy-last-expression-to-repl ()
-  (interactive)
-  (let  ((le (sly-last-expression)))
-    (message "used expression %s" le)
-
-    (switch-to-buffer-other-window
-     (sly-mrepl))
-
-    (goto-char (point-max))
-    (insert le)))
-
-(global-set-key (kbd "s-e") 'sly-copy-last-expression-to-repl)
 
 ;;; **** Paredit
 (add-hook 'minibuffer-inactive-mode-hook #'paredit-mode)
