@@ -25,6 +25,7 @@
 (require 'prelude-coffee)
 
 ;;; move to sly
+(require 'prelude-common-lisp-sly)
 ;; (require 'prelude-common-lisp)
 
 ;; (require 'prelude-css)
