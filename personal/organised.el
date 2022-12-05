@@ -493,14 +493,15 @@
 ;; (add-hook 'slime-repl-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'sly-mrepl-mode-hook 'rainbow-delimiters-mode)
 
-(add-hook 'clojure-mode-hook (lambda () (swap-paredit)))
-(add-hook 'cider-repl-mode-hook (lambda () (swap-paredit)))
+;;; these two could be fixed using advice as the sly-mrepl-mode-hook
+;; (add-hook 'clojure-mode-hook (lambda () (swap-paredit)))
+;; (add-hook 'cider-repl-mode-hook (lambda () (swap-paredit)))
 
 ;;; **** The rest
 (setq common-lisp-hyperspec-root
-        (format
-         "file:/home/%s/Documents/Manuals/Lisp/HyperSpec-7-0/HyperSpec/"
-         user-login-name))
+      (format
+       "file:/home/%s/Documents/Manuals/Lisp/HyperSpec-7-0/HyperSpec/"
+       user-login-name))
 
       (require 'redshank-loader)
       (eval-after-load "redshank-loader"
