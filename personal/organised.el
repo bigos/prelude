@@ -525,21 +525,18 @@
 (add-hook 'geiser-repl-mode-hook 'rainbow-delimiters-mode)
 
 ;; (add-hook 'slime-repl-mode-hook (lambda () (swap-paredit)))
-;;
+(add-hook 'sly-mrepl-mode-hook (lambda () (swap-paredit)))
 
-;;; this is temporary solution involves modification of paredit code
-;; https://emacs.stackexchange.com/questions/74841/ho-do-i-disable-paredit-ret-in-sly-mrepl
-(add-hook 'sly-mrepl-mode-hook (lambda ()
-                                 (paredit-mode +1)
-                                 (advice-add 'paredit-RET
-                                             :after
-                                             (lambda ()
-                                               (if (string-prefix-p "*sly-mrepl for" (buffer-name (current-buffer)))
-                                                   (progn
-                                                     (message "calling sly-mrepl-return after paredit-RET")
-                                                     (sly-mrepl-return)))))))
-
-
+;;; globally in every buffer and mode check if the buffer is repl and if needed
+;;; call sly-mrepl-return
+(advice-add 'paredit-RET
+            :after
+            (lambda ()
+              (when (string-prefix-p "*sly-mrepl for"
+                                     (buffer-name (current-buffer)))
+                (progn
+                  (message "calling sly-mrepl-return after paredit-RET")
+                  (sly-mrepl-return)))))
 
 ;; (add-hook 'slime-repl-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'sly-mrepl-mode-hook 'rainbow-delimiters-mode)
