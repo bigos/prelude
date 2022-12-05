@@ -72,9 +72,6 @@
 
 (global-set-key (kbd "s-8") 'cleanup-80)
 
-(setq prelude-guru nil) ;; better for slime
-;; (setq guru-warn-only t) ;; not suitable for slime
-
 (menu-bar-mode 1)
 (global-hl-line-mode -1)
 ;; (setq prelude-flyspell nil)
