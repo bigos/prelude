@@ -527,7 +527,7 @@
 ;; (add-hook 'slime-repl-mode-hook (lambda () (swap-paredit)))
 ;;
 
-;;; this is temporary solution
+;;; this is temporary solution involves modification of paredit code
 ;; https://emacs.stackexchange.com/questions/74841/ho-do-i-disable-paredit-ret-in-sly-mrepl
 (add-hook 'sly-mrepl-mode-hook (lambda ()
                                  (paredit-mode +1)))
