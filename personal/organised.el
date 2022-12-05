@@ -73,7 +73,7 @@
 (global-set-key (kbd "s-8") 'cleanup-80)
 
 ;;; disable annoying guru
-(setq prelude-guru nil)
+;; (setq prelude-guru nil)
 
 (menu-bar-mode 1)
 (global-hl-line-mode -1)
