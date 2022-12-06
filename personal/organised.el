@@ -87,7 +87,6 @@
                               enh-ruby-mode
                               graphviz-dot-mode
                               helm-core
-                              helm-descbinds
                               helm-projectile
                               htmlize
                               ido-completing-read+
@@ -142,7 +141,9 @@
 
 (setq org-src-fontify-natively t)
 
-(helm-descbinds-mode)
+;;; we do not need and occur can replace the missing functionality
+;; (helm-descbinds-mode)
+
 (require 'load-theme-buffer-local)
 
 ;;; get rid of utf-8 warning in Ruby mode
