@@ -459,10 +459,14 @@
 (add-hook 'minibuffer-inactive-mode-hook #'paredit-mode)
 (add-hook 'minibuffer-inactive-mode-hook #'rainbow-delimiters-mode)
 
+;;; calling force-paredit interactively may be the only option to get rid of smartparens
 (defun swap-paredit ()
-    "Replace smartparens with superior paredit."
-    (smartparens-mode -1)
-    (paredit-mode +1))
+  "Replace smartparens with superior paredit."
+  (smartparens-mode -1)
+  (show-smartparens-mode -1)
+  (smartparens-strict-mode -1)
+
+  (paredit-mode +1))
 
 (defun force-paredit ()
   (interactive)

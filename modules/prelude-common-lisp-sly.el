@@ -41,6 +41,7 @@
 (add-to-list 'auto-mode-alist '("\\.cl\\'" . lisp-mode))
 
 (add-hook 'lisp-mode-hook (lambda () (run-hooks 'prelude-lisp-coding-hook)))
+(add-hook 'lisp-mode-hook (lambda () (swap-paredit)))
 
 (defun sly-copy-last-expression-to-repl ()
   (interactive)
