@@ -116,12 +116,12 @@
                               switch-window
                               vterm ;needs: sudo apt install libvterm-dev cmake
                               vterm-toggle
-                              use-package
                               web-mode
                               ))
 
 (eval-when-compile
     (require 'use-package))
+
 (require 'diminish)                ;; if you use :diminish
 (require 'bind-key)                ;; if you use any :bind variant
 
