@@ -44,6 +44,7 @@
 (add-hook 'lisp-mode-hook (lambda () (swap-paredit)))
 
 (defun sly-copy-last-expression-to-repl ()
+  "Copy any Lisp expression to Sly Repl."
   (interactive)
   (let  ((le (sly-last-expression)))
     (message "used expression %s" le)
@@ -77,5 +78,4 @@
     (setq sly-default-lisp 'sbcl)))
 
 (provide 'prelude-common-lisp-sly)
-
 ;;; prelude-common-lisp-sly.el ends here
