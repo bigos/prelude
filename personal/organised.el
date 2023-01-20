@@ -72,8 +72,8 @@
 
 (global-set-key (kbd "s-8") 'cleanup-80)
 
-;;; disable annoying guru
-(setq prelude-guru nil)
+(setq prelude-guru nil) ;; better for slime
+;; (setq guru-warn-only t) ;; not suitable for slime
 
 (menu-bar-mode 1)
 (global-hl-line-mode -1)
@@ -86,7 +86,7 @@
                               dash
                               enh-ruby-mode
                               graphviz-dot-mode
-                              helm-core
+                              helm-descbinds
                               helm-projectile
                               htmlize
                               ido-completing-read+
@@ -109,19 +109,18 @@
                               ruby-hash-syntax
                               ruby-refactor
                               rvm
-                              sly
-                              ;; slime
-                              ;; slime-repl-ansi-color
+                              slime
+                              slime-repl-ansi-color
                               string-inflection
                               switch-window
                               vterm ;needs: sudo apt install libvterm-dev cmake
                               vterm-toggle
+                              use-package
                               web-mode
                               ))
 
 (eval-when-compile
     (require 'use-package))
-
 (require 'diminish)                ;; if you use :diminish
 (require 'bind-key)                ;; if you use any :bind variant
 
@@ -141,9 +140,7 @@
 
 (setq org-src-fontify-natively t)
 
-;;; we do not need and occur can replace the missing functionality
-;; (helm-descbinds-mode)
-
+(helm-descbinds-mode)
 (require 'load-theme-buffer-local)
 
 ;;; get rid of utf-8 warning in Ruby mode
@@ -434,14 +431,14 @@
           ("s-h" . ormolu-format-buffer)))
 
 ;;; *** Idris
-;; (require 'idris2-mode)
-;; (setq company-global-modes  '(not idris2-mode idris2-repl-mode))
-;; (setq flycheck-global-modes '(not idris2-mode idris2-repl-mode))
+(require 'idris2-mode)
+(setq company-global-modes  '(not idris2-mode idris2-repl-mode))
+(setq flycheck-global-modes '(not idris2-mode idris2-repl-mode))
 
 ;;; *** Lisp
 
 ;;; **** Geiser
-(setq geiser-active-implementations '(scheme chezscheme racket))
+   (setq geiser-active-implementations '(scheme chezscheme racket))
    ;; (setq geiser-racket-binary "/usr/bin/racket")
 
 ;;; *** Clojure
@@ -455,25 +452,53 @@
              #'(lambda ()
                 (local-set-key (kbd "C-c M-a") 'cider-load-all-files)))
 
+;;; **** Slime
+;;; this code has been responsible for slime version problem
+;; (defvar slime-helper-el "~/quicklisp/slime-helper.el")
+;; (when (file-exists-p slime-helper-el)
+;;   (load (expand-file-name slime-helper-el)))
+
+(require 'slime-autoloads)
+
+(setq slime-contribs '(slime-fancy slime-fancy-inspector))
+
+(defun slime-contrib-directory ()
+    (let* ((slime-folder-prefix "slime-20")
+           (folder-length (length slime-folder-prefix))
+           (slime-folder (car (seq-filter (lambda(x) (and (>= (length x)
+                                                              folder-length)
+                                                          (equal slime-folder-prefix
+                                                                 (subseq x 0 folder-length))) )
+                                          (directory-files "~/.emacs.d/elpa")))))
+      (concat "~/.emacs.d/elpa/" slime-folder "/contrib/")))
+
+(setq slime-complete-symbol*-fancy t
+        slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
+
+
+;;; copy last s-expression to repl
+;;; useful for expressions like (in-package #:whatever)
+;;; alternatively you can use C-c ~ with cursor after (in-package :some-package)
+;;; https://www.reddit.com/r/lisp/comments/ehs12v/copying_last_expression_to_repl_in_emacsslime/
+(defun slime-copy-last-expression-to-repl (string)
+    (interactive (list (slime-last-expression)))
+    (slime-switch-to-output-buffer)
+    (goto-char (point-max))
+    (insert string))
+
+(global-set-key (kbd "s-e") 'slime-copy-last-expression-to-repl)
+
 ;;; **** Paredit
 (add-hook 'minibuffer-inactive-mode-hook #'paredit-mode)
 (add-hook 'minibuffer-inactive-mode-hook #'rainbow-delimiters-mode)
 
-;;; calling force-paredit interactively may be the only option to get rid of smartparens
 (defun swap-paredit ()
-  "Replace smartparens with superior paredit."
-  (smartparens-mode -1)
-  (show-smartparens-mode -1)
-  (smartparens-strict-mode -1)
-
-  (paredit-mode +1))
-
-(defun force-paredit ()
-  (interactive)
-  (swap-paredit))
+    "Replace smartparens with superior paredit."
+    (smartparens-mode -1)
+    (paredit-mode +1))
 
 (autoload 'paredit-mode "paredit"
-  "Minor mode for pseudo-structurally editing Lisp code." t)
+    "Minor mode for pseudo-structurally editing Lisp code." t)
 (add-hook 'emacs-lisp-mode-hook (lambda () (swap-paredit)))
 
 (add-hook 'lisp-mode-hook (lambda () (swap-paredit)))
@@ -483,37 +508,22 @@
 (add-hook 'geiser-repl-mode-hook (lambda () (swap-paredit)))
 (add-hook 'geiser-repl-mode-hook 'rainbow-delimiters-mode)
 
-;; (add-hook 'slime-repl-mode-hook (lambda () (swap-paredit)))
-(add-hook 'sly-mrepl-mode-hook (lambda () (swap-paredit)))
+(add-hook 'slime-repl-mode-hook (lambda () (swap-paredit)))
+(add-hook 'slime-repl-mode-hook 'rainbow-delimiters-mode)
 
-;;; globally in every buffer and mode check if paredit-RET was called in
-;;; the repl buffer and call sly-mrepl-return
-(advice-add 'paredit-RET
-            :after
-            (lambda ()
-              (when (string-prefix-p "*sly-mrepl for"
-                                     (buffer-name (current-buffer)))
-                (sly-mrepl-return))))
-
-;; (add-hook 'slime-repl-mode-hook 'rainbow-delimiters-mode)
-(add-hook 'sly-mrepl-mode-hook 'rainbow-delimiters-mode)
-
-;;; these two could be fixed using advice as the sly-mrepl-mode-hook
-;; (add-hook 'clojure-mode-hook (lambda () (swap-paredit)))
-;; (add-hook 'cider-repl-mode-hook (lambda () (swap-paredit)))
+(add-hook 'clojure-mode-hook (lambda () (swap-paredit)))
+(add-hook 'cider-repl-mode-hook (lambda () (swap-paredit)))
 
 ;;; **** The rest
 (setq common-lisp-hyperspec-root
-      (format
-       "file:/home/%s/Documents/Manuals/Lisp/HyperSpec-7-0/HyperSpec/"
-       user-login-name))
+        (format
+         "file:/home/%s/Documents/Manuals/Lisp/HyperSpec-7-0/HyperSpec/"
+         user-login-name))
 
       (require 'redshank-loader)
       (eval-after-load "redshank-loader"
         `(redshank-setup '(lisp-mode-hook
-                           ; slime-repl-mode-hook
-                           sly-mrepl-mode-hook
-                           )
+                           slime-repl-mode-hook)
                          t))
 
 (defun unfold-lisp ()

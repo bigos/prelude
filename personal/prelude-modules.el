@@ -23,11 +23,7 @@
 (require 'prelude-c)
 (require 'prelude-clojure)
 (require 'prelude-coffee)
-
-;;; move to sly
-(require 'prelude-common-lisp-sly)
-;; (require 'prelude-common-lisp)
-
+(require 'prelude-common-lisp)
 ;; (require 'prelude-css)
 ;; (require 'prelude-dart)
 (require 'prelude-emacs-lisp)
