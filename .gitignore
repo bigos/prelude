@@ -42,3 +42,4 @@ smex-items
 gotools/
 eln-cache/
 
+tree-sitter/*
