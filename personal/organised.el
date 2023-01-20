@@ -374,6 +374,15 @@
 (fset 'insert-rails-erb-tag [?< ?% ])
 (global-set-key (kbd "s-=") 'insert-rails-erb-tag)
 
+;;; *** C/CPP
+;;; that assumes we have emacs29, ran autogen.sh and configured the source for tree-sitter support
+;;; and installed parses for c/cpp
+
+(add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode))
+(add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
+(add-to-list 'major-mode-remap-alist
+             '(c-or-c++-mode . c-or-c++-ts-mode))
+
 ;;; *** Elm
 (add-hook 'elm-mode-hook 'elm-format-on-save-mode)
 (add-hook 'elm-mode-hook
