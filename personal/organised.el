@@ -466,7 +466,7 @@
 ;; (defvar slime-helper-el "~/quicklisp/slime-helper.el")
 ;; (when (file-exists-p slime-helper-el)
 ;;   (load (expand-file-name slime-helper-el)))
-
+(require 'slime)
 (require 'slime-autoloads)
 
 (setq slime-contribs '(slime-fancy slime-fancy-inspector))
