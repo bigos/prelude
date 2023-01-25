@@ -293,25 +293,25 @@
   :ensure t
   :bind (("C-x y f" . yafolding-mode)))
 
-(use-package org-roam
-  :ensure t
-  :after org
-  :init (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
-  :custom
-  (org-roam-directory (file-truename org-directory))
-  (org-roam-db-location (file-truename org-db-location))
-  :config
-  (org-roam-db-autosync-enable)
-  (setq org-roam-completion-everywhere t)
-  :bind (("C-x n f" . org-roam-node-find)
-         ("C-x n g" . org-roam-graph)
-         ("C-x n r" . org-roam-node-random)
-         (:map org-mode-map
-               (("C-x n i" . org-roam-node-insert)
-                ("C-x n o" . org-id-get-create)
-                ("C-x n t" . org-roam-tag-add)
-                ("C-x n a" . org-roam-alias-add)
-                ("C-x n l" . org-roam-buffer-toggle)))))
+;; (use-package org-roam
+;;   :ensure t
+;;   :after org
+;;   :init (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
+;;   :custom
+;;   (org-roam-directory (file-truename org-directory))
+;;   (org-roam-db-location (file-truename org-db-location))
+;;   :config
+;;   (org-roam-db-autosync-enable)
+;;   (setq org-roam-completion-everywhere t)
+;;   :bind (("C-x n f" . org-roam-node-find)
+;;          ("C-x n g" . org-roam-graph)
+;;          ("C-x n r" . org-roam-node-random)
+;;          (:map org-mode-map
+;;                (("C-x n i" . org-roam-node-insert)
+;;                 ("C-x n o" . org-id-get-create)
+;;                 ("C-x n t" . org-roam-tag-add)
+;;                 ("C-x n a" . org-roam-alias-add)
+;;                 ("C-x n l" . org-roam-buffer-toggle)))))
 
 (use-package websocket
   :ensure t
