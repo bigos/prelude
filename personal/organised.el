@@ -82,6 +82,7 @@
 
 (global-set-key (kbd "s-f") 'vc-git-grep)
 
+(require 'prelude-packages)
 (prelude-require-packages '(buffer-move
                               dash
                               enh-ruby-mode
@@ -140,7 +141,7 @@
 
 (setq org-src-fontify-natively t)
 
-(helm-descbinds-mode)
+;; (helm-descbinds-mode)
 (require 'load-theme-buffer-local)
 
 ;;; get rid of utf-8 warning in Ruby mode
