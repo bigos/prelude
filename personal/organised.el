@@ -337,7 +337,7 @@
     ;; (save-buffer)
 
     (let ((bfn (buffer-file-name)))
-      (when bfn (let ((com (concatenate 'string "code " bfn)))
+      (when bfn (let ((com (concat "code " bfn)))
                   (shell-command com)))))
 
 (global-set-key [f9] 'open-buffer-in-vscode)
