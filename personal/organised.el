@@ -223,7 +223,8 @@
              (local-set-key (kbd "s-#") 'insert-emacs-lisp-source-block)))
 
 (require 'org)
-(org-add-link-type "pdf" 'org-pdf-open nil)
+(org-link-set-parameters "pdf"
+                         'org-pdf-open nil)
 
 (defun org-pdf-open (link)
   "Where page number is 105, the link should look like:
