@@ -87,6 +87,7 @@
                               dash
                               enh-ruby-mode
                               graphviz-dot-mode
+                              helm-core
                               helm-descbinds
                               helm-projectile
                               htmlize
@@ -141,7 +142,7 @@
 
 (setq org-src-fontify-natively t)
 
-;; (helm-descbinds-mode)
+(helm-descbinds-mode)
 (require 'load-theme-buffer-local)
 
 ;;; get rid of utf-8 warning in Ruby mode
