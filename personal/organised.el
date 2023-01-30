@@ -225,6 +225,9 @@
              (local-set-key (kbd "s-#") 'insert-emacs-lisp-source-block)))
 
 (require 'org)
+
+;;; correct way of adding links
+;; https://orgmode.org/manual/Adding-Hyperlink-Types.html
 (org-link-set-parameters "pdf"
                          'org-pdf-open nil)
 
@@ -232,13 +235,17 @@
   "Where page number is 105, the link should look like:
    [[pdf:/path/to/file.pdf#105][My description.]]"
   (let* ((path+page (split-string link "#"))
-         (pdf-file (car path+page))
+         (pdf-file (cadr (split-string
+                         (car path+page)
+                         ":")))
          (page (car (cdr path+page))))
-    (start-process "view-pdf" nil "evince" "--page-index" page pdf-file)))
+    (message "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz %s %s" page pdf-file)
+    (start-process "view-pdf" nil "xreader" "--page-index" page pdf-file)))
 
-   (add-hook 'org-mode-hook
-             #'(lambda ()
-                (local-set-key [f5] 'verse-link)))
+
+(add-hook 'org-mode-hook
+          #'(lambda ()
+              (local-set-key [f5] 'verse-link)))
 
 (defun my-file-line-link ()
   "Copy the buffer full path and line number into a clipboard
