@@ -229,18 +229,20 @@
 ;;; correct way of adding links
 ;; https://orgmode.org/manual/Adding-Hyperlink-Types.html
 (org-link-set-parameters "pdf"
-                         'org-pdf-open nil)
+                       :follow #'org-pdf-open)
 
 (defun org-pdf-open (link)
   "Where page number is 105, the link should look like:
    [[pdf:/path/to/file.pdf#105][My description.]]"
   (let* ((path+page (split-string link "#"))
-         (pdf-file (cadr (split-string
-                         (car path+page)
-                         ":")))
+         (pdf-file
+          (split-string
+           (car path+page)
+           ":"))
+         (afile (car pdf-file))
          (page (car (cdr path+page))))
-    (message "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz %s %s" page pdf-file)
-    (start-process "view-pdf" nil "xreader" "--page-index" page pdf-file)))
+    ;; (message "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz %s %s" page afile)
+    (start-process "view-pdf" nil "xreader" "--page-index" page afile)))
 
 
 (add-hook 'org-mode-hook
