@@ -130,6 +130,46 @@ by Prelude.")
 (when (eq system-type 'windows-nt)
   (require 'prelude-windows))
 
+
+(message "[Prelude] Ensure we have needed packages...")
+(prelude-require-packages '(buffer-move
+                              dash
+                              enh-ruby-mode
+                              graphviz-dot-mode
+                              helm-core
+                              helm-descbinds
+                              helm-projectile
+                              htmlize
+                              ido-completing-read+
+                              kurecolor
+                              load-theme-buffer-local
+                              magit
+                              mode-line-bell
+                              ob-restclient
+                              paredit
+                              parsec
+                              projectile
+                              projectile-rails
+                              projectile-rails
+                              rails-log-mode
+                              rainbow-delimiters
+                              redshank
+                              restclient-helm
+                              rspec-mode
+                              rubocop
+                              ruby-hash-syntax
+                              ruby-refactor
+                              rvm
+                              slime
+                              slime-repl-ansi-color
+                              string-inflection
+                              switch-window
+                              vterm ;needs: sudo apt install libvterm-dev cmake
+                              vterm-toggle
+                              use-package
+                              web-mode
+                              ))
+
 (message "[Prelude] Loading Prelude's additional modules...")
 
 ;; the modules

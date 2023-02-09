@@ -82,45 +82,6 @@
 
 (global-set-key (kbd "s-f") 'vc-git-grep)
 
-(require 'prelude-packages)
-(prelude-require-packages '(buffer-move
-                              dash
-                              enh-ruby-mode
-                              graphviz-dot-mode
-                              helm-core
-                              helm-descbinds
-                              helm-projectile
-                              htmlize
-                              ido-completing-read+
-                              kurecolor
-                              load-theme-buffer-local
-                              magit
-                              mode-line-bell
-                              ob-restclient
-                              paredit
-                              parsec
-                              projectile
-                              projectile-rails
-                              projectile-rails
-                              rails-log-mode
-                              rainbow-delimiters
-                              redshank
-                              restclient-helm
-                              rspec-mode
-                              rubocop
-                              ruby-hash-syntax
-                              ruby-refactor
-                              rvm
-                              slime
-                              slime-repl-ansi-color
-                              string-inflection
-                              switch-window
-                              vterm ;needs: sudo apt install libvterm-dev cmake
-                              vterm-toggle
-                              use-package
-                              web-mode
-                              ))
-
 (eval-when-compile
     (require 'use-package))
 (require 'diminish)                ;; if you use :diminish
@@ -149,6 +110,7 @@
 (setq ruby-insert-encoding-magic-comment nil)
 
 ;; magit warning silencing
+(require 'magit)
 (setq magit-auto-revert-mode nil)
 (setq magit-last-seen-setup-instructions "1.4.0")
 
