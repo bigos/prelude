@@ -109,10 +109,9 @@
 ;;; get rid of utf-8 warning in Ruby mode
 (setq ruby-insert-encoding-magic-comment nil)
 
-;; magit warning silencing
-(require 'magit)
+;; magit
 (setq magit-auto-revert-mode nil)
-(setq magit-last-seen-setup-instructions "1.4.0")
+
 
 (load "server")
 (unless (server-running-p)
