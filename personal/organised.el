@@ -100,6 +100,7 @@
                               paredit
                               parsec
                               poly-markdown
+                              poly-org
                               projectile
                               projectile-rails
                               projectile-rails
