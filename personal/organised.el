@@ -99,6 +99,7 @@
                               ob-restclient
                               paredit
                               parsec
+                              poly-markdown
                               projectile
                               projectile-rails
                               projectile-rails
