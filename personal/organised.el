@@ -99,6 +99,7 @@
                               ob-restclient
                               paredit
                               parsec
+                              polymode
                               poly-markdown
                               poly-org
                               projectile
