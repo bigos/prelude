@@ -1,6 +1,6 @@
 ;;; prelude-ts.el --- Emacs Prelude: Typescript programming support.
 ;;
-;; Copyright © 2011-2022 LEE Dongjun
+;; Copyright © 2011-2023 LEE Dongjun
 ;;
 ;; Author: LEE Dongjun <redongjun@gmail.com>
 
@@ -30,9 +30,7 @@
 ;;; Code:
 
 (require 'prelude-programming)
-(prelude-require-packages '(tide))
-
-(require 'typescript-mode)
+(prelude-require-packages '(tide typescript-mode))
 
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
 
