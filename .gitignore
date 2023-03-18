@@ -43,3 +43,4 @@ gotools/
 eln-cache/
 
 tree-sitter/*
+image-dired/*
