@@ -215,7 +215,10 @@
   (insert "#+begin_src ")
   (insert language)
   (insert "\n")
-  (insert "#+end_src"))
+  (insert "\n")
+  (insert "#+end_src")
+  (beginning-of-line )
+  (backward-char))
 
 (defun insert-emacs-lisp-source-block ()
   (interactive)
