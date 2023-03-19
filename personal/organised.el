@@ -221,9 +221,13 @@
   (interactive)
   (insert-named-source-block "emacs-lisp"))
 
+(defun insert-lisp-source-block ()
+  (interactive)
+  (insert-named-source-block "lisp"))
+
 (add-hook 'org-mode-hook
           #'(lambda ()
-             (local-set-key (kbd "s-#") 'insert-emacs-lisp-source-block)))
+             (local-set-key (kbd "s-#") 'insert-lisp-source-block)))
 
 (require 'org)
 
