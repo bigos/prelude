@@ -103,6 +103,8 @@ by Prelude.")
   (message "[Prelude] Loading personal configuration files in %s..." prelude-personal-preload-dir)
   (mapc 'load (directory-files prelude-personal-preload-dir 't "^[^#\.].*el$")))
 
+(require 'org)
+
 (message "[Prelude] Loading Prelude's core modules...")
 
 ;; load the core stuff
