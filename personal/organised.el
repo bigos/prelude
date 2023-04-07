@@ -425,26 +425,26 @@
           ("s-h" . ormolu-format-buffer)))
 
 ;;; *** Idris
-(require 'idris2-mode)
-(setq company-global-modes  '(not idris2-mode idris2-repl-mode))
-(setq flycheck-global-modes '(not idris2-mode idris2-repl-mode))
+;; (require 'idris2-mode)
+;; (setq company-global-modes  '(not idris2-mode idris2-repl-mode))
+;; (setq flycheck-global-modes '(not idris2-mode idris2-repl-mode))
 
 ;;; *** Lisp
 
 ;;; **** Geiser
-   (setq geiser-active-implementations '(scheme chezscheme racket))
+   ;; (setq geiser-active-implementations '(scheme chezscheme racket))
    ;; (setq geiser-racket-binary "/usr/bin/racket")
 
 ;;; *** Clojure
-   (add-to-list 'auto-mode-alist '("\\.edn\\'" . clojure-mode))
+   ;; (add-to-list 'auto-mode-alist '("\\.edn\\'" . clojure-mode))
 
-   (add-hook 'cider-repl-mode-hook
-             #'(lambda ()
-                (local-set-key (kbd "C-c M-k") 'cider-repl-clear-buffer)))
+   ;; (add-hook 'cider-repl-mode-hook
+   ;;           #'(lambda ()
+   ;;              (local-set-key (kbd "C-c M-k") 'cider-repl-clear-buffer)))
 
-   (add-hook 'cider-repl-mode-hook
-             #'(lambda ()
-                (local-set-key (kbd "C-c M-a") 'cider-load-all-files)))
+   ;; (add-hook 'cider-repl-mode-hook
+   ;;           #'(lambda ()
+   ;;              (local-set-key (kbd "C-c M-a") 'cider-load-all-files)))
 
 ;;; **** Slime
 ;;; this code has been responsible for slime version problem

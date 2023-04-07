@@ -39,6 +39,9 @@
 ;; You may delete these explanatory comments.
                                         ;(package-initialize)
 
+;; disable because of elpa bug in emacs
+(setq package-check-signature nil)
+
 (defvar prelude-user
   (getenv
    (if (equal system-type 'windows-nt) "USERNAME" "USER")))
