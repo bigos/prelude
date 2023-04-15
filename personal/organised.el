@@ -568,18 +568,6 @@
 
 (global-set-key (kbd "s-0") 'unfold-lisp)
 
-;;; balanced comments
-(defun insert-balanced-comment ()
-    "Insert balanced comment '#||#'."
-    (interactive)
-    (insert "#||#")
-    (backward-char)
-    (backward-char))
-
-(add-hook 'lisp-mode-hook
-            #'(lambda ()
-               (local-set-key (kbd "s-;") 'insert-balanced-comment)))
-
 ;;; *** Parentheses coloring
 ;;; this add capability to define your own hook for responding to theme changes
 (defvar after-load-theme-hook nil
