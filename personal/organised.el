@@ -97,6 +97,7 @@
                               magit
                               mode-line-bell
                               ob-restclient
+                              org-mind-map
                               paredit
                               parsec
                               projectile
