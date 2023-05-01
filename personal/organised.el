@@ -98,6 +98,7 @@
                               mode-line-bell
                               ob-restclient
                               orgit
+                              org-mind-map
                               paredit
                               parsec
                               projectile
@@ -129,14 +130,16 @@
 (require 'bind-key)                ;; if you use any :bind variant
 
 ; (add-to-list 'load-path "/home/jacek/.emacs.d/elpa/enh-ruby-mode-20190513.254/enh-ruby-mode.el") ; must be added after any path containing old ruby-mode
-(autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
+
+;;; problem with enh-ruby-mode
+;; (autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
 
 (global-set-key (kbd "s-'") (quote ruby-toggle-string-quotes))
 
-(add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
-(add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))                                          ;
-(add-to-list 'auto-mode-alist
-                   '("\\(?:\\.rb\\|ru\\|rake\\|thor\\|jbuilder\\|gemspec\\|podspec\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'" . enh-ruby-mode))
+;; (add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
+;; (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))                                          ;
+;; (add-to-list 'auto-mode-alist
+;;                    '("\\(?:\\.rb\\|ru\\|rake\\|thor\\|jbuilder\\|gemspec\\|podspec\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'" . enh-ruby-mode))
 
 ;;; ignore rufo for now
 ;; (setq rufo-enable-format-on-save t)
@@ -568,18 +571,6 @@
     (newline-and-indent))
 
 (global-set-key (kbd "s-0") 'unfold-lisp)
-
-;;; balanced comments
-(defun insert-balanced-comment ()
-    "Insert balanced comment '#||#'."
-    (interactive)
-    (insert "#||#")
-    (backward-char)
-    (backward-char))
-
-(add-hook 'lisp-mode-hook
-            #'(lambda ()
-               (local-set-key (kbd "s-;") 'insert-balanced-comment)))
 
 ;;; *** Parentheses coloring
 ;;; this add capability to define your own hook for responding to theme changes
