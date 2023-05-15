@@ -288,10 +288,18 @@
                        (cadr split-timings))))))
       (message "vlc opening video %s at  %s %s %s" afile timings start-at end-at )
 
-      (apply #'start-process
-             (list  "view-vlc" nil "vlc" afile
-                    start-at end-at))
-      )))
+
+      (let ((options
+             (cond ((and (null start-at) (null end-at))
+                    (list  "view-vlc" nil "vlc" afile))
+                   ((and start-at (null end-at))
+                    (list  "view-vlc" nil "vlc" afile start-at))
+                   ((and start-at end-at)
+                    (list  "view-vlc" nil "vlc" afile start-at end-at))
+                   (t (merssage "error in time arguments")))))
+        (message "starting vlc %S" options)
+        (apply #'start-process options)))
+      ))
 
 ;;; My own additions
 (require 'jacek-verse)
