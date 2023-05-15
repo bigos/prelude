@@ -252,6 +252,50 @@
     ;; (message "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz %s %s" page afile)
     (start-process "view-pdf" nil "xreader" "--page-index" page afile)))
 
+;; https://orgmode.org/manual/Adding-Hyperlink-Types.html
+(org-link-set-parameters "vlc"
+                         :follow #'org-vlc-open)
+(defun time-to-seconds (time)
+  "Convert TIME in minutes and seconds as 01:20 to seconds as 80."
+  (let ((min-sec (mapcar #'string-to-number
+                       (split-string time ":"))))
+    (+ (* 60 (car min-sec))
+       (cadr min-sec))))
+
+(defun org-vlc-open (link)
+  "Where page number is 105, the link should look like:
+   [[vlc:/path/to/file.mp4#01:05][My description.]]
+   or
+   [[vlc:/path/to/file.mp4#01:05-03:25][My description.]]"
+  (let ((path+timing (split-string link "#")))
+    (let* ((video-file
+            (split-string
+             (car path+timing)
+             ":"))
+           (afile (car video-file))
+           ;; time options
+           (timings (cadr path+timing))
+           (split-timings (when timings (split-string timings "-")))
+           (start-at
+            (when (car split-timings)
+              (format "--start-time=%s"
+                      (time-to-seconds
+                       (car split-timings)))))
+           (end-at
+            (when (cadr split-timings)
+              (format "--stop-time=%s"
+                      (time-to-seconds
+                       (cadr split-timings))))))
+      (message "vlc opening video %s at  %s %s %s" afile timings start-at end-at )
+
+      (let ((options (remq nil
+                           (append
+                            (list  "view-vlc" nil "vlc" afile)
+                            (list start-at)
+                            (list end-at)))))
+        (message "options %s" options)
+        (apply #'start-process options)))))
+
 ;;; My own additions
 (require 'jacek-verse)
 
