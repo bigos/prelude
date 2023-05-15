@@ -288,13 +288,10 @@
                        (cadr split-timings))))))
       (message "vlc opening video %s at  %s %s %s" afile timings start-at end-at )
 
-      (let ((options (remq nil
-                           (append
-                            (list  "view-vlc" nil "vlc" afile)
-                            (list start-at)
-                            (list end-at)))))
-        (message "options %s" options)
-        (apply #'start-process options)))))
+      (apply #'start-process
+             (list  "view-vlc" nil "vlc" afile
+                    start-at end-at))
+      )))
 
 ;;; My own additions
 (require 'jacek-verse)
