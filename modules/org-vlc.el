@@ -37,6 +37,7 @@
 (org-link-set-parameters "vlc"
                          :follow #'org-vlc-open)
 
+;;; TODO add hours handling, we do minutes and seconds now
 (defun my-time-to-seconds (time)
   "Convert TIME in minutes and seconds as 01:20 to seconds as 80."
   (let ((min-sec (mapcar #'string-to-number
