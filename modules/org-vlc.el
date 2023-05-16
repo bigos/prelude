@@ -48,6 +48,11 @@
       (+ (* 60 (car time-parts))        ; naiive min sec
          (cadr time-parts)))))
 
+(defun time-option (option fn split-timings)
+  (let ((time-part (apply fn (list  split-timings))))
+    (when time-part
+      (format option (my-time-to-seconds time-part)))))
+
 (defun org-vlc-open (link)
   "Where page number is 105, the link should look like:
    [[vlc:/path/to/file.mp4#01:05][My description.]]
@@ -61,17 +66,10 @@
          ;; time options
          (timings (cadr path+timing))
          (split-timings (when timings (split-string timings "-")))
-
          (start-at
-          (when (car split-timings)
-            (format "--start-time=%s"
-                    (my-time-to-seconds
-                     (car split-timings)))))
+          (time-option "--start-time=%s" #'car split-timings))
          (end-at
-          (when (cadr split-timings)
-            (format "--stop-time=%s"
-                    (my-time-to-seconds
-                     (cadr split-timings))))))
+          (time-option "--stop-time=%s" #'cadr split-timings)))
 
     ;; (message "vlc opening video %s at  %s %s %s" afile timings start-at end-at )
     (let ((options
