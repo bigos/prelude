@@ -37,13 +37,16 @@
 (org-link-set-parameters "vlc"
                          :follow #'org-vlc-open)
 
-;;; TODO add hours handling, we do minutes and seconds now
 (defun my-time-to-seconds (time)
   "Convert TIME in minutes and seconds as 01:20 to seconds as 80."
-  (let ((min-sec (mapcar #'string-to-number
-                         (split-string time ":"))))
-    (+ (* 60 (car min-sec))
-       (cadr min-sec))))
+  (let ((time-parts (mapcar #'string-to-number
+                            (split-string time ":"))))
+    (if (eq 3 (length time-parts))      ; hrs min sec
+        (+ (* 3600 (car time-parts))
+           (* 60 (cadr time-parts))
+           (caddr time-parts))
+      (+ (* 60 (car time-parts))        ; naiive min sec
+         (cadr time-parts)))))
 
 (defun org-vlc-open (link)
   "Where page number is 105, the link should look like:
@@ -80,7 +83,7 @@
                     (list  "view-vlc" nil "vlc" afile start-at end-at))
                    (t (merssage "error in time arguments")))))
         (message "starting vlc %S" options)
-        (apply #'start-process options)))
-      ))
+        (apply #'start-process options)))))
+
 (provide 'org-vlc)
 ;;; org-vlc.el ends here
