@@ -37,7 +37,7 @@
 (org-link-set-parameters "vlc"
                          :follow #'org-vlc-open)
 
-(defun my-time-to-seconds (time)
+(defun org-vlc--my-time-to-seconds (time)
   "Convert TIME in minutes and seconds as 01:20 to seconds as 80."
   (let ((time-parts (mapcar #'string-to-number
                             (split-string time ":"))))
@@ -48,10 +48,10 @@
       (+ (* 60 (car time-parts))        ; naiive min sec
          (cadr time-parts)))))
 
-(defun time-option (option fn split-timings)
+(defun org-vlc--time-option (option fn split-timings)
   (let ((time-part (apply fn (list  split-timings))))
     (when time-part
-      (format option (my-time-to-seconds time-part)))))
+      (format option (org-vlc--my-time-to-seconds time-part)))))
 
 (defun org-vlc-open (link)
   "Where page number is 105, the link should look like:
@@ -67,9 +67,9 @@
          (timings (cadr path+timing))
          (split-timings (when timings (split-string timings "-")))
          (start-at
-          (time-option "--start-time=%s" #'car split-timings))
+          (org-vlc--time-option "--start-time=%s" #'car split-timings))
          (end-at
-          (time-option "--stop-time=%s" #'cadr split-timings)))
+          (org-vlc--time-option "--stop-time=%s" #'cadr split-timings)))
 
     ;; (message "vlc opening video %s at  %s %s %s" afile timings start-at end-at )
     (let ((options
