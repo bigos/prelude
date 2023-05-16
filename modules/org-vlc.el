@@ -29,5 +29,57 @@
 ;; code goes here
 (require 'org)
 
+;;; correct way of adding links
+;; https://orgmode.org/manual/Adding-Hyperlink-Types.html
+
+
+;; https://orgmode.org/manual/Adding-Hyperlink-Types.html
+(org-link-set-parameters "vlc"
+                         :follow #'org-vlc-open)
+(defun time-to-seconds (time)
+  "Convert TIME in minutes and seconds as 01:20 to seconds as 80."
+  (let ((min-sec (mapcar #'string-to-number
+                       (split-string time ":"))))
+    (+ (* 60 (car min-sec))
+       (cadr min-sec))))
+
+(defun org-vlc-open (link)
+  "Where page number is 105, the link should look like:
+   [[vlc:/path/to/file.mp4#01:05][My description.]]
+   or
+   [[vlc:/path/to/file.mp4#01:05-03:25][My description.]]"
+  (let ((path+timing (split-string link "#")))
+    (let* ((video-file
+            (split-string
+             (car path+timing)
+             ":"))
+           (afile (car video-file))
+           ;; time options
+           (timings (cadr path+timing))
+           (split-timings (when timings (split-string timings "-")))
+           (start-at
+            (when (car split-timings)
+              (format "--start-time=%s"
+                      (time-to-seconds
+                       (car split-timings)))))
+           (end-at
+            (when (cadr split-timings)
+              (format "--stop-time=%s"
+                      (time-to-seconds
+                       (cadr split-timings))))))
+      (message "vlc opening video %s at  %s %s %s" afile timings start-at end-at )
+
+
+      (let ((options
+             (cond ((and (null start-at) (null end-at))
+                    (list  "view-vlc" nil "vlc" afile))
+                   ((and start-at (null end-at))
+                    (list  "view-vlc" nil "vlc" afile start-at))
+                   ((and start-at end-at)
+                    (list  "view-vlc" nil "vlc" afile start-at end-at))
+                   (t (merssage "error in time arguments")))))
+        (message "starting vlc %S" options)
+        (apply #'start-process options)))
+      ))
 (provide 'org-vlc)
 ;;; org-vlc.el ends here
