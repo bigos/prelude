@@ -36,10 +36,11 @@
 ;; https://orgmode.org/manual/Adding-Hyperlink-Types.html
 (org-link-set-parameters "vlc"
                          :follow #'org-vlc-open)
-(defun time-to-seconds (time)
+
+(defun my-time-to-seconds (time)
   "Convert TIME in minutes and seconds as 01:20 to seconds as 80."
   (let ((min-sec (mapcar #'string-to-number
-                       (split-string time ":"))))
+                         (split-string time ":"))))
     (+ (* 60 (car min-sec))
        (cadr min-sec))))
 
@@ -60,16 +61,15 @@
            (start-at
             (when (car split-timings)
               (format "--start-time=%s"
-                      (time-to-seconds
+                      (my-time-to-seconds
                        (car split-timings)))))
            (end-at
             (when (cadr split-timings)
               (format "--stop-time=%s"
-                      (time-to-seconds
+                      (my-time-to-seconds
                        (cadr split-timings))))))
-      (message "vlc opening video %s at  %s %s %s" afile timings start-at end-at )
 
-
+      ;; (message "vlc opening video %s at  %s %s %s" afile timings start-at end-at )
       (let ((options
              (cond ((and (null start-at) (null end-at))
                     (list  "view-vlc" nil "vlc" afile))
