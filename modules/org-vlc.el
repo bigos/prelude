@@ -53,37 +53,37 @@
    [[vlc:/path/to/file.mp4#01:05][My description.]]
    or
    [[vlc:/path/to/file.mp4#01:05-03:25][My description.]]"
-  (let ((path+timing (split-string link "#")))
-    (let* ((video-file
-            (split-string
-             (car path+timing)
-             ":"))
-           (afile (car video-file))
-           ;; time options
-           (timings (cadr path+timing))
-           (split-timings (when timings (split-string timings "-")))
-           (start-at
-            (when (car split-timings)
-              (format "--start-time=%s"
-                      (my-time-to-seconds
-                       (car split-timings)))))
-           (end-at
-            (when (cadr split-timings)
-              (format "--stop-time=%s"
-                      (my-time-to-seconds
-                       (cadr split-timings))))))
+  (let* ((path+timing (split-string link "#"))
+         (afile (car
+                 (split-string
+                  (car path+timing)
+                  ":")))
+         ;; time options
+         (timings (cadr path+timing))
+         (split-timings (when timings (split-string timings "-")))
 
-      ;; (message "vlc opening video %s at  %s %s %s" afile timings start-at end-at )
-      (let ((options
-             (cond ((and (null start-at) (null end-at))
-                    (list  "view-vlc" nil "vlc" afile))
-                   ((and start-at (null end-at))
-                    (list  "view-vlc" nil "vlc" afile start-at))
-                   ((and start-at end-at)
-                    (list  "view-vlc" nil "vlc" afile start-at end-at))
-                   (t (merssage "error in time arguments")))))
-        (message "starting vlc %S" options)
-        (apply #'start-process options)))))
+         (start-at
+          (when (car split-timings)
+            (format "--start-time=%s"
+                    (my-time-to-seconds
+                     (car split-timings)))))
+         (end-at
+          (when (cadr split-timings)
+            (format "--stop-time=%s"
+                    (my-time-to-seconds
+                     (cadr split-timings))))))
+
+    ;; (message "vlc opening video %s at  %s %s %s" afile timings start-at end-at )
+    (let ((options
+           (cond ((and (null start-at) (null end-at))
+                  (list  "view-vlc" nil "vlc" afile))
+                 ((and start-at (null end-at))
+                  (list  "view-vlc" nil "vlc" afile start-at))
+                 ((and start-at end-at)
+                  (list  "view-vlc" nil "vlc" afile start-at end-at))
+                 (t (merssage "error in time arguments")))))
+      (message "starting vlc %S" options)
+      (apply #'start-process options))))
 
 (provide 'org-vlc)
 ;;; org-vlc.el ends here
