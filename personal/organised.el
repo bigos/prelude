@@ -169,14 +169,6 @@
 ;;; *** Whitespace
 (setq whitespace-line-column 480)
 
-;;; *** Tabs
-(defun my/ibuffer-visit-buffers-other-tab ()
-    "Open buffers marked with m in other tabs."
-    (interactive)
-    (mapc
-     #'switch-to-buffer-other-tab
-     (or (ibuffer-get-marked-buffers)
-         (list (ibuffer-current-buffer)))))
 
 ;;; *** plantuml
 ;;; basic plantuml config
