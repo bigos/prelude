@@ -84,6 +84,7 @@
 
 (require 'prelude-packages)
 (prelude-require-packages '(
+                            beframe
                             birds-of-paradise-plus-theme
                             buffer-move
                             chyla-theme
