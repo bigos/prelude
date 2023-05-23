@@ -83,8 +83,10 @@
 (global-set-key (kbd "s-f") 'vc-git-grep)
 
 (require 'prelude-packages)
-(prelude-require-packages '(beframe
+(prelude-require-packages '(
+                            birds-of-paradise-plus-theme
                             buffer-move
+                            chyla-theme
                             dash
                             enh-ruby-mode
                             graphviz-dot-mode
@@ -97,9 +99,11 @@
                             load-theme-buffer-local
                             magit
                             mode-line-bell
+                            monokai-theme
+                            noctilux-theme
                             ob-restclient
-                            orgit
                             org-mind-map
+                            orgit
                             paredit
                             parsec
                             projectile
@@ -114,15 +118,17 @@
                             rubocop
                             ruby-hash-syntax
                             ruby-refactor
-                            rvm
                             slime
                             slime-repl-ansi-color
                             string-inflection
                             switch-window
+                            use-package
                             vterm ;needs: sudo apt install libvterm-dev cmake
                             vterm-toggle
-                            use-package
-                            web-mode))
+                            web-mode
+                            zenburn-theme
+                            zeno-theme
+                            ))
 
 (eval-when-compile
     (require 'use-package))
