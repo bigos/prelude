@@ -97,7 +97,6 @@
                             ido-completing-read+
                             kurecolor
                             load-theme-buffer-local
-                            load-theme-buffer-local
                             magit
                             mode-line-bell
                             monokai-theme
