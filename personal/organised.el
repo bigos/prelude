@@ -308,9 +308,41 @@
    '((restclient . t)))
 
 ;; Org-Roam basic configuration
-(setq
- org-directory        (concat (getenv "HOME") "/Documents/org-roam/")
- org-roam-db-location (concat (getenv "HOME") "/Documents/org-roam/org-roam.db"))
+
+;;; make sure you use only letters and '-' or '_' as base name
+(defun org-roam-my-base-name ()
+  "Base for other org-roam-my functions."
+
+  (nth 1
+       (list
+        "orig"
+        "application")))
+
+(defun org-roam-my-folder ()
+  (concat (getenv "HOME")
+          "/Documents/MyRoams/"
+          (org-roam-my-base-name)
+          "/org-roam/"))
+
+(defun org-roam-my-db ()
+  (concat (org-roam-my-folder)
+          "org-roam"
+          ".db"))
+
+(let ((folder  (org-roam-my-folder))
+      (db-file (org-roam-my-db)))
+
+  (message (format "org-roam folder  %s" folder))
+  (message (format "org-roam db-file %s" db-file))
+
+  (setq
+   org-directory        folder
+   org-roam-db-location db-file))
+
+(defun org-roam-dired ()
+  "Open dired buffer on org-roam folder."
+  (interactive)
+  (dired (org-roam-my-folder)))
 
 (use-package org-roam
   :ensure t
