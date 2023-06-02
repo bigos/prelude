@@ -313,7 +313,7 @@
 (defun org-roam-my-base-name ()
   "Base for other org-roam-my functions."
 
-  (nth 1
+  (nth 0
        (list
         "orig"
         "application")))
@@ -329,15 +329,8 @@
           "org-roam"
           ".db"))
 
-(let ((folder  (org-roam-my-folder))
-      (db-file (org-roam-my-db)))
-
-  (message (format "org-roam folder  %s" folder))
-  (message (format "org-roam db-file %s" db-file))
-
-  (setq
-   org-directory        folder
-   org-roam-db-location db-file))
+(message (format "org-roam folder  %s" (org-roam-my-folder)))
+(message (format "org-roam db-file %s" (org-roam-my-db)))
 
 (defun org-roam-dired ()
   "Open dired buffer on org-roam folder."
@@ -349,8 +342,9 @@
   :after org
   :init (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
   :custom
-  (org-roam-directory (file-truename org-directory))
-  (org-roam-db-location (file-truename org-db-location))
+  ;; file-truename can resolve symbolic links
+  (org-roam-directory   (file-truename (org-roam-my-folder)))
+  (org-roam-db-location (file-truename (org-roam-my-db)))
   :config
   (org-roam-db-autosync-enable)
   (setq org-roam-completion-everywhere t)
