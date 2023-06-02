@@ -321,7 +321,7 @@
 
 (defun org-roam-my-folder ()
   (concat (getenv "HOME")
-          "/Documents/MyRoams/"
+          "/Documents/Roams/"
           (org-roam-my-base-name)
           "/org-roam/"))
 
