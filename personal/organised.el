@@ -312,10 +312,6 @@
  org-directory        (concat (getenv "HOME") "/Documents/org-roam/")
  org-roam-db-location (concat (getenv "HOME") "/Documents/org-roam/org-roam.db"))
 
-(use-package yafolding
-  :ensure t
-  :bind (("C-x y f" . yafolding-mode)))
-
 (use-package org-roam
   :ensure t
   :after org
@@ -336,10 +332,6 @@
                 ("C-x n a" . org-roam-alias-add)
                 ("C-x n l" . org-roam-buffer-toggle)))))
 
-(use-package websocket
-  :ensure t
-  :after org-roam)
-
 (use-package org-roam-ui
   :ensure t
   :after org-roam ;; or :after org
@@ -352,6 +344,15 @@
         org-roam-ui-follow t
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t))
+
+(use-package yafolding
+  :ensure t
+  :bind (("C-x y f" . yafolding-mode)))
+
+(use-package websocket
+  :ensure t
+  :after org-roam)
+
 
 ;;; *** vscode interaction
 (defun open-buffer-in-vscode ()
