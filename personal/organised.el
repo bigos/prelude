@@ -56,8 +56,14 @@
 (defun go-80 ()
   (interactive)
   (beginning-of-line)
-  (cl-loop do (forward-char)
-           until (eq (current-column) 80)))
+  (move-to-column 80))
+
+;;; old experiment that works, left in case the new version has some isses
+;; (defun go-80 ()
+;;   (interactive)
+;;   (beginning-of-line)
+;;   (cl-loop do (forward-char)
+;;            until (eq (current-column) 80)))
 
 (defun go-80-word-beginning ()
   (interactive)
