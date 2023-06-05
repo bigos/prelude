@@ -56,7 +56,7 @@
 (defun go-80-word-beginning ()
     (interactive)
     (beginning-of-line)
-    (forward-char 80)
+    (move-to-column 80)
     (forward-word)
     (backward-word))
 
