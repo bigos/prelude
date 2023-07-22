@@ -361,7 +361,8 @@
   :config
   (org-roam-db-autosync-enable)
   (setq org-roam-completion-everywhere t)
-  :bind (("C-x n f" . org-roam-node-find)
+  :bind (("C-x n d" . org-roam-dired)
+         ("C-x n f" . org-roam-node-find)
          ("C-x n g" . org-roam-graph)
          ("C-x n r" . org-roam-node-random)
          (:map org-mode-map
@@ -384,25 +385,24 @@
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t))
 
-(use-package yafolding
-  :ensure t
-  :bind (("C-x y f" . yafolding-mode)))
-
 (use-package websocket
   :ensure t
   :after org-roam)
 
+(use-package yafolding
+  :ensure t
+  :bind (("C-x y f" . yafolding-mode)))
 
 ;;; *** vscode interaction
 (defun open-buffer-in-vscode ()
-    (interactive)
+      (interactive)
 
-    ;; this possibly crashes emacs
-    ;; (save-buffer)
+      ;; this possibly crashes emacs
+      ;; (save-buffer)
 
-    (let ((bfn (buffer-file-name)))
-      (when bfn (let ((com (concat "code " bfn)))
-                  (shell-command com)))))
+  (let ((bfn (buffer-file-name)))
+    (when bfn (let ((com (concat "code " bfn)))
+                (shell-command com)))))
 
 (global-set-key [f9] 'open-buffer-in-vscode)
 
