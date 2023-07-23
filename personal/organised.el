@@ -369,6 +369,7 @@
                (("C-x n i" . org-roam-node-insert)
                 ("C-x n o" . org-id-get-create)
                 ("C-x n t" . org-roam-tag-add)
+                ("C-x n s" . org-roam-db-sync)
                 ("C-x n a" . org-roam-alias-add)
                 ("C-x n l" . org-roam-buffer-toggle)))))
 
