@@ -455,6 +455,10 @@
           #'(lambda ()
               (local-set-key (kbd "C-]") 'insert-graph-arrow)))
 
+;;; *** Rust
+
+;; this may not be needed because prelude defaults
+
 ;;; *** Haskell
 ;;; make sure Emacs uses stack in Haskell Projects by default
 (setq haskell-process-type 'stack-ghci)
