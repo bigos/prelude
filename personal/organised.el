@@ -134,6 +134,7 @@
                             slime-repl-ansi-color
                             string-inflection
                             switch-window
+                            tree-sitter-langs
                             use-package
                             vterm ;needs: sudo apt install libvterm-dev cmake
                             vterm-toggle
