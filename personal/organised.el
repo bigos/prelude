@@ -569,6 +569,9 @@
 
 (global-set-key (kbd "s-e") 'slime-copy-last-expression-to-repl)
 
+;;; switch between Lisp related buffers
+(global-set-key (kbd "s-;") 'slime-selector)
+
 ;;; **** Paredit
 (add-hook 'minibuffer-inactive-mode-hook #'paredit-mode)
 (add-hook 'minibuffer-inactive-mode-hook #'rainbow-delimiters-mode)
