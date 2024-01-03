@@ -355,6 +355,7 @@
   (org-roam-db-autosync-enable)
   (setq org-roam-completion-everywhere t)
   :bind (("C-x n d" . org-roam-dired)
+         ("C-x n D" . org-roam-dailies-find-directory)
          ("C-x n f" . org-roam-node-find)
          ("C-x n g" . org-roam-graph)
          ("C-x n r" . org-roam-node-random)
