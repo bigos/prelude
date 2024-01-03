@@ -13,6 +13,7 @@ ede-projects.el
 .DS_Store
 custom.el
 places
+projects
 .smex-items
 savefile/
 projectile-bookmarks.eld
