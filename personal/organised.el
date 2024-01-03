@@ -352,7 +352,6 @@
   :config
   (org-roam-db-autosync-enable)
   (setq org-roam-completion-everywhere t)
-  (setq org-roam-database-connector 'sqlite-builtin)
   :bind (("C-x n d" . org-roam-dired)
          ("C-x n f" . org-roam-node-find)
          ("C-x n g" . org-roam-graph)
