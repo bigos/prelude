@@ -322,20 +322,10 @@
 
 ;; Org-Roam basic configuration
 
-;;; make sure you use only letters and '-' or '_' as base name
-(defun org-roam-my-base-name ()
-  "Base for other org-roam-my functions."
-
-  (nth 0
-       (list
-        "current"
-        "orig"
-        "application")))
-
 (defun org-roam-my-folder ()
   (concat (getenv "HOME")
           "/Documents/Roams/"
-          (org-roam-my-base-name)
+          "current"
           "/org-roam/"))
 
 (defun org-roam-my-db ()
@@ -362,6 +352,7 @@
   :config
   (org-roam-db-autosync-enable)
   (setq org-roam-completion-everywhere t)
+  (setq org-roam-database-connector 'sqlite-builtin)
   :bind (("C-x n d" . org-roam-dired)
          ("C-x n f" . org-roam-node-find)
          ("C-x n g" . org-roam-graph)
