@@ -322,6 +322,8 @@
 
 ;; Org-Roam basic configuration
 
+(require 'org-roam-export)
+
 (defun org-roam-my-folder ()
   (concat (getenv "HOME")
           "/Documents/Roams/"
