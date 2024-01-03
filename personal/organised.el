@@ -355,7 +355,6 @@
   (org-roam-db-autosync-enable)
   (setq org-roam-completion-everywhere t)
   :bind (("C-x n d" . org-roam-dired)
-         ("C-x n D" . org-roam-dailies-find-directory)
          ("C-x n P" . org-roam-dailies-goto-previous-note)
          ("C-x n N" . org-roam-dailies-goto-next-note)
          ("C-x n T" . org-roam-dailies-goto-today)
