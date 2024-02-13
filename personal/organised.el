@@ -101,7 +101,6 @@
                             chyla-theme
                             dash
                             enh-ruby-mode
-                            flycheck-ocaml
                             graphviz-dot-mode
                             helm-core
                             helm-descbinds
@@ -111,14 +110,11 @@
                             kurecolor
                             load-theme-buffer-local
                             magit
-                            merlin
                             merlin-eldoc
                             mode-line-bell
                             monokai-theme
                             noctilux-theme
                             ob-restclient
-                            ocaml-ts-mode
-                            ocamlformat
                             org-mind-map
                             orgit
                             paredit
@@ -327,7 +323,7 @@
 
 ;; Org-Roam basic configuration
 
-(require 'org-roam-export)
+
 
 (defun org-roam-my-folder ()
   (concat (getenv "HOME")
@@ -460,9 +456,37 @@
 
 ;; this may not be needed because prelude defaults
 
+;;; *** Ocaml
+;; https://discuss.ocaml.org/t/how-to-start-with-emacs-to-work-on-ocaml-codebases/10312/19
+
+;;;; OCaml support
+
+;; major mode for editing OCaml code
+;; it also features basic toplevel integration
+(use-package tuareg
+  :ensure t
+  :mode (("\\.ocamlinit\\'" . tuareg-mode)))
+
+;; major mode for editing Dune files
+(use-package dune
+  :ensure t)
+
+;; Merlin provides a lot of IDE-like features for OCaml editors
+;; e.g. code completion, go to definition, show type of expression, etc
+(use-package merlin
+  :ensure t
+  :config
+  (add-hook 'tuareg-mode-hook #'merlin-mode)
+  (add-hook 'merlin-mode-hook #'company-mode)
+  ;; we're using flycheck instead
+  (setq merlin-error-after-save nil))
+
+;; eldoc integration for Merlin
+(use-package merlin-eldoc)
+
 ;;; *** Haskell
 ;;; make sure Emacs uses stack in Haskell Projects by default
-(setq haskell-process-type 'stack-ghci)
+  (setq haskell-process-type 'stack-ghci)
 
 (add-hook 'haskell-mode-hook (lambda () (setq-local company-dabbrev-downcase nil)))
 
@@ -532,9 +556,6 @@
    (add-hook 'cider-repl-mode-hook
              #'(lambda ()
                 (local-set-key (kbd "C-c M-a") 'cider-load-all-files)))
-
-;;; *** Ocaml
-
 
 ;;; **** Slime
 ;;; this code has been responsible for slime version problem
