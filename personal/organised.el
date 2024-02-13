@@ -101,6 +101,7 @@
                             chyla-theme
                             dash
                             enh-ruby-mode
+                            flycheck-ocaml
                             graphviz-dot-mode
                             helm-core
                             helm-descbinds
@@ -110,10 +111,14 @@
                             kurecolor
                             load-theme-buffer-local
                             magit
+                            merlin
+                            merlin-eldoc
                             mode-line-bell
                             monokai-theme
                             noctilux-theme
                             ob-restclient
+                            ocaml-ts-mode
+                            ocamlformat
                             org-mind-map
                             orgit
                             paredit
@@ -527,6 +532,9 @@
    (add-hook 'cider-repl-mode-hook
              #'(lambda ()
                 (local-set-key (kbd "C-c M-a") 'cider-load-all-files)))
+
+;;; *** Ocaml
+
 
 ;;; **** Slime
 ;;; this code has been responsible for slime version problem
