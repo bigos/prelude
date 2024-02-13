@@ -110,6 +110,7 @@
                             kurecolor
                             load-theme-buffer-local
                             magit
+                            merlin-eldoc
                             mode-line-bell
                             monokai-theme
                             noctilux-theme
@@ -322,7 +323,7 @@
 
 ;; Org-Roam basic configuration
 
-(require 'org-roam-export)
+
 
 (defun org-roam-my-folder ()
   (concat (getenv "HOME")
