@@ -1,0 +1,6 @@
+* README
+
+The package folders dropped here are automatically added to load-path.
+
+** idris2-mode
+https://github.com/redfish64/idris2-mode

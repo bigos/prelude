@@ -13,6 +13,7 @@ ede-projects.el
 .DS_Store
 custom.el
 places
+projects
 .smex-items
 savefile/
 projectile-bookmarks.eld
@@ -30,5 +31,17 @@ transient/
 var/
 .cache/
 .lsp-session*
+
+org-roam.db
+.org-id-locations
+
+tutorial/
+
+eww-bookmarks
+smex-items
+
 gotools/
 eln-cache/
+
+tree-sitter/*
+image-dired/*

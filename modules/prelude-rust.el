@@ -53,7 +53,8 @@
   (add-hook 'flycheck-mode-hook 'flycheck-rust-setup)
 
   ;; enable lsp for rust, by default it uses rust-analyzer as lsp server
-  (add-hook 'rust-mode-hook 'lsp)
+  ;; (add-hook 'rust-mode-hook 'lsp)
+  (add-hook 'rust-mode-hook 'eglot-ensure)
 
   ;; enable tree-sitter for nicer syntax highlighting
   (add-hook 'rust-mode-hook #'tree-sitter-mode)
