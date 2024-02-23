@@ -479,6 +479,14 @@
   ;; we're using flycheck instead
   (setq merlin-error-after-save nil))
 
+(use-package ocamlformat
+  :ensure t
+  :config
+  (add-hook 'before-save-hook 'ocamlformat-before-save))
+
+(use-package flycheck-ocaml
+  :ensure t)
+
 ;; eldoc integration for Merlin
 (use-package merlin-eldoc
   :ensure t
