@@ -110,7 +110,6 @@
                             kurecolor
                             load-theme-buffer-local
                             magit
-                            merlin-eldoc
                             mode-line-bell
                             monokai-theme
                             noctilux-theme
@@ -471,22 +470,32 @@
 (use-package dune
   :ensure t)
 
-;; Merlin provides a lot of IDE-like features for OCaml editors
-;; e.g. code completion, go to definition, show type of expression, etc
 (use-package merlin
   :ensure t
   :config
   (add-hook 'tuareg-mode-hook #'merlin-mode)
   (add-hook 'merlin-mode-hook #'company-mode)
+  (add-hook 'caml-mode-hook #'merlin-mode)
   ;; we're using flycheck instead
   (setq merlin-error-after-save nil))
 
 ;; eldoc integration for Merlin
-(use-package merlin-eldoc)
+(use-package merlin-eldoc
+  :ensure t
+  :hook ((tuareg-mode) . merlin-eldoc-setup))
+
+(use-package merlin-ac
+  :ensure t)
+
+(use-package merlin-company
+  :ensure t)
+
+(use-package merlin-iedit
+  :ensure t)
 
 ;;; *** Haskell
 ;;; make sure Emacs uses stack in Haskell Projects by default
-  (setq haskell-process-type 'stack-ghci)
+(setq haskell-process-type 'stack-ghci)
 
 (add-hook 'haskell-mode-hook (lambda () (setq-local company-dabbrev-downcase nil)))
 
