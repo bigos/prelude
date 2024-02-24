@@ -83,6 +83,7 @@
     (newline-and-indent))
 
 (global-set-key (kbd "s-8") 'cleanup-80)
+(global-set-key (kbd "C-h b") 'helm-descbinds)
 
 (setq prelude-guru nil) ;; better for slime
 ;; (setq guru-warn-only t) ;; not suitable for slime
