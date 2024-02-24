@@ -166,7 +166,7 @@
 
 (setq org-src-fontify-natively t)
 
-(helm-descbinds-mode)
+
 (require 'load-theme-buffer-local)
 
 ;;; get rid of utf-8 warning in Ruby mode
