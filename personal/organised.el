@@ -474,11 +474,16 @@
 (use-package merlin
   :ensure t
   :config
-  (add-hook 'tuareg-mode-hook #'merlin-mode)
+  ;; we're using flycheck instead file:~/.emacs.d/elpa/flycheck-ocaml-20220730.542/flycheck-ocaml.el::37
+  (with-eval-after-load 'merlin
+    ;; Disable Merlin's own error checking
+    (setq merlin-error-after-save nil)
+
+    ;; Enable Flycheck checker
+    (flycheck-ocaml-setup))
   (add-hook 'merlin-mode-hook #'company-mode)
   (add-hook 'caml-mode-hook #'merlin-mode)
-  ;; we're using flycheck instead
-  (setq merlin-error-after-save nil))
+  (add-hook 'tuareg-mode-hook #'merlin-mode))
 
 (use-package ocamlformat
   :ensure t
