@@ -300,6 +300,7 @@
 
        ;; we had to cheat to have s-\ as a shortcut
 (global-set-key (kbd (format "%s-%c" "s" 92)) 'my-file-line-link)
+(global-set-key (kbd "s-q")                   'my-file-line-link)
 
 (defun md-to-org-cleanup ()
   "After we use pandoc to concert md file, we need to
