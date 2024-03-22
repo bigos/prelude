@@ -622,11 +622,12 @@
     (goto-char (point-max))
     (insert string))
 
-(defun slime-copy-last-expression-to-killring (string)
+(defun slime-copy-last-expression (string)
   (interactive (list (slime-last-expression)))
   (kill-new string))
 
 (global-set-key (kbd "s-e") 'slime-copy-last-expression-to-repl)
+(global-set-key (kbd "s-t") 'slime-copy-last-expression)
 
 ;;; switch between Lisp related buffers
 (global-set-key (kbd "s-;") 'slime-selector)
