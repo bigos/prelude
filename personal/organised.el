@@ -624,7 +624,8 @@
 
 (defun slime-copy-last-expression (string)
   (interactive (list (slime-last-expression)))
-  (kill-new string))
+  (kill-new string)
+  (message "copied the last sexp"))
 
 (global-set-key (kbd "s-e") 'slime-copy-last-expression-to-repl)
 (global-set-key (kbd "s-t") 'slime-copy-last-expression)
