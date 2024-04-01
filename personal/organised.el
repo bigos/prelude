@@ -30,19 +30,20 @@
 (global-set-key (kbd "C-S-l s") 'org-store-link)
 (global-set-key (kbd "C-S-l i") 'org-insert-link)
 (global-set-key (kbd "C-S-l o") 'org-open-at-point)
+(global-set-key (kbd "C-]") 'insert-graph-arrow)
 
 (defun jump-to-line-in-file ()
-    "Describe me"
-    (interactive)
-    (let ((line (thing-at-point 'filename)))
-      (let ((line-components (split-string line ":")))
-        (let ((file (nth 0 line-components))
-              (path (nth 1 line-components))
-              (line (nth 3 line-components)))
-          (message (format "line components %s > %s > %s" file path line))
-          (progn
-            (find-file-other-window path)
-            (goto-line (string-to-number line)))))))
+      "Describe me"
+  (interactive)
+  (let ((line (thing-at-point 'filename)))
+    (let ((line-components (split-string line ":")))
+      (let ((file (nth 0 line-components))
+            (path (nth 1 line-components))
+            (line (nth 3 line-components)))
+        (message (format "line components %s > %s > %s" file path line))
+        (progn
+          (find-file-other-window path)
+          (goto-line (string-to-number line)))))))
 
   (global-set-key (kbd "C-x j l") 'jump-to-line-in-file)
 
@@ -220,9 +221,6 @@
 (setq string-inflection-skip-backward-when-done t)
 
 ;;; *** Graphviz
-(add-hook 'graphviz-dot-mode-hook
-              #'(lambda ()
-                 (local-set-key (kbd "C-]") 'insert-graph-arrow)))
 
 ;;; *** Org mode configuration
 ;;; org-mode source code blocks
@@ -449,9 +447,6 @@
 
 ;;; *** Elm
 (add-hook 'elm-mode-hook 'elm-format-on-save-mode)
-(add-hook 'elm-mode-hook
-          #'(lambda ()
-              (local-set-key (kbd "C-]") 'insert-graph-arrow)))
 
 ;;; *** Rust
 
@@ -541,15 +536,6 @@
     (paredit-backward-delete))
 
 (global-set-key (kbd "s-2") 'capitalize-and-join-backwards)
-
-
-(add-hook 'haskell-mode-hook
-              #'(lambda ()
-                 (local-set-key (kbd "C-]") 'insert-graph-arrow)))
-
-(add-hook 'haskell-interactive-mode-hook
-              #'(lambda ()
-                 (local-set-key (kbd "C-]") 'insert-graph-arrow)))
 
 (add-hook 'haskell-mode-hook
             #'(lambda ()
