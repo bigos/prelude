@@ -59,13 +59,6 @@
   (beginning-of-line)
   (move-to-column 80))
 
-;;; old experiment that works, left in case the new version has some isses
-;; (defun go-80 ()
-;;   (interactive)
-;;   (beginning-of-line)
-;;   (cl-loop do (forward-char)
-;;            until (eq (current-column) 80)))
-
 (defun go-80-word-beginning ()
   (interactive)
   (beginning-of-line)
@@ -87,12 +80,8 @@
 (global-set-key (kbd "C-h b") 'helm-descbinds)
 
 (setq prelude-guru nil) ;; better for slime
-;; (setq guru-warn-only t) ;; not suitable for slime
 
 (menu-bar-mode 1)
-(global-hl-line-mode -1)
-;; (setq prelude-flyspell nil)
-;;(smartparens-global-mode -1)
 
 (global-set-key (kbd "s-f") 'vc-git-grep)
 
