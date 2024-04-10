@@ -82,6 +82,7 @@
 (setq prelude-guru nil) ;; better for slime
 
 (menu-bar-mode 1)
+(global-hl-line-mode 0)
 
 (global-set-key (kbd "s-f") 'vc-git-grep)
 
