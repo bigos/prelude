@@ -316,7 +316,8 @@
 (defun org-roam-my-reload ()
   (interactive)
   (setq org-roam-directory   (file-truename (org-roam-my-folder)))
-  (setq org-roam-db-location (file-truename (org-roam-my-db))))
+  (setq org-roam-db-location (file-truename (org-roam-my-db)))
+  (message "reloaded org-roam-directory to %S" org-roam-directory))
 
 (defun org-roam-my-folder ()
   (concat (getenv "HOME")
@@ -350,6 +351,7 @@
   (setq org-roam-completion-everywhere t)
   :bind (("C-x n d" . org-roam-dired)
          ("C-x n P" . org-roam-dailies-goto-previous-note)
+         ("C-x n R" . org-roam-my-reload)
          ("C-x n N" . org-roam-dailies-goto-next-note)
          ("C-x n T" . org-roam-dailies-goto-today)
          ("C-x n f" . org-roam-node-find)
