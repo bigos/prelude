@@ -313,6 +313,9 @@
 ;; Org-Roam basic configuration
 
 
+(defun org-roam-my-reload ()
+  (setq org-roam-directory   (file-truename (org-roam-my-folder)))
+  (setq org-roam-db-location (file-truename (org-roam-my-db))))
 
 (defun org-roam-my-folder ()
   (concat (getenv "HOME")
