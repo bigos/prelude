@@ -314,6 +314,7 @@
 
 
 (defun org-roam-my-reload ()
+  (interactive)
   (setq org-roam-directory   (file-truename (org-roam-my-folder)))
   (setq org-roam-db-location (file-truename (org-roam-my-db))))
 
