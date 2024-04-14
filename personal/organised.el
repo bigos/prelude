@@ -356,6 +356,7 @@
          ("C-x n R" . org-roam-my-reload)
          ("C-x n N" . org-roam-dailies-goto-next-note)
          ("C-x n T" . org-roam-dailies-goto-today)
+         ("C-x n U" . org-roam-ui-open)
          ("C-x n f" . org-roam-node-find)
          ("C-x n g" . org-roam-graph)
          ("C-x n r" . org-roam-node-random)
