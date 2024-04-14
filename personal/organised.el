@@ -367,6 +367,8 @@
                 ("C-x n a" . org-roam-alias-add)
                 ("C-x n l" . org-roam-buffer-toggle)))))
 
+(require 'org-protocol)
+
 (use-package org-roam-ui
   :ensure t
   :after org-roam ;; or :after org
