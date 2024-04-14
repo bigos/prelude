@@ -317,6 +317,7 @@
   (interactive)
   (setq org-roam-directory   (file-truename (org-roam-my-folder)))
   (setq org-roam-db-location (file-truename (org-roam-my-db)))
+  (org-roam-db-sync)
   (message "reloaded org-roam-directory to %S" org-roam-directory))
 
 (defun org-roam-my-folder ()
@@ -329,6 +330,7 @@
   (concat (org-roam-my-folder)
           "org-roam"
           ".db"))
+
 
 (message (format "org-roam folder  %s" (org-roam-my-folder)))
 (message (format "org-roam db-file %s" (org-roam-my-db)))
