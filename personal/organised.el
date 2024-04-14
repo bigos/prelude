@@ -368,6 +368,7 @@
                 ("C-x n l" . org-roam-buffer-toggle)))))
 
 (require 'org-protocol)
+(require 'org-roam-protocol)
 
 (use-package org-roam-ui
   :ensure t
