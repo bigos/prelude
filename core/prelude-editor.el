@@ -262,7 +262,7 @@
 ;; smarter kill-ring navigation
 (require 'browse-kill-ring)
 (browse-kill-ring-default-keybindings)
-(global-set-key (kbd "s-y") 'browse-kill-ring)
+;; (global-set-key (kbd "s-y") 'browse-kill-ring)
 
 (defadvice exchange-point-and-mark (before deactivate-mark activate compile)
   "When called with no active region, do not activate mark."
