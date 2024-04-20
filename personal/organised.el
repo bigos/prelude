@@ -27,13 +27,16 @@
       (lisp-mode)))
 
 ;;; *** Basic configuration
+(global-unset-key (kbd "C-z"))          ; allow others use C-z prefix
+
 (global-set-key (kbd "C-S-l s") 'org-store-link)
 (global-set-key (kbd "C-S-l i") 'org-insert-link)
 (global-set-key (kbd "C-S-l o") 'org-open-at-point)
 (global-set-key (kbd "C-]") 'insert-graph-arrow)
 
+
 (defun jump-to-line-in-file ()
-      "Describe me"
+  "Describe me"
   (interactive)
   (let ((line (thing-at-point 'filename)))
     (let ((line-components (split-string line ":")))
@@ -76,7 +79,7 @@
     ;; insert new line char
     (newline-and-indent))
 
-;; (global-set-key (kbd "s-8") 'cleanup-80)
+(global-set-key (kbd "C-z 8") 'cleanup-80)
 (global-set-key (kbd "C-h b") 'helm-descbinds)
 
 (setq prelude-guru nil) ;; better for slime
@@ -84,7 +87,7 @@
 (menu-bar-mode 1)
 (global-hl-line-mode 0)
 
-;; (global-set-key (kbd "s-f") 'vc-git-grep)
+(global-set-key (kbd "C-z f") 'vc-git-grep)
 
 (require 'prelude-packages)
 (prelude-require-packages '(
@@ -145,7 +148,7 @@
 ;;; problem with enh-ruby-mode
 ;; (autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
 
-;; (global-set-key (kbd "s-'") (quote ruby-toggle-string-quotes))
+(global-set-key (kbd "C-z '") (quote ruby-toggle-string-quotes))
 
 ;; (add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
 ;; (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))                                          ;
@@ -232,9 +235,9 @@
   (interactive)
   (insert-named-source-block "lisp"))
 
-;; (add-hook 'org-mode-hook
-;;           #'(lambda ()
-;;              (local-set-key (kbd "s-#") 'insert-lisp-source-block)))
+(add-hook 'org-mode-hook
+          #'(lambda ()
+              (local-set-key (kbd "C-z #") 'insert-lisp-source-block)))
 
 (require 'org)
 
@@ -286,9 +289,9 @@
     (kill-new
      (message the-link))))
 
-       ;; we had to cheat to have s-\ as a shortcut
-;; (global-set-key (kbd (format "%s-%c" "s" 92)) 'my-file-line-link)
-;; (global-set-key (kbd "s-q")                   'my-file-line-link)
+       ;; we had to cheat to have C-z \ as a shortcut
+(global-set-key (kbd (format "%s %c" "C-z" 92)) 'my-file-line-link)
+(global-set-key (kbd "C-z q")                   'my-file-line-link)
 
 (defun md-to-org-cleanup ()
   "After we use pandoc to concert md file, we need to
@@ -302,7 +305,7 @@
   (dotimes (n 6)
     (kill-line)))
 
-;; (global-set-key (kbd "s-9") 'md-to-org-cleanup)
+(global-set-key (kbd "C-z 9") 'md-to-org-cleanup)
 
 (require 'restclient)
 
@@ -411,18 +414,18 @@
 (global-set-key (kbd "M-3") 'insertPound)
 
 ;;; MacOSX style shortcuts
-;; (global-set-key (kbd "s-z") 'undo)
-;; (global-set-key (kbd "s-x") 'clipboard-kill-region)
-;; (global-set-key (kbd "s-c") 'clipboard-kill-ring-save)
-;; (global-set-key (kbd "s-v") 'clipboard-yank)
+(global-set-key (kbd "C-z z") 'undo)
+(global-set-key (kbd "C-z x") 'clipboard-kill-region)
+(global-set-key (kbd "C-z c") 'clipboard-kill-ring-save)
+(global-set-key (kbd "C-z v") 'clipboard-yank)
 
 ;;; MacOSX F keys
-;; (global-set-key (kbd "s-3") 'kmacro-start-macro-or-insert-counter)
-;; (global-set-key (kbd "s-4") 'kmacro-end-or-call-macro)
+(global-set-key (kbd "C-z 3") 'kmacro-start-macro-or-insert-counter)
+(global-set-key (kbd "C-z 4") 'kmacro-end-or-call-macro)
 
 ;;; *** Shortcuts
-;; (global-set-key (kbd "s-a") 'bs-cycle-previous)
-;; (global-set-key (kbd "s-s") 'bs-cycle-next)
+(global-set-key (kbd "C-z a") 'bs-cycle-previous)
+(global-set-key (kbd "C-z s") 'bs-cycle-next)
 
 ;;; switch-window
 (global-set-key (kbd "C-x o") 'switch-window)
@@ -436,7 +439,7 @@
 
 ;;; insert only <% side of erb tag, autopairing wi
 (fset 'insert-rails-erb-tag [?< ?% ])
-;; (global-set-key (kbd "s-=") 'insert-rails-erb-tag)
+(global-set-key (kbd "C-z =") 'insert-rails-erb-tag)
 
 ;;; *** C/CPP
 ;;; that assumes we have emacs29, ran autogen.sh and configured the source for tree-sitter support
@@ -537,7 +540,7 @@
     (left-char)
     (paredit-backward-delete))
 
-;; (global-set-key (kbd "s-2") 'capitalize-and-join-backwards)
+(global-set-key (kbd "C-z 2") 'capitalize-and-join-backwards)
 
 (add-hook 'haskell-mode-hook
             #'(lambda ()
@@ -557,7 +560,7 @@
   :hook (haskell-mode . ormolu-format-on-save-mode)
   ;; :bind
   ;; :map
-  ;; (haskell-mode-map ("s-h" . ormolu-format-buffer))
+  ;; (haskell-mode-map ("C-z h" . ormolu-format-buffer))
   )
 
 ;;; *** Lisp
@@ -616,11 +619,11 @@
   (kill-new string)
   (message "copied the last sexp"))
 
-;; (global-set-key (kbd "s-e") 'slime-copy-last-expression-to-repl)
-;; (global-set-key (kbd "s-t") 'slime-copy-last-expression)
+(global-set-key (kbd "C-z e") 'slime-copy-last-expression-to-repl)
+(global-set-key (kbd "C-z t") 'slime-copy-last-expression)
 
 ;;; switch between Lisp related buffers
-;; (global-set-key (kbd "s-;") 'slime-selector)
+(global-set-key (kbd "C-z ;") 'slime-selector)
 
 ;;; **** Paredit
 (add-hook 'minibuffer-inactive-mode-hook #'paredit-mode)
@@ -668,7 +671,7 @@
     (search-forward " ")
     (newline-and-indent))
 
-;; (global-set-key (kbd "s-0") 'unfold-lisp)
+(global-set-key (kbd "C-z 0") 'unfold-lisp)
 
 ;;; *** Parentheses coloring
 ;;; this add capability to define your own hook for responding to theme changes
