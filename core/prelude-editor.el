@@ -371,9 +371,9 @@ indent yanked text (with prefix arg don't indent)."
 (winner-mode +1)
 
 ;; diff-hl
-(global-diff-hl-mode +1)
-(add-hook 'dired-mode-hook 'diff-hl-dired-mode)
-(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+;; (global-diff-hl-mode +1)
+;; (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
+;; (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
 
 ;; easy-kill
 (global-set-key [remap kill-ring-save] 'easy-kill)
@@ -381,20 +381,20 @@ indent yanked text (with prefix arg don't indent)."
 
 ;; operate-on-number
 (require 'operate-on-number)
-(require 'smartrep)
+;; (require 'smartrep)
 
-(smartrep-define-key global-map "C-c ."
-  '(("+" . apply-operation-to-number-at-point)
-    ("-" . apply-operation-to-number-at-point)
-    ("*" . apply-operation-to-number-at-point)
-    ("/" . apply-operation-to-number-at-point)
-    ("\\" . apply-operation-to-number-at-point)
-    ("^" . apply-operation-to-number-at-point)
-    ("<" . apply-operation-to-number-at-point)
-    (">" . apply-operation-to-number-at-point)
-    ("#" . apply-operation-to-number-at-point)
-    ("%" . apply-operation-to-number-at-point)
-    ("'" . operate-on-number-at-point)))
+;; (smartrep-define-key global-map "C-c ."
+;;   '(("+" . apply-operation-to-number-at-point)
+;;     ("-" . apply-operation-to-number-at-point)
+;;     ("*" . apply-operation-to-number-at-point)
+;;     ("/" . apply-operation-to-number-at-point)
+;;     ("\\" . apply-operation-to-number-at-point)
+;;     ("^" . apply-operation-to-number-at-point)
+;;     ("<" . apply-operation-to-number-at-point)
+;;     (">" . apply-operation-to-number-at-point)
+;;     ("#" . apply-operation-to-number-at-point)
+;;     ("%" . apply-operation-to-number-at-point)
+;;     ("'" . operate-on-number-at-point)))
 
 (defadvice server-visit-files (before parse-numbers-in-lines (files proc &optional nowait) activate)
   "Open file with emacsclient with cursors positioned on requested line.
