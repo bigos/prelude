@@ -104,6 +104,7 @@
                             helm-projectile
                             htmlize
                             ido-completing-read+
+                            ivy-avy
                             kurecolor
                             load-theme-buffer-local
                             magit
