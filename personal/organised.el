@@ -259,7 +259,7 @@
          (afile (car pdf-file))
          (page (car (cdr path+page))))
     ;; (message "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz %s %s" page afile)
-    (start-process "view-pdf" nil "xreader" "--page-index" page afile)))
+    (start-process "view-pdf" nil "evince" "--page-index" page afile)))
 
 ;;; My own additions
 (require 'org-vlc)
