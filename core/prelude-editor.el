@@ -371,9 +371,9 @@ indent yanked text (with prefix arg don't indent)."
 (winner-mode +1)
 
 ;; diff-hl
-;; (global-diff-hl-mode +1)
-;; (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
-;; (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+(global-diff-hl-mode +1)
+(add-hook 'dired-mode-hook 'diff-hl-dired-mode)
+(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
 
 ;; easy-kill
 (global-set-key [remap kill-ring-save] 'easy-kill)
