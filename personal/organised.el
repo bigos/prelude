@@ -452,6 +452,25 @@
 (add-to-list 'major-mode-remap-alist
              '(c-or-c++-mode . c-or-c++-ts-mode))
 
+;;; more info about possible ivy completions
+(defun ivy-debug-candidates ()
+  (interactive)
+  (message "ivy text %s" ivy-text)
+  (message "ivy regex %s" ivy-regex)
+  (message "ivy length %s" ivy--length)
+  (message "ivy old candidates %s" ivy--old-cands)
+  (message "possible completions %s"
+           (cl-remove-duplicates
+            (cl-map 'list
+                    (lambda (co)
+                      (substring co 0 1))
+                    (cl-map 'list (lambda (c)
+                                    (replace-regexp-in-string ivy--old-re "" c))
+                            ivy--old-cands))
+            :test (lambda (x y) (or (null y) (equal x y))))))
+
+(global-set-key [f7] 'ivy-debug-candidates)
+
 ;;; *** Elm
 (add-hook 'elm-mode-hook 'elm-format-on-save-mode)
 
