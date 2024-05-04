@@ -411,19 +411,20 @@
 (global-set-key [f9] 'open-buffer-in-vscode)
 
 ;;; *** MacOSX specific settings
-;; Allow hash to be entered on MacOSX
-(fset 'insertPound "#")
-(global-set-key (kbd "M-3") 'insertPound)
+(when nil
+  ;; Allow hash to be entered on MacOSX
+  (fset 'insertPound "#")
+  (global-set-key (kbd "M-3") 'insertPound)
 
 ;;; MacOSX style shortcuts
-(global-set-key (kbd "C-z z") 'undo)
-(global-set-key (kbd "C-z x") 'clipboard-kill-region)
-(global-set-key (kbd "C-z c") 'clipboard-kill-ring-save)
-(global-set-key (kbd "C-z v") 'clipboard-yank)
+  (global-set-key (kbd "C-z z") 'undo)
+  (global-set-key (kbd "C-z x") 'clipboard-kill-region)
+  (global-set-key (kbd "C-z c") 'clipboard-kill-ring-save)
+  (global-set-key (kbd "C-z v") 'clipboard-yank)
 
 ;;; MacOSX F keys
-(global-set-key (kbd "C-z 3") 'kmacro-start-macro-or-insert-counter)
-(global-set-key (kbd "C-z 4") 'kmacro-end-or-call-macro)
+  (global-set-key (kbd "C-z 3") 'kmacro-start-macro-or-insert-counter)
+  (global-set-key (kbd "C-z 4") 'kmacro-end-or-call-macro))
 
 ;;; *** Shortcuts
 (global-set-key (kbd "C-z a") 'bs-cycle-previous)
@@ -645,6 +646,9 @@
 
 ;;; switch between Lisp related buffers
 (global-set-key (kbd "C-z ;") 'slime-selector)
+
+;;; restart lisp after error
+(global-set-key (kbd "C-z R") 'slime-restart-inferior-lisp)
 
 ;;; **** Paredit
 (add-hook 'minibuffer-inactive-mode-hook #'paredit-mode)
