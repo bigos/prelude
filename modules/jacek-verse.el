@@ -102,8 +102,6 @@
 (defun verse-link ()
   "Find components."
   (interactive)
-  ;; enable mode for ido-completing-read+
-  ;; (ido-ubiquitous-mode 1)
   (let* ((cpoint (point))
          (bpoint (progn (beginning-of-line) (point)))
          (the-line (buffer-substring-no-properties bpoint cpoint))
