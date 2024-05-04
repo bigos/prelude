@@ -7,7 +7,7 @@
 
 ;; This file is not part of GNU Emacs.
 
-;; Package-Requires: ((dash "2.19.1") ido-completing-read+ parsec)
+;; Package-Requires: ((dash "2.19.1") parsec)
 
 ;;; Commentary:
 
@@ -32,7 +32,6 @@
 
 ;;; Code:
 (require 'cl-lib)
-(require 'ido-completing-read+)
 (require 'parsec)
 (require 'dash)
 
@@ -104,7 +103,7 @@
   "Find components."
   (interactive)
   ;; enable mode for ido-completing-read+
-  (ido-ubiquitous-mode 1)
+  ;; (ido-ubiquitous-mode 1)
   (let* ((cpoint (point))
          (bpoint (progn (beginning-of-line) (point)))
          (the-line (buffer-substring-no-properties bpoint cpoint))
@@ -122,7 +121,7 @@
            (long-books (-map 'car (verse-books)))
            (link-book (if (member book-name long-books)
                           book-name
-                        (ido-completing-read+ (format "select correction for %S" book-name)
+                        (ivy-completing-read (format "select correction for %S" book-name)
                                               long-books
                                               nil
                                               t
