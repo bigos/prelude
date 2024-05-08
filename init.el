@@ -162,38 +162,6 @@ by Prelude.")
     (defun enriched-decode-display-prop (start end &optional param)
       (list start end))))
 
-;;; fix graph drawing
-;; https://emacs.stackexchange.com/questions/81211/how-do-i-write-an-advice-to-override-an-org-roam-function
-(defun org-roam-graph--format-node-fix (node type)
-  "Return a graphviz NODE with TYPE.
-Handles both Org-roam nodes, and string nodes (e.g. urls)."
-  (let (node-id node-properties)
-    (if (org-roam-node-p node)
-        (let* ((title (org-roam-quote-string (org-roam-node-title node)))
-               (shortened-title
-                (org-roam-quote-string
-                 (pcase org-roam-graph-shorten-titles
-                   (`truncate (truncate-string-to-width title org-roam-graph-max-title-length nil nil "..."))
-                   (`wrap (org-roam-word-wrap org-roam-graph-max-title-length title))
-                   (_ title)))))
-          (setq node-id (org-roam-node-id node)
-                node-properties `(("label"   . ,shortened-title)
-                                  ("URL"     . ,(funcall org-roam-graph-link-builder node))
-                                  ("tooltip" . ,(xml-escape-string title)))))
-      (setq node-id node
-            node-properties (append `(("label" . ,(concat type ":" ;node
-                                                          (truncate-string-to-width node 15)
-                                                          )))
-                                    (when (member type (list "http" "https"))
-                                      `(("URL" . ,(xml-escape-string (concat type ":" node))))))))
-    (format "\"%s\" [%s];\n"
-            node-id
-            (mapconcat (lambda (n)
-                         (org-roam-graph--dot-option n nil "\""))
-                       (append (cdr (assoc type org-roam-graph-node-extra-config))
-                               node-properties) ","))))
-(advice-add 'org-roam-graph--format-node :override #'org-roam-graph--format-node-fix)
-
 (prelude-eval-after-init
  ;; greet the use with some useful tip
  (run-at-time 5 nil 'prelude-tip-of-the-day))
