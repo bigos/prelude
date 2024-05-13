@@ -85,11 +85,12 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (global-set-key (kbd "C-x j l") 'jump-to-line-in-file)
 
 (defun double-flash-mode-line ()
-    (let ((flash-sec (/ 1.0 20)))
+  (dotimes (n 2)
+    (progn
+      (message "flashing mode line")
       (invert-face 'mode-line)
-      (run-with-timer flash-sec nil #'invert-face 'mode-line)
-      (run-with-timer (* 2 flash-sec) nil #'invert-face 'mode-line)
-      (run-with-timer (* 3 flash-sec) nil #'invert-face 'mode-line)))
+      (sleep-for 0.2)
+      (invert-face 'mode-line))))
 
 (defun go-80 ()
   (interactive)
