@@ -84,16 +84,26 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
   (global-set-key (kbd "C-x j l") 'jump-to-line-in-file)
 
-(defun double-flash-mode-line ()
-  (dotimes (n 2)
-    (progn
-      (message "flashing mode line")
-      (invert-face 'mode-line)
-      (sleep-for 0.2)
-      (invert-face 'mode-line))))
+;;; candidate for removal
+;; (defun double-flash-mode-line ()
+;;   (dotimes (n 1)
+;;     (if t
+;;         (progn
+;;           (invert-face 'mode-line))
+;;         (progn
+;;           (message "flashing mode line")
+;;           ;; flash
+;;           (invert-face 'mode-line)
+;;           (force-mode-line-update)
+;;           (run-with-timer 0.5 nil (lambda ()
+;;                                     (invert-face 'mode-line)
+;;                                     (force-mode-line-update)))
+;;           ;; no flash
+;;           (run-with-timer 0.5 nil (lambda () nil))))
+;;     ))
 
 (defun go-80 ()
-  (interactive)
+    (interactive)
   (beginning-of-line)
   (move-to-column 80))
 
@@ -212,7 +222,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 ;;; TODO
 ;; (add-hook 'scheme-mode-hook (lambda () (swap-paredit)))
 
-(add-hook 'overwrite-mode-hook #'(lambda () (double-flash-mode-line)))
+(add-hook 'overwrite-mode-hook #'(lambda () (invert-face 'mode-line)))
 
 ;;; *** Whitespace
 (setq whitespace-line-column 480)
