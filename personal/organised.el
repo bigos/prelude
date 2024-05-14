@@ -84,24 +84,6 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
   (global-set-key (kbd "C-x j l") 'jump-to-line-in-file)
 
-;;; candidate for removal
-;; (defun double-flash-mode-line ()
-;;   (dotimes (n 1)
-;;     (if t
-;;         (progn
-;;           (invert-face 'mode-line))
-;;         (progn
-;;           (message "flashing mode line")
-;;           ;; flash
-;;           (invert-face 'mode-line)
-;;           (force-mode-line-update)
-;;           (run-with-timer 0.5 nil (lambda ()
-;;                                     (invert-face 'mode-line)
-;;                                     (force-mode-line-update)))
-;;           ;; no flash
-;;           (run-with-timer 0.5 nil (lambda () nil))))
-;;     ))
-
 (defun go-80 ()
     (interactive)
   (beginning-of-line)
