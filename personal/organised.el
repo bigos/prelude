@@ -62,6 +62,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-unset-key (kbd "C-z"))          ; allow others use C-z prefix
 (global-set-key (kbd "C-z w") 'ace-window)
 (global-set-key (kbd "C-z r") 'crux-recentf-find-file)
+(global-set-key (kbd "C-z SPC") 'fixup-whitespace)
 
 (global-set-key (kbd "C-S-l s") 'org-store-link)
 (global-set-key (kbd "C-S-l i") 'org-insert-link)
