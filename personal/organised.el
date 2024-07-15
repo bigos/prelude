@@ -162,7 +162,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                             tree-sitter-langs
                             use-package
                             vterm ;needs: sudo apt install libvterm-dev cmake
-                            vterm-toggle
+                            multi-vterm
                             web-mode
                             zenburn-theme
                             zeno-theme
