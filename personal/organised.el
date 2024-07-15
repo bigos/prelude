@@ -123,6 +123,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                             buffer-move
                             chyla-theme
                             dash
+                            ef-themes
                             enh-ruby-mode
                             graphviz-dot-mode
                             helm-core
