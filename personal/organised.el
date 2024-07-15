@@ -63,6 +63,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-set-key (kbd "C-z w") 'ace-window)
 (global-set-key (kbd "C-z r") 'crux-recentf-find-file)
 (global-set-key (kbd "C-z SPC") 'fixup-whitespace)
+(global-set-key (kbd "C-z L") 'ef-themes-select-light)
+(global-set-key (kbd "C-z D") 'ef-themes-select-dark)
 
 (global-set-key (kbd "C-S-l s") 'org-store-link)
 (global-set-key (kbd "C-S-l i") 'org-insert-link)
