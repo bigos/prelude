@@ -730,7 +730,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 (defun insert-serapeum-arrow ()
   (interactive)
-  (insert "(~> )"))
+  (insert "(~> )")
+  (backward-char))
 
 (global-set-key (kbd "C-<f9>") 'insert-serapeum-arrow)
 
