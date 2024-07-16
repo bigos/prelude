@@ -728,10 +728,16 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 (global-set-key (kbd "C-z 0") 'unfold-lisp)
 
+(defun insert-serapeum-arrow ()
+  (interactive)
+  (insert "(~> )"))
+
+(global-set-key (kbd "C-<f9>") 'insert-serapeum-arrow)
+
 ;;; *** Parentheses coloring
 ;;; this add capability to define your own hook for responding to theme changes
 (defvar after-load-theme-hook nil
-    "Hook run after a color theme is loaded using `load-theme'.")
+  "Hook run after a color theme is loaded using `load-theme'.")
 (defadvice load-theme (after run-after-load-theme-hook activate)
     "Run `after-load-theme-hook'."
     (run-hooks 'after-load-theme-hook))
