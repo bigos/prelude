@@ -733,7 +733,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (insert "(~> )")
   (backward-char))
 
-(global-set-key (kbd "C-<f9>") 'insert-serapeum-arrow)
+(global-set-key (kbd "C-z i") 'insert-serapeum-arrow)
 
 ;;; *** Parentheses coloring
 ;;; this add capability to define your own hook for responding to theme changes
