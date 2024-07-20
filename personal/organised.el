@@ -375,13 +375,6 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (interactive)
   (dired (org-roam-my-folder)))
 
-;;; add functions for:
-;;; 1. inserting new node based on selection or word under cursor
-;;; 2. replacing word with node link
-
-(when nil
-  (word-at-point))
-
 (use-package org-roam
   :ensure t
   :after org
