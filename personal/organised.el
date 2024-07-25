@@ -124,7 +124,6 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (require 'prelude-packages)
 (prelude-require-packages '(
                             birds-of-paradise-plus-theme
-                            bshell
                             buffer-move
                             chyla-theme
                             dash
