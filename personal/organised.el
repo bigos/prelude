@@ -403,6 +403,17 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                 ("C-x n a" . org-roam-alias-add)
                 ("C-x n l" . org-roam-buffer-toggle)))))
 
+(use-package org-mind-map
+  :init
+  (require 'ox-org)
+  :ensure T
+  :config
+  (setq org-mind-map-engine "dot"))
+;; Then, run M-x org-mind-map-write within the org-mode file you would like to make
+;; a mind-map for. If all works as expected, a PDF file will be generated in the
+;; same directory as the org file.
+;; https://github.com/the-ted/org-mind-map#links
+
 (require 'org-protocol)
 (require 'org-roam-protocol)
 
