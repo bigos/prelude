@@ -404,9 +404,9 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                 ("C-x n l" . org-roam-buffer-toggle)))))
 
 (use-package org-mind-map
+  :ensure t
   :init
   (require 'ox-org)
-  :ensure T
   :config
   (setq org-mind-map-engine "dot"))
 ;; Then, run M-x org-mind-map-write within the org-mode file you would like to make
@@ -428,7 +428,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (setq org-roam-ui-sync-theme t
         org-roam-ui-follow t
         org-roam-ui-update-on-save t
-        org-roam-ui-open-on-start t))
+        org-roam-ui-open-on-start t)
+  :bind (("C-z W" . org-mind-map-write)))
 
 (use-package websocket
   :ensure t
