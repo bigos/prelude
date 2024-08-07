@@ -149,6 +149,11 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                             projectile-rails
                             projectile-rails
                             prop-menu
+
+                            psc-ide
+                            psci
+                            purescript-mode
+
                             rails-log-mode
                             rainbow-delimiters
                             redshank
@@ -248,9 +253,10 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 ;;; *** Graphviz
 
 ;;; *** Org mode configuration
+
 ;;; org-mode source code blocks
 (defun insert-named-source-block (language)
-  "Insert source block with LANGUAGE string provided."
+    "Insert source block with LANGUAGE string provided."
   (insert "#+begin_src ")
   (insert language)
   (insert "\n")
@@ -451,6 +457,19 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                 (shell-command com)))))
 
 (global-set-key [f9] 'open-buffer-in-vscode)
+
+;;; *** PureScript
+
+(require 'psc-ide)
+
+(add-hook 'purescript-mode-hook
+          (lambda ()
+            (psc-ide-mode)
+            (company-mode)
+            (flycheck-mode)
+            (turn-on-purescript-indentation)))
+
+(add-hook 'purescript-mode-hook 'inferior-psci-mode)
 
 ;;; *** MacOSX specific settings
 (when nil
