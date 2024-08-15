@@ -348,9 +348,15 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 ;;; $$$$$$$$$$$$$$$$$$$$$$$$$$$$add link based on last word$$$$$$$$$$$$$$$$$$$$$
 (defun insert-org-heading-link ()
   (interactive)
-  (let ((w (word-at-point))
-        (cpoint (point)))
-    (message "finish me >%s<" w)
+  (let* ((w (word-at-point))
+         (startpoint (search-backward w))
+         (cpoint (point)))
+    ;; remove word at point
+    (replace-region-contents (+ 0 startpoint)
+                             (+ (length w) cpoint)
+                             (lambda ()
+                               ""))
+    ;; replace it with the link
     (replace-region-contents (+ 0 cpoint)
                              (+ 0 cpoint)
                              (lambda ()
