@@ -365,7 +365,9 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                                 w
                                 "]["
                                 w
-                                "]]")))))
+                                "]]")))
+    (forward-word)
+    (forward-word)))
 
 (add-hook 'org-mode-hook
           #'(lambda ()
