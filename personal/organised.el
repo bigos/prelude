@@ -345,15 +345,25 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 (global-set-key (kbd "C-z 9") 'md-to-org-cleanup)
 
-;;; $$$$$$$$$$$$$$$$$$$$$$$$$$$$add link based on last word$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$444
-;; (defun insert-lisp-source-block ()
-;;   (interactive)
-;;   (insert-named-source-block "lisp"))
+;;; $$$$$$$$$$$$$$$$$$$$$$$$$$$$add link based on last word$$$$$$$$$$$$$$$$$$$$$
+(defun insert-org-heading-link ()
+  (interactive)
+  (let ((w (word-at-point))
+        (cpoint (point)))
+    (message "finish me >%s<" w)
+    (replace-region-contents (+ 0 cpoint)
+                             (+ 0 cpoint)
+                             (lambda ()
+                               (concat
+                                "[[*"
+                                w
+                                "]["
+                                w
+                                "]]")))))
 
-;; (add-hook 'org-mode-hook
-;;           #'(lambda ()
-;;               (local-set-key (kbd "C-z #") 'insert-lisp-source-block)))
-
+(add-hook 'org-mode-hook
+          #'(lambda ()
+              (local-set-key (kbd "C-z l") 'insert-org-heading-link)))
 
 (require 'restclient)
 
