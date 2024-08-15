@@ -345,6 +345,16 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 (global-set-key (kbd "C-z 9") 'md-to-org-cleanup)
 
+;;; $$$$$$$$$$$$$$$$$$$$$$$$$$$$add link based on last word$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$444
+;; (defun insert-lisp-source-block ()
+;;   (interactive)
+;;   (insert-named-source-block "lisp"))
+
+;; (add-hook 'org-mode-hook
+;;           #'(lambda ()
+;;               (local-set-key (kbd "C-z #") 'insert-lisp-source-block)))
+
+
 (require 'restclient)
 
 (org-babel-do-load-languages
