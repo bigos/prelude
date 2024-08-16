@@ -368,7 +368,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
            (heading-names (cl-mapcar (lambda (h)
                                        (cl-second (split-string h "* ")))
                                      all-headings))
-           (the-heading (if (member w heading-names)
+           (the-heading (if (member enteredw heading-names)
                             enteredw
                           (ivy-completing-read (format "Select heading %S" enteredw)
                                                heading-names
