@@ -346,28 +346,53 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-set-key (kbd "C-z 9") 'md-to-org-cleanup)
 
 ;;; $$$$$$$$$$$$$$$$$$$$$$$$$$$$add link based on last word$$$$$$$$$$$$$$$$$$$$$
+;; https://stackoverflow.com/questions/2289883/emacs-copy-matching-lines
+(defun all-org-headings ()
+  "Return a list of org headings in the current buffer."
+  (let ((matches nil))
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward org-heading-regexp nil t)
+        (push
+         (buffer-substring-no-properties (line-beginning-position) (point))
+         matches)))
+    (reverse matches)))
+
 (defun insert-org-heading-link ()
   (interactive)
   (let* ((w (word-at-point))
          (startpoint (search-backward w))
-         (cpoint (point)))
-    ;; remove word at point
-    (replace-region-contents (+ 0 startpoint)
-                             (+ (length w) cpoint)
-                             (lambda ()
-                               ""))
-    ;; replace it with the link
-    (replace-region-contents (+ 0 cpoint)
-                             (+ 0 cpoint)
-                             (lambda ()
-                               (concat
-                                "[[*"
-                                w
-                                "]["
-                                w
-                                "]]")))
-    (forward-word)
-    (forward-word)))
+         (cpoint (point))
+         (all-headings (all-org-headings))
+         (heading-names (cl-mapcar (lambda (h)
+                                     (cl-second (split-string h "* ")))
+                                   all-headings)))
+
+    (message "HE %S"  all-headings)
+    (message "HN %S"  heading-names)
+    (if (member w heading-names)
+        (progn
+          (message "OK heading found %S" w)
+
+          ;; remove word at point
+          (replace-region-contents (+ 0 startpoint)
+                                   (+ (length w) cpoint)
+                                   (lambda ()
+                                     ""))
+          ;; replace it with the link
+          (replace-region-contents (+ 0 cpoint)
+                                   (+ 0 cpoint)
+                                   (lambda ()
+                                     (concat
+                                      "[[*"
+                                      w
+                                      "]["
+                                      w
+                                      "]]")))
+          (forward-word)
+          (forward-word))
+
+      (message "Ouch heading not found %S" w))))
 
 (add-hook 'org-mode-hook
           #'(lambda ()
