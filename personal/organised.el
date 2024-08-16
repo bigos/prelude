@@ -345,7 +345,6 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 (global-set-key (kbd "C-z 9") 'md-to-org-cleanup)
 
-;;; $$$$$$$$$$$$$$$$$$$$$$$$$$$$add link based on last word$$$$$$$$$$$$$$$$$$$$$
 (defun insert-org-heading-link ()
   (interactive)
   (let* ((enteredw (word-at-point))
@@ -354,27 +353,21 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
          (heading-names (org-map-entries #'org-get-heading nil 'file))
          (the-heading (if (member enteredw heading-names)
                           enteredw
-                        (ivy-completing-read (format "Select heading %S" enteredw)
-                                             heading-names
-                                             nil
-                                             t
-                                             enteredw)))
-         (the-link (if the-heading
-                       (concat
-                        "[[*"
-                        the-heading
-                        "]["
-                        the-heading
-                        "]]"))))
+                        (completing-read (format "Select heading %s " enteredw)
+                                         heading-names
+                                         nil
+                                         t
+                                         enteredw)))
+         (the-link (when the-heading
+                     (format "[[*%s][%s]]" the-heading the-heading))))
 
-    (if the-link
-        (progn
-          (replace-region-contents (+ 0 startpoint)
-                                   (+ (length enteredw) cpoint)
-                                   (lambda ()
-                                     the-link))
-          ;; go to the end of the link
-          (search-forward "]]")))))
+    (when the-link
+      (replace-region-contents (+ 0 startpoint)
+                               (+ (length enteredw) cpoint)
+                               (lambda ()
+                                 the-link))
+      ;; go to the end of the-link
+      (search-forward "]]"))))
 
 (add-hook 'org-mode-hook
           #'(lambda ()
