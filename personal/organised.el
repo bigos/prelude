@@ -346,48 +346,35 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-set-key (kbd "C-z 9") 'md-to-org-cleanup)
 
 ;;; $$$$$$$$$$$$$$$$$$$$$$$$$$$$add link based on last word$$$$$$$$$$$$$$$$$$$$$
-;; https://stackoverflow.com/questions/2289883/emacs-copy-matching-lines
-(defun all-org-headings ()
-  "Return a list of org headings in the current buffer."
-  (let ((matches nil))
-    (save-excursion
-      (goto-char (point-min))
-      (while (re-search-forward org-heading-regexp nil t)
-        (push
-         (buffer-substring-no-properties (line-beginning-position) (point))
-         matches)))
-    (reverse matches)))
-
 (defun insert-org-heading-link ()
   (interactive)
-  (save-excursion
-    (let* ((enteredw (word-at-point))
-           (startpoint (search-backward enteredw))
-           (cpoint (point))
-           (all-headings (all-org-headings))
-           (heading-names (cl-mapcar (lambda (h)
-                                       (cl-second (split-string h "* ")))
-                                     all-headings))
-           (the-heading (if (member enteredw heading-names)
-                            enteredw
-                          (ivy-completing-read (format "Select heading %S" enteredw)
-                                               heading-names
-                                               nil
-                                               t
-                                               enteredw)))
-           (the-link (if the-heading
-                         (concat
-                          "[[*"
-                          the-heading
-                          "]["
-                          the-heading
-                          "]]"))))
+  (let* ((enteredw (word-at-point))
+         (startpoint (search-backward enteredw))
+         (cpoint (point))
+         (heading-names (org-map-entries #'org-get-heading nil 'file))
+         (the-heading (if (member enteredw heading-names)
+                          enteredw
+                        (ivy-completing-read (format "Select heading %S" enteredw)
+                                             heading-names
+                                             nil
+                                             t
+                                             enteredw)))
+         (the-link (if the-heading
+                       (concat
+                        "[[*"
+                        the-heading
+                        "]["
+                        the-heading
+                        "]]"))))
 
-      (if the-link
-        (replace-region-contents (+ 0 startpoint)
-                                 (+ (length enteredw) cpoint)
-                                 (lambda ()
-                                   the-link))))))
+    (if the-link
+        (progn
+          (replace-region-contents (+ 0 startpoint)
+                                   (+ (length enteredw) cpoint)
+                                   (lambda ()
+                                     the-link))
+          ;; go to the end of the link
+          (search-forward "]]")))))
 
 (add-hook 'org-mode-hook
           #'(lambda ()
