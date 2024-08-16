@@ -389,9 +389,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                                         w
                                         "]["
                                         w
-                                        "]]")))
-            (forward-word)
-            (forward-word))
+                                        "]]"))))
 
         (message "heading not found %s" w)))))
 
