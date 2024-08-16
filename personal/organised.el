@@ -361,37 +361,39 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (defun insert-org-heading-link ()
   (interactive)
   (save-excursion
-    (let* ((w (word-at-point))
-           (startpoint (search-backward w))
+    (let* ((enteredw (word-at-point))
+           (startpoint (search-backward enteredw))
            (cpoint (point))
            (all-headings (all-org-headings))
            (heading-names (cl-mapcar (lambda (h)
                                        (cl-second (split-string h "* ")))
-                                     all-headings)))
+                                     all-headings))
+           (the-heading (if (member w heading-names)
+                            enteredw
+                          (ivy-completing-read (format "Select heading %S" enteredw)
+                                               heading-names
+                                               nil
+                                               t
+                                               enteredw))))
 
-      (message "HE %S"  all-headings)
-      (message "HN %S"  heading-names)
-      (if (member w heading-names)
-          (progn
-            (message "OK heading found %S" w)
-
-            ;; remove word at point
-            (replace-region-contents (+ 0 startpoint)
-                                     (+ (length w) cpoint)
-                                     (lambda ()
-                                       ""))
-            ;; replace it with the link
-            (replace-region-contents (+ 0 cpoint)
-                                     (+ 0 cpoint)
-                                     (lambda ()
-                                       (concat
-                                        "[[*"
-                                        w
-                                        "]["
-                                        w
-                                        "]]"))))
-
-        (message "heading not found %s" w)))))
+            (if the-heading
+              (progn
+                ;; remove word at point
+                (replace-region-contents (+ 0 startpoint)
+                                         (+ (length enteredw) cpoint)
+                                         (lambda ()
+                                           ""))
+                ;; replace it with the link
+                (replace-region-contents (+ 0 cpoint)
+                                         (+ 0 cpoint)
+                                         (lambda ()
+                                           (concat
+                                            "[[*"
+                                            the-heading
+                                            "]["
+                                            the-heading
+                                            "]]"))))
+              ))))
 
 (add-hook 'org-mode-hook
           #'(lambda ()
