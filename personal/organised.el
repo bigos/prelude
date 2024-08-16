@@ -374,26 +374,20 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                                                heading-names
                                                nil
                                                t
-                                               enteredw))))
+                                               enteredw)))
+           (the-link (if the-heading
+                         (concat
+                          "[[*"
+                          the-heading
+                          "]["
+                          the-heading
+                          "]]"))))
 
-            (if the-heading
-              (progn
-                ;; remove word at point
-                (replace-region-contents (+ 0 startpoint)
-                                         (+ (length enteredw) cpoint)
-                                         (lambda ()
-                                           ""))
-                ;; replace it with the link
-                (replace-region-contents (+ 0 cpoint)
-                                         (+ 0 cpoint)
-                                         (lambda ()
-                                           (concat
-                                            "[[*"
-                                            the-heading
-                                            "]["
-                                            the-heading
-                                            "]]"))))
-              ))))
+      (if the-link
+        (replace-region-contents (+ 0 startpoint)
+                                 (+ (length enteredw) cpoint)
+                                 (lambda ()
+                                   the-link))))))
 
 (add-hook 'org-mode-hook
           #'(lambda ()
