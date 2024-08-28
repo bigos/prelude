@@ -437,33 +437,34 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                 ("C-x n a" . org-roam-alias-add)
                 ("C-x n l" . org-roam-buffer-toggle)))))
 
-(use-package org-mind-map
-  :ensure t
-  :init
-  (require 'ox-org)
-  :config
-  (setq org-mind-map-engine "dot"))
-;; Then, run M-x org-mind-map-write within the org-mode file you would like to make
-;; a mind-map for. If all works as expected, a PDF file will be generated in the
-;; same directory as the org file.
-;; https://github.com/the-ted/org-mind-map#links
-
 (require 'org-protocol)
 (require 'org-roam-protocol)
 
-(use-package org-roam-ui
+(use-package org-brain
   :ensure t
-  :after org-roam ;; or :after org
-  ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
-  ;;         a hookable mode anymore, you're advised to pick something yourself
-  ;;         if you don't care about startup time, use
-  ;;  :hook (after-init . org-roam-ui-mode)
+  :init
+  (setq org-brain-path
+        "~/Documents/org-brain")
+  ;; For Evil users
+  (with-eval-after-load 'evil
+    (evil-set-initial-state 'org-brain-visualize-mode 'emacs))
   :config
-  (setq org-roam-ui-sync-theme t
-        org-roam-ui-follow t
-        org-roam-ui-update-on-save t
-        org-roam-ui-open-on-start t)
-  :bind (("C-z W" . org-mind-map-write)))
+  (bind-key "C-z b" 'org-brain-prefix-map org-mode-map)
+  (setq org-id-track-globally t)
+  (setq org-id-locations-file "~/.emacs.d/.org-id-locations")
+  (add-hook 'before-save-hook #'org-brain-ensure-ids-in-buffer)
+  (push '("b" "Brain" plain (function org-brain-goto-end)
+          "* %i%?" :empty-lines 1)
+        org-capture-templates)
+  (setq org-brain-visualize-default-choices 'all)
+  (setq org-brain-title-max-length 12)
+  (setq org-brain-include-file-entries nil
+        org-brain-file-entries-use-title nil))
+
+;; Allows you to edit entries directly from org-brain-visualize
+(use-package polymode
+  :config
+  (add-hook 'org-brain-visualize-mode-hook #'org-brain-polymode))
 
 (use-package websocket
   :ensure t
