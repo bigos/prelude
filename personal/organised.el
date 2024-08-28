@@ -210,7 +210,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 (load "server")
 (unless (server-running-p)
-(server-start))
+  (server-start))
 
 ;;; TODO
 ;; (add-hook 'scheme-mode-hook (lambda () (swap-paredit)))
