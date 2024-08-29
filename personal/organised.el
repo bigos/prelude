@@ -218,7 +218,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 (load "server")
 (unless (server-running-p)
-(server-start))
+  (server-start))
 
 ;;; TODO
 ;; (add-hook 'scheme-mode-hook (lambda () (swap-paredit)))
@@ -445,33 +445,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                 ("C-x n a" . org-roam-alias-add)
                 ("C-x n l" . org-roam-buffer-toggle)))))
 
-(use-package org-mind-map
-  :ensure t
-  :init
-  (require 'ox-org)
-  :config
-  (setq org-mind-map-engine "dot"))
-;; Then, run M-x org-mind-map-write within the org-mode file you would like to make
-;; a mind-map for. If all works as expected, a PDF file will be generated in the
-;; same directory as the org file.
-;; https://github.com/the-ted/org-mind-map#links
-
 (require 'org-protocol)
 (require 'org-roam-protocol)
-
-(use-package org-roam-ui
-  :ensure t
-  :after org-roam ;; or :after org
-  ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
-  ;;         a hookable mode anymore, you're advised to pick something yourself
-  ;;         if you don't care about startup time, use
-  ;;  :hook (after-init . org-roam-ui-mode)
-  :config
-  (setq org-roam-ui-sync-theme t
-        org-roam-ui-follow t
-        org-roam-ui-update-on-save t
-        org-roam-ui-open-on-start t)
-  :bind (("C-z W" . org-mind-map-write)))
 
 (use-package websocket
   :ensure t
