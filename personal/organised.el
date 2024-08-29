@@ -68,6 +68,14 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-set-key (kbd "M-<f7>") 'ef-themes-select)
 (global-set-key (kbd "C-z D") 'ef-themes-select-dark)
 
+(global-set-key (kbd "C-z m") 'multi-vterm)
+(add-hook 'vterm-mode-hook
+          #'(lambda ()
+              (local-set-key (kbd "C-x r") 'multi-vterm-rename-buffer)))
+(add-hook 'vterm-mode-hook
+          #'(lambda ()
+              (local-set-key (kbd "C-x m") 'multi-vterm)))
+
 (global-set-key (kbd "C-S-l s") 'org-store-link)
 (global-set-key (kbd "C-S-l i") 'org-insert-link)
 (global-set-key (kbd "C-S-l o") 'org-open-at-point)
