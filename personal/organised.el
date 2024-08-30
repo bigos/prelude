@@ -75,6 +75,13 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (add-hook 'vterm-mode-hook
           #'(lambda ()
               (local-set-key (kbd "C-x m") 'multi-vterm)))
+(add-hook 'vterm-mode-hook
+          #'(lambda ()
+              (local-set-key (kbd "C-x n") 'multi-vterm-next)))
+(add-hook 'vterm-mode-hook
+          #'(lambda ()
+              (local-set-key (kbd "C-x p") 'multi-vterm-prev)))
+
 
 (global-set-key (kbd "C-S-l s") 'org-store-link)
 (global-set-key (kbd "C-S-l i") 'org-insert-link)
