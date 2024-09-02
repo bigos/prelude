@@ -69,6 +69,21 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-set-key (kbd "C-z D") 'ef-themes-select-dark)
 (global-set-key (kbd "C-z g") 'grep-find)
 
+(global-set-key (kbd "C-z m") 'multi-vterm)
+(add-hook 'vterm-mode-hook
+          #'(lambda ()
+              (local-set-key (kbd "C-x r") 'multi-vterm-rename-buffer)))
+(add-hook 'vterm-mode-hook
+          #'(lambda ()
+              (local-set-key (kbd "C-x m") 'multi-vterm)))
+(add-hook 'vterm-mode-hook
+          #'(lambda ()
+              (local-set-key (kbd "C-x n") 'multi-vterm-next)))
+(add-hook 'vterm-mode-hook
+          #'(lambda ()
+              (local-set-key (kbd "C-x p") 'multi-vterm-prev)))
+
+
 (global-set-key (kbd "C-S-l s") 'org-store-link)
 (global-set-key (kbd "C-S-l i") 'org-insert-link)
 (global-set-key (kbd "C-S-l o") 'org-open-at-point)
@@ -211,7 +226,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 (load "server")
 (unless (server-running-p)
-(server-start))
+  (server-start))
 
 ;;; TODO
 ;; (add-hook 'scheme-mode-hook (lambda () (swap-paredit)))
@@ -438,33 +453,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                 ("C-x n a" . org-roam-alias-add)
                 ("C-x n l" . org-roam-buffer-toggle)))))
 
-(use-package org-mind-map
-  :ensure t
-  :init
-  (require 'ox-org)
-  :config
-  (setq org-mind-map-engine "dot"))
-;; Then, run M-x org-mind-map-write within the org-mode file you would like to make
-;; a mind-map for. If all works as expected, a PDF file will be generated in the
-;; same directory as the org file.
-;; https://github.com/the-ted/org-mind-map#links
-
 (require 'org-protocol)
 (require 'org-roam-protocol)
-
-(use-package org-roam-ui
-  :ensure t
-  :after org-roam ;; or :after org
-  ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
-  ;;         a hookable mode anymore, you're advised to pick something yourself
-  ;;         if you don't care about startup time, use
-  ;;  :hook (after-init . org-roam-ui-mode)
-  :config
-  (setq org-roam-ui-sync-theme t
-        org-roam-ui-follow t
-        org-roam-ui-update-on-save t
-        org-roam-ui-open-on-start t)
-  :bind (("C-z W" . org-mind-map-write)))
 
 (use-package websocket
   :ensure t
