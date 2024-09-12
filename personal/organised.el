@@ -67,6 +67,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-set-key (kbd "C-<f7>") 'ef-themes-select-light)
 (global-set-key (kbd "M-<f7>") 'ef-themes-select)
 (global-set-key (kbd "C-z D") 'ef-themes-select-dark)
+;; https://emacs.stackexchange.com/questions/14748/how-to-bind-a-command-with-a-c-u-prefix-to-a-different-key
 (global-set-key (kbd "C-z O") (lambda () (interactive) (org-open-at-point t)))
 (global-set-key (kbd "C-z g") 'grep-find)
 
