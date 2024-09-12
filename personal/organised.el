@@ -58,6 +58,12 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
       (set-buffer scriptBuf)
       (lisp-mode)))
 
+(defun better-org-open-at-point ()
+  (interactive)
+  (org-open-at-point t))
+;; https://emacs.stackexchange.com/questions/14748/how-to-bind-a-command-with-a-c-u-prefix-to-a-different-key
+(define-key org-mode-map (kbd "C-z o") 'better-org-open-at-point)
+
 ;;; *** Basic configuration
 (global-unset-key (kbd "C-z"))          ; allow others use C-z prefix
 (global-set-key (kbd "C-z w") 'ace-window)
@@ -67,8 +73,6 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-set-key (kbd "C-<f7>") 'ef-themes-select-light)
 (global-set-key (kbd "M-<f7>") 'ef-themes-select)
 (global-set-key (kbd "C-z D") 'ef-themes-select-dark)
-;; https://emacs.stackexchange.com/questions/14748/how-to-bind-a-command-with-a-c-u-prefix-to-a-different-key
-(global-set-key (kbd "C-z O") (lambda () (interactive) (org-open-at-point t)))
 (global-set-key (kbd "C-z g") 'grep-find)
 
 (global-set-key (kbd "C-z m") 'multi-vterm)
