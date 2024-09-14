@@ -58,6 +58,12 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
       (set-buffer scriptBuf)
       (lisp-mode)))
 
+(defun better-org-open-at-point ()
+  (interactive)
+  (org-open-at-point t))
+;; https://emacs.stackexchange.com/questions/14748/how-to-bind-a-command-with-a-c-u-prefix-to-a-different-key
+(define-key org-mode-map (kbd "C-z o") 'better-org-open-at-point)
+
 ;;; *** Basic configuration
 (global-unset-key (kbd "C-z"))          ; allow others use C-z prefix
 (global-set-key (kbd "C-z w") 'ace-window)
@@ -689,6 +695,11 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 ;;   (load (expand-file-name slime-helper-el)))
 (require 'slime)
 (require 'slime-autoloads)
+
+;;; I do not need it because slime-selector is better
+;; (add-hook 'slime-repl-mode-hook
+;;           #'(lambda ()
+;;               (local-set-key (kbd "C-c B") 'slime-scratch-buffer)))
 
 (setq slime-contribs '(slime-fancy slime-fancy-inspector))
 
