@@ -558,6 +558,11 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 (global-set-key [f7] 'ivy-debug-candidates)
 
+;;; *** Indent bars
+(use-package indent-bars
+  :ensure t
+  :hook ((python-mode yaml-mode) . indent-bars-mode)) ; or whichever modes you prefer
+
 ;;; *** Elm
 (add-hook 'elm-mode-hook 'elm-format-on-save-mode)
 
