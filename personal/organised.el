@@ -156,6 +156,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                             helm-descbinds
                             helm-projectile
                             htmlize
+                            indent-bars
                             kurecolor
                             load-theme-buffer-local
                             magit
