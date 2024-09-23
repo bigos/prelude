@@ -738,10 +738,16 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (kill-new string)
   (message "copied the last sexp"))
 
+(defun close-slime-inspector-buffer ()
+  "close slime inspector buffer"
+  (interactive)
+  (message "quitting slime inspector")
+  (kill-buffer "*slime-inspector*"))
+
 (global-set-key (kbd "C-z e") 'slime-copy-last-expression-to-repl)
 (global-set-key (kbd "C-z t") 'slime-copy-last-expression)
 (global-set-key (kbd "C-z P") 'slime-eval-print-last-expression)
-(global-set-key (kbd "C-z Q") 'slime-inspector-quit)
+(global-set-key (kbd "C-z Q") 'close-slime-inspector-buffer)
 
 ;;; switch between Lisp related buffers
 (global-set-key (kbd "C-z ;") 'slime-selector)
