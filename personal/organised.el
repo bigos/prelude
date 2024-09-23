@@ -741,12 +741,14 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-set-key (kbd "C-z e") 'slime-copy-last-expression-to-repl)
 (global-set-key (kbd "C-z t") 'slime-copy-last-expression)
 (global-set-key (kbd "C-z P") 'slime-eval-print-last-expression)
+(global-set-key (kbd "C-z Q") 'slime-inspector-quit)
 
 ;;; switch between Lisp related buffers
 (global-set-key (kbd "C-z ;") 'slime-selector)
 
 ;;; restart lisp after error
 (global-set-key (kbd "C-z R") 'slime-restart-inferior-lisp)
+
 
 ;;; **** Paredit
 (add-hook 'minibuffer-inactive-mode-hook #'paredit-mode)
