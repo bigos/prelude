@@ -115,7 +115,7 @@
       ;; keep the home clean
       savehist-file (expand-file-name "savehist" prelude-savefile-dir))
 
-(savehist-mode +1)
+;; (savehist-mode +1)
 
 ;; save recent files
 (require 'recentf)
