@@ -65,6 +65,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (define-key org-mode-map (kbd "C-z o") 'better-org-open-at-point)
 
 ;;; *** Basic configuration
+(toggle-truncate-lines 0)               ;don't truncate but fold
+
 (global-unset-key (kbd "C-z"))          ; allow others use C-z prefix
 (global-set-key (kbd "C-z w") 'ace-window)
 (global-set-key (kbd "C-z r") 'crux-recentf-find-file)
