@@ -76,6 +76,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-set-key (kbd "M-<f7>") 'ef-themes-select)
 (global-set-key (kbd "C-z D") 'ef-themes-select-dark)
 (global-set-key (kbd "C-z g") 'grep-find)
+(global-set-key (kbd "C-z S") 'sort-lines)
 
 (global-set-key (kbd "C-z m") 'multi-vterm)
 (add-hook 'vterm-mode-hook
