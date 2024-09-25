@@ -745,10 +745,16 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (message "quitting slime inspector")
   (kill-buffer "*slime-inspector*"))
 
+
+
 (global-set-key (kbd "C-z e") 'slime-copy-last-expression-to-repl)
 (global-set-key (kbd "C-z t") 'slime-copy-last-expression)
 (global-set-key (kbd "C-z P") 'slime-eval-print-last-expression)
 (global-set-key (kbd "C-z Q") 'close-slime-inspector-buffer)
+
+(require 'slime-repl)
+(global-set-key (kbd "C-z K") 'slime-kill-all-buffers)
+
 
 ;;; switch between Lisp related buffers
 (global-set-key (kbd "C-z ;") 'slime-selector)
