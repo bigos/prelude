@@ -820,7 +820,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                      s2-point)
                     ((and (not (null s1-point)) (null s2-point))
                      s1-point)
-                    (t (min s1-point s2-point))))))))
+                    (t
+                     (min s1-point s2-point))))))))
 
 (global-set-key (kbd "C-z V") 'search-nearest-space-or-bracket)
 
