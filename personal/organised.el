@@ -77,6 +77,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-set-key (kbd "C-z S") 'sort-lines)
 ;;; fix annoying C-s in macros
 (global-set-key (kbd "C-z F") 'search-forward)
+(global-set-key (kbd "C-z X") 'delete-duplicate-lines)
 
 (global-set-key (kbd "C-z m") 'multi-vterm)
 (add-hook 'vterm-mode-hook
