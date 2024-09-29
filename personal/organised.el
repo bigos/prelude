@@ -810,25 +810,21 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (defun search-nearest-space-or-bracket ()
   (interactive)
   (require 'cl-lib)
-  (let ((s0-point (point))
-        (s1-point nil)
-        (s2-point nil)
-        (s3-point nil))
-    (goto-char s0-point)
-    (setf s1-point (search-forward " " nil t))
-    (goto-char s0-point)
-    (setf s3-point (search-forward ")" nil t))
-    (goto-char s0-point)
-    (setf s3-point (search-forward "
-" nil t))
+  (let ((s0-point (point)))
     (goto-char
      (or
       (car
-       (cl-sort (cl-remove-if #'null
-                              (list s1-point s2-point s3-point))
-                #'<=))
-      s0-point))
-    (goto-char (1- (point)))))
+       (cl-sort
+        (cl-remove-if
+         #'null
+         (cl-mapcar
+          (lambda (s)
+            (goto-char s0-point)
+            (1-
+             (search-forward s nil t)))
+          (list " " ")" "\n")))
+        #'<=))
+      s0-point))))
 
 (global-set-key (kbd "C-z V") 'search-nearest-space-or-bracket)
 
