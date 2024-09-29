@@ -770,6 +770,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 
 ;;; **** Paredit
+(global-set-key (kbd "C-z (") 'paredit-mode)
+
 (add-hook 'minibuffer-inactive-mode-hook #'paredit-mode)
 (add-hook 'minibuffer-inactive-mode-hook #'rainbow-delimiters-mode)
 
