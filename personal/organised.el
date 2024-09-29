@@ -809,19 +809,21 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 (defun search-nearest-space-or-bracket ()
   (interactive)
-  (let ((s0-point (point)))
-    (let ((s1-point (search-forward " " nil t)))
-      (goto-char s0-point)
-      (let ((s2-point (search-forward ")" nil t)))
-        (goto-char (cond
-                    ((and (null s1-point) (null s2-point))
-                     s0-point)
-                    ((and (null s1-point) (not (null s2-point)))
-                     s2-point)
-                    ((and (not (null s1-point)) (null s2-point))
-                     s1-point)
-                    (t
-                     (min s1-point s2-point))))))))
+  ;; (let ((s0-point (point)))
+  ;;   (let ((s1-point (search-forward " " nil t)))
+  ;;     (goto-char s0-point)
+  ;;     (let ((s2-point (search-forward ")" nil t)))
+  ;;       (goto-char (cond
+  ;;                   ((and (null s1-point) (null s2-point))
+  ;;                    s0-point)
+  ;;                   ((and (null s1-point) (not (null s2-point)))
+  ;;                    s2-point)
+  ;;                   ((and (not (null s1-point)) (null s2-point))
+  ;;                    s1-point)
+  ;;                   (t
+  ;;                    (min s1-point s2-point)))))))
+  (re-search-forward "[ )]" nil t)
+  )
 
 (global-set-key (kbd "C-z V") 'search-nearest-space-or-bracket)
 
