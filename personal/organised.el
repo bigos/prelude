@@ -822,7 +822,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   ;;                    s1-point)
   ;;                   (t
   ;;                    (min s1-point s2-point)))))))
-  (re-search-forward "[ )]" nil t)
+  (re-search-forward "[ )]" nil t) ; search for  either SPACE or CLOSING BRACKET
   )
 
 (global-set-key (kbd "C-z V") 'search-nearest-space-or-bracket)
