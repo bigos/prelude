@@ -807,24 +807,25 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                            slime-repl-mode-hook)
                          t))
 
+(require 'cl-lib)
 (defun search-nearest-space-or-bracket ()
   (interactive)
-  (require 'cl-lib)
   (let ((s0-point (point)))
     (goto-char
-     (or
-      (car
-       (cl-sort
-        (cl-remove-if
-         #'null
-         (cl-mapcar
-          (lambda (s)
-            (goto-char s0-point)
-            (1-
-             (search-forward s nil t)))
-          (list " " ")" "\n")))
-        #'<=))
-      s0-point))))
+     (1-
+      (or
+       (car
+        (cl-sort
+         (cl-remove-if
+          #'null
+          (cl-mapcar
+           (lambda (s)
+             (goto-char s0-point)
+             (search-forward s nil t))
+           (list " " ")" "\n")))
+         #'<=))
+       (1+
+        s0-point))))))
 
 (global-set-key (kbd "C-z V") 'search-nearest-space-or-bracket)
 
