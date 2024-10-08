@@ -171,6 +171,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                             ob-restclient
                             org-mind-map
                             orgit
+                            org-roam-ui
                             paredit
                             parsec
                             projectile
@@ -471,6 +472,15 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (use-package websocket
   :ensure t
   :after org-roam)
+
+(use-package org-roam-ui
+  :after org-roam
+  :hook (after-init . org-roam-ui-mode)
+  :config
+  (setq org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start nil))
 
 (use-package yafolding
   :ensure t
