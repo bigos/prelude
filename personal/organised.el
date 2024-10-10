@@ -149,12 +149,27 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-set-key (kbd "C-z f") 'vc-git-grep)
 
 (require 'prelude-packages)
-(prelude-require-packages '(
+(prelude-require-packages '(abyss-theme
+                            adwaita-dark-theme
                             birds-of-paradise-plus-theme
-                            buffer-move
+                            chyla-dark-theme
                             chyla-theme
-                            dash
+                            distinguished-theme
                             ef-themes
+                            flatui-dark-theme
+                            lush-theme
+                            monokai-theme
+                            naga-theme
+                            nimbus-theme
+                            northcode-theme
+                            noctilux-theme
+                            paganini-theme
+                            rimero-theme
+                            zenburn-theme
+                            zeno-theme
+
+                            buffer-move
+                            dash
                             enh-ruby-mode
                             graphviz-dot-mode
                             helm-core
@@ -166,8 +181,6 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                             load-theme-buffer-local
                             magit
                             mode-line-bell
-                            monokai-theme
-                            noctilux-theme
                             ob-restclient
                             org-mind-map
                             orgit
@@ -200,8 +213,6 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                             vterm ;needs: sudo apt install libvterm-dev cmake
                             multi-vterm
                             web-mode
-                            zenburn-theme
-                            zeno-theme
                             ))
 
 (eval-when-compile
