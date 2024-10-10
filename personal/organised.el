@@ -70,8 +70,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-set-key (kbd "C-z r") 'crux-recentf-find-file)
 (global-set-key (kbd "C-z SPC") 'fixup-whitespace)
 (global-set-key (kbd "C-z L") 'ef-themes-select-light)
-(global-set-key (kbd "C-<f7>") 'ef-themes-select-light)
-(global-set-key (kbd "M-<f7>") 'ef-themes-select)
+(global-set-key (kbd "M-<f7>") 'counsel-load-theme)
 (global-set-key (kbd "C-z D") 'ef-themes-select-dark)
 ;;; grep uses expected regular expression if you replace -e with -P
 (global-set-key (kbd "C-z g") 'grep-find)
