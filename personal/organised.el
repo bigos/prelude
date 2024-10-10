@@ -70,7 +70,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-set-key (kbd "C-z r") 'crux-recentf-find-file)
 (global-set-key (kbd "C-z SPC") 'fixup-whitespace)
 (global-set-key (kbd "C-z L") 'ef-themes-select-light)
-;;; Also for F7 note C-c C-o for all options
+;;; Also for F7 note C-c C-o - ivy-occur - for all options
 (global-set-key (kbd "C-z <f7>") 'counsel-load-theme)
 (global-set-key (kbd "C-z D") 'ef-themes-select-dark)
 ;;; grep uses expected regular expression if you replace -e with -P
