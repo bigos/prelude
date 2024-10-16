@@ -67,7 +67,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 ;;; *** Basic configuration
 (global-unset-key (kbd "C-z"))          ; allow others use C-z prefix
 (global-set-key (kbd "C-z w") 'ace-window)
-(global-set-key (kbd "C-z r") 'crux-recentf-find-file)
+(global-set-key (kbd "C-z r") 'crux-recetf-find-file)
 (global-set-key (kbd "C-z SPC") 'fixup-whitespace)
 (global-set-key (kbd "C-z L") 'ef-themes-select-light)
 ;;; Also for F7 note C-c C-o - ivy-occur - for all options
@@ -660,6 +660,22 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
     (add-hook 'caml-mode-hook 'merlin-mode t)
     ;; Use opam switch to lookup ocamlmerlin binary
     (setq merlin-command 'opam)))
+
+(defun recentf-exclude-ocaml-temp-p (file)
+  "A predicate to decide whether to exclude FILE from recentf."
+
+  (let (( recent-file-matches (cl-equalp
+               (cl-subseq file 0 16)
+               "/tmp/ocamlformat")))
+    (if recent-file-matches
+        (progn
+          (message "going to exclude file %s from recentf" file)
+          t)
+      (progn
+        ;; (message "going to skip exclusion file %s" file)
+        nil))))
+
+(add-to-list 'recentf-exclude 'recentf-exclude-ocaml-temp-p)
 
 ;;; *** Haskell
 ;;; make sure Emacs uses stack in Haskell Projects by default
