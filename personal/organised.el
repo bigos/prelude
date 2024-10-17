@@ -67,7 +67,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 ;;; *** Basic configuration
 (global-unset-key (kbd "C-z"))          ; allow others use C-z prefix
 (global-set-key (kbd "C-z w") 'ace-window)
-(global-set-key (kbd "C-z r") 'crux-recetf-find-file)
+
 (global-set-key (kbd "C-z SPC") 'fixup-whitespace)
 (global-set-key (kbd "C-z L") 'ef-themes-select-light)
 ;;; Also for F7 note C-c C-o - ivy-occur - for all options
