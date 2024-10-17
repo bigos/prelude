@@ -677,6 +677,13 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 (add-to-list 'recentf-exclude 'recentf-exclude-ocaml-temp-p)
 
+(defun correct-ocaml-env ()
+  (interactive)
+  (setenv  "CAML_LD_LIBRARY_PATH"
+           "/home/jacek/.opam/default/lib/stublibs:/home/jacek/.opam/default/lib/ocaml/stublibs:/home/jacek/.opam/default/lib/ocaml"))
+
+(global-set-key (kbd "C-z C-V") 'correct-ocaml-env)
+
 ;;; *** Haskell
 ;;; make sure Emacs uses stack in Haskell Projects by default
 (setq haskell-process-type 'stack-ghci)
