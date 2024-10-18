@@ -679,6 +679,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 (defun correct-ocaml-env ()
   (interactive)
+  (message "correcting OCaml env")
   (setenv  "CAML_LD_LIBRARY_PATH"
            "/home/jacek/.opam/default/lib/stublibs:/home/jacek/.opam/default/lib/ocaml/stublibs:/home/jacek/.opam/default/lib/ocaml"))
 
