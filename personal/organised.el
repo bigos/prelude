@@ -98,6 +98,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-set-key (kbd "C-S-l s") 'org-store-link)
 (global-set-key (kbd "C-S-l i") 'org-insert-link)
 (global-set-key (kbd "C-S-l o") 'org-open-at-point)
+(global-set-key (kbd "C-z B") 'org-babel-mark-block)
 (global-set-key (kbd "C-]") 'insert-graph-arrow)
 
 
