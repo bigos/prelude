@@ -42,11 +42,16 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (interactive)
   (insert " -> "))
 
+(defun mark-and-copy-org-block ()
+  (interactive)
+  (org-babel-mark-block)
+  (kill-new (buffer-substring (region-beginning) (region-end))))
+
 ;;; *** ACL 2 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun load-acl2 ()
-    (interactive)
-    (load "~/Documents/acl2-8.4/emacs/emacs-acl2.el")
-    (setq inferior-acl2-program "~/Documents/acl2-8.4/saved_acl2"))
+  (interactive)
+  (load "~/Documents/acl2-8.4/emacs/emacs-acl2.el")
+  (setq inferior-acl2-program "~/Documents/acl2-8.4/saved_acl2"))
 
 (defun acl2-goodies ()
     (interactive)
@@ -98,7 +103,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-set-key (kbd "C-S-l s") 'org-store-link)
 (global-set-key (kbd "C-S-l i") 'org-insert-link)
 (global-set-key (kbd "C-S-l o") 'org-open-at-point)
-(global-set-key (kbd "C-z B") 'org-babel-mark-block)
+(global-set-key (kbd "C-z B") 'mark-and-copy-org-block)
 (global-set-key (kbd "C-]") 'insert-graph-arrow)
 
 
