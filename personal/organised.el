@@ -42,6 +42,10 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (interactive)
   (insert " -> "))
 
+(defun insert-lisp-multiline-comment ()
+  (interactive)
+  (insert (format "\n#|\n\n%s\n\n|#" "your comment here...")))
+
 (defun mark-and-copy-org-block ()
   (interactive)
   (org-babel-mark-block)
@@ -804,6 +808,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (message "quitting slime inspector")
   (kill-buffer "*slime-inspector*"))
 
+
 (defun close-slime-kill-all-buffers ()
   "close slime kill all buffers"
   (interactive)
@@ -817,6 +822,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 (global-set-key (kbd "C-z K") 'close-slime-kill-all-buffers)
 
+;;; add lisp multiline comment
+(global-set-key (kbd "C-z M-;") 'insert-lisp-multiline-comment)
 
 ;;; switch between Lisp related buffers
 (global-set-key (kbd "C-z ;") 'slime-selector)
