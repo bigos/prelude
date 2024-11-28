@@ -828,6 +828,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 (defun swap-paredit ()
     "Replace smartparens with superior paredit."
+    (interactive)
     (message "swapping paredit")
     (smartparens-mode -1)
     (paredit-mode +1))
