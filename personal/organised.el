@@ -831,6 +831,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 ;;; restart lisp after error
 (global-set-key (kbd "C-z R") 'slime-restart-inferior-lisp)
 
+;;; disable function comment-add
+;; (fmakunbound 'comment-add) <- that did not work
 
 ;;; **** Paredit
 (global-set-key (kbd "C-z (") 'paredit-mode)
