@@ -833,6 +833,10 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 ;;; disable function comment-add
 ;; (fmakunbound 'comment-add) <- that did not work
+;;
+;; (defun do-nothing (a1)
+;;   nil)
+;; (advice-add 'comment-add :override #'do-nothing)
 
 ;;; **** Paredit
 (global-set-key (kbd "C-z (") 'paredit-mode)
