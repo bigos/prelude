@@ -49,7 +49,9 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (defun mark-and-copy-org-block ()
   (interactive)
   (org-babel-mark-block)
-  (kill-new (buffer-substring (region-beginning) (region-end))))
+  (kill-new (buffer-substring (region-beginning) (region-end)))
+  (deactivate-mark)
+  (message "copied source block"))
 
 ;;; *** ACL 2 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun load-acl2 ()
