@@ -174,23 +174,23 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                             zenburn-theme
                             zeno-theme
 
-                            ;; buffer-move
+                            buffer-move
                             ;; dash
-                            ;; enh-ruby-mode
-                            ;; graphviz-dot-mode
+                            enh-ruby-mode
+                            graphviz-dot-mode
                             ;; helm-core
                             ;; helm-descbinds
                             ;; helm-projectile
-                            ;; htmlize
+                            htmlize
                             ;; indent-bars
-                            ;; kurecolor
-                            ;; load-theme-buffer-local
+                            kurecolor
+                            load-theme-buffer-local
                             ;; magit
-                            ;; mode-line-bell
-                            ;; ob-restclient
-                            ;; org-mind-map
-                            ;; orgit
-                            ;; org-roam-ui
+                            mode-line-bell
+                            ob-restclient
+                            org-mind-map
+                            orgit
+                            org-roam-ui
                             ;; paredit
                             ;; parsec
                             ;; projectile
@@ -198,27 +198,27 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                             ;; projectile-rails
                             ;; prop-menu
 
-                            ;; psc-ide
-                            ;; psci
-                            ;; purescript-mode
+                            psc-ide
+                            psci
+                            purescript-mode
 
-                            ;; rails-log-mode
+                            rails-log-mode
                             ;; rainbow-delimiters
                             ;; redshank
-                            ;; restclient-helm
-                            ;; rspec-mode
-                            ;; rubocop
-                            ;; ruby-hash-syntax
-                            ;; ruby-refactor
+                            restclient-helm
+                            rspec-mode
+                            rubocop
+                            ruby-hash-syntax
+                            ruby-refactor
                             ;; slime
                             ;; slime-repl-ansi-color
-                            ;; string-inflection
-                            ;; switch-window
+                            string-inflection
+                            switch-window
                             ;; tree-sitter-langs
-                            ;; use-package
-                            ;; vterm ;needs: sudo apt install libvterm-dev cmake
-                            ;; multi-vterm
-                            ;; web-mode
+                            use-package
+                            vterm ;needs: sudo apt install libvterm-dev cmake
+                            multi-vterm
+                            web-mode
                             ))
 
 (eval-when-compile
@@ -226,45 +226,45 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (require 'diminish)                ;; if you use :diminish
 (require 'bind-key)                ;; if you use any :bind variant
 
-;; ; (add-to-list 'load-path "/home/jacek/.emacs.d/elpa/enh-ruby-mode-20190513.254/enh-ruby-mode.el") ; must be added after any path containing old ruby-mode
+; (add-to-list 'load-path "/home/jacek/.emacs.d/elpa/enh-ruby-mode-20190513.254/enh-ruby-mode.el") ; must be added after any path containing old ruby-mode
 
-;; ;;; problem with enh-ruby-mode
-;; ;; (autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
+;;; problem with enh-ruby-mode
+;; (autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
 
-;; (global-set-key (kbd "C-z '") (quote ruby-toggle-string-quotes))
+(global-set-key (kbd "C-z '") (quote ruby-toggle-string-quotes))
 
-;; ;; (add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
-;; ;; (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))                                          ;
-;; ;; (add-to-list 'auto-mode-alist
-;; ;;                    '("\\(?:\\.rb\\|ru\\|rake\\|thor\\|jbuilder\\|gemspec\\|podspec\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'" . enh-ruby-mode))
+;; (add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
+;; (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))                                          ;
+;; (add-to-list 'auto-mode-alist
+;;                    '("\\(?:\\.rb\\|ru\\|rake\\|thor\\|jbuilder\\|gemspec\\|podspec\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'" . enh-ruby-mode))
 
-;; ;;; ignore rufo for now
-;; ;; (setq rufo-enable-format-on-save t)
-;; ;; (add-hook 'enh-ruby-mode-hook 'rufo-minor-mode)
+;;; ignore rufo for now
+;; (setq rufo-enable-format-on-save t)
+;; (add-hook 'enh-ruby-mode-hook 'rufo-minor-mode)
 
-;; (setq org-src-fontify-natively t)
+(setq org-src-fontify-natively t)
 
 
-;; (require 'load-theme-buffer-local)
+(require 'load-theme-buffer-local)
 
-;; ;;; get rid of utf-8 warning in Ruby mode
-;; (setq ruby-insert-encoding-magic-comment nil)
+;;; get rid of utf-8 warning in Ruby mode
+(setq ruby-insert-encoding-magic-comment nil)
 
-;; ;; magit warning silencing
-;; (setq magit-auto-revert-mode nil)
-;; (setq magit-last-seen-setup-instructions "1.4.0")
+;; magit warning silencing
+(setq magit-auto-revert-mode nil)
+(setq magit-last-seen-setup-instructions "1.4.0")
 
-;; (load "server")
-;; (unless (server-running-p)
-;;   (server-start))
+(load "server")
+(unless (server-running-p)
+  (server-start))
 
-;; ;;; TODO
-;; ;; (add-hook 'scheme-mode-hook (lambda () (swap-paredit)))
+;;; TODO
+;; (add-hook 'scheme-mode-hook (lambda () (swap-paredit)))
 
-;; (add-hook 'overwrite-mode-hook #'(lambda () (invert-face 'mode-line)))
+(add-hook 'overwrite-mode-hook #'(lambda () (invert-face 'mode-line)))
 
-;; ;;; *** Whitespace
-;; (setq whitespace-line-column 480)
+;;; *** Whitespace
+(setq whitespace-line-column 480)
 
 
 ;; ;;; *** plantuml
