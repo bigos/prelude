@@ -110,13 +110,13 @@ by Prelude.")
 (message "[Prelude] Loading Prelude's core modules...")
 
 ;; load the core stuff
-;;zzz (require 'prelude-packages)
-;; (require 'prelude-custom)  ;; Needs to be loaded before core, editor and ui
-;; (require 'prelude-ui)
-;; (require 'prelude-core)
-;; (require 'prelude-mode)
-;; (require 'prelude-editor)
-;; (require 'prelude-global-keybindings)
+(require 'prelude-packages)
+(require 'prelude-custom)  ;; Needs to be loaded before core, editor and ui
+(require 'prelude-ui)
+(require 'prelude-core)
+(require 'prelude-mode)
+(require 'prelude-editor)
+(require 'prelude-global-keybindings)
 
 ;; macOS specific settings
 (when (eq system-type 'darwin)
