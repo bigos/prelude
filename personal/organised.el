@@ -298,210 +298,210 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 ;;; *** Graphviz
 
-;; ;;; *** Org mode configuration
+;;; *** Org mode configuration
 
-;; ;;; org-mode source code blocks
-;; (defun insert-named-source-block (language)
-;;     "Insert source block with LANGUAGE string provided."
-;;   (insert "#+begin_src ")
-;;   (insert language)
-;;   (insert "\n")
-;;   (insert "\n")
-;;   (insert "#+end_src")
-;;   (beginning-of-line )
-;;   (backward-char))
+;;; org-mode source code blocks
+(defun insert-named-source-block (language)
+    "Insert source block with LANGUAGE string provided."
+  (insert "#+begin_src ")
+  (insert language)
+  (insert "\n")
+  (insert "\n")
+  (insert "#+end_src")
+  (beginning-of-line )
+  (backward-char))
 
-;; (defun insert-emacs-lisp-source-block ()
-;;   (interactive)
-;;   (insert-named-source-block "emacs-lisp"))
+(defun insert-emacs-lisp-source-block ()
+  (interactive)
+  (insert-named-source-block "emacs-lisp"))
 
-;; (defun insert-lisp-source-block ()
-;;   (interactive)
-;;   (insert-named-source-block "lisp"))
+(defun insert-lisp-source-block ()
+  (interactive)
+  (insert-named-source-block "lisp"))
 
-;; (add-hook 'org-mode-hook
-;;           #'(lambda ()
-;;               (local-set-key (kbd "C-z #") 'insert-lisp-source-block)))
+(add-hook 'org-mode-hook
+          #'(lambda ()
+              (local-set-key (kbd "C-z #") 'insert-lisp-source-block)))
 
-;; (require 'org)
+(require 'org)
 
-;; ;;; correct way of adding links
-;; ;; https://orgmode.org/manual/Adding-Hyperlink-Types.html
-;; (org-link-set-parameters "pdf"
-;;                        :follow #'org-pdf-open)
+;;; correct way of adding links
+;; https://orgmode.org/manual/Adding-Hyperlink-Types.html
+(org-link-set-parameters "pdf"
+                       :follow #'org-pdf-open)
 
-;; (defun org-pdf-open (link)
-;;   "Where page number is 105, the link should look like:
-;;    [[pdf:/path/to/file.pdf#105][My description.]]"
-;;   (let* ((path+page (split-string link "#"))
-;;          (pdf-file
-;;           (split-string
-;;            (car path+page)
-;;            ":"))
-;;          (afile (car pdf-file))
-;;          (page (car (cdr path+page))))
-;;     ;; (message "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz %s %s" page afile)
-;;     (start-process "view-pdf" nil "evince" "--page-index" page afile)))
+(defun org-pdf-open (link)
+  "Where page number is 105, the link should look like:
+   [[pdf:/path/to/file.pdf#105][My description.]]"
+  (let* ((path+page (split-string link "#"))
+         (pdf-file
+          (split-string
+           (car path+page)
+           ":"))
+         (afile (car pdf-file))
+         (page (car (cdr path+page))))
+    ;; (message "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz %s %s" page afile)
+    (start-process "view-pdf" nil "evince" "--page-index" page afile)))
 
-;; ;;; My own additions
-;; (require 'org-vlc)
-;; (require 'jacek-verse)
+;;; My own additions
+(require 'org-vlc)
+(require 'jacek-verse)
 
-;; (add-hook 'org-mode-hook
-;;           #'(lambda ()
-;;               (local-set-key [f5] 'verse-link)))
+(add-hook 'org-mode-hook
+          #'(lambda ()
+              (local-set-key [f5] 'verse-link)))
 
-;; (defun my-file-line-link ()
-;;   "Copy the buffer full path and line number into a clipboard
-;;                  for pasting into *.org file."
-;;   (interactive)
-;;   (let* ((home-part (concat "/home/"
-;;                             (user-login-name)))
-;;          (the-link
-;;           (let ((file-link
-;;                  (concat "file:"
-;;                          (let ((bfn buffer-file-name))
-;;                            (if (string-prefix-p home-part bfn)
-;;                                (concat "~"
-;;                                        (substring bfn (length home-part)))
-;;                              bfn))
-;;                          "::"
-;;                          (substring  (what-line) 5))))
-;;             (if (string-match " " file-link)
-;;                 (concat "[[" file-link "]]")
-;;               file-link))))
-;;     (kill-new
-;;      (message the-link))))
+(defun my-file-line-link ()
+  "Copy the buffer full path and line number into a clipboard
+                 for pasting into *.org file."
+  (interactive)
+  (let* ((home-part (concat "/home/"
+                            (user-login-name)))
+         (the-link
+          (let ((file-link
+                 (concat "file:"
+                         (let ((bfn buffer-file-name))
+                           (if (string-prefix-p home-part bfn)
+                               (concat "~"
+                                       (substring bfn (length home-part)))
+                             bfn))
+                         "::"
+                         (substring  (what-line) 5))))
+            (if (string-match " " file-link)
+                (concat "[[" file-link "]]")
+              file-link))))
+    (kill-new
+     (message the-link))))
 
-;;        ;; we had to cheat to have C-z \ as a shortcut
-;; (global-set-key (kbd (format "%s %c" "C-z" 92)) 'my-file-line-link)
-;; (global-set-key (kbd "C-z q")                   'my-file-line-link)
+       ;; we had to cheat to have C-z \ as a shortcut
+(global-set-key (kbd (format "%s %c" "C-z" 92)) 'my-file-line-link)
+(global-set-key (kbd "C-z q")                   'my-file-line-link)
 
-;; (defun md-to-org-cleanup ()
-;;   "After we use pandoc to concert md file, we need to
-;;                         remove PROPERTIES drawers"
-;;   (interactive)
-;;   (search-forward ":END:")
-;;   (search-backward ":PROPERTIES:")
-;;   (beginning-of-line)
-;;   ;; we remove 3 lines
-;;   ;; 6 because we 1 clear then 2 remove empty line
-;;   (dotimes (n 6)
-;;     (kill-line)))
+(defun md-to-org-cleanup ()
+  "After we use pandoc to concert md file, we need to
+                        remove PROPERTIES drawers"
+  (interactive)
+  (search-forward ":END:")
+  (search-backward ":PROPERTIES:")
+  (beginning-of-line)
+  ;; we remove 3 lines
+  ;; 6 because we 1 clear then 2 remove empty line
+  (dotimes (n 6)
+    (kill-line)))
 
-;; (global-set-key (kbd "C-z 9") 'md-to-org-cleanup)
+(global-set-key (kbd "C-z 9") 'md-to-org-cleanup)
 
-;; (defun insert-org-heading-link ()
-;;   (interactive)
-;;   (let* ((enteredw (word-at-point))
-;;          (startpoint (search-backward enteredw))
-;;          (cpoint (point))
-;;          (heading-names (org-map-entries #'org-get-heading nil 'file))
-;;          (the-heading (if (member enteredw heading-names)
-;;                           enteredw
-;;                         (completing-read (format "Select heading %s " enteredw)
-;;                                          heading-names
-;;                                          nil
-;;                                          t
-;;                                          enteredw)))
-;;          (the-link (when the-heading
-;;                      (format "[[*%s][%s]]" the-heading the-heading))))
+(defun insert-org-heading-link ()
+  (interactive)
+  (let* ((enteredw (word-at-point))
+         (startpoint (search-backward enteredw))
+         (cpoint (point))
+         (heading-names (org-map-entries #'org-get-heading nil 'file))
+         (the-heading (if (member enteredw heading-names)
+                          enteredw
+                        (completing-read (format "Select heading %s " enteredw)
+                                         heading-names
+                                         nil
+                                         t
+                                         enteredw)))
+         (the-link (when the-heading
+                     (format "[[*%s][%s]]" the-heading the-heading))))
 
-;;     (when the-link
-;;       (replace-region-contents (+ 0 startpoint)
-;;                                (+ (length enteredw) cpoint)
-;;                                (lambda ()
-;;                                  the-link))
-;;       ;; go to the end of the-link
-;;       (search-forward "]]"))))
+    (when the-link
+      (replace-region-contents (+ 0 startpoint)
+                               (+ (length enteredw) cpoint)
+                               (lambda ()
+                                 the-link))
+      ;; go to the end of the-link
+      (search-forward "]]"))))
 
-;; (add-hook 'org-mode-hook
-;;           #'(lambda ()
-;;               (local-set-key (kbd "C-z l") 'insert-org-heading-link)))
+(add-hook 'org-mode-hook
+          #'(lambda ()
+              (local-set-key (kbd "C-z l") 'insert-org-heading-link)))
 
-;; (require 'restclient)
+(require 'restclient)
 
-;; (org-babel-do-load-languages
-;;    'org-babel-load-languages
-;;    '((restclient . t)))
+(org-babel-do-load-languages
+   'org-babel-load-languages
+   '((restclient . t)))
 
-;; ;; Org-Roam basic configuration
-
-
-;; (defun org-roam-my-reload ()
-;;   (interactive)
-;;   (setq org-roam-directory   (file-truename (org-roam-my-folder)))
-;;   (setq org-roam-db-location (file-truename (org-roam-my-db)))
-;;   (org-roam-db-sync)
-;;   (message "reloaded org-roam-directory to %S" org-roam-directory))
-
-;; (defun org-roam-my-folder ()
-;;   (concat (getenv "HOME")
-;;           "/Documents/Roams/"
-;;           "current"
-;;           "/org-roam/"))
-
-;; (defun org-roam-my-db ()
-;;   (concat (org-roam-my-folder)
-;;           "org-roam"
-;;           ".db"))
+;; Org-Roam basic configuration
 
 
-;; (message (format "org-roam folder  %s" (org-roam-my-folder)))
-;; (message (format "org-roam db-file %s" (org-roam-my-db)))
+(defun org-roam-my-reload ()
+  (interactive)
+  (setq org-roam-directory   (file-truename (org-roam-my-folder)))
+  (setq org-roam-db-location (file-truename (org-roam-my-db)))
+  (org-roam-db-sync)
+  (message "reloaded org-roam-directory to %S" org-roam-directory))
 
-;; (defun org-roam-dired ()
-;;   "Open dired buffer on org-roam folder."
-;;   (interactive)
-;;   (dired (org-roam-my-folder)))
+(defun org-roam-my-folder ()
+  (concat (getenv "HOME")
+          "/Documents/Roams/"
+          "current"
+          "/org-roam/"))
 
-;; ;;; fix needed in file
-;; ;;; file:~/.emacs.d/elpa/org-roam-20241007.1704/org-roam.el::84
-;; ;;; comment out: (require 'emacsql-sqlite)
+(defun org-roam-my-db ()
+  (concat (org-roam-my-folder)
+          "org-roam"
+          ".db"))
 
-;; (use-package org-roam
-;;   :ensure t
-;;   :after org
-;;   :init (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
-;;   :custom
-;;   ;; file-truename can resolve symbolic links
-;;   (org-roam-directory   (file-truename (org-roam-my-folder)))
-;;   (org-roam-db-location (file-truename (org-roam-my-db)))
-;;   :config
-;;   (org-roam-db-autosync-enable)
-;;   (setq org-roam-completion-everywhere t)
-;;   :bind (("C-x n d" . org-roam-dired)
-;;          ("C-x n P" . org-roam-dailies-goto-previous-note)
-;;          ("C-x n R" . org-roam-my-reload)
-;;          ("C-x n N" . org-roam-dailies-goto-next-note)
-;;          ("C-x n T" . org-roam-dailies-goto-today)
-;;          ("C-x n U" . org-roam-ui-open)
-;;          ("C-x n f" . org-roam-node-find)
-;;          ("C-x n g" . org-roam-graph)
-;;          ("C-x n r" . org-roam-node-random)
-;;          (:map org-mode-map
-;;                (("C-x n i" . org-roam-node-insert)
-;;                 ("C-x n o" . org-id-get-create)
-;;                 ("C-x n t" . org-roam-tag-add)
-;;                 ("C-x n s" . org-roam-db-sync)
-;;                 ("C-x n a" . org-roam-alias-add)
-;;                 ("C-x n l" . org-roam-buffer-toggle)))))
 
-;; (require 'org-protocol)
-;; (require 'org-roam-protocol)
+(message (format "org-roam folder  %s" (org-roam-my-folder)))
+(message (format "org-roam db-file %s" (org-roam-my-db)))
 
-;; (use-package websocket
-;;   :ensure t
-;;   :after org-roam)
+(defun org-roam-dired ()
+  "Open dired buffer on org-roam folder."
+  (interactive)
+  (dired (org-roam-my-folder)))
 
-;; (use-package org-roam-ui
-;;   :after org-roam
-;;   :hook (after-init . org-roam-ui-mode)
-;;   :config
-;;   (setq org-roam-ui-sync-theme t
-;;         org-roam-ui-follow t
-;;         org-roam-ui-update-on-save t
-;;         org-roam-ui-open-on-start nil))
+;;; fix needed in file
+;;; file:~/.emacs.d/elpa/org-roam-20241007.1704/org-roam.el::84
+;;; comment out: (require 'emacsql-sqlite)
+
+(use-package org-roam
+  :ensure t
+  :after org
+  :init (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
+  :custom
+  ;; file-truename can resolve symbolic links
+  (org-roam-directory   (file-truename (org-roam-my-folder)))
+  (org-roam-db-location (file-truename (org-roam-my-db)))
+  :config
+  (org-roam-db-autosync-enable)
+  (setq org-roam-completion-everywhere t)
+  :bind (("C-x n d" . org-roam-dired)
+         ("C-x n P" . org-roam-dailies-goto-previous-note)
+         ("C-x n R" . org-roam-my-reload)
+         ("C-x n N" . org-roam-dailies-goto-next-note)
+         ("C-x n T" . org-roam-dailies-goto-today)
+         ("C-x n U" . org-roam-ui-open)
+         ("C-x n f" . org-roam-node-find)
+         ("C-x n g" . org-roam-graph)
+         ("C-x n r" . org-roam-node-random)
+         (:map org-mode-map
+               (("C-x n i" . org-roam-node-insert)
+                ("C-x n o" . org-id-get-create)
+                ("C-x n t" . org-roam-tag-add)
+                ("C-x n s" . org-roam-db-sync)
+                ("C-x n a" . org-roam-alias-add)
+                ("C-x n l" . org-roam-buffer-toggle)))))
+
+(require 'org-protocol)
+(require 'org-roam-protocol)
+
+(use-package websocket
+  :ensure t
+  :after org-roam)
+
+(use-package org-roam-ui
+  :after org-roam
+  :hook (after-init . org-roam-ui-mode)
+  :config
+  (setq org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start nil))
 
 ;; (use-package yafolding
 ;;   :ensure t
