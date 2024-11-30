@@ -855,6 +855,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (add-hook 'clojure-mode-hook (lambda () (swap-paredit)))
 (add-hook 'cider-repl-mode-hook (lambda () (swap-paredit)))
 
+;; https://emacs.stackexchange.com/questions/82668/how-do-i-disable-the-annoying-garbling-of-multiline-comments-in-common-lisp
 (eval-after-load 'paredit
   '(progn
      (define-key paredit-mode-map (kbd "RET") nil)
