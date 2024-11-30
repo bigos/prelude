@@ -69,90 +69,90 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 ;; https://emacs.stackexchange.com/questions/14748/how-to-bind-a-command-with-a-c-u-prefix-to-a-different-key
 (define-key org-mode-map (kbd "C-z o") 'better-org-open-at-point)
 
-;; ;;; *** Basic configuration
-;; (global-unset-key (kbd "C-z"))          ; allow others use C-z prefix
-;; (global-set-key (kbd "C-z w") 'ace-window)
+;;; *** Basic configuration
+(global-unset-key (kbd "C-z"))          ; allow others use C-z prefix
+(global-set-key (kbd "C-z w") 'ace-window)
 
-;; (global-set-key (kbd "C-z SPC") 'fixup-whitespace)
-;; (global-set-key (kbd "C-z L") 'ef-themes-select-light)
-;; ;;; Also for F7 note C-c C-o - ivy-occur - for all options
-;; (global-set-key (kbd "C-z <f7>") 'counsel-load-theme)
-;; (global-set-key (kbd "C-z D") 'ef-themes-select-dark)
-;; ;;; grep uses expected regular expression if you replace -e with -P
-;; (global-set-key (kbd "C-z g") 'grep-find)
-;; (global-set-key (kbd "C-z S") 'sort-lines)
-;; ;;; fix annoying C-s in macros
-;; (global-set-key (kbd "C-z F") 're-search-forward)
-;; (global-set-key (kbd "C-z X") 'delete-duplicate-lines)
+(global-set-key (kbd "C-z SPC") 'fixup-whitespace)
+(global-set-key (kbd "C-z L") 'ef-themes-select-light)
+;;; Also for F7 note C-c C-o - ivy-occur - for all options
+(global-set-key (kbd "C-z <f7>") 'counsel-load-theme)
+(global-set-key (kbd "C-z D") 'ef-themes-select-dark)
+;;; grep uses expected regular expression if you replace -e with -P
+(global-set-key (kbd "C-z g") 'grep-find)
+(global-set-key (kbd "C-z S") 'sort-lines)
+;;; fix annoying C-s in macros
+(global-set-key (kbd "C-z F") 're-search-forward)
+(global-set-key (kbd "C-z X") 'delete-duplicate-lines)
 
-;; (global-set-key (kbd "C-z m") 'multi-vterm)
-;; (add-hook 'vterm-mode-hook
-;;           #'(lambda ()
-;;               (local-set-key (kbd "C-x r") 'multi-vterm-rename-buffer)))
-;; (add-hook 'vterm-mode-hook
-;;           #'(lambda ()
-;;               (local-set-key (kbd "C-x m") 'multi-vterm)))
-;; (add-hook 'vterm-mode-hook
-;;           #'(lambda ()
-;;               (local-set-key (kbd "C-x n") 'multi-vterm-next)))
-;; (add-hook 'vterm-mode-hook
-;;           #'(lambda ()
-;;               (local-set-key (kbd "C-x p") 'multi-vterm-prev)))
-
-
-;; (global-set-key (kbd "C-S-l s") 'org-store-link)
-;; (global-set-key (kbd "C-S-l i") 'org-insert-link)
-;; (global-set-key (kbd "C-S-l o") 'org-open-at-point)
-;; (global-set-key (kbd "C-z B") 'mark-and-copy-org-block)
-;; (global-set-key (kbd "C-]") 'insert-graph-arrow)
+(global-set-key (kbd "C-z m") 'multi-vterm)
+(add-hook 'vterm-mode-hook
+          #'(lambda ()
+              (local-set-key (kbd "C-x r") 'multi-vterm-rename-buffer)))
+(add-hook 'vterm-mode-hook
+          #'(lambda ()
+              (local-set-key (kbd "C-x m") 'multi-vterm)))
+(add-hook 'vterm-mode-hook
+          #'(lambda ()
+              (local-set-key (kbd "C-x n") 'multi-vterm-next)))
+(add-hook 'vterm-mode-hook
+          #'(lambda ()
+              (local-set-key (kbd "C-x p") 'multi-vterm-prev)))
 
 
-;; (defun jump-to-line-in-file ()
-;;   "Describe me"
-;;   (interactive)
-;;   (let ((line (thing-at-point 'filename)))
-;;     (let ((line-components (split-string line ":")))
-;;       (let ((file (nth 0 line-components))
-;;             (path (nth 1 line-components))
-;;             (line (nth 3 line-components)))
-;;         (message (format "line components %s > %s > %s" file path line))
-;;         (progn
-;;           (find-file-other-window path)
-;;           (goto-line (string-to-number line)))))))
+(global-set-key (kbd "C-S-l s") 'org-store-link)
+(global-set-key (kbd "C-S-l i") 'org-insert-link)
+(global-set-key (kbd "C-S-l o") 'org-open-at-point)
+(global-set-key (kbd "C-z B") 'mark-and-copy-org-block)
+(global-set-key (kbd "C-]") 'insert-graph-arrow)
 
-;;   (global-set-key (kbd "C-x j l") 'jump-to-line-in-file)
 
-;; (defun go-80 ()
-;;     (interactive)
-;;   (beginning-of-line)
-;;   (move-to-column 80))
+(defun jump-to-line-in-file ()
+  "Describe me"
+  (interactive)
+  (let ((line (thing-at-point 'filename)))
+    (let ((line-components (split-string line ":")))
+      (let ((file (nth 0 line-components))
+            (path (nth 1 line-components))
+            (line (nth 3 line-components)))
+        (message (format "line components %s > %s > %s" file path line))
+        (progn
+          (find-file-other-window path)
+          (goto-line (string-to-number line)))))))
 
-;; (defun go-80-word-beginning ()
-;;   (interactive)
-;;   (beginning-of-line)
-;;   (go-80)
-;;   (forward-word)
-;;   (backward-word))
+  (global-set-key (kbd "C-x j l") 'jump-to-line-in-file)
 
-;; (defun cleanup-80 ()
-;;     (interactive)
-;;     (beginning-of-line)
-;;     (go-80)
-;;     (forward-word)
-;;     (backward-word)
+(defun go-80 ()
+    (interactive)
+  (beginning-of-line)
+  (move-to-column 80))
 
-;;     ;; insert new line char
-;;     (newline-and-indent))
+(defun go-80-word-beginning ()
+  (interactive)
+  (beginning-of-line)
+  (go-80)
+  (forward-word)
+  (backward-word))
 
-;; (global-set-key (kbd "C-z 8") 'cleanup-80)
-;; (global-set-key (kbd "C-h b") 'helm-descbinds)
+(defun cleanup-80 ()
+    (interactive)
+    (beginning-of-line)
+    (go-80)
+    (forward-word)
+    (backward-word)
 
-;; (setq prelude-guru nil) ;; better for slime
+    ;; insert new line char
+    (newline-and-indent))
 
-;; (menu-bar-mode 1)
-;; (global-hl-line-mode 0)
+(global-set-key (kbd "C-z 8") 'cleanup-80)
+(global-set-key (kbd "C-h b") 'helm-descbinds)
 
-;; (global-set-key (kbd "C-z f") 'vc-git-grep)
+(setq prelude-guru nil) ;; better for slime
+
+(menu-bar-mode 1)
+(global-hl-line-mode 0)
+
+(global-set-key (kbd "C-z f") 'vc-git-grep)
 
 ;; (require 'prelude-packages)
 ;; (prelude-require-packages '(abyss-theme
