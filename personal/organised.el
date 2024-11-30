@@ -47,27 +47,27 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (org-babel-mark-block)
   (kill-new (buffer-substring (region-beginning) (region-end))))
 
-;; ;;; *** ACL 2 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (defun load-acl2 ()
-;;   (interactive)
-;;   (load "~/Documents/acl2-8.4/emacs/emacs-acl2.el")
-;;   (setq inferior-acl2-program "~/Documents/acl2-8.4/saved_acl2"))
+;;; *** ACL 2 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun load-acl2 ()
+  (interactive)
+  (load "~/Documents/acl2-8.4/emacs/emacs-acl2.el")
+  (setq inferior-acl2-program "~/Documents/acl2-8.4/saved_acl2"))
 
-;; (defun acl2-goodies ()
-;;     (interactive)
-;;     (rainbow-delimiters-mode)
-;;     (paredit-mode)
-;;     (setq *acl2-doc-link-color* "#aaff00")
+(defun acl2-goodies ()
+    (interactive)
+    (rainbow-delimiters-mode)
+    (paredit-mode)
+    (setq *acl2-doc-link-color* "#aaff00")
 
-;;     (let ((scriptBuf (get-buffer-create "script")))
-;;       (set-buffer scriptBuf)
-;;       (lisp-mode)))
+    (let ((scriptBuf (get-buffer-create "script")))
+      (set-buffer scriptBuf)
+      (lisp-mode)))
 
-;; (defun better-org-open-at-point ()
-;;   (interactive)
-;;   (org-open-at-point t))
-;; ;; https://emacs.stackexchange.com/questions/14748/how-to-bind-a-command-with-a-c-u-prefix-to-a-different-key
-;; (define-key org-mode-map (kbd "C-z o") 'better-org-open-at-point)
+(defun better-org-open-at-point ()
+  (interactive)
+  (org-open-at-point t))
+;; https://emacs.stackexchange.com/questions/14748/how-to-bind-a-command-with-a-c-u-prefix-to-a-different-key
+(define-key org-mode-map (kbd "C-z o") 'better-org-open-at-point)
 
 ;; ;;; *** Basic configuration
 ;; (global-unset-key (kbd "C-z"))          ; allow others use C-z prefix
