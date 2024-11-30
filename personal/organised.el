@@ -695,64 +695,64 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 (global-set-key (kbd "C-z C-V") 'correct-ocaml-env)
 
-;; ;;; *** Haskell
-;; ;;; make sure Emacs uses stack in Haskell Projects by default
-;; (setq haskell-process-type 'stack-ghci)
+;;; *** Haskell
+;;; make sure Emacs uses stack in Haskell Projects by default
+(setq haskell-process-type 'stack-ghci)
 
-;; (add-hook 'haskell-mode-hook (lambda () (setq-local company-dabbrev-downcase nil)))
+(add-hook 'haskell-mode-hook (lambda () (setq-local company-dabbrev-downcase nil)))
 
-;; (defun capitalize-and-join-backwards ()
-;;     (interactive)
-;;     (search-backward " ")
-;;     (right-char)
-;;     (right-char)
-;;     (insert " ")
-;;     (left-char)
-;;     (left-char)
-;;     (capitalize-word 1)
-;;     (paredit-forward-delete)
-;;     (left-char)
-;;     (paredit-backward-delete))
+(defun capitalize-and-join-backwards ()
+    (interactive)
+    (search-backward " ")
+    (right-char)
+    (right-char)
+    (insert " ")
+    (left-char)
+    (left-char)
+    (capitalize-word 1)
+    (paredit-forward-delete)
+    (left-char)
+    (paredit-backward-delete))
 
-;; (global-set-key (kbd "C-z 2") 'capitalize-and-join-backwards)
+(global-set-key (kbd "C-z 2") 'capitalize-and-join-backwards)
 
-;; (add-hook 'haskell-mode-hook
-;;             #'(lambda ()
-;;                (local-set-key (kbd "C-c C-d h") 'haskell-hoogle)))
+(add-hook 'haskell-mode-hook
+            #'(lambda ()
+               (local-set-key (kbd "C-c C-d h") 'haskell-hoogle)))
 
-;; (add-hook 'haskell-interactive-mode-hook
-;;             #'(lambda ()
-;;                (local-set-key (kbd "C-c C-d h") 'haskell-hoogle)))
+(add-hook 'haskell-interactive-mode-hook
+            #'(lambda ()
+               (local-set-key (kbd "C-c C-d h") 'haskell-hoogle)))
 
-;; (add-hook 'haskell-interactive-mode-hook
-;;             #'(lambda ()
-;;                (prelude-mode -1)
-;;                (local-set-key (kbd "C-a") 'haskell-interactive-mode-bol)))
+(add-hook 'haskell-interactive-mode-hook
+            #'(lambda ()
+               (prelude-mode -1)
+               (local-set-key (kbd "C-a") 'haskell-interactive-mode-bol)))
 
-;; (use-package ormolu
-;;   :ensure t
-;;   :hook (haskell-mode . ormolu-format-on-save-mode)
-;;   ;; :bind
-;;   ;; :map
-;;   ;; (haskell-mode-map ("C-z h" . ormolu-format-buffer))
-;;   )
+(use-package ormolu
+  :ensure t
+  :hook (haskell-mode . ormolu-format-on-save-mode)
+  ;; :bind
+  ;; :map
+  ;; (haskell-mode-map ("C-z h" . ormolu-format-buffer))
+  )
 
-;; ;;; *** Lisp
+;;; *** Lisp
 
-;; ;;; **** Geiser
-;;    (setq geiser-active-implementations '(scheme chezscheme racket))
-;;    ;; (setq geiser-racket-binary "/usr/bin/racket")
+;;; **** Geiser
+   (setq geiser-active-implementations '(scheme chezscheme racket))
+   ;; (setq geiser-racket-binary "/usr/bin/racket")
 
-;; ;;; *** Clojure
-;;    (add-to-list 'auto-mode-alist '("\\.edn\\'" . clojure-mode))
+;;; *** Clojure
+   (add-to-list 'auto-mode-alist '("\\.edn\\'" . clojure-mode))
 
-;;    (add-hook 'cider-repl-mode-hook
-;;              #'(lambda ()
-;;                 (local-set-key (kbd "C-c M-k") 'cider-repl-clear-buffer)))
+   (add-hook 'cider-repl-mode-hook
+             #'(lambda ()
+                (local-set-key (kbd "C-c M-k") 'cider-repl-clear-buffer)))
 
-;;    (add-hook 'cider-repl-mode-hook
-;;              #'(lambda ()
-;;                 (local-set-key (kbd "C-c M-a") 'cider-load-all-files)))
+   (add-hook 'cider-repl-mode-hook
+             #'(lambda ()
+                (local-set-key (kbd "C-c M-a") 'cider-load-all-files)))
 
 ;; ;;; **** Slime
 ;; ;;; this code has been responsible for slime version problem
