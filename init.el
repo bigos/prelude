@@ -137,12 +137,12 @@ by Prelude.")
 (message "[Prelude] Loading Prelude's additional modules...")
 
 ;; the modules
-;;zzz (if (file-exists-p prelude-modules-file)
-;;     (load prelude-modules-file)
-;;   (message "[Prelude] Missing personal modules file %s" prelude-modules-file)
-;;   (message "[Prelude] Falling back to the bundled example file sample/prelude-modules.el")
-;;   (message "[Prelude] You should copy this file to your personal configuration folder and tweak it to your liking")
-;;   (load (expand-file-name "sample/prelude-modules.el" prelude-dir)))
+(if (file-exists-p prelude-modules-file)
+    (load prelude-modules-file)
+  (message "[Prelude] Missing personal modules file %s" prelude-modules-file)
+  (message "[Prelude] Falling back to the bundled example file sample/prelude-modules.el")
+  (message "[Prelude] You should copy this file to your personal configuration folder and tweak it to your liking")
+  (load (expand-file-name "sample/prelude-modules.el" prelude-dir)))
 
 ;; config changes made through the customize UI will be stored here
 (setq custom-file (expand-file-name "custom.el" prelude-personal-dir))
