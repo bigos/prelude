@@ -503,111 +503,111 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start nil))
 
-;; (use-package yafolding
-;;   :ensure t
-;;   :bind (("C-x y f" . yafolding-mode)))
+(use-package yafolding
+  :ensure t
+  :bind (("C-x y f" . yafolding-mode)))
 
-;; ;;; *** vscode interaction
-;; (defun open-buffer-in-vscode ()
-;;       (interactive)
+;;; *** vscode interaction
+(defun open-buffer-in-vscode ()
+      (interactive)
 
-;;       ;; this possibly crashes emacs
-;;       ;; (save-buffer)
+      ;; this possibly crashes emacs
+      ;; (save-buffer)
 
-;;   (let ((bfn (buffer-file-name)))
-;;     (when bfn (let ((com (concat "code " bfn)))
-;;                 (shell-command com)))))
+  (let ((bfn (buffer-file-name)))
+    (when bfn (let ((com (concat "code " bfn)))
+                (shell-command com)))))
 
-;; (global-set-key [f9] 'open-buffer-in-vscode)
+(global-set-key [f9] 'open-buffer-in-vscode)
 
-;; ;;; *** PureScript
+;;; *** PureScript
 
-;; (require 'psc-ide)
+(require 'psc-ide)
 
-;; (add-hook 'purescript-mode-hook
-;;           (lambda ()
-;;             (psc-ide-mode)
-;;             (company-mode)
-;;             (flycheck-mode)
-;;             (turn-on-purescript-indentation)))
+(add-hook 'purescript-mode-hook
+          (lambda ()
+            (psc-ide-mode)
+            (company-mode)
+            (flycheck-mode)
+            (turn-on-purescript-indentation)))
 
-;; (add-hook 'purescript-mode-hook 'inferior-psci-mode)
+(add-hook 'purescript-mode-hook 'inferior-psci-mode)
 
-;; ;;; *** MacOSX specific settings
-;; (when nil
-;;   ;; Allow hash to be entered on MacOSX
-;;   (fset 'insertPound "#")
-;;   (global-set-key (kbd "M-3") 'insertPound)
+;;; *** MacOSX specific settings
+(when nil
+  ;; Allow hash to be entered on MacOSX
+  (fset 'insertPound "#")
+  (global-set-key (kbd "M-3") 'insertPound)
 
-;; ;;; MacOSX style shortcuts
-;;   (global-set-key (kbd "C-z z") 'undo)
-;;   (global-set-key (kbd "C-z x") 'clipboard-kill-region)
-;;   (global-set-key (kbd "C-z c") 'clipboard-kill-ring-save)
-;;   (global-set-key (kbd "C-z v") 'clipboard-yank)
+;;; MacOSX style shortcuts
+  (global-set-key (kbd "C-z z") 'undo)
+  (global-set-key (kbd "C-z x") 'clipboard-kill-region)
+  (global-set-key (kbd "C-z c") 'clipboard-kill-ring-save)
+  (global-set-key (kbd "C-z v") 'clipboard-yank)
 
-;; ;;; MacOSX F keys
-;;   (global-set-key (kbd "C-z 3") 'kmacro-start-macro-or-insert-counter)
-;;   (global-set-key (kbd "C-z 4") 'kmacro-end-or-call-macro))
+;;; MacOSX F keys
+  (global-set-key (kbd "C-z 3") 'kmacro-start-macro-or-insert-counter)
+  (global-set-key (kbd "C-z 4") 'kmacro-end-or-call-macro))
 
-;; ;;; *** Shortcuts
-;; (global-set-key (kbd "C-z a") 'bs-cycle-previous)
-;; (global-set-key (kbd "C-z s") 'bs-cycle-next)
+;;; *** Shortcuts
+(global-set-key (kbd "C-z a") 'bs-cycle-previous)
+(global-set-key (kbd "C-z s") 'bs-cycle-next)
 
-;; ;;; switch-window
-;; (global-set-key (kbd "C-x o") 'switch-window)
+;;; switch-window
+(global-set-key (kbd "C-x o") 'switch-window)
 
-;; ;;; *** Web mode
-;; (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-;; (setq web-mode-code-indent-offset 2)
-;; (setq web-mode-markup-indent-offset 2)
-;; (setq web-mode-css-indent-offset 2)
-;; (add-hook 'web-mode-hook #'(lambda () (smartparens-mode -1)))
+;;; *** Web mode
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(setq web-mode-code-indent-offset 2)
+(setq web-mode-markup-indent-offset 2)
+(setq web-mode-css-indent-offset 2)
+(add-hook 'web-mode-hook #'(lambda () (smartparens-mode -1)))
 
-;; ;;; insert only <% side of erb tag, autopairing wi
-;; (fset 'insert-rails-erb-tag [?< ?% ])
-;; (global-set-key (kbd "C-z =") 'insert-rails-erb-tag)
+;;; insert only <% side of erb tag, autopairing wi
+(fset 'insert-rails-erb-tag [?< ?% ])
+(global-set-key (kbd "C-z =") 'insert-rails-erb-tag)
 
-;; ;;; *** C/CPP
-;; ;;; that assumes we have emacs29, ran autogen.sh and configured the source for tree-sitter support
-;; ;;; and installed parses for c/cpp
+;;; *** C/CPP
+;;; that assumes we have emacs29, ran autogen.sh and configured the source for tree-sitter support
+;;; and installed parses for c/cpp
 
-;; (add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode))
-;; (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
-;; (add-to-list 'major-mode-remap-alist
-;;              '(c-or-c++-mode . c-or-c++-ts-mode))
+(add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode))
+(add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
+(add-to-list 'major-mode-remap-alist
+             '(c-or-c++-mode . c-or-c++-ts-mode))
 
-;; ;;; more info about possible ivy completions
-;; (defun ivy-debug-candidates ()
-;;   (interactive)
-;;   (message "ivy text %s" ivy-text)
-;;   (message "ivy regex %s" ivy-regex)
-;;   (message "ivy length %s" ivy--length)
-;;   (message "ivy old candidates %s" ivy--old-cands)
-;;   (message "possible completions %s"
-;;            (cl-remove-duplicates
-;;             (cl-map 'list
-;;                     (lambda (co)
-;;                       (substring co 0 1))
-;;                     (cl-map 'list (lambda (c)
-;;                                     (replace-regexp-in-string ivy--old-re "" c))
-;;                             ivy--old-cands))
-;;             :test (lambda (x y) (or (null y) (equal x y))))))
+;;; more info about possible ivy completions
+(defun ivy-debug-candidates ()
+  (interactive)
+  (message "ivy text %s" ivy-text)
+  (message "ivy regex %s" ivy-regex)
+  (message "ivy length %s" ivy--length)
+  (message "ivy old candidates %s" ivy--old-cands)
+  (message "possible completions %s"
+           (cl-remove-duplicates
+            (cl-map 'list
+                    (lambda (co)
+                      (substring co 0 1))
+                    (cl-map 'list (lambda (c)
+                                    (replace-regexp-in-string ivy--old-re "" c))
+                            ivy--old-cands))
+            :test (lambda (x y) (or (null y) (equal x y))))))
 
-;; (global-set-key [f7] 'ivy-debug-candidates)
+(global-set-key [f7] 'ivy-debug-candidates)
 
-;; ;;; *** Indent bars
-;; (use-package indent-bars
-;;   :ensure t
-;;   :hook ((python-mode yaml-mode) . indent-bars-mode)) ; or whichever modes you prefer
+;;; *** Indent bars
+(use-package indent-bars
+  :ensure t
+  :hook ((python-mode yaml-mode) . indent-bars-mode)) ; or whichever modes you prefer
 
-;; ;;; *** Elm
-;; (add-hook 'elm-mode-hook 'elm-format-on-save-mode)
+;;; *** Elm
+(add-hook 'elm-mode-hook 'elm-format-on-save-mode)
 
-;; ;;; *** Rust
+;;; *** Rust
 
-;; ;; this may not be needed because prelude defaults
+;; this may not be needed because prelude defaults
 
-;; ;;; *** C#
+;;; *** C#
 
 
 ;; ;;; *** Ocaml
