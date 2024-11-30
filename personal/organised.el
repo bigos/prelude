@@ -854,9 +854,15 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 (add-hook 'clojure-mode-hook (lambda () (swap-paredit)))
 (add-hook 'cider-repl-mode-hook (lambda () (swap-paredit)))
+(eval-after-load 'paredit
+
+'(progn
+   (define-key paredit-mode-map (kbd "RET") nil)
+   (define-key paredit-mode-map (kbd "C-j") nil)))
+
 
 ;;; **** The rest
-(setq common-lisp-hyperspec-root
+  (setq common-lisp-hyperspec-root
         (format
          "file:/home/%s/Documents/Manuals/Lisp/HyperSpec-7-0/HyperSpec/"
          user-login-name))
