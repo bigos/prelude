@@ -123,8 +123,8 @@ by Prelude.")
   (require 'prelude-macos))
 
 ;; Linux specific settings
-;;zzz (when (eq system-type 'gnu/linux)
-;;   (require 'prelude-linux))
+(when (eq system-type 'gnu/linux)
+  (require 'prelude-linux))
 
 ;; WSL specific setting
 (when (and (eq system-type 'gnu/linux) (getenv "WSLENV"))
