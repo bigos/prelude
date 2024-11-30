@@ -148,11 +148,11 @@ by Prelude.")
 (setq custom-file (expand-file-name "custom.el" prelude-personal-dir))
 
 ;; load the personal settings (this includes `custom-file')
-;;zzz (when (file-exists-p prelude-personal-dir)
-;;   (message "[Prelude] Loading personal configuration files in %s..." prelude-personal-dir)
-;;   (mapc 'load (delete
-;;                prelude-modules-file
-;;                (directory-files prelude-personal-dir 't "^[^#\.].*\\.el$"))))
+(when (file-exists-p prelude-personal-dir)
+  (message "[Prelude] Loading personal configuration files in %s..." prelude-personal-dir)
+  (mapc 'load (delete
+               prelude-modules-file
+               (directory-files prelude-personal-dir 't "^[^#\.].*\\.el$"))))
 
 (message "[Prelude] Prelude is ready to do thy bidding, Master %s!" prelude-user)
 
