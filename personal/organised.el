@@ -854,11 +854,11 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 (add-hook 'clojure-mode-hook (lambda () (swap-paredit)))
 (add-hook 'cider-repl-mode-hook (lambda () (swap-paredit)))
-(eval-after-load 'paredit
 
-'(progn
-   (define-key paredit-mode-map (kbd "RET") nil)
-   (define-key paredit-mode-map (kbd "C-j") nil)))
+(eval-after-load 'paredit
+  '(progn
+     (define-key paredit-mode-map (kbd "RET") nil)
+     (define-key paredit-mode-map (kbd "C-j") nil)))
 
 
 ;;; **** The rest
