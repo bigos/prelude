@@ -862,10 +862,10 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 
 ;;; **** The rest
-  (setq common-lisp-hyperspec-root
-        (format
-         "file:/home/%s/Documents/Manuals/Lisp/HyperSpec-7-0/HyperSpec/"
-         user-login-name))
+(setq common-lisp-hyperspec-root
+      (format
+       "file:/home/%s/Documents/Manuals/Lisp/HyperSpec-7-0/HyperSpec/"
+       user-login-name))
 
       (require 'redshank-loader)
       (eval-after-load "redshank-loader"
