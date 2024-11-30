@@ -267,36 +267,36 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (setq whitespace-line-column 480)
 
 
-;; ;;; *** plantuml
-;; ;;; basic plantuml config
+;;; *** plantuml
+;;; basic plantuml config
 
-;; (prelude-require-packages '(flycheck-plantuml))
+(prelude-require-packages '(flycheck-plantuml))
 
-;; (setq plantuml-jar-path "~/bin/plantuml.jar")
-;; (setq plantuml-default-exec-mode 'jar)
+(setq plantuml-jar-path "~/bin/plantuml.jar")
+(setq plantuml-default-exec-mode 'jar)
 
-;; ;; Enable plantuml-mode for PlantUML files
-;; (add-to-list 'auto-mode-alist '("\\.puml\\'" . plantuml-mode))
+;; Enable plantuml-mode for PlantUML files
+(add-to-list 'auto-mode-alist '("\\.puml\\'" . plantuml-mode))
 
-;; ;;; integrate with org-mode
-;; (require 'org)
-;; (add-to-list
-;;  'org-src-lang-modes '("plantuml" . plantuml))
+;;; integrate with org-mode
+(require 'org)
+(add-to-list
+ 'org-src-lang-modes '("plantuml" . plantuml))
 
-;; ;;; *** string inflection
-;; (require 'string-inflection)
+;;; *** string inflection
+(require 'string-inflection)
 
-;; ;; default
-;; (global-set-key [f5] 'string-inflection-all-cycle)
+;; default
+(global-set-key [f6] 'string-inflection-all-cycle)
 
-;; ;; for ruby
-;; (add-hook 'ruby-mode-hook
-;;             #'(lambda ()
-;;                (local-set-key [f6] 'string-inflection-ruby-style-cycle)))
+;; for ruby
+(add-hook 'ruby-mode-hook
+            #'(lambda ()
+               (local-set-key [f6] 'string-inflection-ruby-style-cycle)))
 
-;; (setq string-inflection-skip-backward-when-done t)
+(setq string-inflection-skip-backward-when-done t)
 
-;; ;;; *** Graphviz
+;;; *** Graphviz
 
 ;; ;;; *** Org mode configuration
 
