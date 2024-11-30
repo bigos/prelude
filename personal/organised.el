@@ -154,77 +154,77 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 (global-set-key (kbd "C-z f") 'vc-git-grep)
 
-;; (require 'prelude-packages)
-;; (prelude-require-packages '(abyss-theme
-;;                             adwaita-dark-theme
-;;                             birds-of-paradise-plus-theme
-;;                             chyla-dark-theme
-;;                             chyla-theme
-;;                             distinguished-theme
-;;                             ef-themes
-;;                             flatui-dark-theme
-;;                             lush-theme
-;;                             monokai-theme
-;;                             naga-theme
-;;                             nimbus-theme
-;;                             northcode-theme
-;;                             noctilux-theme
-;;                             paganini-theme
-;;                             rimero-theme
-;;                             zenburn-theme
-;;                             zeno-theme
+(require 'prelude-packages)
+(prelude-require-packages '(abyss-theme
+                            adwaita-dark-theme
+                            birds-of-paradise-plus-theme
+                            chyla-dark-theme
+                            chyla-theme
+                            distinguished-theme
+                            ef-themes
+                            flatui-dark-theme
+                            lush-theme
+                            monokai-theme
+                            naga-theme
+                            nimbus-theme
+                            northcode-theme
+                            noctilux-theme
+                            paganini-theme
+                            rimero-theme
+                            zenburn-theme
+                            zeno-theme
 
-;;                             buffer-move
-;;                             dash
-;;                             enh-ruby-mode
-;;                             graphviz-dot-mode
-;;                             helm-core
-;;                             helm-descbinds
-;;                             helm-projectile
-;;                             htmlize
-;;                             indent-bars
-;;                             kurecolor
-;;                             load-theme-buffer-local
-;;                             magit
-;;                             mode-line-bell
-;;                             ob-restclient
-;;                             org-mind-map
-;;                             orgit
-;;                             org-roam-ui
-;;                             paredit
-;;                             parsec
-;;                             projectile
-;;                             projectile-rails
-;;                             projectile-rails
-;;                             prop-menu
+                            ;; buffer-move
+                            ;; dash
+                            ;; enh-ruby-mode
+                            ;; graphviz-dot-mode
+                            ;; helm-core
+                            ;; helm-descbinds
+                            ;; helm-projectile
+                            ;; htmlize
+                            ;; indent-bars
+                            ;; kurecolor
+                            ;; load-theme-buffer-local
+                            ;; magit
+                            ;; mode-line-bell
+                            ;; ob-restclient
+                            ;; org-mind-map
+                            ;; orgit
+                            ;; org-roam-ui
+                            ;; paredit
+                            ;; parsec
+                            ;; projectile
+                            ;; projectile-rails
+                            ;; projectile-rails
+                            ;; prop-menu
 
-;;                             psc-ide
-;;                             psci
-;;                             purescript-mode
+                            ;; psc-ide
+                            ;; psci
+                            ;; purescript-mode
 
-;;                             rails-log-mode
-;;                             rainbow-delimiters
-;;                             redshank
-;;                             restclient-helm
-;;                             rspec-mode
-;;                             rubocop
-;;                             ruby-hash-syntax
-;;                             ruby-refactor
-;;                             slime
-;;                             slime-repl-ansi-color
-;;                             string-inflection
-;;                             switch-window
-;;                             tree-sitter-langs
-;;                             use-package
-;;                             vterm ;needs: sudo apt install libvterm-dev cmake
-;;                             multi-vterm
-;;                             web-mode
-;;                             ))
+                            ;; rails-log-mode
+                            ;; rainbow-delimiters
+                            ;; redshank
+                            ;; restclient-helm
+                            ;; rspec-mode
+                            ;; rubocop
+                            ;; ruby-hash-syntax
+                            ;; ruby-refactor
+                            ;; slime
+                            ;; slime-repl-ansi-color
+                            ;; string-inflection
+                            ;; switch-window
+                            ;; tree-sitter-langs
+                            ;; use-package
+                            ;; vterm ;needs: sudo apt install libvterm-dev cmake
+                            ;; multi-vterm
+                            ;; web-mode
+                            ))
 
-;; (eval-when-compile
-;;     (require 'use-package))
-;; (require 'diminish)                ;; if you use :diminish
-;; (require 'bind-key)                ;; if you use any :bind variant
+(eval-when-compile
+    (require 'use-package))
+(require 'diminish)                ;; if you use :diminish
+(require 'bind-key)                ;; if you use any :bind variant
 
 ;; ; (add-to-list 'load-path "/home/jacek/.emacs.d/elpa/enh-ruby-mode-20190513.254/enh-ruby-mode.el") ; must be added after any path containing old ruby-mode
 
