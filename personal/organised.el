@@ -175,46 +175,46 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                             zeno-theme
 
                             buffer-move
-                            ;; dash
+                            dash
                             enh-ruby-mode
                             graphviz-dot-mode
-                            ;; helm-core
-                            ;; helm-descbinds
-                            ;; helm-projectile
+                            helm-core
+                            helm-descbinds
+                            helm-projectile
                             htmlize
                             ;; indent-bars
                             kurecolor
                             load-theme-buffer-local
-                            ;; magit
+                            magit
                             mode-line-bell
                             ob-restclient
                             org-mind-map
                             orgit
                             org-roam-ui
                             ;; paredit
-                            ;; parsec
-                            ;; projectile
-                            ;; projectile-rails
-                            ;; projectile-rails
-                            ;; prop-menu
+                            parsec
+                            projectile
+                            projectile-rails
+                            projectile-rails
+                            prop-menu
 
                             psc-ide
                             psci
                             purescript-mode
 
                             rails-log-mode
-                            ;; rainbow-delimiters
-                            ;; redshank
+                            rainbow-delimiters
+                            redshank
                             restclient-helm
                             rspec-mode
                             rubocop
                             ruby-hash-syntax
                             ruby-refactor
-                            ;; slime
-                            ;; slime-repl-ansi-color
+                            slime
+                            slime-repl-ansi-color
                             string-inflection
                             switch-window
-                            ;; tree-sitter-langs
+                            tree-sitter-langs
                             use-package
                             vterm ;needs: sudo apt install libvterm-dev cmake
                             multi-vterm
