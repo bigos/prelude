@@ -182,7 +182,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                             helm-descbinds
                             helm-projectile
                             htmlize
-                            ;; indent-bars
+                            indent-bars
                             kurecolor
                             load-theme-buffer-local
                             magit
@@ -191,7 +191,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                             org-mind-map
                             orgit
                             org-roam-ui
-                            ;; paredit
+                            paredit
                             parsec
                             projectile
                             projectile-rails
