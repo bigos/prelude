@@ -894,118 +894,118 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 ;; (global-set-key (kbd "C-z i") 'insert-serapeum-arrow)
 
-;; ;;; *** Parentheses coloring
-;; ;;; this add capability to define your own hook for responding to theme changes
-;; (defvar after-load-theme-hook nil
-;;   "Hook run after a color theme is loaded using `load-theme'.")
-;; (defadvice load-theme (after run-after-load-theme-hook activate)
-;;     "Run `after-load-theme-hook'."
-;;     (run-hooks 'after-load-theme-hook))
+;;; *** Parentheses coloring
+;;; this add capability to define your own hook for responding to theme changes
+(defvar after-load-theme-hook nil
+  "Hook run after a color theme is loaded using `load-theme'.")
+(defadvice load-theme (after run-after-load-theme-hook activate)
+    "Run `after-load-theme-hook'."
+    (run-hooks 'after-load-theme-hook))
 
-;; (require 'color)
-;; (defun hsl-to-hex (h s l)
-;;     "Convert H S L to hex colours."
-;;     (let (rgb)
-;;       (setq rgb (color-hsl-to-rgb h s l))
-;;       (color-rgb-to-hex (nth 0 rgb)
-;;                         (nth 1 rgb)
-;;                         (nth 2 rgb))))
+(require 'color)
+(defun hsl-to-hex (h s l)
+    "Convert H S L to hex colours."
+    (let (rgb)
+      (setq rgb (color-hsl-to-rgb h s l))
+      (color-rgb-to-hex (nth 0 rgb)
+                        (nth 1 rgb)
+                        (nth 2 rgb))))
 
-;; (defun hex-to-rgb (hex)
-;;     "Convert a 6 digit HEX color to r g b."
-;;     (mapcar #'(lambda (s) (/ (string-to-number s 16) 255.0))
-;;             (list (substring hex 1 3)
-;;                   (substring hex 3 5)
-;;                   (substring hex 5 7))))
-
-
-;; (defun bg-color ()
-;;      "Return COLOR or it's hexvalue."
-;;      (let ((color (face-attribute 'default :background)))
-;;        (if (equal (substring color 0 1) "#")
-;;            color
-;;          (apply 'color-rgb-to-hex
-;;                 (let ((color-rgb (color-name-to-rgb color)))
-;;                   (if (null color-rgb)
-;;                       '(0.0 0.0 0.0)
-;;                     color-rgb))))))
-
-;; (defun bg-light ()
-;;     "Calculate background brightness."
-;;     (< (color-distance  "white"
-;;                         (bg-color))
-;;        (color-distance  "black"
-;;                         (bg-color))))
-
-;; (defun whitespace-line-bg ()
-;;     "Calculate long line highlight depending on background brightness."
-;;     (apply 'color-rgb-to-hex
-;;            (apply 'color-hsl-to-rgb
-;;                   (apply (if (bg-light) 'color-darken-hsl 'color-lighten-hsl)
-;;                          (append
-;;                           (apply 'color-rgb-to-hsl
-;;                                  (hex-to-rgb
-;;                                   (bg-color)))
-;;                           '(7))))))
-
-;; (defun bracket-colors ()
-;;     "Calculate the bracket colours based on background."
-;;     (let (hexcolors lightvals)
-;;       (setq lightvals (if (bg-light)
-;;                           (list (list .60 1.0 0.55) ; H S L
-;;                                 (list .30 1.0 0.40)
-;;                                 (list .11 1.0 0.55)
-;;                                 (list .01 1.0 0.65)
-;;                                 (list .75 0.9 0.55) ; H S L
-;;                                 (list .49 0.9 0.40)
-;;                                 (list .17 0.9 0.47)
-;;                                 (list .05 0.9 0.55))
-;;                         (list (list .70 1.0 0.68) ; H S L
-;;                               (list .30 1.0 0.40)
-;;                               (list .11 1.0 0.50)
-;;                               (list .01 1.0 0.50)
-;;                               (list .81 0.9 0.55) ; H S L
-;;                               (list .49 0.9 0.40)
-;;                               (list .17 0.9 0.45)
-;;                               (list .05 0.9 0.45))))
-;;       (dolist (n lightvals)
-;;         (push (apply 'hsl-to-hex n) hexcolors))
-;;       (reverse hexcolors)))
+(defun hex-to-rgb (hex)
+    "Convert a 6 digit HEX color to r g b."
+    (mapcar #'(lambda (s) (/ (string-to-number s 16) 255.0))
+            (list (substring hex 1 3)
+                  (substring hex 3 5)
+                  (substring hex 5 7))))
 
 
-;; (defun colorise-brackets ()
-;;     "Apply my own colours to rainbow delimiters."
-;;     (interactive)
-;;     (require 'rainbow-delimiters)
-;;     (custom-set-faces
-;;      ;; change the background but do not let theme to interfere with the foreground
-;;      `(whitespace-line ((t (:background ,(whitespace-line-bg)))))
-;;      ;; or use (list-colors-display)
-;;      `(rainbow-delimiters-depth-2-face ((t (:foreground ,(nth 0 (bracket-colors))))))
-;;      `(rainbow-delimiters-depth-3-face ((t (:foreground ,(nth 1 (bracket-colors))))))
-;;      `(rainbow-delimiters-depth-4-face ((t (:foreground ,(nth 2 (bracket-colors))))))
-;;      `(rainbow-delimiters-depth-5-face ((t (:foreground ,(nth 3 (bracket-colors))))))
-;;      `(rainbow-delimiters-depth-6-face ((t (:foreground ,(nth 4 (bracket-colors))))))
-;;      `(rainbow-delimiters-depth-7-face ((t (:foreground ,(nth 5 (bracket-colors))))))
-;;      `(rainbow-delimiters-depth-8-face ((t (:foreground ,(nth 6 (bracket-colors))))))
-;;      `(rainbow-delimiters-depth-9-face ((t (:foreground ,(nth 7 (bracket-colors))))))
-;;      `(rainbow-delimiters-unmatched-face ((t (:foreground "white" :background "red"))))
-;;      `(highlight ((t (:foreground "#ff0000" :background "#888"))))))
+(defun bg-color ()
+     "Return COLOR or it's hexvalue."
+     (let ((color (face-attribute 'default :background)))
+       (if (equal (substring color 0 1) "#")
+           color
+         (apply 'color-rgb-to-hex
+                (let ((color-rgb (color-name-to-rgb color)))
+                  (if (null color-rgb)
+                      '(0.0 0.0 0.0)
+                    color-rgb))))))
 
-;; (colorise-brackets)
+(defun bg-light ()
+    "Calculate background brightness."
+    (< (color-distance  "white"
+                        (bg-color))
+       (color-distance  "black"
+                        (bg-color))))
 
-;; ;;; *** Buffer movement
-;; (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
-;; (add-hook 'after-load-theme-hook 'colorise-brackets)
+(defun whitespace-line-bg ()
+    "Calculate long line highlight depending on background brightness."
+    (apply 'color-rgb-to-hex
+           (apply 'color-hsl-to-rgb
+                  (apply (if (bg-light) 'color-darken-hsl 'color-lighten-hsl)
+                         (append
+                          (apply 'color-rgb-to-hsl
+                                 (hex-to-rgb
+                                  (bg-color)))
+                          '(7))))))
 
-;; ;; moving buffers
-;; (require 'buffer-move)
-;; ;; need to find unused shortcuts for moving up and down
-;; ;; (global-set-key (kbd "<M-s-up>")     'buf-move-up)
-;; ;; (global-set-key (kbd "<M-s-down>")   'buf-move-down)
-;; ;; (global-set-key (kbd "<M-s-left>")   'buf-move-left)
-;; ;; (global-set-key (kbd "<M-s-right>")  'buf-move-right)
+(defun bracket-colors ()
+    "Calculate the bracket colours based on background."
+    (let (hexcolors lightvals)
+      (setq lightvals (if (bg-light)
+                          (list (list .60 1.0 0.55) ; H S L
+                                (list .30 1.0 0.40)
+                                (list .11 1.0 0.55)
+                                (list .01 1.0 0.65)
+                                (list .75 0.9 0.55) ; H S L
+                                (list .49 0.9 0.40)
+                                (list .17 0.9 0.47)
+                                (list .05 0.9 0.55))
+                        (list (list .70 1.0 0.68) ; H S L
+                              (list .30 1.0 0.40)
+                              (list .11 1.0 0.50)
+                              (list .01 1.0 0.50)
+                              (list .81 0.9 0.55) ; H S L
+                              (list .49 0.9 0.40)
+                              (list .17 0.9 0.45)
+                              (list .05 0.9 0.45))))
+      (dolist (n lightvals)
+        (push (apply 'hsl-to-hex n) hexcolors))
+      (reverse hexcolors)))
 
-;; ;;; *** Conclusion
-;; (provide 'personal)
-;; ;;; personal ends here
+
+(defun colorise-brackets ()
+    "Apply my own colours to rainbow delimiters."
+    (interactive)
+    (require 'rainbow-delimiters)
+    (custom-set-faces
+     ;; change the background but do not let theme to interfere with the foreground
+     `(whitespace-line ((t (:background ,(whitespace-line-bg)))))
+     ;; or use (list-colors-display)
+     `(rainbow-delimiters-depth-2-face ((t (:foreground ,(nth 0 (bracket-colors))))))
+     `(rainbow-delimiters-depth-3-face ((t (:foreground ,(nth 1 (bracket-colors))))))
+     `(rainbow-delimiters-depth-4-face ((t (:foreground ,(nth 2 (bracket-colors))))))
+     `(rainbow-delimiters-depth-5-face ((t (:foreground ,(nth 3 (bracket-colors))))))
+     `(rainbow-delimiters-depth-6-face ((t (:foreground ,(nth 4 (bracket-colors))))))
+     `(rainbow-delimiters-depth-7-face ((t (:foreground ,(nth 5 (bracket-colors))))))
+     `(rainbow-delimiters-depth-8-face ((t (:foreground ,(nth 6 (bracket-colors))))))
+     `(rainbow-delimiters-depth-9-face ((t (:foreground ,(nth 7 (bracket-colors))))))
+     `(rainbow-delimiters-unmatched-face ((t (:foreground "white" :background "red"))))
+     `(highlight ((t (:foreground "#ff0000" :background "#888"))))))
+
+(colorise-brackets)
+
+;;; *** Buffer movement
+(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'after-load-theme-hook 'colorise-brackets)
+
+;; moving buffers
+(require 'buffer-move)
+;; need to find unused shortcuts for moving up and down
+;; (global-set-key (kbd "<M-s-up>")     'buf-move-up)
+;; (global-set-key (kbd "<M-s-down>")   'buf-move-down)
+;; (global-set-key (kbd "<M-s-left>")   'buf-move-left)
+;; (global-set-key (kbd "<M-s-right>")  'buf-move-right)
+
+;;; *** Conclusion
+(provide 'personal)
+;;; personal ends here
