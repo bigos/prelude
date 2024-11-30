@@ -855,44 +855,44 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 ;; (add-hook 'clojure-mode-hook (lambda () (swap-paredit)))
 ;; (add-hook 'cider-repl-mode-hook (lambda () (swap-paredit)))
 
-;; ;;; **** The rest
-;; (setq common-lisp-hyperspec-root
-;;         (format
-;;          "file:/home/%s/Documents/Manuals/Lisp/HyperSpec-7-0/HyperSpec/"
-;;          user-login-name))
+;;; **** The rest
+(setq common-lisp-hyperspec-root
+        (format
+         "file:/home/%s/Documents/Manuals/Lisp/HyperSpec-7-0/HyperSpec/"
+         user-login-name))
 
-;;       (require 'redshank-loader)
-;;       (eval-after-load "redshank-loader"
-;;         `(redshank-setup '(lisp-mode-hook
-;;                            slime-repl-mode-hook)
-;;                          t))
+      (require 'redshank-loader)
+      (eval-after-load "redshank-loader"
+        `(redshank-setup '(lisp-mode-hook
+                           slime-repl-mode-hook)
+                         t))
 
-;; (require 'cl-lib)
-;; (defun search-nearest-space-or-bracket ()
-;;   (interactive)
-;;   (goto-char (1- (car (cl-sort (cl-remove-if #'null
-;;                                              (list (re-search-forward " \\|)\\|\n" nil t)
-;;                                                    (1+ (point))))
-;;                                #'<=)))))
+(require 'cl-lib)
+(defun search-nearest-space-or-bracket ()
+  (interactive)
+  (goto-char (1- (car (cl-sort (cl-remove-if #'null
+                                             (list (re-search-forward " \\|)\\|\n" nil t)
+                                                   (1+ (point))))
+                               #'<=)))))
 
-;; (global-set-key (kbd "C-z V") 'search-nearest-space-or-bracket)
+(global-set-key (kbd "C-z V") 'search-nearest-space-or-bracket)
 
-;; (defun unfold-lisp ()
-;;   "Unfold lisp code."
-;;   (interactive)
-;;   (search-forward ")")
-;;   (backward-char)
-;;   (search-forward " ")
-;;   (newline-and-indent))
+(defun unfold-lisp ()
+  "Unfold lisp code."
+  (interactive)
+  (search-forward ")")
+  (backward-char)
+  (search-forward " ")
+  (newline-and-indent))
 
-;; (global-set-key (kbd "C-z 0") 'unfold-lisp)
+(global-set-key (kbd "C-z 0") 'unfold-lisp)
 
-;; (defun insert-serapeum-arrow ()
-;;   (interactive)
-;;   (insert "(~> )")
-;;   (backward-char))
+(defun insert-serapeum-arrow ()
+  (interactive)
+  (insert "(~> )")
+  (backward-char))
 
-;; (global-set-key (kbd "C-z i") 'insert-serapeum-arrow)
+(global-set-key (kbd "C-z i") 'insert-serapeum-arrow)
 
 ;;; *** Parentheses coloring
 ;;; this add capability to define your own hook for responding to theme changes
