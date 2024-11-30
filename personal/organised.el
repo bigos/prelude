@@ -810,13 +810,17 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (require 'slime-repl)
   (slime-kill-all-buffers))
 
+(defun insert-lisp-multiline-comment ()
+  (interactive)
+  (insert (format "\n#|\n\n%s\n\n|#" "your comment here...")))
+
 (global-set-key (kbd "C-z e") 'slime-copy-last-expression-to-repl)
 (global-set-key (kbd "C-z t") 'slime-copy-last-expression)
 (global-set-key (kbd "C-z P") 'slime-eval-print-last-expression)
 (global-set-key (kbd "C-z Q") 'close-slime-inspector-buffer)
 
 (global-set-key (kbd "C-z K") 'close-slime-kill-all-buffers)
-
+(global-set-key (kbd "C-z M-;") 'insert-lisp-multiline-comment)
 
 ;;; switch between Lisp related buffers
 (global-set-key (kbd "C-z ;") 'slime-selector)
