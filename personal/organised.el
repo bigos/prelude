@@ -842,8 +842,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
     "Minor mode for pseudo-structurally editing Lisp code." t)
 (add-hook 'emacs-lisp-mode-hook (lambda () (swap-paredit)))
 
-(add-hook 'lisp-mode-hook (lambda () (swap-paredit)))
-(add-hook 'lisp-interaction-mode-hook (lambda () (swap-paredit)))
+;; (add-hook 'lisp-mode-hook (lambda () (swap-paredit)))
+;; (add-hook 'lisp-interaction-mode-hook (lambda () (swap-paredit)))
 
 (add-hook 'scheme-mode-hook (lambda () (swap-paredit)))
 (add-hook 'geiser-repl-mode-hook (lambda () (swap-paredit)))
