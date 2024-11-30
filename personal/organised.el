@@ -836,14 +836,14 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
     (interactive)
     (message "swapping paredit")
     (smartparens-mode -1)
-    (paredit-mode +1))
+    (enable-paredit-mode))
 
 (autoload 'paredit-mode "paredit"
     "Minor mode for pseudo-structurally editing Lisp code." t)
 (add-hook 'emacs-lisp-mode-hook (lambda () (swap-paredit)))
 
-;; (add-hook 'lisp-mode-hook (lambda () (swap-paredit)))
-;; (add-hook 'lisp-interaction-mode-hook (lambda () (swap-paredit)))
+(add-hook 'lisp-mode-hook (lambda () (swap-paredit)))
+(add-hook 'lisp-interaction-mode-hook (lambda () (swap-paredit)))
 
 (add-hook 'scheme-mode-hook (lambda () (swap-paredit)))
 (add-hook 'geiser-repl-mode-hook (lambda () (swap-paredit)))
