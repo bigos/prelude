@@ -101,30 +101,30 @@ by Prelude.")
 (setq large-file-warning-threshold 100000000)
 
 ;; preload the personal settings from `prelude-personal-preload-dir'
-(when (file-exists-p prelude-personal-preload-dir)
-  (message "[Prelude] Loading personal configuration files in %s..." prelude-personal-preload-dir)
-  (mapc 'load (directory-files prelude-personal-preload-dir 't "^[^#\.].*el$")))
+;;zzz (when (file-exists-p prelude-personal-preload-dir)
+;;   (message "[Prelude] Loading personal configuration files in %s..." prelude-personal-preload-dir)
+;;   (mapc 'load (directory-files prelude-personal-preload-dir 't "^[^#\.].*el$")))
 
-(require 'org)
+;; (require 'org)
 
 (message "[Prelude] Loading Prelude's core modules...")
 
 ;; load the core stuff
-(require 'prelude-packages)
-(require 'prelude-custom)  ;; Needs to be loaded before core, editor and ui
-(require 'prelude-ui)
-(require 'prelude-core)
-(require 'prelude-mode)
-(require 'prelude-editor)
-(require 'prelude-global-keybindings)
+;;zzz (require 'prelude-packages)
+;; (require 'prelude-custom)  ;; Needs to be loaded before core, editor and ui
+;; (require 'prelude-ui)
+;; (require 'prelude-core)
+;; (require 'prelude-mode)
+;; (require 'prelude-editor)
+;; (require 'prelude-global-keybindings)
 
 ;; macOS specific settings
 (when (eq system-type 'darwin)
   (require 'prelude-macos))
 
 ;; Linux specific settings
-(when (eq system-type 'gnu/linux)
-  (require 'prelude-linux))
+;;zzz (when (eq system-type 'gnu/linux)
+;;   (require 'prelude-linux))
 
 ;; WSL specific setting
 (when (and (eq system-type 'gnu/linux) (getenv "WSLENV"))
@@ -137,22 +137,22 @@ by Prelude.")
 (message "[Prelude] Loading Prelude's additional modules...")
 
 ;; the modules
-(if (file-exists-p prelude-modules-file)
-    (load prelude-modules-file)
-  (message "[Prelude] Missing personal modules file %s" prelude-modules-file)
-  (message "[Prelude] Falling back to the bundled example file sample/prelude-modules.el")
-  (message "[Prelude] You should copy this file to your personal configuration folder and tweak it to your liking")
-  (load (expand-file-name "sample/prelude-modules.el" prelude-dir)))
+;;zzz (if (file-exists-p prelude-modules-file)
+;;     (load prelude-modules-file)
+;;   (message "[Prelude] Missing personal modules file %s" prelude-modules-file)
+;;   (message "[Prelude] Falling back to the bundled example file sample/prelude-modules.el")
+;;   (message "[Prelude] You should copy this file to your personal configuration folder and tweak it to your liking")
+;;   (load (expand-file-name "sample/prelude-modules.el" prelude-dir)))
 
 ;; config changes made through the customize UI will be stored here
 (setq custom-file (expand-file-name "custom.el" prelude-personal-dir))
 
 ;; load the personal settings (this includes `custom-file')
-(when (file-exists-p prelude-personal-dir)
-  (message "[Prelude] Loading personal configuration files in %s..." prelude-personal-dir)
-  (mapc 'load (delete
-               prelude-modules-file
-               (directory-files prelude-personal-dir 't "^[^#\.].*\\.el$"))))
+;;zzz (when (file-exists-p prelude-personal-dir)
+;;   (message "[Prelude] Loading personal configuration files in %s..." prelude-personal-dir)
+;;   (mapc 'load (delete
+;;                prelude-modules-file
+;;                (directory-files prelude-personal-dir 't "^[^#\.].*\\.el$"))))
 
 (message "[Prelude] Prelude is ready to do thy bidding, Master %s!" prelude-user)
 
@@ -162,9 +162,9 @@ by Prelude.")
     (defun enriched-decode-display-prop (start end &optional param)
       (list start end))))
 
-(prelude-eval-after-init
- ;; greet the use with some useful tip
- (run-at-time 5 nil 'prelude-tip-of-the-day))
+;;zzz (prelude-eval-after-init
+;;  ;; greet the use with some useful tip
+;;  (run-at-time 5 nil 'prelude-tip-of-the-day))
 
 ;;; init.el ends here
 
