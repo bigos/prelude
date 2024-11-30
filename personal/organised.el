@@ -754,106 +754,106 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
              #'(lambda ()
                 (local-set-key (kbd "C-c M-a") 'cider-load-all-files)))
 
-;; ;;; **** Slime
-;; ;;; this code has been responsible for slime version problem
-;; ;; (defvar slime-helper-el "~/quicklisp/slime-helper.el")
-;; ;; (when (file-exists-p slime-helper-el)
-;; ;;   (load (expand-file-name slime-helper-el)))
-;; (require 'slime)
-;; (require 'slime-autoloads)
+;;; **** Slime
+;;; this code has been responsible for slime version problem
+;; (defvar slime-helper-el "~/quicklisp/slime-helper.el")
+;; (when (file-exists-p slime-helper-el)
+;;   (load (expand-file-name slime-helper-el)))
+(require 'slime)
+(require 'slime-autoloads)
 
-;; ;;; I do not need it because slime-selector is better
-;; ;; (add-hook 'slime-repl-mode-hook
-;; ;;           #'(lambda ()
-;; ;;               (local-set-key (kbd "C-c B") 'slime-scratch-buffer)))
+;;; I do not need it because slime-selector is better
+;; (add-hook 'slime-repl-mode-hook
+;;           #'(lambda ()
+;;               (local-set-key (kbd "C-c B") 'slime-scratch-buffer)))
 
-;; (setq slime-contribs '(slime-fancy slime-fancy-inspector))
+(setq slime-contribs '(slime-fancy slime-fancy-inspector))
 
-;; (defun slime-contrib-directory ()
-;;     (let* ((slime-folder-prefix "slime-20")
-;;            (folder-length (length slime-folder-prefix))
-;;            (slime-folder (car (seq-filter (lambda(x) (and (>= (length x)
-;;                                                               folder-length)
-;;                                                           (equal slime-folder-prefix
-;;                                                                  (subseq x 0 folder-length))) )
-;;                                           (directory-files "~/.emacs.d/elpa")))))
-;;       (concat "~/.emacs.d/elpa/" slime-folder "/contrib/")))
+(defun slime-contrib-directory ()
+    (let* ((slime-folder-prefix "slime-20")
+           (folder-length (length slime-folder-prefix))
+           (slime-folder (car (seq-filter (lambda(x) (and (>= (length x)
+                                                              folder-length)
+                                                          (equal slime-folder-prefix
+                                                                 (subseq x 0 folder-length))) )
+                                          (directory-files "~/.emacs.d/elpa")))))
+      (concat "~/.emacs.d/elpa/" slime-folder "/contrib/")))
 
-;; (setq slime-complete-symbol*-fancy t
-;;         slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
-
-
-;; ;;; copy last s-expression to repl
-;; ;;; useful for expressions like (in-package #:whatever)
-;; ;;; alternatively you can use C-c ~ with cursor after (in-package :some-package)
-;; ;;; https://www.reddit.com/r/lisp/comments/ehs12v/copying_last_expression_to_repl_in_emacsslime/
-;; (defun slime-copy-last-expression-to-repl (string)
-;;     (interactive (list (slime-last-expression)))
-;;     (slime-switch-to-output-buffer)
-;;     (goto-char (point-max))
-;;     (insert string))
-
-;; (defun slime-copy-last-expression (string)
-;;   (interactive (list (slime-last-expression)))
-;;   (kill-new string)
-;;   (message "copied the last sexp"))
-
-;; (defun close-slime-inspector-buffer ()
-;;   "close slime inspector buffer"
-;;   (interactive)
-;;   (message "quitting slime inspector")
-;;   (kill-buffer "*slime-inspector*"))
-
-;; (defun close-slime-kill-all-buffers ()
-;;   "close slime kill all buffers"
-;;   (interactive)
-;;   (require 'slime-repl)
-;;   (slime-kill-all-buffers))
-
-;; (global-set-key (kbd "C-z e") 'slime-copy-last-expression-to-repl)
-;; (global-set-key (kbd "C-z t") 'slime-copy-last-expression)
-;; (global-set-key (kbd "C-z P") 'slime-eval-print-last-expression)
-;; (global-set-key (kbd "C-z Q") 'close-slime-inspector-buffer)
-
-;; (global-set-key (kbd "C-z K") 'close-slime-kill-all-buffers)
+(setq slime-complete-symbol*-fancy t
+        slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
 
 
-;; ;;; switch between Lisp related buffers
-;; (global-set-key (kbd "C-z ;") 'slime-selector)
+;;; copy last s-expression to repl
+;;; useful for expressions like (in-package #:whatever)
+;;; alternatively you can use C-c ~ with cursor after (in-package :some-package)
+;;; https://www.reddit.com/r/lisp/comments/ehs12v/copying_last_expression_to_repl_in_emacsslime/
+(defun slime-copy-last-expression-to-repl (string)
+    (interactive (list (slime-last-expression)))
+    (slime-switch-to-output-buffer)
+    (goto-char (point-max))
+    (insert string))
 
-;; ;;; restart lisp after error
-;; (global-set-key (kbd "C-z R") 'slime-restart-inferior-lisp)
+(defun slime-copy-last-expression (string)
+  (interactive (list (slime-last-expression)))
+  (kill-new string)
+  (message "copied the last sexp"))
+
+(defun close-slime-inspector-buffer ()
+  "close slime inspector buffer"
+  (interactive)
+  (message "quitting slime inspector")
+  (kill-buffer "*slime-inspector*"))
+
+(defun close-slime-kill-all-buffers ()
+  "close slime kill all buffers"
+  (interactive)
+  (require 'slime-repl)
+  (slime-kill-all-buffers))
+
+(global-set-key (kbd "C-z e") 'slime-copy-last-expression-to-repl)
+(global-set-key (kbd "C-z t") 'slime-copy-last-expression)
+(global-set-key (kbd "C-z P") 'slime-eval-print-last-expression)
+(global-set-key (kbd "C-z Q") 'close-slime-inspector-buffer)
+
+(global-set-key (kbd "C-z K") 'close-slime-kill-all-buffers)
 
 
-;; ;;; **** Paredit
-;; (global-set-key (kbd "C-z (") 'paredit-mode)
+;;; switch between Lisp related buffers
+(global-set-key (kbd "C-z ;") 'slime-selector)
 
-;; (add-hook 'minibuffer-inactive-mode-hook #'paredit-mode)
-;; (add-hook 'minibuffer-inactive-mode-hook #'rainbow-delimiters-mode)
+;;; restart lisp after error
+(global-set-key (kbd "C-z R") 'slime-restart-inferior-lisp)
 
-;; (defun swap-paredit ()
-;;     "Replace smartparens with superior paredit."
-;;     (interactive)
-;;     (message "swapping paredit")
-;;     (smartparens-mode -1)
-;;     (paredit-mode +1))
 
-;; (autoload 'paredit-mode "paredit"
-;;     "Minor mode for pseudo-structurally editing Lisp code." t)
-;; (add-hook 'emacs-lisp-mode-hook (lambda () (swap-paredit)))
+;;; **** Paredit
+(global-set-key (kbd "C-z (") 'paredit-mode)
 
-;; (add-hook 'lisp-mode-hook (lambda () (swap-paredit)))
-;; (add-hook 'lisp-interaction-mode-hook (lambda () (swap-paredit)))
+(add-hook 'minibuffer-inactive-mode-hook #'paredit-mode)
+(add-hook 'minibuffer-inactive-mode-hook #'rainbow-delimiters-mode)
 
-;; (add-hook 'scheme-mode-hook (lambda () (swap-paredit)))
-;; (add-hook 'geiser-repl-mode-hook (lambda () (swap-paredit)))
-;; (add-hook 'geiser-repl-mode-hook 'rainbow-delimiters-mode)
+(defun swap-paredit ()
+    "Replace smartparens with superior paredit."
+    (interactive)
+    (message "swapping paredit")
+    (smartparens-mode -1)
+    (paredit-mode +1))
 
-;; (add-hook 'slime-repl-mode-hook (lambda () (swap-paredit)))
-;; (add-hook 'slime-repl-mode-hook 'rainbow-delimiters-mode)
+(autoload 'paredit-mode "paredit"
+    "Minor mode for pseudo-structurally editing Lisp code." t)
+(add-hook 'emacs-lisp-mode-hook (lambda () (swap-paredit)))
 
-;; (add-hook 'clojure-mode-hook (lambda () (swap-paredit)))
-;; (add-hook 'cider-repl-mode-hook (lambda () (swap-paredit)))
+(add-hook 'lisp-mode-hook (lambda () (swap-paredit)))
+(add-hook 'lisp-interaction-mode-hook (lambda () (swap-paredit)))
+
+(add-hook 'scheme-mode-hook (lambda () (swap-paredit)))
+(add-hook 'geiser-repl-mode-hook (lambda () (swap-paredit)))
+(add-hook 'geiser-repl-mode-hook 'rainbow-delimiters-mode)
+
+(add-hook 'slime-repl-mode-hook (lambda () (swap-paredit)))
+(add-hook 'slime-repl-mode-hook 'rainbow-delimiters-mode)
+
+(add-hook 'clojure-mode-hook (lambda () (swap-paredit)))
+(add-hook 'cider-repl-mode-hook (lambda () (swap-paredit)))
 
 ;;; **** The rest
 (setq common-lisp-hyperspec-root
