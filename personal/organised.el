@@ -822,6 +822,9 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-set-key (kbd "C-z K") 'close-slime-kill-all-buffers)
 (global-set-key (kbd "C-z M-;") 'insert-lisp-multiline-comment)
 
+;;; macro expand once
+(global-set-key (kbd "C-c M-o") 'slime-macroexpand-1)
+
 ;;; switch between Lisp related buffers
 (global-set-key (kbd "C-z ;") 'slime-selector)
 
