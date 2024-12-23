@@ -172,7 +172,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                             paganini-theme
                             ;; rimero-theme
                             zenburn-theme
-                            zeno-theme
+                            ;; zeno-theme
 
                             buffer-move
                             dash
