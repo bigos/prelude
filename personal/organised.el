@@ -158,19 +158,19 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (prelude-require-packages '(abyss-theme
                             adwaita-dark-theme
                             birds-of-paradise-plus-theme
-                            chyla-dark-theme
-                            chyla-theme
-                            distinguished-theme
+                            ;; chyla-dark-theme
+                            ;; chyla-theme
+                            ;; distinguished-theme
                             ef-themes
                             flatui-dark-theme
                             lush-theme
                             monokai-theme
                             naga-theme
                             nimbus-theme
+                            ;; noctilux-theme
                             northcode-theme
-                            noctilux-theme
                             paganini-theme
-                            rimero-theme
+                            ;; rimero-theme
                             zenburn-theme
                             zeno-theme
 
