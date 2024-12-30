@@ -105,7 +105,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-set-key (kbd "C-S-l o") 'org-open-at-point)
 (global-set-key (kbd "C-z B") 'mark-and-copy-org-block)
 (global-set-key (kbd "C-]") 'insert-graph-arrow)
-
+(global-set-key (kbd "C-S-l n") 'display-line-numbers-mode)
 
 (defun jump-to-line-in-file ()
   "Describe me"
