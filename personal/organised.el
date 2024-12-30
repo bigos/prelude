@@ -215,6 +215,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                             string-inflection
                             switch-window
                             tree-sitter-langs
+                            treemacs-all-the-icons
+                            treemacs-projectile
                             use-package
                             vterm ;needs: sudo apt install libvterm-dev cmake
                             multi-vterm
