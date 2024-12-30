@@ -611,6 +611,91 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 ;;; *** C#
 
+;;; *** Ocaml
+;; https://discuss.ocaml.org/t/how-to-start-with-emacs-to-work-on-ocaml-codebases/10312/19
+
+;;;; OCaml support
+
+;; major mode for editing OCaml code
+;; it also features basic toplevel integration
+(use-package tuareg
+  :ensure t
+  :mode (("\\.ocamlinit\\'" . tuareg-mode)))
+
+;; major mode for editing Dune files
+(use-package dune
+  :ensure t)
+
+(use-package merlin
+  :ensure t
+  :config
+  ;; we're using flycheck instead file:~/.emacs.d/elpa/flycheck-ocaml-20220730.542/flycheck-ocaml.el::37
+  (with-eval-after-load 'merlin
+    ;; Disable Merlin's own error checking
+    (setq merlin-error-after-save nil)
+
+    ;; Enable Flycheck checker
+    (flycheck-ocaml-setup))
+  (add-hook 'merlin-mode-hook #'company-mode))
+
+(use-package ocamlformat
+  :ensure t
+  :config
+  (add-hook 'before-save-hook 'ocamlformat-before-save))
+
+(use-package flycheck-ocaml
+  :ensure t)
+
+;; eldoc integration for Merlin
+(use-package merlin-eldoc
+  :ensure t
+  :hook ((tuareg-mode) . merlin-eldoc-setup))
+
+(use-package merlin-ac
+  :ensure t)
+
+(use-package merlin-company
+  :ensure t)
+
+(use-package merlin-iedit
+  :ensure t)
+
+;;; copied from merlin post install
+(let ((opam-share (ignore-errors (car (process-lines "opam" "var" "share")))))
+  (when (and opam-share (file-directory-p opam-share))
+    ;; Register Merlin
+    (add-to-list 'load-path (expand-file-name "emacs/site-lisp" opam-share))
+    (autoload 'merlin-mode "merlin" nil t nil)
+    ;; Automatically start it in OCaml buffers
+    (add-hook 'tuareg-mode-hook 'merlin-mode t)
+    (add-hook 'caml-mode-hook 'merlin-mode t)
+    ;; Use opam switch to lookup ocamlmerlin binary
+    (setq merlin-command 'opam)))
+
+(defun recentf-exclude-ocaml-temp-p (file)
+  "A predicate to decide whether to exclude FILE from recentf."
+
+  (let (( recent-file-matches (cl-equalp
+               (cl-subseq file 0 16)
+               "/tmp/ocamlformat")))
+    (if recent-file-matches
+        (progn
+          (message "going to exclude file %s from recentf" file)
+          t)
+      (progn
+        ;; (message "going to skip exclusion file %s" file)
+        nil))))
+
+(add-to-list 'recentf-exclude 'recentf-exclude-ocaml-temp-p)
+
+(defun correct-ocaml-env ()
+  (interactive)
+  (message "correcting OCaml env")
+  (setenv  "CAML_LD_LIBRARY_PATH"
+           "/home/jacek/.opam/default/lib/stublibs:/home/jacek/.opam/default/lib/ocaml/stublibs:/home/jacek/.opam/default/lib/ocaml"))
+
+(global-set-key (kbd "C-z C-V") 'correct-ocaml-env)
+
 
 ;;; *** Haskell
 ;;; make sure Emacs uses stack in Haskell Projects by default
