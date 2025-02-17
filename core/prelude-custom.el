@@ -1,6 +1,6 @@
 ;;; prelude-custom.el --- Emacs Prelude: Prelude's customizable variables.
 ;;
-;; Copyright © 2011-2023 Bozhidar Batsov
+;; Copyright © 2011-2025 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -63,6 +63,11 @@ or desktop environments that make heavy use of them."
 
 (defcustom prelude-whitespace t
   "Non-nil values enable Prelude's whitespace visualization."
+  :type 'boolean
+  :group 'prelude)
+
+(defcustom prelude-undo-tree t
+  "Non-nil values enable Prelude's undo-tree integration."
   :type 'boolean
   :group 'prelude)
 
