@@ -498,7 +498,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 (use-package org-roam-ui
   :after org-roam
-  :hook (after-init . org-roam-ui-mode)
+  ;; :hook (after-init . org-roam-ui-mode)
   :config
   (setq org-roam-ui-sync-theme t
         org-roam-ui-follow t
