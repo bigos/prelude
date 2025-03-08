@@ -147,6 +147,10 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-set-key (kbd "C-z 8") 'cleanup-80)
 (global-set-key (kbd "C-h b") 'helm-descbinds)
 
+;; Font size
+(global-set-key (kbd "C-+") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
+
 (setq prelude-guru nil) ;; better for slime
 
 (menu-bar-mode 1)
