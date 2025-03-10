@@ -266,7 +266,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (add-hook 'overwrite-mode-hook #'(lambda () (invert-face 'mode-line)))
 
 ;;; *** Whitespace
-(setq whitespace-line-column 480)
+(setq whitespace-line-column (* 10 80))
 
 
 ;;; *** plantuml
