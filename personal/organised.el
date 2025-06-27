@@ -703,7 +703,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 ;;; *** Haskell
 ;;; make sure Emacs uses stack in Haskell Projects by default
-(setq haskell-process-type 'stack-ghci)
+;;(setq haskell-process-type 'stack-ghci)
 
 (add-hook 'haskell-mode-hook (lambda () (setq-local company-dabbrev-downcase nil)))
 
