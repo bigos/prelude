@@ -743,6 +743,16 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   ;; (haskell-mode-map ("C-z h" . ormolu-format-buffer))
   )
 
+;;; *** Purescript
+(require 'psc-ide)
+
+(add-hook 'purescript-mode-hook
+          (lambda ()
+            (psc-ide-mode)
+            (company-mode)
+            (flycheck-mode)
+            (turn-on-purescript-indentation)))
+
 ;;; *** Lisp
 
 ;;; **** Geiser
