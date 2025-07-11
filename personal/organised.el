@@ -537,7 +537,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (interactive)
   (let ((purs-tidy-location (shell-command-to-string "which purs-tidy")))
     (if (eq "" purs-tidy-location)
-        (message "Please install purs tidy: npm install -g purs-tidy"))
+        (message "Please install purs-tidy: npm install -g purs-tidy"))
     (if (eq major-mode 'purescript-mode)
         (progn
           (message "Will format %s file %s" major-mode buffer-file-name )
@@ -545,7 +545,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
             (message "will execute %s" command)
             (shell-command command)))
       (progn
-        (message "Will NOT format %s because it's a NON PureScript file" major-mode)))))
+        (message "Will NOT format %s because it's a NON PureScript file" major-mode))))
+  )
 
 (add-hook 'purescript-mode-hook (lambda nil
                                   (add-hook 'after-save-hook
@@ -562,6 +563,23 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
             (company-mode)
             (flycheck-mode)
             (turn-on-purescript-indentation)))
+
+
+;;; ---------------
+
+(let ((purs-tidy-location (shell-command-to-string "which purs-tidy")))
+  (if (equal "" purs-tidy-location)
+      (message "Please install purs-tidy: npm install -g purs-tidy")
+    (if (eq major-mode 'purescript-mode)
+        (progn
+          (message "Will format %s file %s" major-mode buffer-file-name )
+          (let ((command (format "purs-tidy format-in-place %s" buffer-file-name)))
+            (message "will execute %s" command)
+            (shell-command command)))
+      (progn
+        (message "Will NOT format %s because it's a NON PureScript file" major-mode)))))
+
+
 
 ;;; *** MacOSX specific settings
 (when nil
