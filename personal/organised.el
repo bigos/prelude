@@ -530,14 +530,32 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 (require 'psc-ide)
 
+(defun format-saved-purescript-file ()
+  "Format the file. That may need reloading and saving again, but is better than nothing"
+  ;; https://github.com/natefaubion/purescript-tidy
+  ;; npm install -g purs-tidy
+  (interactive)
+  (if (eq major-mode 'purescript-mode)
+      (progn
+        (message "Will format %s file %s" major-mode buffer-file-name )
+        (let ((command (format "purs-tidy format-in-place %s" buffer-file-name)))
+          (message "will execute %s" command)
+          (shell-command command)))
+    (progn
+      (message "Will NOT format %s because it's a NON PureScript file" major-mode))))
+
+(add-hook 'purescript-mode-hook #'(lambda ()
+                                    (local-set-key (kbd "C-z -") 'format-saved-purescript-file)))
+
+(add-hook 'purescript-mode-hook 'inferior-psci-mode)
+
+;; purs-tidy format-in-place ./Counter.purs
 (add-hook 'purescript-mode-hook
           (lambda ()
             (psc-ide-mode)
             (company-mode)
             (flycheck-mode)
             (turn-on-purescript-indentation)))
-
-(add-hook 'purescript-mode-hook 'inferior-psci-mode)
 
 ;;; *** MacOSX specific settings
 (when nil
@@ -742,20 +760,6 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   ;; :map
   ;; (haskell-mode-map ("C-z h" . ormolu-format-buffer))
   )
-
-;;; *** Purescript
-(require 'psc-ide)
-
-(add-hook 'purescript-mode-hook
-          (lambda ()
-            (psc-ide-mode)
-            (company-mode)
-            (flycheck-mode)
-            ;; find code for PS format
-            ;; eval shell
-            ;; purs-tidy format-in-place ./Counter.purs
-
-            (turn-on-purescript-indentation)))
 
 ;;; *** Lisp
 
