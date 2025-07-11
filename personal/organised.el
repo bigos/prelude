@@ -751,6 +751,10 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
             (psc-ide-mode)
             (company-mode)
             (flycheck-mode)
+            ;; find code for PS format
+            ;; eval shell
+            ;; purs-tidy format-in-place ./Counter.purs
+
             (turn-on-purescript-indentation)))
 
 ;;; *** Lisp
