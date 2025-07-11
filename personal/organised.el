@@ -544,8 +544,11 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
     (progn
       (message "Will NOT format %s because it's a NON PureScript file" major-mode))))
 
-(add-hook 'purescript-mode-hook #'(lambda ()
-                                    (local-set-key (kbd "C-z -") 'format-saved-purescript-file)))
+(add-hook 'purescript-mode-hook (lambda nil
+                                  (add-hook 'after-save-hook
+                                            (lambda ()
+                                              (format-saved-purescript-file))
+                                            nil 'local))) ;Only in the current buffer
 
 (add-hook 'purescript-mode-hook 'inferior-psci-mode)
 
