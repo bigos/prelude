@@ -209,6 +209,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                             rails-log-mode
                             rainbow-delimiters
                             redshank
+                            rescript-mode
                             restclient-helm
                             rspec-mode
                             rubocop
