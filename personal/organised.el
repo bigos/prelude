@@ -786,8 +786,13 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                 (local-set-key (kbd "C-c M-a") 'cider-load-all-files)))
 
 ;;; **** Slime
-(use-package slime
-  :load-path "~/Programming/EmacsPlugins/slime")
+(if (file-exists-p "~/Programming/EmacsPlugins/slime/slime.el")
+    ;; use my fork
+    (use-package slime
+      :load-path "~/Programming/EmacsPlugins/slime")
+  ;; use the upstream version
+  (use-package slime
+    :ensure t))
 
 ;;; this code has been responsible for slime version problem
 ;; (defvar slime-helper-el "~/quicklisp/slime-helper.el")
