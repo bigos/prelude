@@ -214,7 +214,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                             rubocop
                             ruby-hash-syntax
                             ruby-refactor
-                            slime
+                            ;; disabled to use my own slime fork
+                            ;; slime
                             slime-repl-ansi-color
                             string-inflection
                             switch-window
