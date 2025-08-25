@@ -215,8 +215,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                             rubocop
                             ruby-hash-syntax
                             ruby-refactor
-                            ;; disabled to use my own slime fork
-                            ;; slime
+                            ;; slime was removed from here to use my own fork
                             slime-repl-ansi-color
                             string-inflection
                             switch-window
@@ -787,6 +786,9 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                 (local-set-key (kbd "C-c M-a") 'cider-load-all-files)))
 
 ;;; **** Slime
+(use-package slime
+  :load-path "~/Programming/EmacsPlugins/slime")
+
 ;;; this code has been responsible for slime version problem
 ;; (defvar slime-helper-el "~/quicklisp/slime-helper.el")
 ;; (when (file-exists-p slime-helper-el)
