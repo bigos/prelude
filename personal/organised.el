@@ -209,6 +209,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                             rails-log-mode
                             rainbow-delimiters
                             redshank
+                            rescript-mode
                             restclient-helm
                             rspec-mode
                             rubocop
@@ -537,16 +538,16 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   ;; npm install -g purs-tidy
   (interactive)
   (let ((purs-tidy-location (shell-command-to-string "which purs-tidy")))
-    (if (eq "" purs-tidy-location)
-        (message "Please install purs tidy: npm install -g purs-tidy"))
-    (if (eq major-mode 'purescript-mode)
+    (if (equal "" purs-tidy-location)
+        (message "Please install purs-tidy: npm install -g purs-tidy")
+      (if (eq major-mode 'purescript-mode)
+          (progn
+            (message "Will format %s file %s" major-mode buffer-file-name )
+            (let ((command (format "purs-tidy format-in-place %s" buffer-file-name)))
+              (message "will execute %s" command)
+              (shell-command command)))
         (progn
-          (message "Will format %s file %s" major-mode buffer-file-name )
-          (let ((command (format "purs-tidy format-in-place %s" buffer-file-name)))
-            (message "will execute %s" command)
-            (shell-command command)))
-      (progn
-        (message "Will NOT format %s because it's a NON PureScript file" major-mode)))))
+          (message "Will NOT format %s because it's a NON PureScript file" major-mode))))))
 
 (add-hook 'purescript-mode-hook (lambda nil
                                   (add-hook 'after-save-hook
