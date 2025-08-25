@@ -858,6 +858,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-set-key (kbd "C-z P") 'slime-eval-print-last-expression)
 (global-set-key (kbd "C-z Q") 'close-slime-inspector-buffer)
 
+(global-set-key (kbd "C-z <f2>") 'slime-show-current-connection)
 (global-set-key (kbd "C-z K") 'close-slime-kill-all-buffers)
 (global-set-key (kbd "C-z M-;") 'insert-lisp-multiline-comment)
 
