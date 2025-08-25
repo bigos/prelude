@@ -798,7 +798,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 ;;           #'(lambda ()
 ;;               (local-set-key (kbd "C-c B") 'slime-scratch-buffer)))
 
-(setq slime-contribs '(slime-fancy slime-fancy-inspector))
+;; (setq slime-contribs '(slime-fancy slime-fancy-inspector))
 
 (defun slime-contrib-directory ()
     (let* ((slime-folder-prefix "slime-20")
@@ -810,8 +810,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                                           (directory-files "~/.emacs.d/elpa")))))
       (concat "~/.emacs.d/elpa/" slime-folder "/contrib/")))
 
-(setq slime-complete-symbol*-fancy t
-        slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
+;; (setq slime-complete-symbol*-fancy t
+;;         slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
 
 
 ;;; copy last s-expression to repl
