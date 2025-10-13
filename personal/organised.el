@@ -222,6 +222,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                             tree-sitter-langs
                             treemacs-all-the-icons
                             treemacs-projectile
+                            uniline
                             use-package
                             vterm ;needs: sudo apt install libvterm-dev cmake
                             multi-vterm
