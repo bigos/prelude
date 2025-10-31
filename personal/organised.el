@@ -63,11 +63,25 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
       (set-buffer scriptBuf)
       (lisp-mode)))
 
+(defun better-org-open-and-search (filepath searched)
+  "Describe me"
+  (interactive)
+  (let ((line (thing-at-point 'existing-filename)))
+    (let ((line-components (split-string line ":")))
+      (let ((file (nth 0 line-components))
+            (path (nth 1 line-components))
+            (searched (nth 3 line-components)))
+        (message (format " open and search line components %s > %s > %s" file path searched))
+        (progn (org-link-open-as-file file t)
+               (beginning-of-buffer)
+               (swiper-isearch searched))))))
+
 (defun better-org-open-at-point ()
   (interactive)
   (org-open-at-point t))
 ;; https://emacs.stackexchange.com/questions/14748/how-to-bind-a-command-with-a-c-u-prefix-to-a-different-key
 (define-key org-mode-map (kbd "C-z o") 'better-org-open-at-point)
+(define-key org-mode-map (kbd "C-z T") 'better-org-open-and-search)
 
 ;;; *** Basic configuration
 (global-unset-key (kbd "C-z"))          ; allow others use C-z prefix
@@ -189,7 +203,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                             indent-bars
                             kurecolor
                             load-theme-buffer-local
-                            magit
+                            ;; magit
                             mode-line-bell
                             ob-restclient
                             org-mind-map
