@@ -88,7 +88,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (org-open-at-point t))
 ;; https://emacs.stackexchange.com/questions/14748/how-to-bind-a-command-with-a-c-u-prefix-to-a-different-key
 (define-key org-mode-map (kbd "C-z o") 'better-org-open-at-point)
-(define-key org-mode-map (kbd "C-z T") 'better-org-open-and-search)
+(define-key org-mode-map (kbd "C-z t") 'better-org-open-and-search)
 
 ;;; *** Basic configuration
 (global-unset-key (kbd "C-z"))          ; allow others use C-z prefix
