@@ -46,3 +46,5 @@ eln-cache/
 
 tree-sitter/*
 image-dired/*
+
+ielm-history.eld 
