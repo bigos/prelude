@@ -710,6 +710,9 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (use-package merlin-company
   :ensure t)
 
+(use-package ocp-indent
+  :ensure t)
+
 (use-package merlin-iedit
   :ensure t)
 
