@@ -747,7 +747,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (setenv  "CAML_LD_LIBRARY_PATH"
            "/home/jacek/.opam/default/lib/stublibs:/home/jacek/.opam/default/lib/ocaml/stublibs:/home/jacek/.opam/default/lib/ocaml"))
 
-(global-set-key (kbd "C-z C-V") 'correct-ocaml-env)
+(global-set-key (kbd "C-z C-v") 'correct-ocaml-env)
 
 
 ;;; *** Haskell
