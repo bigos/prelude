@@ -1087,10 +1087,10 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 ;; moving buffers
 (require 'buffer-move)
 
-(global-set-key (kbd "<M-s-j")   'buf-move-left)
-(global-set-key (kbd "<M-s-k")   'buf-move-down)
-(global-set-key (kbd "<M-s-l")     'buf-move-up)
-(global-set-key (kbd "<M-s-;")  'buf-move-right)
+(global-set-key (kbd "M-s-j") 'buf-move-left)
+(global-set-key (kbd "M-s-k") 'buf-move-down)
+(global-set-key (kbd "M-s-l") 'buf-move-up)
+(global-set-key (kbd "M-s-;") 'buf-move-right)
 
 ;;; *** Conclusion
 (provide 'personal)
