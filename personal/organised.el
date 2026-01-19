@@ -461,30 +461,31 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 (defun org-roam-my-reload ()
   (interactive)
-  (setq org-roam-directory   (file-truename (org-roam-my-folder)))
+  (setq org-roam-directory   (file-truename org-roam-my-folder))
   (setq org-roam-db-location (file-truename (org-roam-my-db)))
   (org-roam-db-sync)
   (message "reloaded org-roam-directory to %S" org-roam-directory))
 
-(defun org-roam-my-folder ()
+(defvar org-roam-my-folder
+  "Place for org roam folder"
   (concat (getenv "HOME")
           "/Documents/Roams/"
           "current"
           "/org-roam/"))
 
 (defun org-roam-my-db ()
-  (concat (org-roam-my-folder)
+  (concat org-roam-my-folder
           "org-roam"
           ".db"))
 
 
-(message (format "org-roam folder  %s" (org-roam-my-folder)))
+(message (format "org-roam folder  %s" org-roam-my-folder))
 (message (format "org-roam db-file %s" (org-roam-my-db)))
 
 (defun org-roam-dired ()
   "Open dired buffer on org-roam folder."
   (interactive)
-  (dired (org-roam-my-folder)))
+  (dired org-roam-my-folder))
 
 ;;; fix needed in file
 ;;; file:~/.emacs.d/elpa/org-roam-20241007.1704/org-roam.el::84
@@ -496,7 +497,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   :init (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
   :custom
   ;; file-truename can resolve symbolic links
-  (org-roam-directory   (file-truename (org-roam-my-folder)))
+  (org-roam-directory   (file-truename org-roam-my-folder))
   (org-roam-db-location (file-truename (org-roam-my-db)))
   :config
   (org-roam-db-autosync-enable)
