@@ -555,6 +555,11 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 (require 'psc-ide)
 
+(use-package psci
+  :ensure t
+  :config
+  (add-hook 'purescript-mode-hook 'inferior-psci-mode))
+
 (defun format-saved-purescript-file ()
   "Format the file. That may need reloading and saving again, but is better than nothing"
   ;; https://github.com/natefaubion/purescript-tidy
