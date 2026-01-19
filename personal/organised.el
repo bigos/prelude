@@ -467,7 +467,6 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (message "reloaded org-roam-directory to %S" org-roam-directory))
 
 (defvar org-roam-my-folder
-  "Place for org roam folder"
   (concat (getenv "HOME")
           "/Documents/Roams/"
           "current"
