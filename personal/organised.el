@@ -1086,11 +1086,11 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 ;; moving buffers
 (require 'buffer-move)
-;; need to find unused shortcuts for moving up and down
-;; (global-set-key (kbd "<M-s-up>")     'buf-move-up)
-;; (global-set-key (kbd "<M-s-down>")   'buf-move-down)
-;; (global-set-key (kbd "<M-s-left>")   'buf-move-left)
-;; (global-set-key (kbd "<M-s-right>")  'buf-move-right)
+
+(global-set-key (kbd "<M-s-j")   'buf-move-left)
+(global-set-key (kbd "<M-s-k")   'buf-move-down)
+(global-set-key (kbd "<M-s-l")     'buf-move-up)
+(global-set-key (kbd "<M-s-;")  'buf-move-right)
 
 ;;; *** Conclusion
 (provide 'personal)
