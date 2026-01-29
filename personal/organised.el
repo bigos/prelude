@@ -480,7 +480,9 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   ;; ensure PATH ends with "/org-roam/"
   (if (s-ends-with? last-part-of-org-roam path)
       (message (concat "Loading org-roam project at: " path))
-    (error (concat "Could not validate org-roam path " path)))
+    (progn
+      (message (concat "Expecting the PATH to end with " last-part-of-org-roam))
+      (error (concat "Could not validate org-roam PATH " path))))
 
   (let ((new-current path))
     (make-directory new-current :parents)
