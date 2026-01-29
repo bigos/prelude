@@ -466,6 +466,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (org-roam-db-sync)
   (message "reloaded org-roam-directory to %S" org-roam-directory))
 
+(defconst last-part-of-org-roam "/org-roam/" "Last part of the path to org-roam project.")
 ;;; we can redefine it in another session
 ;;; (setq org-roam-my-folder "/tmp/org-roam/")
 ;;; and reload with: C-x n R
@@ -473,13 +474,22 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (concat (getenv "HOME")
           "/Documents/Roams/"
           "current"
-          "/org-roam/"))
+          last-part-of-org-roam))
+
+(defun override-current-org-roam-my-folder (path)
+  ;; ensure PATH ends with "/org-roam/"
+  (if (s-ends-with? last-part-of-org-roam path)
+      (message (concat "Loading org-roam project at: " path))
+    (error (concat "Could not validate org-roam path " path)))
+
+  (let ((new-current path))
+    (make-directory new-current :parents)
+    (setq org-roam-my-folder new-current)))
 
 (defun org-roam-my-db ()
   (concat org-roam-my-folder
           "org-roam"
           ".db"))
-
 
 (message (format "org-roam folder  %s" org-roam-my-folder))
 (message (format "org-roam db-file %s" (org-roam-my-db)))
