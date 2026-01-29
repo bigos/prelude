@@ -467,7 +467,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (message "reloaded org-roam-directory to %S" org-roam-directory))
 
 ;;; we can redefine it in another session
-;;; (setq org-roam-my-folder "/tmp/org-roam")
+;;; (setq org-roam-my-folder "/tmp/org-roam/")
 ;;; and reload with: C-x n R
 (defvar org-roam-my-folder
   (concat (getenv "HOME")
