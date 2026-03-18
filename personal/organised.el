@@ -745,6 +745,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
     ;; Automatically start it in OCaml buffers
     (add-hook 'tuareg-mode-hook 'merlin-mode t)
     (add-hook 'caml-mode-hook 'merlin-mode t)
+    (require 'merlin-company)
     ;; Use opam switch to lookup ocamlmerlin binary
     (setq merlin-command 'opam)))
 
