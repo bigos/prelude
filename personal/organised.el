@@ -795,6 +795,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 (global-set-key (kbd "C-z 2") 'capitalize-and-join-backwards)
 
+;;; a;so install ormolu
+;; https://github.com/tweag/ormolu#installation
 (add-hook 'haskell-mode-hook
             #'(lambda ()
                (local-set-key (kbd "C-c C-d h") 'haskell-hoogle)))
