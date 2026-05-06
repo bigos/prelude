@@ -1,6 +1,6 @@
 ;;; prelude-common-lisp.el --- Emacs Prelude: lisp-mode and SLIME config.
 ;;
-;; Copyright © 2011-2025 Bozhidar Batsov
+;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -32,8 +32,6 @@
 
 (require 'prelude-lisp)
 
-(prelude-require-package 'slime)
-
 ;; the SBCL configuration file is in Common Lisp
 (add-to-list 'auto-mode-alist '("\\.sbclrc\\'" . lisp-mode))
 
@@ -42,41 +40,41 @@
 
 (add-hook 'lisp-mode-hook (lambda () (run-hooks 'prelude-lisp-coding-hook)))
 
-(with-eval-after-load "slime"
-  ;; a list of alternative Common Lisp implementations that can be
-  ;; used with SLIME. Note that their presence render
-  ;; inferior-lisp-program useless. This variable holds a list of
-  ;; programs and if you invoke SLIME with a negative prefix
-  ;; argument, M-- M-x slime, you can select a program from that list.
+;; Default Lisp for `M-x run-lisp' (the built-in inferior Lisp mode).
+(setq inferior-lisp-program "sbcl")
+
+;; SLIME: Superior Lisp Interaction Mode for Emacs.
+;; If you prefer Sly (a modernized SLIME fork), install it in your
+;; personal config instead.
+(use-package slime
+  :ensure t
+  :bind (:map slime-mode-map
+              ("C-c C-s" . slime-selector))
+  :config
+  ;; Known Common Lisp implementations.  Use M-- M-x slime to pick one.
   (setq slime-lisp-implementations
         '((ccl ("ccl"))
           (clisp ("clisp" "-q"))
           (cmucl ("cmucl" "-quiet"))
           (sbcl ("sbcl" "--noinform") :coding-system utf-8-unix)))
 
-  ;; select the default value from slime-lisp-implementations
-  (if (and (eq system-type 'darwin)
-           (executable-find "ccl"))
-      ;; default to Clozure CL on macOS
-      (setq slime-default-lisp 'ccl)
-    ;; default to SBCL on Linux and Windows
-    (setq slime-default-lisp 'sbcl))
+  (setq slime-default-lisp 'sbcl)
 
-  ;; Add fancy slime contribs
-  (setq slime-contribs '(slime-fancy slime-cl-indent))
+  ;; slime-fancy loads most popular contribs in one go;
+  ;; slime-cl-indent provides better CL-aware indentation;
+  ;; slime-quicklisp adds Quicklisp integration.
+  (setq slime-contribs '(slime-fancy slime-cl-indent slime-quicklisp))
 
-  (setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol
-        slime-fuzzy-completion-in-place t
-        slime-enable-evaluate-in-emacs t
-        slime-autodoc-use-multiline-p t)
+  ;; Uncomment to let the Lisp process evaluate Emacs Lisp.
+  ;; Useful for advanced setups but a potential security risk.
+  ;; (setq slime-enable-evaluate-in-emacs t)
 
-  ;; rainbow-delimeters messes up colors in slime-repl, and doesn't seem to work
-  ;; anyway, so we won't use prelude-lisp-coding-defaults.
+  ;; rainbow-delimiters messes up colors in slime-repl, so we
+  ;; configure the REPL hooks directly instead of using
+  ;; prelude-lisp-coding-defaults.
   (add-hook 'slime-repl-mode-hook (lambda ()
                                     (smartparens-strict-mode +1)
-                                    (whitespace-mode -1)))
-
-  (define-key slime-mode-map (kbd "C-c C-s") 'slime-selector))
+                                    (whitespace-mode -1))))
 
 (provide 'prelude-common-lisp)
 

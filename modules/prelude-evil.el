@@ -1,6 +1,6 @@
 ;;; prelude-evil.el --- Emacs Prelude: evil-mode configuration.
 ;;
-;; Copyright © 2011-2025 Bozhidar Batsov
+;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -62,13 +62,13 @@
 ;;
 (evil-ex-define-cmd "W"     'evil-write-all)
 (evil-ex-define-cmd "Tree"  'speedbar-get-focus)
-(evil-ex-define-cmd "linum" 'linum-mode)
+(evil-ex-define-cmd "linum" 'display-line-numbers-mode)
 (evil-ex-define-cmd "Align" 'align-regexp)
 
 (defun prelude-yank-to-end-of-line ()
   "Yank to end of line."
   (interactive)
-  (evil-yank (point) (point-at-eol)))
+  (evil-yank (point) (line-end-position)))
 
 (define-key evil-normal-state-map
   (kbd "Y") 'prelude-yank-to-end-of-line)
@@ -109,10 +109,6 @@
 ;; Magit from avsej
 ;;
 (evil-add-hjkl-bindings magit-log-mode-map 'emacs)
-(evil-add-hjkl-bindings magit-commit-mode-map 'emacs)
-(evil-add-hjkl-bindings magit-branch-manager-mode-map 'emacs
-  "K" 'magit-discard
-  "L" 'magit-log)
 (evil-add-hjkl-bindings magit-status-mode-map 'emacs
   "K" 'magit-discard
   "l" 'magit-log

@@ -1,6 +1,6 @@
 ;;; prelude-scheme.el --- Emacs Prelude: Some defaults for Scheme.
 ;;
-;; Copyright © 2011-2025 Bozhidar Batsov
+;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -29,19 +29,28 @@
 ;; Boston, MA 02110-1301, USA.
 
 ;;; Code:
-(prelude-require-package 'geiser)
 
 (require 'prelude-lisp)
-(require 'geiser)
 
-;; geiser replies on a REPL to provide autodoc and completion
-(setq geiser-mode-start-repl-p t)
+(defun prelude-scheme-mode-defaults ()
+  (run-hooks 'prelude-lisp-coding-hook))
 
-;; keep the home clean
-(setq geiser-repl-history-filename
-      (expand-file-name "geiser-history" prelude-savefile-dir))
+;; Geiser: REPL-driven development for Scheme (Guile, Chicken, Chez,
+;; Racket, etc.)
+(use-package geiser
+  :ensure t
+  :defer t
+  :custom
+  ;; Auto-start a REPL for autodoc and completion
+  (geiser-mode-start-repl-p t)
+  ;; Keep history out of ~/.emacs.d
+  (geiser-repl-history-filename
+   (expand-file-name "geiser-history" prelude-savefile-dir)))
 
-(add-hook 'scheme-mode-hook (lambda () (run-hooks 'prelude-lisp-coding-hook)))
+(setq prelude-scheme-mode-hook 'prelude-scheme-mode-defaults)
+
+(add-hook 'scheme-mode-hook (lambda ()
+                              (run-hooks 'prelude-scheme-mode-hook)))
 
 (provide 'prelude-scheme)
 

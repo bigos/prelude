@@ -29,21 +29,12 @@
 ;;; Code:
 
 (require 'prelude-programming)
-(require 'prelude-lsp)
 
-(prelude-require-packages '(go-mode
-                            go-projectile
-                            lsp-mode
-                            lsp-ui
-                            company
-                            gotest))
-
-(require 'go-projectile)
+;; Use go-ts-mode when the tree-sitter grammar is available
+(prelude-treesit-remap 'go 'go-mode 'go-ts-mode)
 
 ;; Ignore go test -c output files
 (add-to-list 'completion-ignored-extensions ".test")
-
-(define-key 'help-command (kbd "G") 'godoc)
 
 ;; Fix: super-save will cause go files to be saved when lsp-mode does
 ;; certain things, triggering lsp-format-buffer. This causes, inter alia,
@@ -51,42 +42,47 @@
 (add-to-list 'super-save-predicates
              (lambda () (not (eq major-mode 'go-mode))))
 
-(with-eval-after-load 'go-mode
-  (defun prelude-go-mode-defaults ()
-    ;; Add to default go-mode key bindings
-    (let ((map go-mode-map))
-      (define-key map (kbd "C-c a") 'go-test-current-project) ;; current package, really
-      (define-key map (kbd "C-c m") 'go-test-current-file)
-      (define-key map (kbd "C-c .") 'go-test-current-test)
-      (define-key map (kbd "C-c b") 'go-run)
-      (define-key map (kbd "C-h f") 'godoc-at-point))
+(defun prelude-go-mode-defaults ()
+  ;; Add to default go-mode key bindings
+  (let ((map go-mode-map))
+    (define-key map (kbd "C-c a") 'go-test-current-project) ;; current package, really
+    (define-key map (kbd "C-c m") 'go-test-current-file)
+    (define-key map (kbd "C-c .") 'go-test-current-test)
+    (define-key map (kbd "C-c b") 'go-run)
+    (define-key map (kbd "C-h f") 'godoc-at-point))
 
-    ;; Prefer goimports to gofmt if installed
-    (let ((goimports (executable-find "goimports")))
-      (when goimports
-        (setq gofmt-command goimports)))
+  ;; Prefer goimports to gofmt if installed
+  (let ((goimports (executable-find "goimports")))
+    (when goimports
+      (setq gofmt-command goimports)))
 
-    ;; stop whitespace being highlighted
-    (whitespace-toggle-options '(tabs))
+  ;; format before save
+  (add-hook 'before-save-hook #'gofmt-before-save nil t)
 
-    ;; CamelCase aware editing operations
-    (subword-mode +1))
+  ;; Go uses tabs for indentation, so don't highlight them as problems
+  (whitespace-toggle-options '(tabs))
 
-  ;; if yas is present, this enables yas-global-mode
-  ;; which provides completion via company
-  (if (fboundp 'yas-global-mode)
-      (yas-global-mode))
+  ;; CamelCase aware editing operations
+  (subword-mode +1)
 
-  ;; configure lsp for go
-  (defun lsp-go-install-save-hooks ()
-    (add-hook 'before-save-hook #'lsp-format-buffer t t)
-    (add-hook 'before-save-hook #'lsp-organize-imports t t))
-  (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
-  (add-hook 'go-mode-hook #'lsp-deferred)
+  (prelude-lsp-enable))
 
-  (setq prelude-go-mode-hook 'prelude-go-mode-defaults)
-  (add-hook 'go-mode-hook (lambda ()
-                            (run-hooks 'prelude-go-mode-hook))))
+;; Major mode for Go; also provides gofmt integration.
+;; go-ts-mode (built-in) is used when the tree-sitter grammar is
+;; available, but go-mode is still needed for gofmt, godoc, etc.
+(use-package go-mode
+  :ensure t
+  :defer t
+  :bind (:map help-map ("G" . godoc))
+  :hook ((go-mode . (lambda () (run-hooks 'prelude-go-mode-hook)))
+         (go-ts-mode . (lambda () (run-hooks 'prelude-go-mode-hook)))))
+
+;; Run Go tests from Emacs (C-c a/m/.)
+(use-package gotest
+  :ensure t
+  :defer t)
+
+(setq prelude-go-mode-hook 'prelude-go-mode-defaults)
 
 (provide 'prelude-go)
 ;;; prelude-go.el ends here

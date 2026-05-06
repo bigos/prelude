@@ -1,6 +1,6 @@
 ;;; prelude-shell.el --- Emacs Prelude: sh-mode configuration.
 ;;
-;; Copyright © 2011-2025 Bozhidar Batsov
+;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -9,7 +9,7 @@
 
 ;;; Commentary:
 
-;; Some basic configuration for cc-mode and the modes derived from it.
+;; Some basic configuration for sh-mode.
 
 ;;; License:
 
@@ -32,18 +32,29 @@
 
 (require 'sh-script)
 
+;; Use bash-ts-mode when the tree-sitter grammar is available
+(prelude-treesit-remap 'bash 'sh-mode 'bash-ts-mode)
+
 ;; recognize prezto files as zsh scripts
-(defvar prelude-prezto-files '("zlogin" "zlogin" "zlogout" "zpreztorc" "zprofile" "zshenv" "zshrc"))
+(defvar prelude-prezto-files '("zlogin" "zlogout" "zpreztorc" "zprofile" "zshenv" "zshrc"))
 
 (mapc (lambda (file)
         (add-to-list 'auto-mode-alist `(,(format "\\%s\\'" file) . sh-mode)))
       prelude-prezto-files)
 
-(add-hook 'sh-mode-hook
-          (lambda ()
-            (if (and buffer-file-name
-                     (member (file-name-nondirectory buffer-file-name) prelude-prezto-files))
-                (sh-set-shell "zsh"))))
+(defun prelude-sh-mode-defaults ()
+  (subword-mode +1)
+  ;; Auto-detect zsh for prezto files
+  (when (and buffer-file-name
+             (member (file-name-nondirectory buffer-file-name) prelude-prezto-files))
+    (sh-set-shell "zsh")))
+
+(setq prelude-sh-mode-hook 'prelude-sh-mode-defaults)
+
+(add-hook 'sh-mode-hook (lambda ()
+                          (run-hooks 'prelude-sh-mode-hook)))
+(add-hook 'bash-ts-mode-hook (lambda ()
+                               (run-hooks 'prelude-sh-mode-hook)))
 
 (provide 'prelude-shell)
 ;;; prelude-shell.el ends here

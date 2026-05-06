@@ -1,6 +1,6 @@
-;;; prelude-ocaml.el --- Emacs Prelude: decent Perl coding settings.
+;;; prelude-ocaml.el --- Emacs Prelude: OCaml programming support.
 ;;
-;; Copyright © 2014-2025 Geoff Shannon
+;; Copyright © 2014-2026 Geoff Shannon
 ;;
 ;; Author: Geoff Shannon <geoffpshannon@gmail.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -9,24 +9,10 @@
 
 ;;; Commentary:
 
-;; tuareg is the preferred ocaml mode for Emacs
+;; A modern OCaml setup based on neocaml, eglot, and ocaml-eglot.
 
-;; These setups for ocaml assume that you are using the OPAM package
-;; manager (http://opam.ocaml.org/).
-
-;; Because of the apparent complexity of getting Emacs environment
-;; variables setup to use opam correctly, it is instead easier to use
-;; opam itself to execute any necessary commands.
-
-;; Also, the standard OCaml toplevel usage has been replaced in favor
-;; of UTOP, the universal toplevel, and we assume that you are using
-;; the Jane Street Core libraries rather than the regular OCaml
-;; standard libraries
-
-;; The minimum required setup for using Prelude's OCaml setup would be
-;; to install OPAM, and then, minimally `opam install core utop'.  A
-;; good getting started guide is available at
-;; https://dev.realworldocaml.org/install.html
+;; You'll need to install opam and ocaml-lsp-server:
+;;   opam install ocaml-lsp-server
 
 ;;; License:
 
@@ -47,43 +33,46 @@
 
 ;;; Code:
 
-(prelude-require-packages '(tuareg utop merlin flycheck-ocaml))
+(require 'prelude-programming)
 
-(require 'tuareg)
-(require 'utop)
-(require 'merlin)
+(defun prelude-ocaml-mode-defaults ()
+  ;; CamelCase aware editing operations
+  (subword-mode +1)
+  (when (eq prelude-lsp-client 'eglot)
+    ;; ocaml-eglot-mode adds OCaml-specific LSP commands
+    ;; (switch .ml/.mli, type-enclosing, destruct, etc.)
+    (ocaml-eglot-mode 1))
+  ;; Start the LSP server (eglot-ensure or lsp-deferred)
+  (prelude-lsp-enable))
 
-(setq auto-mode-alist
-      (append '(("\\.ml[ily]?\\'" . tuareg-mode)
-                ("\\.topml\\'" . tuareg-mode))
-              auto-mode-alist))
+;; Tree-sitter powered major mode for OCaml, Dune, and utop.
+;; Replaces the older tuareg + merlin + utop stack.
+;; Hook into neocaml-base-mode so both .ml and .mli buffers
+;; get the same setup.
+(use-package neocaml
+  :ensure t
+  :hook (neocaml-base-mode . prelude-ocaml-mode-defaults)
+  :config
+  ;; Workaround: register neocaml modes with eglot until neocaml
+  ;; ships this fix itself (neocaml >= 20260331).  add-to-list is
+  ;; a no-op if the entry already exists.
+  (with-eval-after-load 'eglot
+    (unless (cl-some (lambda (entry)
+                       (and (consp (car entry))
+                            (assq 'neocaml-mode (car entry))))
+                     eglot-server-programs)
+      (add-to-list 'eglot-server-programs
+                   '(((neocaml-mode :language-id "ocaml")
+                      (neocaml-interface-mode
+                       :language-id "ocaml.interface"))
+                     "ocamllsp")))))
 
-(with-eval-after-load 'merlin
-  ;; Disable Merlin's own error checking
-  (setq merlin-error-after-save nil)
-
-  ;; Enable Flycheck checker
-  (flycheck-ocaml-setup))
-
-(add-hook 'tuareg-mode-hook #'utop-minor-mode)
-(add-hook 'tuareg-mode-hook #'merlin-mode)
-
-(add-hook 'tuareg-mode-hook (lambda ()
-                              (progn
-                                (define-key tuareg-mode-map (kbd "C-c C-s")
-                                  'utop)
-                                (setq compile-command
-                                      "opam config exec corebuild "))))
-
-;; Setup merlin completions company is used by default in prelude
-(add-to-list 'company-backends 'merlin-company-backend)
-
-;; Merlin also offers support for autocomplete, uncomment this next line
-;; to activate it.
-;; (setq merlin-use-auto-complete-mode t)
-
-(setq utop-command "opam config exec utop -- -emacs"
-      merlin-error-after-save nil)
+;; OCaml-specific Eglot extensions (requires ocaml-lsp-server).
+;; Only installed when Eglot is the configured LSP client.
+(use-package ocaml-eglot
+  :ensure t
+  :defer t
+  :if (eq prelude-lsp-client 'eglot))
 
 (provide 'prelude-ocaml)
 

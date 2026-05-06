@@ -1,6 +1,6 @@
-;;; prelude-js.el --- Emacs Prelude: js-mode configuration.
+;;; prelude-js.el --- Emacs Prelude: JavaScript configuration.
 ;;
-;; Copyright © 2011-2025 Bozhidar Batsov
+;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -9,7 +9,8 @@
 
 ;;; Commentary:
 
-;; Some basic configuration for js-mode.
+;; Configuration for JavaScript development.  Uses js-ts-mode
+;; (tree-sitter) when available and LSP for code intelligence.
 
 ;;; License:
 
@@ -31,26 +32,19 @@
 ;;; Code:
 
 (require 'prelude-programming)
-(prelude-require-packages '(js2-mode json-mode))
 
-(require 'js2-mode)
+;; Use tree-sitter modes when grammars are available
+(prelude-treesit-remap 'javascript 'js-mode 'js-ts-mode)
+(prelude-treesit-remap 'json 'js-json-mode 'json-ts-mode)
 
-(add-to-list 'auto-mode-alist '("\\.js\\'"     . js2-mode))
-(add-to-list 'auto-mode-alist '("\\.[cm]js\\'" . js2-mode))
-(add-to-list 'auto-mode-alist '("\\.pac\\'"    . js2-mode))
-(add-to-list 'interpreter-mode-alist '("node"  . js2-mode))
+(defun prelude-js-mode-defaults ()
+  (subword-mode +1)
+  (prelude-lsp-enable))
 
-(with-eval-after-load 'js2-mode
-  (defun prelude-js-mode-defaults ()
-    ;; electric-layout-mode doesn't play nice with smartparens
-    (setq-local electric-layout-rules '((?\; . after)))
-    (setq mode-name "JS2")
-    (js2-imenu-extras-mode +1)
-    (subword-mode +1))
+(setq prelude-js-mode-hook 'prelude-js-mode-defaults)
 
-  (setq prelude-js-mode-hook 'prelude-js-mode-defaults)
-
-  (add-hook 'js2-mode-hook (lambda () (run-hooks 'prelude-js-mode-hook))))
+(add-hook 'js-mode-hook (lambda () (run-hooks 'prelude-js-mode-hook)))
+(add-hook 'js-ts-mode-hook (lambda () (run-hooks 'prelude-js-mode-hook)))
 
 (provide 'prelude-js)
 

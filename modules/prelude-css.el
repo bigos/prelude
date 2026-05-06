@@ -1,6 +1,6 @@
 ;;; prelude-css.el --- Emacs Prelude: css support
 ;;
-;; Copyright © 2011-2025 Bozhidar Batsov
+;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -30,19 +30,26 @@
 
 ;;; Code:
 
-(with-eval-after-load 'css-mode
-  (prelude-require-packages '(rainbow-mode))
+;; Use css-ts-mode when the tree-sitter grammar is available
+(prelude-treesit-remap 'css 'css-mode 'css-ts-mode)
 
-  (setq css-indent-offset 2)
+(setq css-indent-offset 2)
 
-  (defun prelude-css-mode-defaults ()
-    (rainbow-mode +1)
-    (run-hooks 'prelude-prog-mode-hook))
+;; Colorize color names and hex values in CSS buffers
+(use-package rainbow-mode
+  :ensure t
+  :defer t)
 
-  (setq prelude-css-mode-hook 'prelude-css-mode-defaults)
+(defun prelude-css-mode-defaults ()
+  (rainbow-mode +1)
+  (run-hooks 'prelude-prog-mode-hook))
 
-  (add-hook 'css-mode-hook (lambda ()
-                             (run-hooks 'prelude-css-mode-hook))))
+(setq prelude-css-mode-hook 'prelude-css-mode-defaults)
+
+(add-hook 'css-mode-hook (lambda ()
+                           (run-hooks 'prelude-css-mode-hook)))
+(add-hook 'css-ts-mode-hook (lambda ()
+                              (run-hooks 'prelude-css-mode-hook)))
 
 (provide 'prelude-css)
 ;;; prelude-css.el ends here

@@ -1,6 +1,6 @@
 ;;; prelude-dart.el --- Emacs Prelude: Dart programming configuration.
 ;;
-;; Copyright © 2011-2025 Bozhidar Batsov
+;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
 ;; Author: Rafael Medina <rafaelmedina789@gmail.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -30,26 +30,31 @@
 
 ;;; Code:
 
-(require 'prelude-lsp)
-(prelude-require-packages '(lsp-dart))
+(require 'prelude-programming)
 
-(with-eval-after-load 'lsp-dart
-  (add-hook 'dart-mode-hook #'lsp))
-
-(with-eval-after-load 'dart-mode
-  (defun prelude-dart-mode-defaults ()
-
-    (setq dap-launch-configuration-providers  '(dap-debug-template-configurations-provider))
-
-    ;; Add to default dart-mode key bindings
+(defun prelude-dart-mode-defaults ()
+  (subword-mode +1)
+  (prelude-lsp-enable)
+  (when (eq prelude-lsp-client 'lsp-mode)
+    (setq dap-launch-configuration-providers
+          '(dap-debug-template-configurations-provider))
     (lsp-dart-define-key "s o" #'lsp-dart-show-outline)
     (lsp-dart-define-key "s f" #'lsp-dart-show-flutter-outline)
-    (lsp-dart-dap-setup))
+    (lsp-dart-dap-setup)))
 
-  (setq prelude-dart-mode-hook 'prelude-dart-mode-defaults)
+(use-package dart-mode
+  :ensure t
+  :hook (dart-mode . (lambda ()
+                       (run-hooks 'prelude-dart-mode-hook))))
 
-  (add-hook 'dart-mode-hook (lambda ()
-                            (run-hooks 'prelude-dart-mode-hook))))
+;; Flutter-specific features on top of lsp-mode (outline views, DAP
+;; debugging, hot reload, etc.)
+(use-package lsp-dart
+  :ensure t
+  :defer t
+  :if (eq prelude-lsp-client 'lsp-mode))
+
+(setq prelude-dart-mode-hook 'prelude-dart-mode-defaults)
 
 (provide 'prelude-dart)
 

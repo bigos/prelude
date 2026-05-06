@@ -1,6 +1,6 @@
 ;;; prelude-helm-everywhere.el --- Enable Helm everywhere
 ;;
-;; Copyright © 2014-2025 Tu, Do Hoang
+;; Copyright © 2014-2026 Tu, Do Hoang
 ;;
 ;; Author: Tu, Do Hoang (tuhdo1710@gmail.com)
 ;; URL: https://github.com/bbatsov/prelude
@@ -32,7 +32,6 @@
 
 ;;; Code:
 (require 'prelude-helm)
-(prelude-require-packages '(helm-descbinds helm-ag))
 (require 'helm-eshell)
 
 (global-set-key (kbd "M-x") 'helm-M-x)
@@ -50,21 +49,16 @@
 
 (define-key isearch-mode-map (kbd "C-o") 'helm-occur-from-isearch)
 
-;; shell history.
-(define-key shell-mode-map (kbd "C-c C-l") 'helm-comint-input-ring)
-
 ;; use helm to list eshell history
 (add-hook 'eshell-mode-hook
           #'(lambda ()
               (substitute-key-definition 'eshell-list-history 'helm-eshell-history eshell-mode-map)))
 
-(substitute-key-definition 'find-tag 'helm-etags-select global-map)
-
-(helm-descbinds-mode)
 (helm-mode 1)
 
-;; enable Helm version of Projectile with replacment commands
-(helm-projectile-on)
+(when prelude-projectile
+      ;; enable Helm version of Projectile with replacment commands
+      (helm-projectile-on))
 
 (provide 'prelude-helm-everywhere)
 ;; prelude-helm-everywhere.el ends here.

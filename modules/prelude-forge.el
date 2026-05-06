@@ -1,6 +1,6 @@
-;;; prelude-selectrum.el --- Selectrum setup
+;;; prelude-forge.el --- Emacs Prelude: Magit Forge configuration.
 ;;
-;; Copyright © 2011-2025 Bozhidar Batsov
+;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -9,8 +9,14 @@
 
 ;;; Commentary:
 
-;; Selectrum-related config.  Selectrum is a smart framework for minibuffer
-;; completion/filtering/selection (think of ivy/ido).
+;; Configuration for Forge, a Magit extension that lets you work with
+;; pull requests, issues, and discussions on Git forges (GitHub,
+;; GitLab, Gitea, etc.) directly from Emacs.
+;;
+;; Forge integrates with Magit automatically once loaded -- forge
+;; sections appear in the Magit status buffer, and `'' (apostrophe)
+;; opens the forge dispatch menu.  You'll need to configure an
+;; authentication token; see the module documentation for details.
 
 ;;; License:
 
@@ -30,25 +36,10 @@
 ;; Boston, MA 02110-1301, USA.
 
 ;;; Code:
-(prelude-require-packages '(selectrum selectrum-prescient))
 
-;;; Selectrum
-;;
-;; selectrum is a powerful alternative to the popular ido-mode and ivy-mode.
+(use-package forge
+  :ensure t
+  :after magit)
 
-(require 'selectrum)
-(require 'selectrum-prescient)
-(require 'diminish)
-
-(selectrum-mode 1)
-(diminish 'selectrum-mode)
-
-;; to make sorting and filtering more intelligent
-(selectrum-prescient-mode +1)
-
-;; to save your command history on disk, so the sorting gets more
-;; intelligent over time
-(prescient-persist-mode +1)
-
-(provide 'prelude-selectrum)
-;;; prelude-selectrum.el ends here
+(provide 'prelude-forge)
+;;; prelude-forge.el ends here

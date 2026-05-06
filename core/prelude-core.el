@@ -1,6 +1,6 @@
 ;;; prelude-core.el --- Emacs Prelude: Core Prelude functions.
 ;;
-;; Copyright © 2011-2025 Bozhidar Batsov
+;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -37,11 +37,6 @@
 ;;; Code:
 
 (require 'cl-lib)
-
-(defun prelude-buffer-mode (buffer-or-name)
-  "Retrieve the `major-mode' of BUFFER-OR-NAME."
-  (with-current-buffer buffer-or-name
-    major-mode))
 
 (defun prelude-search (query-url prompt)
   "Open the search url constructed with the QUERY-URL.
@@ -116,14 +111,12 @@ PROMPT sets the `read-string prompt."
     (when after-init-time
       (eval form))))
 
-(require 'epl)
-
 (defun prelude-update ()
   "Update Prelude to its latest version."
   (interactive)
   (when (y-or-n-p "Do you want to update Prelude? ")
     (message "Updating installed packages...")
-    (epl-upgrade)
+    (package-upgrade-all)
     (message "Updating Prelude...")
     (cd prelude-dir)
     (shell-command "git pull")
@@ -132,15 +125,16 @@ PROMPT sets the `read-string prompt."
 
 (defun prelude-update-packages (&optional arg)
   "Update Prelude's packages.
-This includes package installed via `prelude-require-package'.
+This includes packages installed via `prelude-require-package'.
 
 With a prefix ARG updates all installed packages."
   (interactive "P")
   (when (y-or-n-p "Do you want to update Prelude's packages? ")
     (if arg
-        (epl-upgrade)
-      (epl-upgrade (cl-remove-if-not (lambda (p) (memq (epl-package-name p) prelude-packages))
-                                     (epl-installed-packages))))
+        (package-upgrade-all)
+      (dolist (package prelude-packages)
+        (when (package-installed-p package)
+          (package-upgrade package))))
     (message "Update finished. Restart Emacs to complete the process.")))
 
 (defun prelude-wrap-with (s)
@@ -148,6 +142,33 @@ With a prefix ARG updates all installed packages."
   `(lambda (&optional arg)
      (interactive "P")
      (sp-wrap-with-pair ,s)))
+
+(defun prelude-treesit-remap (grammar old-mode new-mode)
+  "Remap OLD-MODE to NEW-MODE when tree-sitter GRAMMAR is available.
+Does nothing if Emacs was compiled without tree-sitter support."
+  (require 'treesit nil t)
+  (when (and (fboundp 'treesit-ready-p)
+             (treesit-ready-p grammar t))
+    (add-to-list 'major-mode-remap-alist (cons old-mode new-mode))))
+
+(defun prelude-lsp-enable ()
+  "Enable the LSP client configured via `prelude-lsp-client'."
+  (pcase prelude-lsp-client
+    ('eglot (eglot-ensure))
+    ('lsp-mode
+     (require 'prelude-lsp-mode)
+     (lsp-deferred))))
+
+;; Eglot configuration
+(with-eval-after-load 'eglot
+  (setq eglot-autoshutdown t)
+  (setq eglot-events-buffer-size 0)
+  (setq eglot-extend-to-xref t)
+
+  (define-key eglot-mode-map (kbd "C-c C-l r") #'eglot-rename)
+  (define-key eglot-mode-map (kbd "C-c C-l e") #'eglot-code-actions)
+  (define-key eglot-mode-map (kbd "C-c C-l f") #'eglot-format-buffer)
+  (define-key eglot-mode-map (kbd "C-c C-l o") #'eglot-code-action-organize-imports))
 
 (provide 'prelude-core)
 ;;; prelude-core.el ends here

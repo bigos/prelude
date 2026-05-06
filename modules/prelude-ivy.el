@@ -1,6 +1,6 @@
 ;;; prelude-ivy.el --- Ivy setup
 ;;
-;; Copyright © 2011-2025 Bozhidar Batsov
+;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -39,7 +39,6 @@
 ;; ivy is a powerful alternative to the popular ido-mode
 
 (require 'ivy)
-(require 'diminish)
 
 (ivy-mode 1)
 (setq ivy-use-virtual-buffers t)

@@ -1,6 +1,6 @@
 ;;; prelude-latex.el --- Emacs Prelude: Sane setup for LaTeX writers.
 ;;
-;; Copyright © 2011-2025 Bozhidar Batsov
+;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -30,14 +30,24 @@
 
 ;;; Code:
 
-(prelude-require-packages '(auctex cdlatex))
 (require 'smartparens-latex)
-;; for case
-(require 'cl-lib)
 
-(with-eval-after-load "company"
-  (prelude-require-packages '(company-auctex))
-  (company-auctex-init))
+;; AUCTeX: the de facto standard LaTeX editing environment for Emacs
+(use-package auctex
+  :ensure t
+  :defer t)
+
+;; Fast math symbol entry via backtick shortcuts (e.g., ` a → \alpha)
+(use-package cdlatex
+  :ensure t
+  :defer t)
+
+;; Company completion for AUCTeX (labels, citations, macros, etc.)
+(use-package company-auctex
+  :ensure t
+  :defer t
+  :after company
+  :config (company-auctex-init))
 
 (defcustom prelude-latex-fast-math-entry 'LaTeX-math-mode
   "Method used for fast math symbol entry in LaTeX."
@@ -51,13 +61,14 @@
 ;; AUCTeX configuration
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
+
+;; Disable smart quote insertion -- many users prefer to manage
+;; quotes manually or via a snippet system
 (setq TeX-close-quote "")
 (setq TeX-open-quote "")
 
+;; Ask for the master file when editing multi-file documents
 (setq-default TeX-master nil)
-
-;; use pdflatex
-(setq TeX-PDF-mode t)
 
 ;; sensible defaults for macOS, other OSes should be covered out-of-the-box
 (when (eq system-type 'darwin)
@@ -75,10 +86,11 @@
   "Default Prelude hook for `LaTeX-mode'."
   (turn-on-auto-fill)
   (abbrev-mode +1)
+  (subword-mode +1)
   (smartparens-mode +1)
-  (cl-case prelude-latex-fast-math-entry
-    (LaTeX-math-mode (LaTeX-math-mode 1))
-    (cdlatex (turn-on-cdlatex))))
+  (pcase prelude-latex-fast-math-entry
+    ('LaTeX-math-mode (LaTeX-math-mode 1))
+    ('cdlatex (turn-on-cdlatex))))
 
 (setq prelude-latex-mode-hook 'prelude-latex-mode-defaults)
 

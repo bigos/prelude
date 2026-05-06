@@ -1,6 +1,6 @@
 ;;; prelude-org.el --- Emacs Prelude: org-mode configuration.
 ;;
-;; Copyright © 2011-2025 Bozhidar Batsov
+;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -30,20 +30,21 @@
 
 ;;; Code:
 
-(require 'org)
-(require 'org-habit)
-
-(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
-
 ;; a few useful global keybindings for org-mode
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-switchb)
+(global-set-key (kbd "C-c l") 'org-store-link)
+(global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "C-c c") 'org-capture)
+(global-set-key (kbd "C-c b") 'org-switchb)
 
-(setq org-log-done t)
-(setq org-log-into-drawer t)
+(with-eval-after-load 'org
+  (require 'org-habit)
+  (setq org-log-done t)
+  (setq org-log-into-drawer t))
 
 (defun prelude-org-mode-defaults ()
+  ;; clean visual indentation
+  (org-indent-mode +1)
+  ;; let org-mode handle C-c +, C-c - and C-a
   (let ((oldmap (cdr (assoc 'prelude-mode minor-mode-map-alist)))
         (newmap (make-sparse-keymap)))
     (set-keymap-parent newmap oldmap)
@@ -51,8 +52,7 @@
     (define-key newmap (kbd "C-c -") nil)
     (define-key newmap (kbd "C-a") 'org-beginning-of-line)
     (make-local-variable 'minor-mode-overriding-map-alist)
-    (push `(prelude-mode . ,newmap) minor-mode-overriding-map-alist))
-)
+    (push `(prelude-mode . ,newmap) minor-mode-overriding-map-alist)))
 
 (setq prelude-org-mode-hook 'prelude-org-mode-defaults)
 

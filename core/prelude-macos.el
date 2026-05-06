@@ -1,6 +1,6 @@
 ;;; prelude-macos.el --- Emacs Prelude: macOS specific settings.
 ;;
-;; Copyright © 2011-2025 Bozhidar Batsov
+;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -60,7 +60,7 @@ Windows external keyboard from time to time."
 (menu-bar-mode +1)
 
 ;; Enable emoji, and stop the UI from freezing when trying to display them.
-(when (fboundp 'set-fontset-font)
+(when (display-graphic-p)
   (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend))
 
 
