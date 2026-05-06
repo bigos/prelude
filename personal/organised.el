@@ -779,20 +779,20 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 ;;(setq haskell-process-type 'stack-ghci)
 
 
-(use-package haskell-mode
-  :defer
-  :custom
-  (haskell-process-type 'cabal-repl)
-  (haskell-interactive-popup-errors nil)
-  (haskell-process-args-cabal-repl '("--repl-options=-ferror-spans"))
-  :hook
-  (haskell-mode 'interactive-haskell-mode)
-  ;; :bind
-  ;; (:map haskell-mode-map
-  ;;       ("C-c i" . +haskell-add-import)
-  ;;       ("C-c p l" . +haskell-add-language-extension)
-  ;;       ("C-c p o" . +haskell-add-ghc-option))
-  )
+;; (use-package haskell-mode
+;;   :defer
+;;   :custom
+;;   (haskell-process-type 'cabal-repl)
+;;   (haskell-interactive-popup-errors nil)
+;;   (haskell-process-args-cabal-repl '("--repl-options=-ferror-spans"))
+;;   :hook
+;;   (haskell-mode 'interactive-haskell-mode)
+;;   ;; :bind
+;;   ;; (:map haskell-mode-map
+;;   ;;       ("C-c i" . +haskell-add-import)
+;;   ;;       ("C-c p l" . +haskell-add-language-extension)
+;;   ;;       ("C-c p o" . +haskell-add-ghc-option))
+;;   )
 
 (add-hook 'haskell-mode-hook (lambda () (setq-local company-dabbrev-downcase nil)))
 
