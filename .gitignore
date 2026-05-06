@@ -48,3 +48,5 @@ tree-sitter/*
 image-dired/*
 
 ielm-history.eld 
+
+neocaml-repl-history

@@ -778,6 +778,22 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 ;;; make sure Emacs uses stack in Haskell Projects by default
 ;;(setq haskell-process-type 'stack-ghci)
 
+
+(use-package haskell-mode
+  :defer
+  :custom
+  (haskell-process-type 'cabal-repl)
+  (haskell-interactive-popup-errors nil)
+  (haskell-process-args-cabal-repl '("--repl-options=-ferror-spans"))
+  :hook
+  (haskell-mode 'interactive-haskell-mode)
+  ;; :bind
+  ;; (:map haskell-mode-map
+  ;;       ("C-c i" . +haskell-add-import)
+  ;;       ("C-c p l" . +haskell-add-language-extension)
+  ;;       ("C-c p o" . +haskell-add-ghc-option))
+  )
+
 (add-hook 'haskell-mode-hook (lambda () (setq-local company-dabbrev-downcase nil)))
 
 (defun capitalize-and-join-backwards ()
