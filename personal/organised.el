@@ -780,60 +780,67 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 ;;; make sure Emacs uses stack in Haskell Projects by default
 ;; (setq haskell-process-type 'stack-ghci)
 
+;; set up Haskell mode
 (use-package haskell-mode
-  :defer
-  :custom
-  (haskell-process-type 'cabal-repl)
-  ;;(haskell-interactive-popup-errors nil)
-  (haskell-process-args-cabal-repl '("--repl-options=-ferror-spans"))
-  :hook
-  ;;(haskell-mode 'interactive-haskell-mode)
-  ;; :bind
-  ;; (:map haskell-mode-map
-  ;;       ("C-c i" . +haskell-add-import)
-  ;;       ("C-c p l" . +haskell-add-language-extension)
-  ;;       ("C-c p o" . +haskell-add-ghc-option)
-  ;;       )
-  )
+  :ensure t
+  ;; :hook (haskell-mode . font-lock-fontify-buffer)
+  :hook (haskell-mode . turn-on-haskell-doc-mode)
+  :hook (haskell-mode . turn-on-haskell-indentation)
+  ;; :hook (haskell-mode . hlint-refactor-mode)
+  ;; :hook (haskell-mode . intero-mode)
+  :hook (haskell-mode . interactive-haskell-mode)
+  :hook (haskell-mode . flymake-haskell-enable)
+  :init
+  (add-to-list 'exec-path "~/.local/bin")
+  :config
+  (require 'haskell-interactive-mode)
+  (require 'haskell-process)
+  (setq haskell-process-type 'cabal-repl)
+  (setq haskell-interactive-mode-eval-mode 'haskell-mode)
+  (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-file)
+  (define-key haskell-mode-map (kbd "C-c C-n C-t") 'haskell-process-do-type)
+  (define-key haskell-mode-map (kbd "C-c C-n C-i") 'haskell-process-do-info)
+  (define-key haskell-mode-map (kbd "C-h") 'haskell-hoogle)
+  (defun flymake-haskell-init ()
+    "Flymake init function for Haskell."
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy 'flymake-create-temp-inplace))
+           (local-file (file-relative-name temp-file (file-name-directory buffer-file-name))))
+      (list "hlint" (list local-file))))
 
+  (defun flymake-haskell-enable ()
+    "Enable flymake mode for Haskell."
+    (when (and buffer-file-name
+               (file-writable-p (file-name-directory buffer-file-name))
+               (file-writable-p buffer-file-name))
+      (local-set-key (kbd "C-c d") 'flymake-display-err-menu-for-current-line)
+      (flymake-mode t)))
 
-(add-hook 'haskell-mode-hook (lambda () (setq-local company-dabbrev-downcase nil)))
+  (push '("\\.l?hs\\'" flymake-haskell-init) flymake-allowed-file-name-masks))
 
-(defun capitalize-and-join-backwards ()
-    (interactive)
-    (search-backward " ")
-    (right-char)
-    (right-char)
-    (insert " ")
-    (left-char)
-    (left-char)
-    (capitalize-word 1)
-    (paredit-forward-delete)
-    (left-char)
-    (paredit-backward-delete))
+;; (add-hook 'haskell-mode-hook (lambda () (setq-local company-dabbrev-downcase nil)))
 
-(global-set-key (kbd "C-z 2") 'capitalize-and-join-backwards)
-
-;;; a;so install ormolu
-;; https://github.com/tweag/ormolu#installation
-(add-hook 'haskell-mode-hook
-            #'(lambda ()
-               (local-set-key (kbd "C-c C-d h") 'haskell-hoogle)))
-
-(add-hook 'haskell-interactive-mode-hook
-            #'(lambda ()
-               (local-set-key (kbd "C-c C-d h") 'haskell-hoogle)))
-
-(add-hook 'haskell-interactive-mode-hook
-            #'(lambda ()
-               (prelude-mode -1)
-               (local-set-key (kbd "C-a") 'haskell-interactive-mode-bol)))
-
+;;; also install ormolu
+;;; https://github.com/tweag/ormolu#installation
 (use-package ormolu
   :hook (haskell-mode . ormolu-format-on-save-mode)
   :bind
   (:map haskell-mode-map
         ("C-c r" . ormolu-format-buffer)))
+
+(defun capitalize-and-join-backwards ()
+  (interactive)
+  (search-backward " ")
+  (right-char)
+  (right-char)
+  (insert " ")
+  (left-char)
+  (left-char)
+  (capitalize-word 1)
+  (paredit-forward-delete)
+  (left-char)
+  (paredit-backward-delete))
+
+(global-set-key (kbd "C-z 2") 'capitalize-and-join-backwards)
 
 ;;; *** Lisp
 
