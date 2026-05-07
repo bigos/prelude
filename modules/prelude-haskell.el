@@ -1,6 +1,6 @@
 ;;; prelude-haskell.el --- Emacs Prelude: Nice config for Haskell programming.
 ;;
-;; Copyright © 2011-2026 Bozhidar Batsov
+;; Copyright © 2011-2025 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -9,9 +9,7 @@
 
 ;;; Commentary:
 
-;; Nice config for Haskell programming.  Install haskell-language-server
-;; for LSP support:
-;;   ghcup install hls
+;; Nice config for Haskell programming.
 
 ;;; License:
 
@@ -33,22 +31,19 @@
 ;;; Code:
 
 (require 'prelude-programming)
+(prelude-require-packages '(haskell-mode))
 
-(defun prelude-haskell-mode-defaults ()
-  (subword-mode +1)
-  (eldoc-mode +1)
-  ;; Haskell's layout-based indentation
-  (haskell-indentation-mode +1)
-  ;; GHCi integration: type info, jump to definition, REPL interaction
-  (interactive-haskell-mode +1)
-  (prelude-lsp-enable))
+(with-eval-after-load 'haskell-mode
+  (defun prelude-haskell-mode-defaults ()
+    (subword-mode +1)
+    (eldoc-mode +1)
+    (haskell-indentation-mode +1)
+    (interactive-haskell-mode +1))
 
-(use-package haskell-mode
-  :ensure t
-  :hook (haskell-mode . (lambda ()
-                          (run-hooks 'prelude-haskell-mode-hook))))
+  (setq prelude-haskell-mode-hook 'prelude-haskell-mode-defaults)
 
-(setq prelude-haskell-mode-hook 'prelude-haskell-mode-defaults)
+  (add-hook 'haskell-mode-hook (lambda ()
+                                 (run-hooks 'prelude-haskell-mode-hook))))
 
 (provide 'prelude-haskell)
 

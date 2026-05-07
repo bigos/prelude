@@ -1,6 +1,6 @@
 ;;; prelude-clojure.el --- Emacs Prelude: Clojure programming configuration.
 ;;
-;; Copyright © 2011-2026 Bozhidar Batsov
+;; Copyright © 2011-2025 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -32,34 +32,31 @@
 ;;; Code:
 
 (require 'prelude-lisp)
+(prelude-require-packages '(clojure-mode cider))
 
-(defun prelude-clojure-mode-defaults ()
-  (subword-mode +1)
-  (run-hooks 'prelude-lisp-coding-hook))
+(with-eval-after-load 'clojure-mode
+  (defun prelude-clojure-mode-defaults ()
+    (subword-mode +1)
+    (run-hooks 'prelude-lisp-coding-hook))
 
-(defun prelude-cider-repl-mode-defaults ()
-  (subword-mode +1)
-  (run-hooks 'prelude-interactive-lisp-coding-hook))
+  (setq prelude-clojure-mode-hook 'prelude-clojure-mode-defaults)
 
-;; For tree-sitter support on Emacs 30+, install clojure-ts-mode
-;; separately -- it auto-remaps clojure-mode buffers when present.
-(use-package clojure-mode
-  :ensure t
-  :hook (clojure-mode . (lambda ()
-                           (run-hooks 'prelude-clojure-mode-hook))))
+  (add-hook 'clojure-mode-hook (lambda ()
+                                 (run-hooks 'prelude-clojure-mode-hook))))
 
-;; CIDER: Clojure Interactive Development Environment that Rocks
-(use-package cider
-  :ensure t
-  :defer t
-  :config
-  ;; Enable to log all nREPL messages for debugging
-  ;; (setq nrepl-log-messages t)
-  :hook (cider-repl-mode . (lambda ()
-                              (run-hooks 'prelude-cider-repl-mode-hook))))
+(with-eval-after-load 'cider
+  (setq nrepl-log-messages t)
 
-(setq prelude-clojure-mode-hook 'prelude-clojure-mode-defaults)
-(setq prelude-cider-repl-mode-hook 'prelude-cider-repl-mode-defaults)
+  (add-hook 'cider-mode-hook 'eldoc-mode)
+
+  (defun prelude-cider-repl-mode-defaults ()
+    (subword-mode +1)
+    (run-hooks 'prelude-interactive-lisp-coding-hook))
+
+  (setq prelude-cider-repl-mode-hook 'prelude-cider-repl-mode-defaults)
+
+  (add-hook 'cider-repl-mode-hook (lambda ()
+                                    (run-hooks 'prelude-cider-repl-mode-hook))))
 
 (provide 'prelude-clojure)
 

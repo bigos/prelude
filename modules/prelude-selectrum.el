@@ -1,4 +1,4 @@
-;;; prelude-js.el --- Emacs Prelude: js-mode configuration.
+;;; prelude-selectrum.el --- Selectrum setup
 ;;
 ;; Copyright © 2011-2025 Bozhidar Batsov
 ;;
@@ -9,7 +9,8 @@
 
 ;;; Commentary:
 
-;; Some basic configuration for js-mode.
+;; Selectrum-related config.  Selectrum is a smart framework for minibuffer
+;; completion/filtering/selection (think of ivy/ido).
 
 ;;; License:
 
@@ -29,29 +30,25 @@
 ;; Boston, MA 02110-1301, USA.
 
 ;;; Code:
+(prelude-require-packages '(selectrum selectrum-prescient))
 
-(require 'prelude-programming)
-(prelude-require-packages '(js2-mode json-mode))
+;;; Selectrum
+;;
+;; selectrum is a powerful alternative to the popular ido-mode and ivy-mode.
 
-(require 'js2-mode)
+(require 'selectrum)
+(require 'selectrum-prescient)
+(require 'diminish)
 
-(add-to-list 'auto-mode-alist '("\\.js\\'"     . js2-mode))
-(add-to-list 'auto-mode-alist '("\\.[cm]js\\'" . js2-mode))
-(add-to-list 'auto-mode-alist '("\\.pac\\'"    . js2-mode))
-(add-to-list 'interpreter-mode-alist '("node"  . js2-mode))
+(selectrum-mode 1)
+(diminish 'selectrum-mode)
 
-(with-eval-after-load 'js2-mode
-  (defun prelude-js-mode-defaults ()
-    ;; electric-layout-mode doesn't play nice with smartparens
-    (setq-local electric-layout-rules '((?\; . after)))
-    (setq mode-name "JS2")
-    (js2-imenu-extras-mode +1)
-    (subword-mode +1))
+;; to make sorting and filtering more intelligent
+(selectrum-prescient-mode +1)
 
-  (setq prelude-js-mode-hook 'prelude-js-mode-defaults)
+;; to save your command history on disk, so the sorting gets more
+;; intelligent over time
+(prescient-persist-mode +1)
 
-  (add-hook 'js2-mode-hook (lambda () (run-hooks 'prelude-js-mode-hook))))
-
-(provide 'prelude-js)
-
-;;; prelude-js.el ends here
+(provide 'prelude-selectrum)
+;;; prelude-selectrum.el ends here

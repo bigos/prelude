@@ -7,12 +7,9 @@ updating Prelude, since the latest Prelude code might depend on newer
 versions of the bundled packages than you would currently have
 installed.
 
-If you're doing manual Prelude updates you should always do a
-package update first.
+If you're doing manual Prelude updates you should always do a package update first.
 
-```text
-M-x package-list-packages RET U x
-```
+    M-x package-list-packages RET U x
 
 That's not necessary if you're using `M-x prelude-update`, since it
 will automatically update the installed packages.
@@ -25,8 +22,8 @@ on the presence of the `aspell` program and an `en` dictionary on your
 system. You can install `aspell` and the dictionary on macOS with
 `homebrew` like this:
 
-```shell
-brew install aspell --with-lang=en
+```shellsession
+$ brew install aspell --with-lang=en
 ```
 
 On Linux distros - just use your distro's package manager.
@@ -70,9 +67,9 @@ personal Emacs config:
 
 ## Customized C-a behavior
 
-Prelude overrides `C-a` to behave as described in this
-[blog post about smarter navigation][smart-bol]. If you
-don't like that simply add this to your personal config:
+Prelude overrides `C-a` to behave as described
+[here](http://emacsredux.com/blog/2013/05/22/smarter-navigation-to-the-beginning-of-a-line/). If
+you don't like that simply add this to your personal config:
 
 ```emacs-lisp
 (global-set-key [remap move-beginning-of-line]
@@ -82,13 +79,9 @@ don't like that simply add this to your personal config:
 If you're using term-mode or ansi-term-mode, the above will not
 restore the default behaviour of sending the C-a key sequence directly
 to the terminal. As a workaround, you can remove the C-a binding from
-prelude-mode specifically for these as described in this
-[guide to removing minor mode keybindings][remove-keys]
-by adding something like the following to your personal
-config:
-
-[smart-bol]: http://emacsredux.com/blog/2013/05/22/smarter-navigation-to-the-beginning-of-a-line/
-[remove-keys]: https://emacsredux.com/blog/2013/09/25/removing-key-bindings-from-minor-mode-keymaps/
+prelude-mode specifically for these as described
+[here](https://emacsredux.com/blog/2013/09/25/removing-key-bindings-from-minor-mode-keymaps/)
+by adding something like the following to your personal config:
 
 ```emacs-lisp
 (defun my-term-mode-hook ()

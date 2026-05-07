@@ -1,6 +1,6 @@
 ;;; prelude-global-keybindings.el --- Emacs Prelude: some useful keybindings.
 ;;
-;; Copyright © 2011-2026 Bozhidar Batsov
+;; Copyright © 2011-2025 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -41,6 +41,9 @@
 ;; Indentation help
 (global-set-key (kbd "C-^") 'crux-top-join-line)
 
+;; Start proced in a similar manner to dired
+(global-set-key (kbd "C-x p") 'proced)
+
 ;; Start eshell or switch to it if it's active.
 (global-set-key (kbd "C-x m") 'eshell)
 
@@ -51,7 +54,7 @@
 (global-set-key (kbd "C-x M-m") 'shell)
 
 ;; If you want to be able to M-x without meta
-(global-set-key (kbd "C-x C-m") 'execute-extended-command)
+(global-set-key (kbd "C-x C-m") 'smex)
 
 ;; A complementary binding to the apropos-command (C-h a)
 (define-key 'help-command "A" 'apropos)
@@ -78,9 +81,8 @@
 ;; Activate occur easily inside isearch
 (define-key isearch-mode-map (kbd "C-o") 'isearch-occur)
 
-(when prelude-hippie-expand
-  ;; use hippie-expand instead of dabbrev
-  (global-set-key (kbd "M-/") 'hippie-expand))
+;; use hippie-expand instead of dabbrev
+(global-set-key (kbd "M-/") 'hippie-expand)
 
 ;; replace buffer-menu with ibuffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)

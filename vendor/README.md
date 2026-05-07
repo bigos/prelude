@@ -1,5 +1,3 @@
-# Vendored Packages Directory
-
 The main purpose of this folder is to drop here Emacs packages
 that for some reason are not available via `package.el` repositories
 (e.g. you might want some package available only on EmacsWiki).

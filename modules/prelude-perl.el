@@ -1,6 +1,6 @@
 ;;; prelude-perl.el --- Emacs Prelude: decent Perl coding settings.
 ;;
-;; Copyright © 2011-2026 Bozhidar Batsov
+;; Copyright © 2011-2025 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -32,17 +32,16 @@
 
 (require 'prelude-programming)
 
-;; Prefer cperl-mode over perl-mode for all Perl files
-(add-to-list 'major-mode-remap-alist '(perl-mode . cperl-mode))
+;; use cperl-mode instead of perl-mode
+(defalias 'perl-mode 'cperl-mode)
 
-;; C-h P to look up Perl documentation
-(define-key 'help-command (kbd "P") 'cperl-perldoc)
+(define-key 'help-command "P" 'cperl-perldoc)
 
 (defun prelude-cperl-mode-defaults ()
   (setq cperl-indent-level 4)
   (setq cperl-continued-statement-offset 8)
-  ;; Fine-grained control over electric behavior instead of the
-  ;; all-or-nothing cperl-hairy option
+  ;; cperl-hairy affects all those variables, but I prefer
+  ;; a more fine-grained approach as far as they are concerned
   (setq cperl-font-lock t)
   (setq cperl-electric-lbrace-space t)
   (setq cperl-electric-parens nil)
@@ -52,11 +51,12 @@
   (setq cperl-clobber-lisp-bindings t)
   (setq cperl-lazy-help-time 3)
 
-  ;; Remove distracting background colors on array/hash variables
+  ;; if you want all the bells and whistles
+  ;; (setq cperl-hairy)
+
   (set-face-background 'cperl-array-face nil)
   (set-face-background 'cperl-hash-face nil)
-  (setq cperl-invalid-face nil)
-  (subword-mode +1))
+  (setq cperl-invalid-face nil))
 
 (setq prelude-cperl-mode-hook 'prelude-cperl-mode-defaults)
 

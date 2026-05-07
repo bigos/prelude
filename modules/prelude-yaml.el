@@ -1,8 +1,8 @@
 ;;; prelude-yaml.el --- Emacs Prelude: YAML programming support.
 ;;
-;; Copyright © 2011-2026 Bozhidar Batsov
+;; Copyright © 2011-2025 Bozhidar Batsov
 ;;
-;; Author: Bozhidar Batsov <bozhidar@batsov.com>
+;; Author: ToBeReplaced
 ;; URL: https://github.com/bbatsov/prelude
 
 ;; This file is not part of GNU Emacs.
@@ -29,27 +29,14 @@
 ;; Boston, MA 02110-1301, USA.
 
 ;;; Code:
+(prelude-require-packages '(yaml-mode))
 
-;; Use yaml-ts-mode when the tree-sitter grammar is available,
-;; otherwise fall back to yaml-mode from MELPA
-(require 'treesit nil t)
-(if (and (fboundp 'treesit-ready-p) (treesit-ready-p 'yaml t))
-    (add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-ts-mode))
-  (use-package yaml-mode
-    :ensure t
-    :defer t))
-
-(defun prelude-yaml-mode-defaults ()
-  (whitespace-mode +1)
-  (subword-mode +1)
-  (add-hook 'before-save-hook 'prelude-cleanup-maybe nil t))
-
-(setq prelude-yaml-mode-hook 'prelude-yaml-mode-defaults)
-
-(add-hook 'yaml-mode-hook (lambda ()
-                            (run-hooks 'prelude-yaml-mode-hook)))
-(add-hook 'yaml-ts-mode-hook (lambda ()
-                               (run-hooks 'prelude-yaml-mode-hook)))
+;; yaml-mode doesn't derive from prog-mode, but we can at least enable
+;; whitespace-mode and apply cleanup.
+(add-hook 'yaml-mode-hook 'whitespace-mode)
+(add-hook 'yaml-mode-hook 'subword-mode)
+(add-hook 'yaml-mode-hook
+          (lambda () (add-hook 'before-save-hook 'prelude-cleanup-maybe nil t)))
 
 (provide 'prelude-yaml)
 ;;; prelude-yaml.el ends here

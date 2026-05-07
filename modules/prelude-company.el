@@ -1,6 +1,6 @@
 ;;; prelude-company.el --- company-mode setup
 ;;
-;; Copyright © 2011-2026 Bozhidar Batsov
+;; Copyright © 2011-2025 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -32,6 +32,7 @@
 (prelude-require-packages '(company))
 
 (require 'company)
+(require 'diminish)
 
 (setq company-idle-delay 0.5)
 (setq company-show-numbers t)

@@ -28,28 +28,20 @@
 ;;; Code:
 
 (require 'prelude-programming)
+(prelude-require-packages '(fsharp-mode eglot-fsharp))
 
-(defun prelude-fsharp-mode-defaults ()
-  ;; Use the .NET CLI to run the F# interactive REPL
-  (setq inferior-fsharp-program "dotnet fsi --readline-")
-  (subword-mode +1)
-  (when (eq prelude-lsp-client 'eglot)
-    (require 'eglot-fsharp))
-  (prelude-lsp-enable))
+(with-eval-after-load 'fsharp-mode
+  (defun prelude-fsharp-mode-defaults ()
+    ;; A reasonable default path to the F# compiler and interpreter on
+    ;; Unix-like systems.
+    ;; https://github.com/fsharp/emacs-fsharp-mode#compiler-and-repl-paths
+    (setq inferior-fsharp-program "dotnet fsi --readline-")
+    (require 'eglot-sharp))
 
-(use-package fsharp-mode
-  :ensure t
-  :hook (fsharp-mode . (lambda ()
-                         (run-hooks 'prelude-fsharp-mode-hook))))
+  (setq prelude-fsharp-mode-hook 'prelude-fsharp-mode-defaults)
 
-;; Auto-configures Eglot to use FsAutoComplete as the F# language
-;; server.  Only needed when Eglot is the LSP client.
-(use-package eglot-fsharp
-  :ensure t
-  :defer t
-  :if (eq prelude-lsp-client 'eglot))
-
-(setq prelude-fsharp-mode-hook 'prelude-fsharp-mode-defaults)
+  (add-hook 'fsharp-mode-hook (lambda ()
+                                (run-hooks 'prelude-sharp-mode-hook))))
 
 (provide 'prelude-fsharp)
 

@@ -1,6 +1,6 @@
 ;;; prelude-lua.el --- Emacs Prelude: Lua programming configuration.
 ;;
-;; Copyright © 2011-2026 Bozhidar Batsov
+;; Copyright © 2011-2025 Bozhidar Batsov
 ;;
 ;; Author: Xiongfei Shi <xiongfei.shi@icloud.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -9,9 +9,7 @@
 
 ;;; Commentary:
 
-;; Basic configuration for Lua programming.  Install lua-language-server
-;; for LSP support:
-;;   https://github.com/LuaLS/lua-language-server
+;; Basic configuration for Lua programming.
 
 ;;; License:
 
@@ -32,31 +30,26 @@
 
 ;;; Code:
 
+
 (require 'prelude-programming)
+(prelude-require-packages '(lua-mode))
 
-(defun prelude-lua-mode-defaults ()
-  (subword-mode +1)
-  (prelude-lsp-enable))
+(with-eval-after-load 'lua-mode
+  (setq lua-indent-level 2)
+  (setq lua-indent-nested-block-content-align nil)
+  (setq lua-indent-close-paren-align nil)
+  (setq lua-indent-string-contents t)
 
-(use-package lua-mode
-  :ensure t
-  :custom
-  (lua-indent-level 2)
-  ;; Don't align block contents to opening paren position
-  (lua-indent-nested-block-content-align nil)
-  (lua-indent-close-paren-align nil)
-  ;; Indent contents of multi-line strings
-  (lua-indent-string-contents t)
-  :bind (:map lua-mode-map
-              ("C-c C-b" . lua-send-buffer)
-              ("C-c C-f" . lua-send-defun)
-              ("C-c C-r" . lua-send-region)
-              ("C-c C-z" . lua-show-process-buffer))
-  :hook (lua-mode . (lambda ()
-                      (run-hooks 'prelude-lua-mode-hook))))
+  (define-key lua-mode-map (kbd "C-c C-b") 'lua-send-buffer)
+  (define-key lua-mode-map (kbd "C-c C-l") 'lua-send-current-line)
+  (define-key lua-mode-map (kbd "C-c C-f") 'lua-send-defun)
+  (define-key lua-mode-map (kbd "C-c C-r") 'lua-send-region)
+  (define-key lua-mode-map (kbd "C-c C-z") 'lua-show-process-buffer))
 
-(setq prelude-lua-mode-hook 'prelude-lua-mode-defaults)
+(autoload 'lua-mode "lua-mode" "Lua editing mode." t)
+(add-to-list 'auto-mode-alist '("\\.lua\\'" . lua-mode))
+(add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
 
 (provide 'prelude-lua)
 
-;;; prelude-lua.el ends here
+;;; prelude-lua ends here
