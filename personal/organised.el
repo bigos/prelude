@@ -375,7 +375,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
     (start-process "view-pdf" nil "evince" "--page-index" page afile)))
 
 ;;; My own additions
-(require 'org-vlc)
+;; (require 'org-vlc)
 (require 'jacek-verse)
 
 (add-hook 'org-mode-hook
