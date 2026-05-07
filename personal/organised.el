@@ -778,23 +778,24 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 ;;; *** Haskell
 ;;; make sure Emacs uses stack in Haskell Projects by default
-;;(setq haskell-process-type 'stack-ghci)
-
+;; (setq haskell-process-type 'stack-ghci)
 
 (use-package haskell-mode
   :defer
   :custom
   (haskell-process-type 'cabal-repl)
-  (haskell-interactive-popup-errors nil)
+  ;;(haskell-interactive-popup-errors nil)
   (haskell-process-args-cabal-repl '("--repl-options=-ferror-spans"))
   :hook
-  (haskell-mode 'interactive-haskell-mode)
+  ;;(haskell-mode 'interactive-haskell-mode)
   ;; :bind
   ;; (:map haskell-mode-map
   ;;       ("C-c i" . +haskell-add-import)
   ;;       ("C-c p l" . +haskell-add-language-extension)
-  ;;       ("C-c p o" . +haskell-add-ghc-option))
+  ;;       ("C-c p o" . +haskell-add-ghc-option)
+  ;;       )
   )
+
 
 (add-hook 'haskell-mode-hook (lambda () (setq-local company-dabbrev-downcase nil)))
 
@@ -829,12 +830,10 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                (local-set-key (kbd "C-a") 'haskell-interactive-mode-bol)))
 
 (use-package ormolu
-  :ensure t
   :hook (haskell-mode . ormolu-format-on-save-mode)
-  ;; :bind
-  ;; :map
-  ;; (haskell-mode-map ("C-z h" . ormolu-format-buffer))
-  )
+  :bind
+  (:map haskell-mode-map
+        ("C-c r" . ormolu-format-buffer)))
 
 ;;; *** Lisp
 
