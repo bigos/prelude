@@ -47,3 +47,6 @@ image-dired/*
 ielm-history.eld 
 
 neocaml-repl-history
+
+ac-comphist.dat
+projects 
