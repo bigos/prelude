@@ -68,8 +68,8 @@
 ;; are enabled by default.
 
 (require 'prelude-c)
-;; (require 'prelude-clojure)
-;; (require 'prelude-common-lisp)
+(require 'prelude-clojure)
+(require 'prelude-common-lisp)
 (require 'prelude-css)
 ;; (require 'prelude-dart)
 (require 'prelude-emacs-lisp)
@@ -77,18 +77,18 @@
 ;; (require 'prelude-elixir)
 ;; (require 'prelude-fsharp)
 ;; (require 'prelude-go)
-;; (require 'prelude-haskell)
+(require 'prelude-haskell)
 (require 'prelude-js)
 ;; (require 'prelude-latex)
 (require 'prelude-lisp) ;; Common setup for Lisp-like languages
 ;; (require 'prelude-literate-programming) ;; Setup for Literate Programming
 ;; (require 'prelude-lsp-mode) ;; lsp-mode and lsp-ui setup (loaded on demand when prelude-lsp-client is 'lsp-mode)
 ;; (require 'prelude-lua)
-;; (require 'prelude-ocaml)
+(require 'prelude-ocaml)
 (require 'prelude-perl)
-;; (require 'prelude-python)
+(require 'prelude-python)
 ;; (require 'prelude-racket)
-;; (require 'prelude-ruby)
+(require 'prelude-ruby)
 ;; (require 'prelude-rust)
 ;; (require 'prelude-scala)
 ;; (require 'prelude-scheme)
