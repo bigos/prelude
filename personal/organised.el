@@ -776,6 +776,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 ;;; *** Haskell
 
+;;; this needs rust, switching to other machine
+
 (use-package eglot
   :ensure t
   :config
