@@ -77,7 +77,7 @@
 ;; (require 'prelude-elixir)
 ;; (require 'prelude-fsharp)
 ;; (require 'prelude-go)
-;; (require 'prelude-haskell)
+(require 'prelude-haskell)
 (require 'prelude-js)
 ;; (require 'prelude-latex)
 (require 'prelude-lisp) ;; Common setup for Lisp-like languages
@@ -93,7 +93,7 @@
 ;; (require 'prelude-scala)
 ;; (require 'prelude-scheme)
 (require 'prelude-shell)
-;; (require 'prelude-scss)
+(require 'prelude-scss)
 ;; (require 'prelude-ts)
 (require 'prelude-web) ;; Emacs mode for web templates
 (require 'prelude-xml)
