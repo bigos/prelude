@@ -795,7 +795,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   :config
   (require 'haskell-interactive-mode)
   (require 'haskell-process)
-  (setq haskell-process-type 'cabal-repl)
+  ;; (setq haskell-process-type 'cabal-repl)
+  (setq haskell-process-type 'stack-ghci)
   (setq haskell-interactive-mode-eval-mode 'haskell-mode)
   (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-file)
   (define-key haskell-mode-map (kbd "C-c C-n C-t") 'haskell-process-do-type)
