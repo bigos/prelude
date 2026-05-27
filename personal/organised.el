@@ -948,18 +948,18 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 
 ;;; **** Paredit
-(global-set-key (kbd "C-z (") 'paredit-mode)
+(defun swap-paredit ()
+  "Replace smartparens with superior paredit."
+  (interactive)
+  (message "swapping paredit")
+  (smartparens-mode -1)
+  (show-smartparens-mode -1)
+  (enable-paredit-mode))
+
+(global-set-key (kbd "C-z (") 'swap-paredit)
 
 (add-hook 'minibuffer-inactive-mode-hook #'paredit-mode)
 (add-hook 'minibuffer-inactive-mode-hook #'rainbow-delimiters-mode)
-
-(defun swap-paredit ()
-    "Replace smartparens with superior paredit."
-    (interactive)
-    (message "swapping paredit")
-    (smartparens-mode -1)
-    (show-smartparens-mode -1)
-    (enable-paredit-mode))
 
 (autoload 'paredit-mode "paredit"
     "Minor mode for pseudo-structurally editing Lisp code." t)
