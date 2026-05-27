@@ -958,6 +958,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
     (interactive)
     (message "swapping paredit")
     (smartparens-mode -1)
+    (show-smartparens-mode -1)
     (enable-paredit-mode))
 
 (autoload 'paredit-mode "paredit"
