@@ -49,6 +49,13 @@
 ;; delete the selection with a keypress
 (delete-selection-mode t)
 
+;; preserve the system clipboard contents before killing text in Emacs,
+;; so you don't lose what you copied from another app
+(setq save-interprogram-paste-before-kill t)
+
+;; don't clutter the kill ring with duplicate entries
+(setq kill-do-not-save-duplicates t)
+
 ;; store all backup and autosave files in the tmp dir
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
@@ -115,12 +122,19 @@
 ;; savehist keeps track of some history
 (require 'savehist)
 (setq savehist-additional-variables
-      ;; search entries
-      '(search-ring regexp-search-ring)
+      ;; search entries and kill ring
+      '(search-ring regexp-search-ring kill-ring)
       ;; save every minute
       savehist-autosave-interval 60
       ;; keep the home clean
       savehist-file (expand-file-name "savehist" prelude-savefile-dir))
+;; strip text properties from kill-ring entries before saving to disk --
+;; propertized strings cause errors and bloat the savehist file
+(add-hook 'savehist-save-hook
+          (lambda ()
+            (setq kill-ring
+                  (mapcar #'substring-no-properties
+                          (cl-remove-if-not #'stringp kill-ring)))))
 (savehist-mode +1)
 
 ;; save recent files
@@ -279,6 +293,10 @@
   :bind (("M-y" . browse-kill-ring)
          ("s-y" . browse-kill-ring)))
 
+;; after C-u C-SPC, keep popping the mark ring with just C-SPC
+;; instead of having to repeat the C-u prefix each time
+(setq set-mark-command-repeat-pop t)
+
 (define-advice exchange-point-and-mark (:before (&rest _) prelude-deactivate-mark)
   "When called with no active region, do not activate mark."
   (interactive
@@ -332,6 +350,11 @@ Does not indent if the mode is in `prelude-indent-sensitive-modes'."
   (setq whitespace-line-column 80
         whitespace-style '(face tabs empty trailing lines-tail)))
 
+;; don't let ffap ping random hostnames -- when point is on something
+;; that looks like a hostname, ffap would attempt a network lookup to
+;; verify it, causing annoying freezes
+(setq ffap-machine-p-known 'reject)
+
 ;; saner regex syntax
 (use-package re-builder
   :defer t
@@ -345,6 +368,15 @@ Does not indent if the mode is in `prelude-indent-sensitive-modes'."
 
 (setq semanticdb-default-save-directory
       (expand-file-name "semanticdb" prelude-savefile-dir))
+
+;; increase the amount of data Emacs reads from subprocesses in a
+;; single chunk (default is 4KB).  This improves throughput for LSP
+;; servers and other processes that produce large output.
+(setq read-process-output-max (* 1024 1024)) ; 1MB
+
+;; defer fontification while there is input pending -- this keeps
+;; typing responsive in large/complex buffers where font-lock is slow
+(setq redisplay-skip-fontification-on-input t)
 
 ;; Compilation from Emacs
 (use-package compile
@@ -373,8 +405,15 @@ Does not indent if the mode is in `prelude-indent-sensitive-modes'."
 
 (prelude-maybe-enable-undo-tree)
 
+;; when splitting a window, resize all windows proportionally
+;; instead of just shrinking the current one
+(setq window-combination-resize t)
+
 ;; enable winner-mode to manage window configurations
 (winner-mode +1)
+
+;; automatically select help windows so you can dismiss them with 'q'
+(setq help-window-select t)
 
 ;; diff-hl
 (global-diff-hl-mode +1)
