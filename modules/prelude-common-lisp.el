@@ -73,7 +73,8 @@
   ;; configure the REPL hooks directly instead of using
   ;; prelude-lisp-coding-defaults.
   (add-hook 'slime-repl-mode-hook (lambda ()
-                                    (smartparens-strict-mode +1)
+                                    ;; (smartparens-strict-mode +1)
+                                    (paredit-mode +1)
                                     (whitespace-mode -1))))
 
 (provide 'prelude-common-lisp)
