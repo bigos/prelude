@@ -76,6 +76,7 @@
     magit
     move-text
     operate-on-number
+    paredit
     smartparens
     smartrep
     super-save
