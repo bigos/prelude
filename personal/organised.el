@@ -928,6 +928,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (interactive)
   (insert (format "\n#|\n\n%s\n\n|#" "your comment here...")))
 
+(global-set-key (kbd "C-z E") 'slime-eval-defun)
 (global-set-key (kbd "C-z e") 'slime-copy-last-expression-to-repl)
 (global-set-key (kbd "C-z t") 'slime-copy-last-expression)
 (global-set-key (kbd "C-z P") 'slime-eval-print-last-expression)
