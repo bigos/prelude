@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-global-keybindings.el --- Emacs Prelude: some useful keybindings.
 ;;
 ;; Copyright © 2011-2025 Bozhidar Batsov

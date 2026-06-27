@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-selectrum.el --- Selectrum setup
 ;;
 ;; Copyright © 2011-2025 Bozhidar Batsov

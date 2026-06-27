@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-mode.el --- Emacs Prelude: minor mode
 ;;
 ;; Copyright © 2011-2025 Bozhidar Batsov

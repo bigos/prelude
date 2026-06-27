@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-web.el --- Emacs Prelude: web template support
 ;;
 ;; Copyright © 2011-2025 Bozhidar Batsov

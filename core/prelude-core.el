@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-core.el --- Emacs Prelude: Core Prelude functions.
 ;;
 ;; Copyright © 2011-2025 Bozhidar Batsov

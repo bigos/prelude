@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-literate-programming.el --- Emacs Prelude: Literate Programming Support
 ;;
 ;; Author: Koustubh Sinkar

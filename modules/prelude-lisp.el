@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-lisp.el --- Emacs Prelude: Configuration common to all lisp modes.
 ;;
 ;; Copyright © 2011-2025 Bozhidar Batsov

@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-perl.el --- Emacs Prelude: decent Perl coding settings.
 ;;
 ;; Copyright © 2011-2025 Bozhidar Batsov

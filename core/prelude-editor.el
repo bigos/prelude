@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-editor.el --- Emacs Prelude: enhanced core editing experience.
 ;;
 ;; Copyright © 2011-2025 Bozhidar Batsov

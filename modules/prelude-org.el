@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-org.el --- Emacs Prelude: org-mode configuration.
 ;;
 ;; Copyright © 2011-2025 Bozhidar Batsov

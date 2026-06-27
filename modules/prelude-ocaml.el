@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-ocaml.el --- Emacs Prelude: decent Perl coding settings.
 ;;
 ;; Copyright © 2014-2025 Geoff Shannon

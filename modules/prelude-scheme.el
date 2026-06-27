@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-scheme.el --- Emacs Prelude: Some defaults for Scheme.
 ;;
 ;; Copyright © 2011-2025 Bozhidar Batsov
