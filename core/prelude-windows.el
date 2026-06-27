@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-windows.el --- Emacs Prelude: Windows-specific setup.
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov

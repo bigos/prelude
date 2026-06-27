@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-wsl.el --- Emacs Prelude: WSL-specific setup.
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
