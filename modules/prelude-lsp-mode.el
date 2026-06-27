@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-lsp-mode.el --- lsp-mode setup
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov

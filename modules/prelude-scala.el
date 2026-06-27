@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-scala.el --- Emacs Prelude: scala-mode configuration.
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov

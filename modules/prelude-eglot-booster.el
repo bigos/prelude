@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-eglot-booster.el --- Emacs Prelude: Eglot performance booster.
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov

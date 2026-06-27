@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-python.el --- Emacs Prelude: python.el configuration.
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov

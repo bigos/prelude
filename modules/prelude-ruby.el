@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-ruby.el --- Emacs Prelude: A nice setup for Ruby (and Rails) devs.
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov

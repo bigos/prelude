@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-racket.el --- Emacs Prelude: Racket programming support.
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov

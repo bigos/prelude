@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-erlang.el --- Emacs Prelude: Erlang programming support.
 ;;
 ;; Copyright © 2011-2026 Gleb Peregud

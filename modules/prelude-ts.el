@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-ts.el --- Emacs Prelude: TypeScript programming support.
 ;;
 ;; Copyright © 2023-2026 LEE Dongjun

@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-go.el --- Emacs Prelude: Go programming support.
 ;;
 ;; Author: Doug MacEachern

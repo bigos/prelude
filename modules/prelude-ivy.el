@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-ivy.el --- Ivy setup
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
