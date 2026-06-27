@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-ido.el --- Ido setup
 ;;
 ;; Copyright © 2011-2025 Bozhidar Batsov

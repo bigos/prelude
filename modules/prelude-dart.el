@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-dart.el --- Emacs Prelude: Dart programming configuration.
 ;;
 ;; Copyright © 2011-2025 Bozhidar Batsov

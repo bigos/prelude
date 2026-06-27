@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-yaml.el --- Emacs Prelude: YAML programming support.
 ;;
 ;; Copyright © 2011-2025 Bozhidar Batsov

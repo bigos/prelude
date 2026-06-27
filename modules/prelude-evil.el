@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-evil.el --- Emacs Prelude: evil-mode configuration.
 ;;
 ;; Copyright © 2011-2025 Bozhidar Batsov

@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-elixir.el --- Emacs Prelude: Elixir programming support.
 ;;
 ;; Copyright © 2014-2025 Samuel Tonini

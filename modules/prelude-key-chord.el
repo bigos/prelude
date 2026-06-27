@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-key-chord.el --- Key chord setup
 ;;
 ;; Copyright © 2011-2025 Bozhidar Batsov

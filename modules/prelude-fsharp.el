@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-fsharp.el --- Emacs Prelude: F# programming support.
 ;;
 ;; Author: Andre Boechat <andre.boechat@tutanota.com>

@@ -1,4 +1,5 @@
-;;; org-vlc.el --- a simple package                     -*- lexical-binding: t; -*-
+;;;-*- lexical-binding: t; -*-
+;;; org-vlc.el --- a simple package
 
 ;; Copyright (C) 2023 Jacek Podkanski
 

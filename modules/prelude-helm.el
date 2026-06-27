@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-helm.el --- Helm setup
 ;;
 ;; Copyright © 2011-2025 Bozhidar Batsov

@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-c.el --- Emacs Prelude: cc-mode configuration.
 ;;
 ;; Copyright © 2011-2025 Bozhidar Batsov

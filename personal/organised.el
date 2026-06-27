@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 ;;; code:
 
 ;;; WARNING! this *.el file has been generated automatically from

@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-js.el --- Emacs Prelude: js-mode configuration.
 ;;
 ;; Copyright © 2011-2025 Bozhidar Batsov
