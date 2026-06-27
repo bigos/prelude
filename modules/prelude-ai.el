@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-ai.el --- Emacs Prelude: AI assistant configuration.
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov

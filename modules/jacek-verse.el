@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; jacek-verse.el --- Adding bible verse links to org files.
 ;;
 ;; Copyright © 2021-2021 Jacek Podkanski

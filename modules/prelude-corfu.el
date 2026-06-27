@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-corfu.el --- Corfu in-buffer completion setup
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov

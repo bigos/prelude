@@ -1,4 +1,6 @@
-;;; prelude-company.el --- company-mode setup
+;;;   -*- lexical-binding: t; -*-
+;;; prelude-company.el --- com
+pany-mode setup
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;

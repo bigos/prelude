@@ -1,3 +1,4 @@
+;;;   -*- lexical-binding: t; -*-
 ;;; prelude-modules.el --- A listing of modules to load on startup
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
