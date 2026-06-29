@@ -948,6 +948,18 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 ;;; restart lisp after error
 (global-set-key (kbd "C-z R") 'slime-restart-inferior-lisp)
 
+;; reset source and REPL windows
+(defun reset-lisp-windows ()
+  (interactive)
+  (message "Resetting windows")
+  (delete-other-windows)
+  (split-window-right)
+  (switch-window)
+  (switch-to-buffer  "*slime-repl sbcl*")
+  (switch-window))
+
+(global-set-key (kbd "C-z z") 'reset-lisp-windows)
+
 
 ;;; **** Paredit
 (defun swap-paredit ()
