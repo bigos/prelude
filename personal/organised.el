@@ -951,12 +951,21 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 ;; reset source and REPL windows
 (defun reset-lisp-windows ()
   (interactive)
-  (message "Resetting windows")
-  (delete-other-windows)
-  (split-window-right)
-  (switch-window)
-  (switch-to-buffer  "*slime-repl sbcl*")
-  (switch-window))
+  (message "Resetting windows for %s" major-mode)
+  (cond ((equal major-mode 'lisp-mode)
+         (progn
+           (if (slime-connected-p)
+               (progn
+                 (if (equal (slime-connection-name) "sbcl")
+                     (progn
+                       (delete-other-windows)
+                       (split-window-right)
+                       (switch-window)
+                       (switch-to-buffer  "*slime-repl sbcl*")
+                       (switch-window))
+                   (message "Only SBCL is supported")))
+             (message "No Lisp connected"))))
+        (t (message "Buffer with major-mode %s is not supported" major-mode))))
 
 (global-set-key (kbd "C-z z") 'reset-lisp-windows)
 
