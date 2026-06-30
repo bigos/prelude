@@ -962,10 +962,11 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                        (split-window-right)
                        (switch-window)
                        (switch-to-buffer  "*slime-repl sbcl*")
-                       (switch-window))
-                   (message "Only SBCL is supported")))
-             (message "No Lisp connected"))))
-        (t (message "Buffer with major-mode %s is not supported" major-mode))))
+                       (switch-window)
+                       (message "Windows for %s were reset" major-mode))
+                   (message "Error - Only SBCL is supported")))
+             (message "Error - No Lisp connected"))))
+        (t (message "Error - Buffer with major-mode %s is not supported" major-mode))))
 
 (global-set-key (kbd "C-z z") 'reset-lisp-windows)
 
