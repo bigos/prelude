@@ -969,17 +969,19 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
         ((equal major-mode 'haskell-mode)
          (progn
            (if (equal major-mode 'haskell-mode)
-             (progn
-               (delete-other-windows)
-               (split-window-right)
-               (switch-window)
-               (switch-to-buffer (buffer-name
-                                  (first
-                                   (cl-remove-if-not
-                                    (lambda (b) (equal 'haskell-interactive-mode (buffer-local-value 'major-mode b)) )
-                                    (buffer-list)))))
-               (switch-window)
-               (message "Windows for %s were reset" major-mode))
+               (progn
+                 (delete-other-windows)
+                 (split-window-right)
+                 (switch-window)
+                 (switch-to-buffer (buffer-name
+                                    (first
+                                     (cl-remove-if-not
+                                      (lambda (b)
+                                        (equal 'haskell-interactive-mode
+                                               (buffer-local-value 'major-mode b)) )
+                                      (buffer-list)))))
+                 (switch-window)
+                 (message "Windows for %s were reset" major-mode))
              (massage "No Haskell REPL found"))))
         (t (message "Error - Buffer with major-mode %s is not supported" major-mode))))
 
