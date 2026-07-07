@@ -717,7 +717,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (use-package ocamlformat
   :ensure t
   :config
-  (add-hook 'before-save-hook 'ocamlformat-before-save))
+  (add-hook 'before-save-hook 'ocamlformat-before-save)
+  (add-hook 'before-save-hook 'neocaml-format-buffer))
 
 (use-package flycheck-ocaml
   :ensure t)
