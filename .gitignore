@@ -45,6 +45,7 @@ tree-sitter/*
 image-dired/*
 
 ielm-history.eld 
+projectile-frecency.eld
 
 neocaml-repl-history
 
