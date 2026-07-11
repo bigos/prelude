@@ -644,6 +644,9 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (defun insert-verbar ()
   (interactive)
   (insert "|"))
+(defun insert-sharp ()
+  (interactive)
+  (insert "#"))
 
 
 (global-set-key (kbd "C-z 3") 'insert-pound)
@@ -653,6 +656,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-set-key (kbd "C-z k b") 'insert-backslash)
 (global-set-key (kbd "C-z k r") 'insert-brvbar)
 (global-set-key (kbd "C-z k v") 'insert-verbar)
+(global-set-key (kbd "C-z k s") 'insert-sharp)
+
 
 (global-set-key (kbd "C-z a") 'bs-cycle-previous)
 (global-set-key (kbd "C-z s") 'bs-cycle-next)
