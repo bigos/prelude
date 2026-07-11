@@ -658,6 +658,16 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-set-key (kbd "C-z k v") 'insert-verbar)
 (global-set-key (kbd "C-z k s") 'insert-sharp)
 
+(global-set-key (kbd "C-z k #")   'insert-backslash)
+(global-set-key (kbd "C-z k ~")   'insert-brvbar)
+(global-set-key (kbd "C-z k C-#") 'insert-verbar)
+(global-set-key (kbd "C-z k 3")    'insert-pound)
+
+(global-set-key (kbd "C-z #")   'insert-backslash)
+(global-set-key (kbd "C-z ~")   'insert-brvbar)
+(global-set-key (kbd "C-z C-#") 'insert-verbar)
+
+;;; verbar -| - can be inserted with AltGr and the key below escape
 
 (global-set-key (kbd "C-z a") 'bs-cycle-previous)
 (global-set-key (kbd "C-z s") 'bs-cycle-next)
