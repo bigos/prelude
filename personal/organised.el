@@ -628,6 +628,32 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (global-set-key (kbd "C-z 4") 'kmacro-end-or-call-macro))
 
 ;;; *** Shortcuts
+(defun insert-pound ()
+  (interactive)
+  (insert "£"))
+(defun insert-tilde ()
+  (interactive)
+  (insert "~"))
+
+(defun insert-backslash ()
+  (interactive)
+  (insert "\\"))
+(defun insert-brvbar ()
+  (interactive)
+  (insert "¦"))
+(defun insert-verbar ()
+  (interactive)
+  (insert "|"))
+
+
+(global-set-key (kbd "C-z 3") 'insert-pound)
+(global-set-key (kbd "C-z 1") 'insert-tilde)
+
+
+(global-set-key (kbd "C-z k b") 'insert-backslash)
+(global-set-key (kbd "C-z k r") 'insert-brvbar)
+(global-set-key (kbd "C-z k v") 'insert-verbar)
+
 (global-set-key (kbd "C-z a") 'bs-cycle-previous)
 (global-set-key (kbd "C-z s") 'bs-cycle-next)
 
