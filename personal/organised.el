@@ -349,10 +349,6 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (interactive)
   (insert-named-source-block "lisp"))
 
-(add-hook 'org-mode-hook
-          #'(lambda ()
-              (local-set-key (kbd "C-z #") 'insert-lisp-source-block)))
-
 (require 'org)
 
 ;;; correct way of adding links
