@@ -636,15 +636,19 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (insert "~"))
 
 (defun insert-backslash ()
+  "\\"
   (interactive)
   (insert "\\"))
 (defun insert-brvbar ()
+  "¦"
   (interactive)
   (insert "¦"))
 (defun insert-verbar ()
+  "|"
   (interactive)
   (insert "|"))
 (defun insert-sharp ()
+  "#"
   (interactive)
   (insert "#"))
 
