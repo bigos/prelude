@@ -475,11 +475,11 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   ;; ensure PATH ends with "/org-roam/"
   (if (s-ends-with? last-part-of-org-roam path)
       (progn
-        (message (concat "Loading org-roam project at: " path))
         (let ((new-current path))
           (if (file-exists-p path)
               (message "Expected roam folder exists")
             (make-directory new-current :parents))
+          (message (concat "Loading org-roam project at: " path))
           (setq org-roam-my-folder new-current)))
     (progn
       (message (concat "Expecting the PATH to end with " last-part-of-org-roam))
