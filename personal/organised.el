@@ -650,9 +650,9 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (interactive)
   (insert "#"))
 
-
+;;; some of these shortcuts make sense only on British keyboard
 (global-set-key (kbd "C-z 3") 'insert-pound)
-(global-set-key (kbd "C-z 1") 'insert-tilde)
+;; (global-set-key (kbd "C-z 1") 'insert-tilde)
 
 
 (global-set-key (kbd "C-z k b") 'insert-backslash)
