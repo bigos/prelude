@@ -654,7 +654,6 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-set-key (kbd "C-z 3") 'insert-pound)
 ;; (global-set-key (kbd "C-z 1") 'insert-tilde)
 
-
 (global-set-key (kbd "C-z k b") 'insert-backslash)
 (global-set-key (kbd "C-z k r") 'insert-brvbar)
 (global-set-key (kbd "C-z k v") 'insert-verbar)
