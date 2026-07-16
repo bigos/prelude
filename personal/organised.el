@@ -992,11 +992,12 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-set-key (kbd "C-z R") 'slime-restart-inferior-lisp)
 
 ;; reset source and REPL windows
-(defun reset-my-windows-lisp ()
+(defun reset-my-windows-lisp (buffer)
   (if (slime-connected-p)
       (progn
         (if (equal (slime-connection-name) "sbcl")
             (progn
+              (switch-to-buffer  (buffer-name buffer))
               (delete-other-windows)
               (split-window-right)
               (switch-window)
@@ -1006,22 +1007,21 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
           (message "Error - Only SBCL is supported")))
     (message "Error - No Lisp connected")))
 
-(defun reset-my-windows-haskell ()
-  (if (equal major-mode 'haskell-mode)
-      (progn
-        (delete-other-windows)
-        (split-window-right)
-        (switch-window)
-        (switch-to-buffer (buffer-name
-                           (first
-                            (cl-remove-if-not
-                             (lambda (b)
-                               (equal 'haskell-interactive-mode
-                                      (buffer-local-value 'major-mode b)) )
-                             (buffer-list)))))
-        (switch-window)
-        (message "Windows for %s were reset" major-mode))
-    (massage "No Haskell REPL found")))
+(defun reset-my-windows-haskell (buffer)
+  (let ((haskell-repl-buffer  (first (remove-if-not
+                                       (lambda (b) (eq 'haskell-interactive-mode
+                                                       (buffer-local-value 'major-mode b)))
+                                       (buffer-list)))))
+      (if haskell-repl-buffer
+          (progn
+            (switch-to-buffer  (buffer-name buffer))
+            (delete-other-windows)
+            (split-window-right)
+            (switch-window)
+            (switch-to-buffer (buffer-name haskell-repl-buffer))
+            (switch-window)
+            (message "Haskell Windows for %s were reset" major-mode))
+        (message "No Haskell REPL found"))))
 
 (defun reset-my-windows ()
   (interactive)
@@ -1047,15 +1047,18 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                        haskell-buffers)
                   (message "Both Lisp or Haskell buffers are present.")
                   ;; make the choice
-                  (if (> 2 1)
-                      (reset-my-windows-lisp)
-                    (reset-my-windows-haskell)))
+                  (let ((selection (ivy-completing-read "select the mode" '("Haskell" "Lisp"))))
+                    (cond ((equal selection "Lisp")
+                           (reset-my-windows-lisp (first lisp-buffers)))
+                          ((equal selection "Haskell")
+                           (reset-my-windows-haskell (first haskell-buffers)))
+                          (t (message "Error - invalid selection %s" selection)))))
                  (lisp-buffers
                   (message "Working on Lisp.")
-                  (reset-my-windows-lisp))
+                  (reset-my-windows-lisp (first lisp-buffers)))
                  (haskell-buffers
                   (message "Working on Haskell.")
-                  (reset-my-windows-haskell))
+                  (reset-my-windows-haskell (first lisp-buffers)))
                  (t (message "I do not know what to do here.")))))
         (t (message "Error - Buffer with major-mode %s is not supported" major-mode))))
 
