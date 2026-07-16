@@ -1030,7 +1030,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
          (reset-my-windows-lisp))
         ((equal major-mode 'haskell-mode)
          (reset-my-windows-haskell))
-        ((equal major-mode 'org-mode)
+        (t
          ;; detect if major modes are present
          (let ((lisp-buffers (remove-if-not
                               (lambda (b) (eq 'lisp-mode
@@ -1059,8 +1059,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                  (haskell-buffers
                   (message "Working on Haskell.")
                   (reset-my-windows-haskell (first lisp-buffers)))
-                 (t (message "I do not know what to do here.")))))
-        (t (message "Error - Buffer with major-mode %s is not supported" major-mode))))
+                 (t (message "I do not know what to do here.")))))))
 
 (global-set-key (kbd "C-z z") 'reset-my-windows)
 
