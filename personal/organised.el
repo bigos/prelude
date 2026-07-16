@@ -992,43 +992,68 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-set-key (kbd "C-z R") 'slime-restart-inferior-lisp)
 
 ;; reset source and REPL windows
-(defun reset-lisp-windows ()
+(defun reset-my-windows-lisp ()
+  (if (slime-connected-p)
+      (progn
+        (if (equal (slime-connection-name) "sbcl")
+            (progn
+              (delete-other-windows)
+              (split-window-right)
+              (switch-window)
+              (switch-to-buffer  "*slime-repl sbcl*")
+              (switch-window)
+              (message "Windows for %s were reset" major-mode))
+          (message "Error - Only SBCL is supported")))
+    (message "Error - No Lisp connected")))
+
+(defun reset-my-windows-haskell ()
+  (if (equal major-mode 'haskell-mode)
+      (progn
+        (delete-other-windows)
+        (split-window-right)
+        (switch-window)
+        (switch-to-buffer (buffer-name
+                           (first
+                            (cl-remove-if-not
+                             (lambda (b)
+                               (equal 'haskell-interactive-mode
+                                      (buffer-local-value 'major-mode b)) )
+                             (buffer-list)))))
+        (switch-window)
+        (message "Windows for %s were reset" major-mode))
+    (massage "No Haskell REPL found")))
+
+(defun reset-my-windows ()
   (interactive)
   (message "Resetting windows for %s" major-mode)
   (cond ((equal major-mode 'lisp-mode)
-         (progn
-           (if (slime-connected-p)
-               (progn
-                 (if (equal (slime-connection-name) "sbcl")
-                     (progn
-                       (delete-other-windows)
-                       (split-window-right)
-                       (switch-window)
-                       (switch-to-buffer  "*slime-repl sbcl*")
-                       (switch-window)
-                       (message "Windows for %s were reset" major-mode))
-                   (message "Error - Only SBCL is supported")))
-             (message "Error - No Lisp connected"))))
+         (reset-my-windows-lisp))
         ((equal major-mode 'haskell-mode)
-         (progn
-           (if (equal major-mode 'haskell-mode)
-               (progn
-                 (delete-other-windows)
-                 (split-window-right)
-                 (switch-window)
-                 (switch-to-buffer (buffer-name
-                                    (first
-                                     (cl-remove-if-not
-                                      (lambda (b)
-                                        (equal 'haskell-interactive-mode
-                                               (buffer-local-value 'major-mode b)) )
-                                      (buffer-list)))))
-                 (switch-window)
-                 (message "Windows for %s were reset" major-mode))
-             (massage "No Haskell REPL found"))))
+         (reset-my-windows-haskell))
+        ((equal major-mode 'org-mode)
+         ;; detect if major modes are present
+         (let ((lisp-buffers (remove-if-not
+                              (lambda (b) (eq 'lisp-mode
+                                              (buffer-local-value 'major-mode b)))
+                              (buffer-list)))
+               (haskell-buffers  (remove-if-not
+                                  (lambda (b) (eq 'haskell-mode
+                                                  (buffer-local-value 'major-mode b)))
+                                  (buffer-list))))
+           (cond ((and (null lisp-buffers)
+                       (null haskell-buffers))
+                  (message "Neither Lisp or Haskell buffers were found."))
+                 ((and lisp-buffers
+                       haskell-buffers)
+                  (message "Both Lisp or Haskell buffers are present."))
+                 (lisp-buffers
+                  (message "Working on Lisp."))
+                 (haskell-buffers
+                  (message "Working on Haskell."))
+                 (t (message "I do not know what to do here.")))))
         (t (message "Error - Buffer with major-mode %s is not supported" major-mode))))
 
-(global-set-key (kbd "C-z z") 'reset-lisp-windows)
+(global-set-key (kbd "C-z z") 'reset-my-windows)
 
 
 ;;; **** Paredit
