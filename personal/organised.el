@@ -1045,11 +1045,17 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                   (message "Neither Lisp or Haskell buffers were found."))
                  ((and lisp-buffers
                        haskell-buffers)
-                  (message "Both Lisp or Haskell buffers are present."))
+                  (message "Both Lisp or Haskell buffers are present.")
+                  ;; make the choice
+                  (if (> 2 1)
+                      (reset-my-windows-lisp)
+                    (reset-my-windows-haskell)))
                  (lisp-buffers
-                  (message "Working on Lisp."))
+                  (message "Working on Lisp.")
+                  (reset-my-windows-lisp))
                  (haskell-buffers
-                  (message "Working on Haskell."))
+                  (message "Working on Haskell.")
+                  (reset-my-windows-haskell))
                  (t (message "I do not know what to do here.")))))
         (t (message "Error - Buffer with major-mode %s is not supported" major-mode))))
 
