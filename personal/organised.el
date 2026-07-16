@@ -1025,41 +1025,36 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 (defun reset-my-windows ()
   (interactive)
-  (message "Resetting windows for %s" major-mode)
-  (cond ((equal major-mode 'lisp-mode)
-         (reset-my-windows-lisp))
-        ((equal major-mode 'haskell-mode)
-         (reset-my-windows-haskell))
-        (t
-         ;; detect if major modes are present
-         (let ((lisp-buffers (remove-if-not
-                              (lambda (b) (eq 'lisp-mode
-                                              (buffer-local-value 'major-mode b)))
-                              (buffer-list)))
-               (haskell-buffers  (remove-if-not
-                                  (lambda (b) (eq 'haskell-mode
-                                                  (buffer-local-value 'major-mode b)))
-                                  (buffer-list))))
-           (cond ((and (null lisp-buffers)
-                       (null haskell-buffers))
-                  (message "Neither Lisp or Haskell buffers were found."))
-                 ((and lisp-buffers
-                       haskell-buffers)
-                  (message "Both Lisp or Haskell buffers are present.")
-                  ;; make the choice
-                  (let ((selection (ivy-completing-read "select the mode" '("Haskell" "Lisp"))))
-                    (cond ((equal selection "Lisp")
-                           (reset-my-windows-lisp (first lisp-buffers)))
-                          ((equal selection "Haskell")
-                           (reset-my-windows-haskell (first haskell-buffers)))
-                          (t (message "Error - invalid selection %s" selection)))))
-                 (lisp-buffers
-                  (message "Working on Lisp.")
-                  (reset-my-windows-lisp (first lisp-buffers)))
-                 (haskell-buffers
-                  (message "Working on Haskell.")
-                  (reset-my-windows-haskell (first lisp-buffers)))
-                 (t (message "I do not know what to do here.")))))))
+  (message "Resetting from windows with %s" major-mode)
+
+  (let ((lisp-buffers (remove-if-not
+                       (lambda (b) (eq 'lisp-mode
+                                       (buffer-local-value 'major-mode b)))
+                       (buffer-list)))
+        (haskell-buffers  (remove-if-not
+                           (lambda (b) (eq 'haskell-mode
+                                           (buffer-local-value 'major-mode b)))
+                           (buffer-list))))
+    (cond ((and (null lisp-buffers)
+                (null haskell-buffers))
+           (message "Neither Lisp or Haskell buffers were found."))
+          ((and lisp-buffers
+                haskell-buffers)
+           (message "Both Lisp or Haskell buffers are present.")
+           ;; make the choice
+           (let ((selection (ivy-completing-read "select the mode" '("Haskell" "Lisp"))))
+             (cond ((equal selection "Lisp")
+                    (reset-my-windows-lisp (first lisp-buffers)))
+                   ((equal selection "Haskell")
+                    (reset-my-windows-haskell (first haskell-buffers)))
+                   (t (message "Error - invalid selection %s" selection)))))
+          (lisp-buffers
+           (message "Working on Lisp.")
+           (reset-my-windows-lisp (first lisp-buffers)))
+          (haskell-buffers
+           (message "Working on Haskell.")
+           (reset-my-windows-haskell (first lisp-buffers)))
+          (t (message "I do not know what to do here.")))))
 
 (global-set-key (kbd "C-z z") 'reset-my-windows)
 
