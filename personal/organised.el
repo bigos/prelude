@@ -1002,7 +1002,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
               (switch-window)
               (switch-to-buffer  "*slime-repl sbcl*")
               (switch-window)
-              (message "Windows for %s were reset" major-mode))
+              (message "Lisp Windows for %s were reset" major-mode))
           (message "Error - Only SBCL is supported")))
     (message "Error - No Lisp connected")))
 
