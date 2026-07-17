@@ -1027,11 +1027,11 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (interactive)
   (message "Resetting from windows with %s" major-mode)
 
-  (let ((lisp-buffers (remove-if-not
+  (let ((lisp-buffers (cl-remove-if-not
                        (lambda (b) (eq 'lisp-mode
                                        (buffer-local-value 'major-mode b)))
                        (buffer-list)))
-        (haskell-buffers  (remove-if-not
+        (haskell-buffers  (cl-remove-if-not
                            (lambda (b) (eq 'haskell-mode
                                            (buffer-local-value 'major-mode b)))
                            (buffer-list))))
