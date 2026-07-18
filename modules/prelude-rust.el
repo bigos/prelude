@@ -37,56 +37,44 @@
 ;; * rust-analyzer as lsp server needs to be in global path, see:
 ;; https://rust-analyzer.github.io/manual.html#rust-analyzer-language-server-binary
 
-
-(prelude-require-packages '(rust-mode
-                            cargo
-                            flycheck-rust
-                            tree-sitter
-                            tree-sitter-langs
-                            yasnippet
-                            ron-mode))
-
-(require 'tree-sitter)
-(require 'tree-sitter-langs)
-
+;; Disable super-save in Rust buffers -- auto-saving triggers
+;; lsp-format-buffer which causes severe hangs during autocomplete
 (add-to-list 'super-save-predicates
-             (lambda () (not (eq major-mode 'rust-mode))))
+             (lambda () (not (eq major-mode 'rust-ts-mode))))
 
-(with-eval-after-load 'rust-mode
-  (add-hook 'rust-mode-hook 'cargo-minor-mode)
-  (add-hook 'flycheck-mode-hook 'flycheck-rust-setup)
+(defun prelude-rust-mode-defaults ()
+  (setq rust-format-on-save t)
 
-  ;; enable lsp for rust, by default it uses rust-analyzer as lsp server
-  ;; (add-hook 'rust-mode-hook 'lsp)
-  (add-hook 'rust-mode-hook 'eglot-ensure)
+  ;; Rust files start with #![...] (inner attributes), which looks
+  ;; like a shebang to Emacs -- prevent auto-chmod on save
+  (remove-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
-  ;; enable tree-sitter for nicer syntax highlighting
-  (add-hook 'rust-mode-hook #'tree-sitter-mode)
-  (add-hook 'rust-mode-hook #'tree-sitter-hl-mode)
+  ;; CamelCase aware editing operations
+  (subword-mode +1)
 
-  (defun prelude-rust-mode-defaults ()
-    ;; format on save
-    (setq rust-format-on-save t)
+  (prelude-lsp-enable))
 
-    ;; lsp settings
-    (setq
-     ;; enable macro expansion
-     lsp-rust-analyzer-proc-macro-enable t
-     lsp-rust-analyzer-experimental-proc-attr-macros t)
+;; Built-in tree-sitter mode for Rust (requires rust grammar)
+(use-package rust-ts-mode
+  :ensure t
+  :hook (rust-ts-mode . (lambda () (run-hooks 'prelude-rust-mode-hook))))
 
-    ;; Prevent #! from chmodding rust files to be executable
-    (remove-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
+;; Interface to Cargo commands (C-c C-c C-b to build, etc.)
+(use-package cargo
+  :ensure t
+  :hook (rust-ts-mode . cargo-minor-mode))
 
-    ;; snippets are required for correct lsp autocompletions
-    (yas-minor-mode)
+;; Configures Flycheck to use cargo/clippy for Rust diagnostics
+(use-package flycheck-rust
+  :ensure t
+  :hook (flycheck-mode . flycheck-rust-setup))
 
-    ;; CamelCase aware editing operations
-    (subword-mode +1))
+;; Major mode for Rusty Object Notation (.ron) files
+(use-package ron-mode
+  :ensure t
+  :defer t)
 
-  (setq prelude-rust-mode-hook 'prelude-rust-mode-defaults)
-
-  (add-hook 'rust-mode-hook (lambda ()
-                              (run-hooks 'prelude-rust-mode-hook))))
+(setq prelude-rust-mode-hook 'prelude-rust-mode-defaults)
 
 (provide 'prelude-rust)
 ;;; prelude-rust.el ends here

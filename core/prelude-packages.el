@@ -1,7 +1,7 @@
 ;;;   -*- lexical-binding: t; -*-
 ;;; prelude-packages.el --- Emacs Prelude: default package selection.
 ;;
-;; Copyright © 2011-2025 Bozhidar Batsov
+;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -37,13 +37,8 @@
 
 ;;;; Package setup and additional utility functions
 
-;; accessing a package repo over https on Windows is a no go, so we
-;; fallback to http there
-(if (eq system-type 'windows-nt)
-    (add-to-list 'package-archives
-                 '("melpa" . "http://melpa.org/packages/") t)
-  (add-to-list 'package-archives
-               '("melpa" . "https://melpa.org/packages/") t))
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/") t)
 
 ;; load the pinned packages
 (let ((prelude-pinned-packages-file (expand-file-name "prelude-pinned-packages.el" prelude-dir)))
@@ -51,23 +46,18 @@
       (load prelude-pinned-packages-file)))
 
 ;; set package-user-dir to be relative to Prelude install path
-(setq package-user-dir (expand-file-name "elpa" prelude-dir))
+(when prelude-override-package-user-dir
+  (setq package-user-dir (expand-file-name "elpa" prelude-dir)))
 
-(unless package--initialized
-    (package-initialize))
+(package-initialize)
 
-;; install & enable use-package
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
-
-(require 'use-package)
+;; use-package is built-in since Emacs 29
 (setq use-package-verbose t)
 
 (defvar prelude-packages
   '(ace-window
     ag
     avy
-    anzu
     browse-kill-ring
     crux
     discover-my-major
@@ -75,10 +65,10 @@
     diminish
     easy-kill
     editorconfig
-    epl
     expand-region
     flycheck
     gist
+    git-timemachine
     git-modes
     guru-mode
     hl-todo
@@ -86,8 +76,8 @@
     projectile
     magit
     move-text
-    nlinum
     operate-on-number
+    paredit
     smartparens
     smartrep
     super-save
@@ -156,8 +146,6 @@ PACKAGE is installed only if not already present.  The file is opened in MODE."
     ("\\.edn\\'" clojure-mode clojure-mode)
     ("\\.cmake\\'" cmake-mode cmake-mode)
     ("CMakeLists\\.txt\\'" cmake-mode cmake-mode)
-    ("\\.coffee\\'" coffee-mode coffee-mode)
-    ("\\.css\\'" css-mode css-mode)
     ("\\.csv\\'" csv-mode csv-mode)
     ("Cask" cask-mode cask-mode)
     ("\\.d\\'" d-mode d-mode)
@@ -174,7 +162,6 @@ PACKAGE is installed only if not already present.  The file is opened in MODE."
     ("\\.haml\\'" haml-mode haml-mode)
     ("\\.hs\\'" haskell-mode haskell-mode)
     ("\\.jl\\'" julia-mode julia-mode)
-    ("\\.json\\'" json-mode json-mode)
     ("\\.kt\\'" kotlin-mode kotlin-mode)
     ("\\.kv\\'" kivy-mode kivy-mode)
     ("\\.latex\\'" auctex LaTeX-mode)
@@ -182,7 +169,7 @@ PACKAGE is installed only if not already present.  The file is opened in MODE."
     ("\\.lua\\'" lua-mode lua-mode)
     ("\\.markdown\\'" markdown-mode markdown-mode)
     ("\\.md\\'" markdown-mode markdown-mode)
-    ("\\.ml\\'" tuareg tuareg-mode)
+    ("\\.ml\\'" neocaml neocaml-mode)
     ("\\.pp\\'" puppet-mode puppet-mode)
     ("\\.php\\'" php-mode php-mode)
     ("\\.proto\\'" protobuf-mode protobuf-mode)
@@ -191,7 +178,7 @@ PACKAGE is installed only if not already present.  The file is opened in MODE."
     ("\\.pyx\\'" cython-mode cython-mode)
     ("PKGBUILD\\'" pkgbuild-mode pkgbuild-mode)
     ("\\.rkt\\'" racket-mode racket-mode)
-    ("\\.rs\\'" rust-mode rust-mode)
+    ("\\.rs\\'" rust-ts-mode rust-ts-mode)
     ("\\.sass\\'" sass-mode sass-mode)
     ("\\.scala\\'" scala-mode scala-mode)
     ("\\.scss\\'" scss-mode scss-mode)
@@ -200,15 +187,7 @@ PACKAGE is installed only if not already present.  The file is opened in MODE."
     ("\\.swift\\'" swift-mode swift-mode)
     ("\\.textile\\'" textile-mode textile-mode)
     ("\\.thrift\\'" thrift thrift-mode)
-    ("\\.yml\\'" yaml-mode yaml-mode)
-    ("\\.yaml\\'" yaml-mode yaml-mode)
     ("Dockerfile\\'" dockerfile-mode dockerfile-mode)))
-
-;; markdown-mode doesn't have autoloads for the auto-mode-alist
-;; so we add them manually if it's already installed
-(when (package-installed-p 'markdown-mode)
-  (add-to-list 'auto-mode-alist '("\\.markdown\\'" . gfm-mode))
-  (add-to-list 'auto-mode-alist '("\\.md\\'" . gfm-mode)))
 
 ;; same with adoc-mode
 (when (package-installed-p 'adoc-mode)

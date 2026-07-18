@@ -1,7 +1,7 @@
 ;;;   -*- lexical-binding: t; -*-
 ;;; init.el --- Prelude's configuration entry point.
 ;;
-;; Copyright (c) 2011-2025 Bozhidar Batsov
+;; Copyright (c) 2011-2026 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -46,10 +46,8 @@
 
 (message "[Prelude] Prelude is powering up... Be patient, Master %s!" prelude-user)
 
-(when (version< emacs-version "25.1")
-  (error "[Prelude] Prelude requires GNU Emacs 25.1 or newer, but you're running %s" emacs-version))
-
-
+(when (version< emacs-version "29.1")
+  (error "[Prelude] Prelude requires GNU Emacs 29.1 or newer, but you're running %s" emacs-version))
 
 ;; Always load newest byte code
 (setq load-prefer-newer t)
@@ -75,6 +73,9 @@ by Prelude.")
   "This folder stores all the automatically generated save/history-files.")
 (defvar prelude-modules-file (expand-file-name "prelude-modules.el" prelude-personal-dir)
   "This file contains a list of modules that will be loaded by Prelude.")
+(defvar prelude-override-package-user-dir t
+  "By default prelude installs downloaded packages in <prelude-dir>/elpa.
+   Set to nil to override this behaviour")
 
 (unless (file-exists-p prelude-savefile-dir)
   (make-directory prelude-savefile-dir))
@@ -102,11 +103,9 @@ by Prelude.")
 (setq large-file-warning-threshold 100000000)
 
 ;; preload the personal settings from `prelude-personal-preload-dir'
-(when (file-exists-p prelude-personal-preload-dir)
-  (message "[Prelude] Loading personal configuration files in %s..." prelude-personal-preload-dir)
-  (mapc 'load (directory-files prelude-personal-preload-dir 't "^[^#\.].*el$")))
-
-(require 'org)
+(when (file-directory-p prelude-personal-preload-dir)
+  (message "[Prelude] Loading personal configuration files from files and directories in %s..." prelude-personal-preload-dir)
+  (mapc 'load (directory-files-recursively prelude-personal-preload-dir "^[^#\.].*el$")))
 
 (message "[Prelude] Loading Prelude's core modules...")
 
@@ -156,12 +155,6 @@ by Prelude.")
                (directory-files prelude-personal-dir 't "^[^#\.].*\\.el$"))))
 
 (message "[Prelude] Prelude is ready to do thy bidding, Master %s!" prelude-user)
-
-;; Patch security vulnerability in Emacs versions older than 25.3
-(when (version< emacs-version "25.3")
-  (with-eval-after-load "enriched"
-    (defun enriched-decode-display-prop (start end &optional param)
-      (list start end))))
 
 (prelude-eval-after-init
  ;; greet the use with some useful tip

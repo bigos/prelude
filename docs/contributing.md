@@ -20,6 +20,9 @@ Before submitting a patch or a pull request make sure that your patch
 is in line with the [contribution
 guidelines](https://github.com/bbatsov/prelude/blob/master/CONTRIBUTING.md).
 
+If you're contributing a new module or modifying an existing one,
+please follow the [module conventions](modules/index.md#writing-a-module).
+
 ## Documentation
 
 Good documentation is just as important as good code.  Please,
@@ -41,8 +44,8 @@ You can install `MkDocs` locally and use the command `mkdocs serve` to
 see the result of changes you make to the manual locally:
 
 ```sh
-$ cd path/to/prelude/repo
-$ mkdocs serve
+cd path/to/prelude/repo
+mkdocs serve
 ```
 
 If you want to make changes to the manual's page structure you'll have to edit

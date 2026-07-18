@@ -1,4 +1,4 @@
-;;; -*- lexical-binding: t; -*-
+;;;   -*- lexical-binding: t; -*-
 ;; ## added by OPAM user-setup for emacs / base ## 6bcc7eb91f2a0005a1719b379c22ad99 ## you can edit, but keep this line
 (provide 'opam-user-setup)
 
@@ -128,12 +128,12 @@
 
 (opam-auto-tools-setup)
 ;; ## end of OPAM user-setup addition for emacs / base ## keep this line
-;; ## added by OPAM user-setup for emacs / ocp-indent ## d26022835b9c9778e472b277f7dc2298 ## you can edit, but keep this line
+;; ## added by OPAM user-setup for emacs / ocp-indent ## 397269d8289d855132fd93b531bbba3d ## you can edit, but keep this line
 ;; Load ocp-indent from its original switch when not found in current switch
 (when (not (member "ocp-indent" opam-tools-installed))
-  (autoload 'ocp-setup-indent "/home/jacekp/.opam/default/share/emacs/site-lisp/ocp-indent.el" "Improved indentation for Tuareg mode")
-  (autoload 'ocp-indent-caml-mode-setup "/home/jacekp/.opam/default/share/emacs/site-lisp/ocp-indent.el" "Improved indentation for Caml mode")
+  (autoload 'ocp-setup-indent "/home/jacek/.opam/default/share/emacs/site-lisp/ocp-indent.el" "Improved indentation for Tuareg mode")
+  (autoload 'ocp-indent-caml-mode-setup "/home/jacek/.opam/default/share/emacs/site-lisp/ocp-indent.el" "Improved indentation for Caml mode")
   (add-hook 'tuareg-mode-hook 'ocp-setup-indent t)
   (add-hook 'caml-mode-hook 'ocp-indent-caml-mode-setup  t)
-  (setq ocp-indent-path "/home/jacekp/.opam/default/bin/ocp-indent"))
+  (setq ocp-indent-path "/home/jacek/.opam/default/bin/ocp-indent"))
 ;; ## end of OPAM user-setup addition for emacs / ocp-indent ## keep this line

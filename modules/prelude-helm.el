@@ -1,7 +1,7 @@
 ;;;   -*- lexical-binding: t; -*-
 ;;; prelude-helm.el --- Helm setup
 ;;
-;; Copyright © 2011-2025 Bozhidar Batsov
+;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -32,21 +32,21 @@
 
 ;;; Code:
 
-(prelude-require-packages '(helm helm-projectile))
+(prelude-require-package 'helm)
 
-(require 'helm-config)
-(require 'helm-projectile)
+(when prelude-projectile
+  (prelude-require-package 'helm-projectile)
+  (require 'helm-projectile))
 
 (when (executable-find "curl")
-  (setq helm-google-suggest-use-curl-p t))
+  (setq helm-net-prefer-curl t))
 
 ;; See https://github.com/bbatsov/prelude/pull/670 for a detailed
 ;; discussion of these options.
-(setq helm-split-window-in-side-p           t
-      helm-buffers-fuzzy-matching           t
-      helm-move-to-line-cycle-in-source     t
-      helm-ff-search-library-in-sexp        t
-      helm-ff-file-name-history-use-recentf t)
+(setq helm-split-window-inside-p        t
+      helm-buffers-fuzzy-matching       t
+      helm-move-to-line-cycle-in-source t
+      helm-ff-search-library-in-sexp    t)
 
 ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
 ;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
@@ -54,10 +54,9 @@
 (global-set-key (kbd "C-c h") 'helm-command-prefix)
 (global-unset-key (kbd "C-x c"))
 
-(define-key helm-command-map (kbd "o")     'helm-occur)
-(define-key helm-command-map (kbd "g")     'helm-do-grep)
-(define-key helm-command-map (kbd "C-c w") 'helm-wikipedia-suggest)
-(define-key helm-command-map (kbd "SPC")   'helm-all-mark-rings)
+(define-key helm-command-map (kbd "o")   'helm-occur)
+(define-key helm-command-map (kbd "g")   'helm-do-grep-ag)
+(define-key helm-command-map (kbd "SPC") 'helm-all-mark-rings)
 
 (push "Press <C-c p h> to navigate a project in Helm." prelude-tips)
 

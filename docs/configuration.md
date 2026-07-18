@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD013 MD046 -->
+
 # Configuration
 
 ## User Interface
@@ -12,13 +14,13 @@ it's quite big and not that useful.
 
     You can toggle the menu bar by pressing `F12`.
 
-Furthermore, Prelude 1.1 displays line numbers (via `global-nlinum-mode`), just
-like most "modern" editors and IDEs do these days. You can go back to the way
+Furthermore, Prelude displays line numbers (via `global-display-line-numbers-mode`),
+just like most "modern" editors and IDEs do these days. You can go back to the way
 things were by setting `prelude-minimalistic-ui` to `t` in `personal/preload` or
 by adding the following snippets to your personal config:
 
 ``` emacs-lisp
-(global-nlinum-mode -1)
+(global-display-line-numbers-mode -1)
 (menu-bar-mode -1)
 ```
 
@@ -62,6 +64,7 @@ Or you can use another theme altogether by adding something in `personal/preload
 ```emacs-lisp
 (setq prelude-theme 'solarized-dark)
 ```
+
 in `personal/preload`.
 
 Finally, if you don't want any theme at all, you can add this to your
@@ -73,15 +76,15 @@ Finally, if you don't want any theme at all, you can add this to your
 
 ## Personalizing
 
-All files you create under the `personal/` directory are yours for
+All files or directories of files you create under the `personal/` directory are yours for
 personalization.  There is no single special personal config file --
-any files you create in the `personal/` directory will be loaded in
-lexicographical order.  The overall loading precedence is:
+any files or directories of files you create in the `personal/` directory will be loaded in
+lexicographical order (files first and then directories of files).  The overall loading precedence is:
 
-1.  `personal/preload/*`
-2.  `core/`
-3.  `personal/prelude-modules.el` (or deprecated `prelude-modules.el`)
-4.  `personal/*`
+1. `personal/preload/*`
+2. `core/`
+3. `personal/prelude-modules.el` (or deprecated `prelude-modules.el`)
+4. `personal/*`
 
 ### Personalization Example
 
@@ -159,12 +162,23 @@ If you prefer not to automatically format your file on save, you can disable tha
 
 Currently this only affects automated formatting of Typescript files.
 
+### Switch LSP client
+
+Prelude uses Eglot (built-in) as the default LSP client. If you prefer lsp-mode
+with its richer UI (peek views, sideline diagnostics), add to `personal/preload`:
+
+```emacs-lisp
+(setq prelude-lsp-client 'lsp-mode)
+```
+
+See the [LSP module documentation](modules/lsp.md) for details.
+
 ### Disable Super-based keybindings
 
 Out-of-the-box Prelude will create two versions of many keybindings in `prelude-mode`:
 
-* One "traditional" version with a prefix like `Control`
-* One "alternative" version with a prefix like `Super`
+- One "traditional" version with a prefix like `Control`
+- One "alternative" version with a prefix like `Super`
 
 The reason for this is that there are generally more options for short keybindings with `Super` - e.g. you can
 have `s-p`, `s-g`, etc. There's, however, a problem lying here as well - some operating systems and
@@ -175,8 +189,35 @@ desktop environments might be making heavy use of such keybindings. (in most cas
 (setq prelude-super-keybindings nil)
 ```
 
+### Disable Projectile
+
+By default, Prelude configures [Projectile](https://github.com/bbatsov/projectile) for project
+interaction. To disable this, add the following to your config.
+
+``` emacs-lisp
+(setq prelude-projectile nil)
+```
+
+### Disable hippie-expand
+
+By default, Prelude configures `hippie-expand` as a replacement for Emacs' default `dabbrev`. To disable this
+behaviour, add the following to your config.
+
+``` emacs-lisp
+(setq prelude-hippie-expand nil)
+```
+
 ### Configuration per file or directory
 
 Some of these settings (those that don't need to be pre-loaded) can also be set
 on a per-file or directory basis by using a file local variable or a
 `.dir-locals.el` file.
+
+### package-user-dir
+
+By default, prelude sets the directory where downloaded modules are installed to `<prelude-dir>/elpa`. If you want
+to disable this behaviour, set the following variable to nil before loading prelude.
+
+```emacs-lisp
+(setq prelude-override-package-user-dir nil)
+```

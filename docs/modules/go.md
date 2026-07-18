@@ -1,16 +1,16 @@
 # Prelude Go
 
 This module builds on top of the shared [Programming](programming.md)
-module, as well as the `prelude-lsp` module.
+module.
 
 The following keybindings are set by default, which are not present in
 each mode's default bindings:
 
-* <kbd>C-c a</kbd> (`go-test-current-project`)
-* <kbd>C-c m</kbd> (`go-test-current-file`)
-* <kbd>C-c .</kbd> (`go-test-current-test`)
-* <kbd>C-c b</kbd> (`go-run`)
-* <kbd>C-h f</kbd> (`godoc-at-point`)
+- <kbd>C-c a</kbd> (`go-test-current-project`)
+- <kbd>C-c m</kbd> (`go-test-current-file`)
+- <kbd>C-c .</kbd> (`go-test-current-test`)
+- <kbd>C-c b</kbd> (`go-run`)
+- <kbd>C-h f</kbd> (`godoc-at-point`)
 
 Run <kbd>C-h m</kbd> for all the key bindings and other documentation.
 
@@ -29,7 +29,8 @@ with 1.18+. Other minor modes may not support generics yet.
 ## Go Mode
 
 `prelude-go` builds on several useful Go tools, and establishes sensible
-defaults. The major mode is `go-mode`. Documentation is available at [github.com/dominikh/go-mode.el](https://github.com/dominikh/go-mode.el)
+defaults. The major mode is `go-mode`. Documentation is
+available at [github.com/dominikh/go-mode.el](https://github.com/dominikh/go-mode.el)
 
 ## Go Projectile
 
@@ -38,14 +39,14 @@ provided by [go-projectile](https://github.com/dougm/go-projectile).
 
 This provides:
 
-* Projectile integration
-* Switching GOPATH if desired per project (customizable via
+- Projectile integration
+- Switching GOPATH if desired per project (customizable via
   `customize`)
-* Ability to download all commonly used `go` tools via <kbd>M-x
+- Ability to download all commonly used `go` tools via <kbd>M-x
   go-projectile-install-tools</kbd> and update them via <kbd>M-x
   go-projectile-update-tools</kbd>
-* Very basic refactoring via `go-projectile-rewrite` (uses `gofmt -r`)
-* Support for `go get` and `go get -u` via `go-projectile-get` and
+- Very basic refactoring via `go-projectile-rewrite` (uses `gofmt -r`)
+- Support for `go get` and `go get -u` via `go-projectile-get` and
   `go-projectile-update`.
 
 See its documentation for details.
@@ -63,13 +64,14 @@ features separately in each editor. Emacs supports LSP via
 To install `gopls`, change to a directory outside of `$GOPATH` or any
 module (e.g., `/tmp`) and execute:
 
-```
+```shell
 go install golang.org/x/tools/gopls@latest
 ```
 
 Ensure that `gopls` is in your `$PATH`.
 
-Excellent documentation for `lsp-mode` and `lsp-ui` are provided at [emacs-lsp.github.io/lsp-mode/](https://emacs-lsp.github.io/lsp-mode/)
+Excellent documentation for `lsp-mode` and `lsp-ui` are
+provided at [emacs-lsp.github.io/lsp-mode/](https://emacs-lsp.github.io/lsp-mode/)
 
 If a feature, such as documentation, refactoring, indenting, etc. is
 provided by `lsp`, you should use it instead of calling to another

@@ -1,7 +1,7 @@
 ;;;   -*- lexical-binding: t; -*-
 ;;; prelude-emacs-lisp.el --- Emacs Prelude: Nice config for Elisp programming.
 ;;
-;; Copyright © 2011-2025 Bozhidar Batsov
+;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -33,8 +33,6 @@
 
 (require 'prelude-lisp)
 (require 'crux)
-
-(prelude-require-packages '(elisp-slime-nav rainbow-mode))
 
 (defun prelude-recompile-elc-on-save ()
   "Recompile your elc when saving an elisp file."
@@ -77,7 +75,10 @@ Start `ielm' if it's not already running."
 (add-hook 'emacs-lisp-mode-hook (lambda ()
                                   (run-hooks 'prelude-emacs-lisp-mode-hook)))
 
+;; Recognize Emacs package build tool files as Emacs Lisp
 (add-to-list 'auto-mode-alist '("Cask\\'" . emacs-lisp-mode))
+(add-to-list 'auto-mode-alist '("Eask\\'" . emacs-lisp-mode))
+(add-to-list 'auto-mode-alist '("Eldev\\'" . emacs-lisp-mode))
 
 ;; ielm is an interactive Emacs Lisp shell
 (defun prelude-ielm-mode-defaults ()
@@ -90,10 +91,19 @@ Start `ielm' if it's not already running."
 (add-hook 'ielm-mode-hook (lambda ()
                             (run-hooks 'prelude-ielm-mode-hook)))
 
-(with-eval-after-load "elisp-slime-nav"
-  (diminish 'elisp-slime-nav-mode))
-(with-eval-after-load "rainbow-mode"
-  (diminish 'rainbow-mode))
+;; M-. to jump to Elisp definition, C-c C-d to describe symbol at
+;; point.  Complements built-in xref with Elisp-specific navigation.
+(use-package elisp-slime-nav
+  :ensure t
+  :diminish
+  :hook ((emacs-lisp-mode ielm-mode) . elisp-slime-nav-mode))
+
+;; Colorize color names and hex values in Elisp buffers
+(use-package rainbow-mode
+  :ensure t
+  :diminish
+  :defer t)
+
 (with-eval-after-load "eldoc"
   (diminish 'eldoc-mode))
 
@@ -101,16 +111,13 @@ Start `ielm' if it's not already running."
   (define-key ielm-map (kbd "M-(") (prelude-wrap-with "("))
   (define-key ielm-map (kbd "M-\"") (prelude-wrap-with "\"")))
 
-;; enable elisp-slime-nav-mode
-(dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
-  (add-hook hook 'elisp-slime-nav-mode))
-
-(defun conditionally-enable-smartparens-mode ()
-  "Enable `smartparens-mode' in the minibuffer, during `eval-expression'."
+(defun prelude-conditionally-enable-smartparens-mode ()
+  "Enable `smartparens-mode' in the minibuffer during `eval-expression'."
   (if (eq this-command 'eval-expression)
-      (smartparens-mode 1)))
+      ;; (smartparens-mode 1)
+      (paredit-mode 1)))
 
-(add-hook 'minibuffer-setup-hook 'conditionally-enable-smartparens-mode)
+(add-hook 'minibuffer-setup-hook 'prelude-conditionally-enable-smartparens-mode)
 
 (provide 'prelude-emacs-lisp)
 

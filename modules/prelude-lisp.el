@@ -1,7 +1,7 @@
 ;;;   -*- lexical-binding: t; -*-
 ;;; prelude-lisp.el --- Emacs Prelude: Configuration common to all lisp modes.
 ;;
-;; Copyright © 2011-2025 Bozhidar Batsov
+;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -45,14 +45,16 @@
 
 ;; a great lisp coding hook
 (defun prelude-lisp-coding-defaults ()
-  (smartparens-strict-mode +1)
+  ;; (smartparens-strict-mode +1)
+  (paredit-mode +1)
   (rainbow-delimiters-mode +1))
 
 (setq prelude-lisp-coding-hook 'prelude-lisp-coding-defaults)
 
 ;; interactive modes don't need whitespace checks
 (defun prelude-interactive-lisp-coding-defaults ()
-  (smartparens-strict-mode +1)
+  ;; (smartparens-strict-mode +1)
+  (paredit-mode +1)
   (rainbow-delimiters-mode +1)
   (whitespace-mode -1))
 

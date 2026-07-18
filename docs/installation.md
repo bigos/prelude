@@ -12,15 +12,19 @@ dictionaries for the languages you wish to check.
 
 You'll also do well to install some of the following:
 
-* `git` (needed by Magit)
-* `ag` (`the_silver_searcher`) or `ripgrep` (Projectile has nice integration with them and they are much faster than `grep`)
-* your favorite lint tools (for Flycheck)
+- `git` (needed by Magit)
+- `ag` (`the_silver_searcher`) or `ripgrep` (Projectile has
+  nice integration with them and they are much faster than
+  `grep`)
+- your favorite lint tools (for Flycheck)
 
 All those tools are completely optional, though.
 
 !!! Note
 
-    Additional external tools might be needed by some of the modules (e.g. tools specific to particular programming languages, etc).
+    Additional external tools might be needed by some of the
+    modules (e.g. tools specific to particular programming
+    languages, etc).
 
 ## Installing Prelude
 
@@ -31,10 +35,10 @@ You can install Emacs Prelude via the command line with either `curl` or
 
 The installer script will do the following:
 
-* Clone Prelude's GitHub repo
-* Check your Emacs version
-* Backup any existing `.emacs` or `.emacs.d` you might have
-* Create any additional folders if necessary (e.g. for storing
+- Clone Prelude's GitHub repo
+- Check your Emacs version
+- Backup any existing `.emacs` or `.emacs.d` you might have
+- Create any additional folders if necessary (e.g. for storing
   package-specific data)
 
 If you have a `.emacs` file it will backed up as `.emacs.pre-prelude`
@@ -45,16 +49,18 @@ and if you have a `.emacs.d` folder, it will be backed up as
 
 If you're using `curl` type the following command:
 
-```shellsession
-$ curl -L https://github.com/bbatsov/prelude/raw/master/utils/installer.sh | sh
+```shell
+curl -L https://github.com/bbatsov/prelude/raw/master/utils/installer.sh | sh
 ```
 
 #### Via Wget
 
 If you're using `wget` type:
 
-```shellsession
-$ wget --no-check-certificate https://github.com/bbatsov/prelude/raw/master/utils/installer.sh -O - | sh
+```shell
+wget --no-check-certificate \
+  https://github.com/bbatsov/prelude/raw/master/utils/installer.sh \
+  -O - | sh
 ```
 
 ### Manual
@@ -62,18 +68,20 @@ $ wget --no-check-certificate https://github.com/bbatsov/prelude/raw/master/util
 Make sure you do not have any `~/.emacs` file or `~/.emacs.d` folder
 present.
 
-```shellsession
-$ git clone https://github.com/bbatsov/prelude.git path/to/local/repo
-$ ln -s path/to/local/repo ~/.emacs.d
-$ cd ~/.emacs.d
+```shell
+git clone https://github.com/bbatsov/prelude.git path/to/local/repo
+ln -s path/to/local/repo ~/.emacs.d
+cd ~/.emacs.d
 ```
 
 !!! Note
 
-    If you are using Windows, you should check what Emacs thinks the `~` directory is by running Emacs
-    and typing `C-x d ~/<RET>`, and then adjust the command appropriately.
-    It is recommended to explicitly set HOME environment variable.
-    For details, please refer to [Emacs manual Windows-HOME section](https://www.gnu.org/software/emacs/manual/html_node/emacs/Windows-HOME.html)
+    If you are using Windows, you should check what Emacs
+    thinks the `~` directory is by running Emacs and typing
+    `C-x d ~/<RET>`, and then adjust the command
+    appropriately. It is recommended to explicitly set HOME
+    environment variable. For details, please refer to the
+    [Emacs manual Windows-HOME section](https://www.gnu.org/software/emacs/manual/html_node/emacs/Windows-HOME.html).
 
 ### System-wide (site-wide)
 
@@ -142,7 +150,6 @@ modules visit the [docs](modules/index.md).
 
 (require 'prelude-c)
 ;; (require 'prelude-clojure)
-;; (require 'prelude-coffee)
 ;; (require 'prelude-common-lisp)
 (require 'prelude-css)
 ;; (require 'prelude-dart)
@@ -154,7 +161,7 @@ modules visit the [docs](modules/index.md).
 (require 'prelude-js)
 ;; (require 'prelude-latex)
 (require 'prelude-lisp) ;; Common setup for Lisp-like languages
-(require 'prelude-lsp) ;; Base setup for the Language Server Protocol
+;; (require 'prelude-lsp-mode) ;; lsp-mode and lsp-ui setup
 ;; (require 'prelude-lua)
 ;; (require 'prelude-ocaml)
 (require 'prelude-perl)
@@ -172,7 +179,7 @@ modules visit the [docs](modules/index.md).
 (require 'prelude-yaml)
 
 ;;; Misc
-(require 'prelude-erc) ;; A popular Emacs IRC client (useful if you're still into Freenode)
+(require 'prelude-erc) ;; A popular Emacs IRC client
 ```
 
 You'll need to adjust your `prelude-modules.el` file once the
@@ -211,9 +218,9 @@ Just run <kbd>M-x package-list-packages RET U x</kbd>.
 
 #### Update Prelude's code
 
-```shellsession
-$ cd path/to/prelude/installation
-$ git pull
+```shell
+cd path/to/prelude/installation
+git pull
 ```
 
 The `path/to/prelude/installation` is usually `~/.emacs.d` (at least

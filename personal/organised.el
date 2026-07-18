@@ -1,5 +1,4 @@
-;; -*- lexical-binding: t; -*-
-
+;;;   -*- lexical-binding: t; -*-
 ;;; code:
 
 ;;; WARNING! this *.el file has been generated automatically from
@@ -89,8 +88,6 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (interactive)
   (org-open-at-point t))
 ;; https://emacs.stackexchange.com/questions/14748/how-to-bind-a-command-with-a-c-u-prefix-to-a-different-key
-(define-key org-mode-map (kbd "C-z o") 'better-org-open-at-point)
-(define-key org-mode-map (kbd "C-z t") 'better-org-open-and-search)
 
 ;;; *** Basic configuration
 (global-unset-key (kbd "C-z"))          ; allow others use C-z prefix
@@ -129,7 +126,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-set-key (kbd "C-S-l i") 'org-insert-link)
 (global-set-key (kbd "C-S-l o") 'org-open-at-point)
 (global-set-key (kbd "C-z B") 'mark-and-copy-org-block)
-(global-set-key (kbd "C-]") 'insert-graph-arrow)
+(global-set-key (kbd "C-z >") 'insert-graph-arrow)
 (global-set-key (kbd "C-S-l n") 'display-line-numbers-mode)
 
 (defun jump-to-line-in-file ()
@@ -352,10 +349,6 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (interactive)
   (insert-named-source-block "lisp"))
 
-(add-hook 'org-mode-hook
-          #'(lambda ()
-              (local-set-key (kbd "C-z #") 'insert-lisp-source-block)))
-
 (require 'org)
 
 ;;; correct way of adding links
@@ -377,7 +370,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
     (start-process "view-pdf" nil "evince" "--page-index" page afile)))
 
 ;;; My own additions
-(require 'org-vlc)
+;; (require 'org-vlc)
 (require 'jacek-verse)
 
 (add-hook 'org-mode-hook
@@ -481,14 +474,16 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (defun override-current-org-roam-my-folder (path)
   ;; ensure PATH ends with "/org-roam/"
   (if (s-ends-with? last-part-of-org-roam path)
-      (message (concat "Loading org-roam project at: " path))
+      (progn
+        (let ((new-current path))
+          (if (file-exists-p path)
+              (message "Expected roam folder exists")
+            (make-directory new-current :parents))
+          (message (concat "Loading org-roam project at: " path))
+          (setq org-roam-my-folder new-current)))
     (progn
       (message (concat "Expecting the PATH to end with " last-part-of-org-roam))
-      (error (concat "Could not validate org-roam PATH " path))))
-
-  (let ((new-current path))
-    (make-directory new-current :parents)
-    (setq org-roam-my-folder new-current)))
+      (error (concat "Could not validate org-roam PATH " path)))))
 
 (defun org-roam-my-db ()
   (concat org-roam-my-folder
@@ -533,7 +528,11 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                 ("C-x n t" . org-roam-tag-add)
                 ("C-x n s" . org-roam-db-sync)
                 ("C-x n a" . org-roam-alias-add)
-                ("C-x n l" . org-roam-buffer-toggle)))))
+                ("C-x n l" . org-roam-buffer-toggle)))
+         ))
+
+(define-key org-mode-map (kbd "C-z o") 'better-org-open-at-point)
+(define-key org-mode-map (kbd "C-z t") 'better-org-open-and-search)
 
 (require 'org-protocol)
 (require 'org-roam-protocol)
@@ -627,6 +626,50 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (global-set-key (kbd "C-z 4") 'kmacro-end-or-call-macro))
 
 ;;; *** Shortcuts
+(defun insert-pound ()
+  (interactive)
+  (insert "£"))
+(defun insert-tilde ()
+  (interactive)
+  (insert "~"))
+
+(defun insert-backslash ()
+  "\\"
+  (interactive)
+  (insert "\\"))
+(defun insert-brvbar ()
+  "¦"
+  (interactive)
+  (insert "¦"))
+(defun insert-verbar ()
+  "|"
+  (interactive)
+  (insert "|"))
+(defun insert-sharp ()
+  "#"
+  (interactive)
+  (insert "#"))
+
+;;; some of these shortcuts make sense only on British keyboard
+(global-set-key (kbd "C-z 3") 'insert-pound)
+;; (global-set-key (kbd "C-z 1") 'insert-tilde)
+
+(global-set-key (kbd "C-z k b") 'insert-backslash)
+(global-set-key (kbd "C-z k r") 'insert-brvbar)
+(global-set-key (kbd "C-z k v") 'insert-verbar)
+(global-set-key (kbd "C-z k s") 'insert-sharp)
+
+(global-set-key (kbd "C-z k #")   'insert-backslash)
+(global-set-key (kbd "C-z k ~")   'insert-brvbar)
+(global-set-key (kbd "C-z k C-#") 'insert-verbar)
+(global-set-key (kbd "C-z k 3")    'insert-pound)
+
+(global-set-key (kbd "C-z #")   'insert-backslash)
+(global-set-key (kbd "C-z ~")   'insert-brvbar)
+(global-set-key (kbd "C-z C-#") 'insert-verbar)
+
+;;; verbar -| - can be inserted with AltGr and the key below escape
+
 (global-set-key (kbd "C-z a") 'bs-cycle-previous)
 (global-set-key (kbd "C-z s") 'bs-cycle-next)
 
@@ -716,7 +759,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (use-package ocamlformat
   :ensure t
   :config
-  (add-hook 'before-save-hook 'ocamlformat-before-save))
+  (add-hook 'before-save-hook 'ocamlformat-before-save)
+  (add-hook 'before-save-hook 'neocaml-format-buffer))
 
 (use-package flycheck-ocaml
   :ensure t)
@@ -778,63 +822,70 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 ;;; *** Haskell
 ;;; make sure Emacs uses stack in Haskell Projects by default
-;;(setq haskell-process-type 'stack-ghci)
+;; (setq haskell-process-type 'stack-ghci)
 
-
+;; set up Haskell mode
 (use-package haskell-mode
-  :defer
-  :custom
-  (haskell-process-type 'cabal-repl)
-  (haskell-interactive-popup-errors nil)
-  (haskell-process-args-cabal-repl '("--repl-options=-ferror-spans"))
-  :hook
-  (haskell-mode 'interactive-haskell-mode)
-  ;; :bind
-  ;; (:map haskell-mode-map
-  ;;       ("C-c i" . +haskell-add-import)
-  ;;       ("C-c p l" . +haskell-add-language-extension)
-  ;;       ("C-c p o" . +haskell-add-ghc-option))
-  )
+  :ensure t
+  ;; :hook (haskell-mode . font-lock-fontify-buffer)
+  :hook (haskell-mode . turn-on-haskell-doc-mode)
+  :hook (haskell-mode . turn-on-haskell-indentation)
+  ;; :hook (haskell-mode . hlint-refactor-mode)
+  ;; :hook (haskell-mode . intero-mode)
+  :hook (haskell-mode . interactive-haskell-mode)
+  :hook (haskell-mode . flymake-haskell-enable)
+  :init
+  (add-to-list 'exec-path "~/.local/bin")
+  :config
+  (require 'haskell-interactive-mode)
+  (require 'haskell-process)
+  ;; (setq haskell-process-type 'cabal-repl)
+  (setq haskell-process-type 'stack-ghci)
+  (setq haskell-interactive-mode-eval-mode 'haskell-mode)
+  (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-file)
+  (define-key haskell-mode-map (kbd "C-c C-n C-t") 'haskell-process-do-type)
+  (define-key haskell-mode-map (kbd "C-c C-n C-i") 'haskell-process-do-info)
+  (define-key haskell-mode-map (kbd "C-h") 'haskell-hoogle)
+  (defun flymake-haskell-init ()
+    "Flymake init function for Haskell."
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy 'flymake-create-temp-inplace))
+           (local-file (file-relative-name temp-file (file-name-directory buffer-file-name))))
+      (list "hlint" (list local-file))))
 
-(add-hook 'haskell-mode-hook (lambda () (setq-local company-dabbrev-downcase nil)))
+  (defun flymake-haskell-enable ()
+    "Enable flymake mode for Haskell."
+    (when (and buffer-file-name
+               (file-writable-p (file-name-directory buffer-file-name))
+               (file-writable-p buffer-file-name))
+      (local-set-key (kbd "C-c d") 'flymake-display-err-menu-for-current-line)
+      (flymake-mode t)))
+
+  (push '("\\.l?hs\\'" flymake-haskell-init) flymake-allowed-file-name-masks))
+
+;; (add-hook 'haskell-mode-hook (lambda () (setq-local company-dabbrev-downcase nil)))
+
+;;; also install ormolu
+;;; https://github.com/tweag/ormolu#installation
+(use-package ormolu
+  :hook (haskell-mode . ormolu-format-on-save-mode)
+  :bind
+  (:map haskell-mode-map
+        ("C-c r" . ormolu-format-buffer)))
 
 (defun capitalize-and-join-backwards ()
-    (interactive)
-    (search-backward " ")
-    (right-char)
-    (right-char)
-    (insert " ")
-    (left-char)
-    (left-char)
-    (capitalize-word 1)
-    (paredit-forward-delete)
-    (left-char)
-    (paredit-backward-delete))
+  (interactive)
+  (search-backward " ")
+  (right-char)
+  (right-char)
+  (insert " ")
+  (left-char)
+  (left-char)
+  (capitalize-word 1)
+  (paredit-forward-delete)
+  (left-char)
+  (paredit-backward-delete))
 
 (global-set-key (kbd "C-z 2") 'capitalize-and-join-backwards)
-
-;;; a;so install ormolu
-;; https://github.com/tweag/ormolu#installation
-(add-hook 'haskell-mode-hook
-            #'(lambda ()
-               (local-set-key (kbd "C-c C-d h") 'haskell-hoogle)))
-
-(add-hook 'haskell-interactive-mode-hook
-            #'(lambda ()
-               (local-set-key (kbd "C-c C-d h") 'haskell-hoogle)))
-
-(add-hook 'haskell-interactive-mode-hook
-            #'(lambda ()
-               (prelude-mode -1)
-               (local-set-key (kbd "C-a") 'haskell-interactive-mode-bol)))
-
-(use-package ormolu
-  :ensure t
-  :hook (haskell-mode . ormolu-format-on-save-mode)
-  ;; :bind
-  ;; :map
-  ;; (haskell-mode-map ("C-z h" . ormolu-format-buffer))
-  )
 
 ;;; *** Lisp
 
@@ -921,6 +972,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (interactive)
   (insert (format "\n#|\n\n%s\n\n|#" "your comment here...")))
 
+(global-set-key (kbd "C-z E") 'slime-eval-defun)
 (global-set-key (kbd "C-z e") 'slime-copy-last-expression-to-repl)
 (global-set-key (kbd "C-z t") 'slime-copy-last-expression)
 (global-set-key (kbd "C-z P") 'slime-eval-print-last-expression)
@@ -939,19 +991,87 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 ;;; restart lisp after error
 (global-set-key (kbd "C-z R") 'slime-restart-inferior-lisp)
 
+;; reset source and REPL windows
+(defun reset-my-windows-lisp (buffer)
+  (if (slime-connected-p)
+      (progn
+        (if (equal (slime-connection-name) "sbcl")
+            (progn
+              (switch-to-buffer  (buffer-name buffer))
+              (delete-other-windows)
+              (split-window-right)
+              (switch-window)
+              (switch-to-buffer  "*slime-repl sbcl*")
+              (switch-window)
+              (message "Lisp Windows for %s were reset" major-mode))
+          (message "Error - Only SBCL is supported")))
+    (message "Error - No Lisp connected")))
+
+(defun reset-my-windows-haskell (buffer)
+  (let ((haskell-repl-buffer  (first (remove-if-not
+                                       (lambda (b) (eq 'haskell-interactive-mode
+                                                       (buffer-local-value 'major-mode b)))
+                                       (buffer-list)))))
+      (if haskell-repl-buffer
+          (progn
+            (switch-to-buffer  (buffer-name buffer))
+            (delete-other-windows)
+            (split-window-right)
+            (switch-window)
+            (switch-to-buffer (buffer-name haskell-repl-buffer))
+            (switch-window)
+            (message "Haskell Windows for %s were reset" major-mode))
+        (message "No Haskell REPL found"))))
+
+(defun reset-my-windows ()
+  (interactive)
+  (message "Resetting from windows with %s" major-mode)
+
+  (let ((lisp-buffers (cl-remove-if-not
+                       (lambda (b) (eq 'lisp-mode
+                                       (buffer-local-value 'major-mode b)))
+                       (buffer-list)))
+        (haskell-buffers  (cl-remove-if-not
+                           (lambda (b) (eq 'haskell-mode
+                                           (buffer-local-value 'major-mode b)))
+                           (buffer-list))))
+    (cond ((and (null lisp-buffers)
+                (null haskell-buffers))
+           (message "Neither Lisp or Haskell buffers were found."))
+          ((and lisp-buffers
+                haskell-buffers)
+           (message "Both Lisp or Haskell buffers are present.")
+           ;; make the choice
+           (let ((selection (ivy-completing-read "select the mode" '("Haskell" "Lisp"))))
+             (cond ((equal selection "Lisp")
+                    (reset-my-windows-lisp (first lisp-buffers)))
+                   ((equal selection "Haskell")
+                    (reset-my-windows-haskell (first haskell-buffers)))
+                   (t (message "Error - invalid selection %s" selection)))))
+          (lisp-buffers
+           (message "Working on Lisp.")
+           (reset-my-windows-lisp (first lisp-buffers)))
+          (haskell-buffers
+           (message "Working on Haskell.")
+           (reset-my-windows-haskell (first lisp-buffers)))
+          (t (message "I do not know what to do here.")))))
+
+(global-set-key (kbd "C-z z") 'reset-my-windows)
+
 
 ;;; **** Paredit
-(global-set-key (kbd "C-z (") 'paredit-mode)
+(defun swap-paredit ()
+  "Replace smartparens with superior paredit."
+  (interactive)
+  (message "swapping paredit")
+  (smartparens-mode -1)
+  (show-smartparens-mode -1)
+  (enable-paredit-mode))
+
+(global-set-key (kbd "C-z (") 'swap-paredit)
 
 (add-hook 'minibuffer-inactive-mode-hook #'paredit-mode)
 (add-hook 'minibuffer-inactive-mode-hook #'rainbow-delimiters-mode)
-
-(defun swap-paredit ()
-    "Replace smartparens with superior paredit."
-    (interactive)
-    (message "swapping paredit")
-    (smartparens-mode -1)
-    (enable-paredit-mode))
 
 (autoload 'paredit-mode "paredit"
     "Minor mode for pseudo-structurally editing Lisp code." t)
