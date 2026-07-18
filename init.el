@@ -1,5 +1,4 @@
-;;;   -*- lexical-binding: t; -*-
-;;; init.el --- Prelude's configuration entry point.
+;;; init.el --- Prelude's configuration entry point.  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2011-2026 Bozhidar Batsov
 ;;
@@ -95,9 +94,8 @@ by Prelude.")
 (add-to-list 'load-path prelude-vendor-dir)
 (prelude-add-subfolders-to-load-path prelude-vendor-dir)
 
-;; reduce the frequency of garbage collection by making it happen on
-;; each 50MB of allocated data (the default is on every 0.76MB)
-(setq gc-cons-threshold 50000000)
+;; the garbage collection threshold is tuned in early-init.el (raised
+;; during startup, restored to a modest value once startup is over)
 
 ;; warn when opening files bigger than 100MB
 (setq large-file-warning-threshold 100000000)
@@ -161,8 +159,3 @@ by Prelude.")
  (run-at-time 5 nil 'prelude-tip-of-the-day))
 
 ;;; init.el ends here
-
-;; ## added by OPAM user-setup for emacs / base ## 56ab50dc8996d2bb95e7856a6eddb17b ## you can edit, but keep this line
-(require 'opam-user-setup "~/.emacs.d/opam-user-setup.el")
-
-;; ## end of OPAM user-setup addition for emacs / base ## keep this line

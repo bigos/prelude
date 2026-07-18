@@ -33,21 +33,9 @@ var/
 gotools/
 eln-cache/
 
-org-roam.db
 .org-id-locations
-
-tutorial/
-
-eww-bookmarks
-smex-items
-
-tree-sitter/*
-image-dired/*
-
-ielm-history.eld 
 projectile-frecency.eld
 
-neocaml-repl-history
+tree-sitter/*
+ac-comphist.dat 
 
-ac-comphist.dat
-projects 
