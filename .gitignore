@@ -35,3 +35,7 @@ eln-cache/
 
 .org-id-locations
 projectile-frecency.eld
+
+tree-sitter/*
+ac-comphist.dat 
+
