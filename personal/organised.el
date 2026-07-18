@@ -241,6 +241,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                             slime-repl-ansi-color
                             string-inflection
                             switch-window
+                            transpose-frame
                             tree-sitter-langs
                             treemacs-all-the-icons
                             treemacs-projectile
