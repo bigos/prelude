@@ -106,6 +106,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 ;;; fix annoying C-s in macros
 (global-set-key (kbd "C-z F") 're-search-forward)
 (global-set-key (kbd "C-z X") 'delete-duplicate-lines)
+(global-set-key (kbd "C-z X") 'delete-duplicate-lines)
 
 (global-set-key (kbd "C-z m") 'multi-vterm)
 (add-hook 'vterm-mode-hook
@@ -674,6 +675,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-set-key (kbd "C-z a") 'bs-cycle-previous)
 (global-set-key (kbd "C-z s") 'bs-cycle-next)
 (global-set-key (kbd "C-z T") 'transpose-frame)
+(global-set-key (kbd "C-z 1") 'elisp-enable-lexical-binding)
 
 
 ;;; switch-window
