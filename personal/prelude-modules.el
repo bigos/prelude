@@ -1,4 +1,3 @@
-;;;   -*- lexical-binding: t; -*-
 ;;; prelude-modules.el --- A listing of modules to load on startup
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
@@ -43,8 +42,8 @@
 ;;; General productivity tools
 
 ;; (require 'prelude-ido) ;; Supercharges Emacs completion for C-x C-f and more
-(require 'prelude-ivy) ;; A mighty modern alternative to ido
-;; (require 'prelude-vertico) ;; A powerful, yet simple, alternative to ivy
+;; (require 'prelude-ivy) ;; A mighty modern alternative to ido
+(require 'prelude-vertico) ;; A powerful, yet simple, alternative to ivy
 ;; (require 'prelude-helm) ;; Interface for narrowing and search
 ;; (require 'prelude-helm-everywhere) ;; Enable Helm everywhere
 (require 'prelude-company)
@@ -69,8 +68,8 @@
 ;; are enabled by default.
 
 (require 'prelude-c)
-(require 'prelude-clojure)
-(require 'prelude-common-lisp)
+;; (require 'prelude-clojure)
+;; (require 'prelude-common-lisp)
 (require 'prelude-css)
 ;; (require 'prelude-dart)
 (require 'prelude-emacs-lisp)
@@ -78,23 +77,24 @@
 ;; (require 'prelude-elixir)
 ;; (require 'prelude-fsharp)
 ;; (require 'prelude-go)
-(require 'prelude-haskell)
+;; (require 'prelude-haskell)
 (require 'prelude-js)
 ;; (require 'prelude-latex)
 (require 'prelude-lisp) ;; Common setup for Lisp-like languages
 ;; (require 'prelude-literate-programming) ;; Setup for Literate Programming
 ;; (require 'prelude-lsp-mode) ;; lsp-mode and lsp-ui setup (loaded on demand when prelude-lsp-client is 'lsp-mode)
 ;; (require 'prelude-lua)
-(require 'prelude-ocaml)
+;; (require 'prelude-ocaml)
 (require 'prelude-perl)
-(require 'prelude-python)
+;; (require 'prelude-python)
 ;; (require 'prelude-racket)
-(require 'prelude-ruby)
+;; (require 'prelude-ruby)
 ;; (require 'prelude-rust)
 ;; (require 'prelude-scala)
 ;; (require 'prelude-scheme)
 (require 'prelude-shell)
-(require 'prelude-scss)
+;; (require 'prelude-scss)
+;; (require 'prelude-swift)
 ;; (require 'prelude-ts)
 (require 'prelude-web) ;; Emacs mode for web templates
 (require 'prelude-xml)
@@ -104,6 +104,7 @@
 ;; (require 'prelude-ai) ;; LLM-backed chat via gptel
 ;; (require 'prelude-erc) ;; A popular Emacs IRC client
 ;; (require 'prelude-forge) ;; GitHub/GitLab/Gitea PRs and issues via Magit
+;; (require 'prelude-mistty) ;; MisTTY terminal (pure elisp, no native module; rebinds C-c t)
 
 (provide 'prelude-modules)
 ;;; prelude-modules.el ends here
