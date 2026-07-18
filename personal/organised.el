@@ -920,11 +920,6 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (require 'slime)
 (require 'slime-autoloads)
 
-;;; I do not need it because slime-selector is better
-;; (add-hook 'slime-repl-mode-hook
-;;           #'(lambda ()
-;;               (local-set-key (kbd "C-c B") 'slime-scratch-buffer)))
-
 ;; (setq slime-contribs '(slime-fancy slime-fancy-inspector))
 
 (defun slime-contrib-directory ()
@@ -1213,7 +1208,6 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
       (dolist (n lightvals)
         (push (apply 'hsl-to-hex n) hexcolors))
       (reverse hexcolors)))
-
 
 (defun colorise-brackets ()
     "Apply my own colours to rainbow delimiters."
