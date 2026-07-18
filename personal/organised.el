@@ -673,6 +673,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 (global-set-key (kbd "C-z a") 'bs-cycle-previous)
 (global-set-key (kbd "C-z s") 'bs-cycle-next)
+(global-set-key (kbd "C-z T") 'transpose-frame)
+
 
 ;;; switch-window
 (global-set-key (kbd "C-x o") 'switch-window)
