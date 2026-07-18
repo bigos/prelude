@@ -165,7 +165,7 @@
 (use-package embark
   :ensure t
   :bind (("C-." . embark-act)       ;; act on the thing at point / candidate
-         ("C-;" . embark-dwim)      ;; run the default action
+         ("C-'" . embark-dwim)      ;; run the default action
          ("C-h B" . embark-bindings))) ;; browse bindings via completing-read
 
 ;; Integration between Embark and Consult, e.g. `embark-export' from a
