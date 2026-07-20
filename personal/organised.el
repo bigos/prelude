@@ -1,11 +1,6 @@
 ;;;   -*- lexical-binding: t; -*-
 ;;; code:
 
-;;; WARNING! this *.el file has been generated automatically from
-;;; a corresponding *.org file. Do not edit this *.el file, but edit
-;;; the *.org file which will generate the *.el file upon executing
-;;; Mx org-babel-tangle.
-
 ;;; fix graph drawing ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; https://emacs.stackexchange.com/questions/81211/how-do-i-write-an-advice-to-override-an-org-roam-function
 (defun org-roam-graph--format-node-fix (node type)

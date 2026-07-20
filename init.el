@@ -115,7 +115,7 @@ by Prelude.")
 (require 'prelude-mode)
 (require 'prelude-editor)
 (require 'prelude-global-keybindings)
-(require 'prelude-welcome)
+;; (require 'prelude-welcome)
 
 ;; macOS specific settings
 (when (eq system-type 'darwin)
