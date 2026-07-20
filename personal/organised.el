@@ -477,7 +477,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
               (message "Expected roam folder exists")
             (make-directory new-current :parents))
           (message (concat "Loading org-roam project at: " path))
-          (setq org-roam-my-folder new-current)))
+          (setq org-roam-my-folder new-current)
+          (org-roam-my-reload)))
     (progn
       (message (concat "Expecting the PATH to end with " last-part-of-org-roam))
       (error (concat "Could not validate org-roam PATH " path)))))
