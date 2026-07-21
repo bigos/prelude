@@ -39,4 +39,9 @@ projectile-frecency.eld
 tree-sitter/*
 ac-comphist.dat 
 
+<<<<<<< HEAD
 eww-bookmarks 
+=======
+eww-bookmarks
+smex-items
+>>>>>>> origin/master
