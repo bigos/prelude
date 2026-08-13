@@ -5,6 +5,8 @@
 ;;; the *.org file which will generate the *.el file upon executing
 ;;; Mx org-babel-tangle.
 
+;;; This is last good, because problems with vertico and its cousins may eat memory.
+
 ;;; fix graph drawing ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; https://emacs.stackexchange.com/questions/81211/how-do-i-write-an-advice-to-override-an-org-roam-function
 (defun org-roam-graph--format-node-fix (node type)
