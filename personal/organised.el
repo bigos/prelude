@@ -522,6 +522,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
          ("C-x n r" . org-roam-node-random)
          (:map org-mode-map
                (("C-x n i" . org-roam-node-insert)
+                ("C-x n c" . org-roam-node-capture)
                 ("C-x n o" . org-id-get-create)
                 ("C-x n t" . org-roam-tag-add)
                 ("C-x n s" . org-roam-db-sync)
