@@ -481,14 +481,17 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (defun override-current-org-roam-my-folder (path)
   ;; ensure PATH ends with "/org-roam/"
   (if (s-ends-with? last-part-of-org-roam path)
-      (message (concat "Loading org-roam project at: " path))
+      (progn
+        (let ((new-current path))
+          (if (file-exists-p path)
+              (message "Expected roam folder exists")
+            (make-directory new-current :parents))
+          (message (concat "Loading org-roam project at: " path))
+          (setq org-roam-my-folder new-current)
+          (org-roam-my-reload)))
     (progn
       (message (concat "Expecting the PATH to end with " last-part-of-org-roam))
-      (error (concat "Could not validate org-roam PATH " path))))
-
-  (let ((new-current path))
-    (make-directory new-current :parents)
-    (setq org-roam-my-folder new-current)))
+      (error (concat "Could not validate org-roam PATH " path)))))
 
 (defun org-roam-my-db ()
   (concat org-roam-my-folder
