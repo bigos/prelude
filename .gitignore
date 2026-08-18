@@ -50,3 +50,4 @@ image-dired/*
 ielm-history.eld 
 
 neocaml-repl-history
+projectile-frecency.eld
