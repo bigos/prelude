@@ -176,6 +176,10 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 
+;;; *** American keyboard with British layout
+(global-set-key (kbd "C-z ~") (lambda () (interactive) (insert-char #xA6))) ; with SHIFT, insert ¦
+(global-set-key (kbd "C-z #") (lambda () (interactive) (insert-char #x5C))) ; no shift, insert \
+
 (setq prelude-guru nil) ;; better for slime
 
 (menu-bar-mode 1)
@@ -355,27 +359,29 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 ;;; *** Org mode configuration
 
 ;;; org-mode source code blocks
-(defun insert-named-source-block (language)
-    "Insert source block with LANGUAGE string provided."
-  (insert "#+begin_src ")
-  (insert language)
-  (insert "\n")
-  (insert "\n")
-  (insert "#+end_src")
-  (beginning-of-line )
-  (backward-char))
 
-(defun insert-emacs-lisp-source-block ()
-  (interactive)
-  (insert-named-source-block "emacs-lisp"))
+;;; deprecated
+;; (defun insert-named-source-block (language)
+;;     "Insert source block with LANGUAGE string provided."
+;;   (insert "#+begin_src ")
+;;   (insert language)
+;;   (insert "\n")
+;;   (insert "\n")
+;;   (insert "#+end_src")
+;;   (beginning-of-line )
+;;   (backward-char))
 
-(defun insert-lisp-source-block ()
-  (interactive)
-  (insert-named-source-block "lisp"))
+;; (defun insert-emacs-lisp-source-block ()
+;;   (interactive)
+;;   (insert-named-source-block "emacs-lisp"))
 
-(add-hook 'org-mode-hook
-          #'(lambda ()
-              (local-set-key (kbd "C-z #") 'insert-lisp-source-block)))
+;; (defun insert-lisp-source-block ()
+;;   (interactive)
+;;   (insert-named-source-block "lisp"))
+
+;; (add-hook 'org-mode-hook
+;;           #'(lambda ()
+;;               (local-set-key (kbd "C-z #") 'insert-lisp-source-block)))
 
 (require 'org)
 
