@@ -532,6 +532,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                 ("C-x n t" . org-roam-tag-add)
                 ("C-x n s" . org-roam-db-sync)
                 ("C-x n a" . org-roam-alias-add)
+                ("C-x n z" . org-roam-ui-node-zoom)
+                ("C-x n L" . org-roam-ui-node-local)
                 ("C-x n l" . org-roam-buffer-toggle)))
          ))
 
