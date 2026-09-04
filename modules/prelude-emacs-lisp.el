@@ -1,4 +1,4 @@
-;;; prelude-emacs-lisp.el --- Emacs Prelude: Nice config for Elisp programming.  -*- lexical-binding: t; -*-
+;;; prelude-emacs-lisp.el --- Emacs Prelude: Nice config for Elisp programming.
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;

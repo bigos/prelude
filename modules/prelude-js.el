@@ -1,4 +1,4 @@
-;;; prelude-js.el --- Emacs Prelude: JavaScript configuration.  -*- lexical-binding: t; -*-
+;;; prelude-js.el --- Emacs Prelude: JavaScript configuration.
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;

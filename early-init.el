@@ -1,4 +1,4 @@
-;;; early-init.el --- Prelude's early configuration.  -*- lexical-binding: t; -*-
+;;; early-init.el --- Prelude's early configuration.
 ;;
 ;; Copyright (c) 2011-2026 Bozhidar Batsov
 ;;

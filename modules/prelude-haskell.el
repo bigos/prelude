@@ -1,4 +1,4 @@
-;;; prelude-haskell.el --- Emacs Prelude: Nice config for Haskell programming.  -*- lexical-binding: t; -*-
+;;; prelude-haskell.el --- Emacs Prelude: Nice config for Haskell programming.
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;

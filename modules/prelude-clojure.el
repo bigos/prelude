@@ -1,4 +1,4 @@
-;;; prelude-clojure.el --- Emacs Prelude: Clojure programming configuration.  -*- lexical-binding: t; -*-
+;;; prelude-clojure.el --- Emacs Prelude: Clojure programming configuration.
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
