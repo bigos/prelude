@@ -192,6 +192,9 @@
                    (file-exists-p arg)))
             (cdr command-line-args)))
 
+;;; trying to disable it, because the documented place did not make sense
+(setq prelude-welcome-screen nil)
+
 ;; Show the welcome screen on startup, unless it's been disabled or
 ;; Emacs was launched to open specific files.
 (when (and prelude-welcome-screen
