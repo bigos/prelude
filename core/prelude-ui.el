@@ -1,4 +1,4 @@
-;;; prelude-ui.el --- Emacs Prelude: UI optimizations and tweaks.  -*- lexical-binding: t; -*-
+;;; prelude-ui.el --- Emacs Prelude: UI optimizations and tweaks.
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
