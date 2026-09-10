@@ -319,7 +319,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
            :scroll-bar-width 8
            :fringe-width 8))
 
-  (spacious-padding-mode 1)
+  ;; do not start spacious padding by default
+  (spacious-padding-mode 0)
 
   ;; Set a key binding if you need to toggle spacious padding.
   (define-key global-map (kbd "<f8>") #'spacious-padding-mode))
