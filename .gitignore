@@ -34,7 +34,8 @@ gotools/
 eln-cache/
 
 .org-id-locations
-projectile-frecency.eld
+
+*.eld
 
 tree-sitter/*
 ac-comphist.dat 
