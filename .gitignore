@@ -52,3 +52,4 @@ ielm-history.eld
 neocaml-repl-history
 
 *.eld
+*.sqlite
