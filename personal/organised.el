@@ -9,6 +9,10 @@
 
 ;;; fix graph drawing ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; https://emacs.stackexchange.com/questions/81211/how-do-i-write-an-advice-to-override-an-org-roam-function
+
+;;; t for debugging, to find misbehaving configuration of package
+(setq debug-on-error nil)
+
 (defun org-roam-graph--format-node-fix (node type)
   "Return a graphviz NODE with TYPE.
 Handles both Org-roam nodes, and string nodes (e.g. urls)."
@@ -818,8 +822,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (haskell-process-type 'cabal-repl)
   (haskell-interactive-popup-errors nil)
   (haskell-process-args-cabal-repl '("--repl-options=-ferror-spans"))
-  :hook
-  (haskell-mode 'interactive-haskell-mode)
+;;  :hook
+;;  (haskell-mode 'interactive-haskell-mode)
   ;; :bind
   ;; (:map haskell-mode-map
   ;;       ("C-c i" . +haskell-add-import)
