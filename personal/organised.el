@@ -1115,7 +1115,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                                 (list .01 1.0 0.65)
                                 (list .75 0.9 0.55) ; H S L
                                 (list .49 0.9 0.40)
-                                (list .17 0.9 0.47)
+                                (list .20 1.0 0.35)
                                 (list .05 0.9 0.55))
                         (list (list .70 1.0 0.68) ; H S L
                               (list .30 1.0 0.40)
