@@ -1197,19 +1197,22 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                                  (hex-to-rgb
                                   (bg-color)))
                           '(7))))))
+(defun hval (h)
+  "HSL pickers have values 0-360"
+  (/ h 360.0))
 
 (defun bracket-colors ()
     "Calculate the bracket colours based on background."
     (let (hexcolors lightvals)
       (setq lightvals (if (bg-light)
-                          (list (list .60 1.0 0.55) ; H S L
-                                (list .30 1.0 0.40)
-                                (list .11 1.0 0.55)
-                                (list .01 1.0 0.65)
-                                (list .75 0.9 0.55) ; H S L
-                                (list .49 0.9 0.40)
-                                (list .20 1.0 0.35)
-                                (list .05 0.9 0.55))
+                          (list (list (hval 245) 1.0 0.60) ; H S L
+                                (list (hval 160) 1.0 0.45)
+                                (list (hval  45) 1.0 0.45)
+                                (list (hval  20) 1.0 0.40)
+                                (list (hval 255) 1.0 0.60) ; H S L
+                                (list (hval 150) 1.0 0.45)
+                                (list (hval  35) 1.0 0.45)
+                                (list (hval   0) 1.0 0.40))
                         (list (list .70 1.0 0.68) ; H S L
                               (list .30 1.0 0.40)
                               (list .11 1.0 0.50)
