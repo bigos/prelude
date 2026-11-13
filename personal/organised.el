@@ -1205,13 +1205,13 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
     "Calculate the bracket colours based on background."
     (let (hexcolors lightvals)
       (setq lightvals (if (bg-light)
-                          (list (list (hval 245) 1.0 0.60) ; H S L
-                                (list (hval 160) 1.0 0.45)
-                                (list (hval  45) 1.0 0.45)
-                                (list (hval  20) 1.0 0.40)
-                                (list (hval 255) 1.0 0.60) ; H S L
-                                (list (hval 150) 1.0 0.45)
-                                (list (hval  35) 1.0 0.45)
+                          (list (list (hval 255) 1.0 0.70) ; H S L
+                                (list (hval 160) 1.0 0.40)
+                                (list (hval  40) 1.0 0.40)
+                                (list (hval  10) 1.0 0.40)
+                                (list (hval 245) 1.0 0.60) ; H S L
+                                (list (hval 150) 1.0 0.40)
+                                (list (hval  30) 1.0 0.40)
                                 (list (hval   0) 1.0 0.40))
                         (list (list .70 1.0 0.68) ; H S L
                               (list .30 1.0 0.40)
