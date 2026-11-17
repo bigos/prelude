@@ -1,4 +1,4 @@
-;;; prelude-mode.el --- Emacs Prelude: minor mode
+;;; prelude-mode.el --- Emacs Prelude: minor mode  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -126,7 +126,8 @@
 \\{prelude-mode-map}"
   :lighter " Pre"
   :keymap prelude-mode-map
-  :global t)
+  :global t
+  :group 'prelude)
 
 (provide 'prelude-mode)
 ;;; prelude-mode.el ends here

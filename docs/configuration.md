@@ -98,10 +98,11 @@ personalization.  There is no single special personal config file --
 any files or directories of files you create in the `personal/` directory will be loaded in
 lexicographical order (files first and then directories of files).  The overall loading precedence is:
 
-1. `personal/preload/*`
-2. `core/`
-3. `personal/prelude-modules.el` (or deprecated `prelude-modules.el`)
-4. `personal/*`
+1. `personal/early-init.el`
+2. `personal/preload/*`
+3. `core/`
+4. `personal/prelude-modules.el` (or deprecated `prelude-modules.el`)
+5. `personal/*`
 
 ### Personalization Example
 
@@ -124,23 +125,32 @@ the personal folder** to avoid having to deal with git merge conflicts
 in the future.
 
 If you'd like to add some auto installation of packages in your
-personal config use the following code:
+personal config, use `use-package` with `:ensure t`:
 
 ```emacs-lisp
-(prelude-require-packages '(some-package some-other-package))
+(use-package some-package
+  :ensure t)
 ```
 
-If you require just a single package you can also use:
+Prelude installs these the same way it installs its own packages (it
+refreshes a stale package list and retries if an install fails), and
+`M-x prelude-update-packages` updates them as well.
 
-```emacs-lisp
-(prelude-require-package 'some-package)
-```
+The older `prelude-require-package` and `prelude-require-packages`
+still work, but they're deprecated.
 
 ### Preloading personal config
 
 Sometimes you might want to load code before Prelude has started loading. Prelude will automatically preload all
 Emacs Lisp files in your `personal/preload` directory. Note that at this point you can't using anything from
 Prelude, except a few variables like `prelude-dir`, etc (since nothing is yet loaded).
+
+### Personal early-init
+
+Some settings have to be in place before the package system and the first frame are set up (e.g.
+`default-frame-alist` tweaks). Put those in `personal/early-init.el` and Prelude's own `early-init.el`
+will load it after its own settings, so you can also override those. The file isn't loaded
+again together with the rest of `personal/`.
 
 ### Disabling whitespace-mode
 
@@ -223,6 +233,33 @@ behaviour, add the following to your config.
 ``` emacs-lisp
 (setq prelude-hippie-expand nil)
 ```
+
+### Disable smartparens
+
+By default, Prelude enables `smartparens`. To disable this behaviour, add the following to
+your `personal/preload` config (it has to be set before Prelude's core is loaded).
+
+``` emacs-lisp
+(setq prelude-smartparens nil)
+```
+
+### Tree-sitter grammars
+
+Prelude uses tree-sitter based major modes (e.g. `python-ts-mode`) when the
+grammar for the language is installed. When it isn't, Prelude asks whether to
+install it the first time you open a file in that language (this requires a C
+compiler), and falls back to the classic major mode if you decline. You can
+change that in `personal/preload`:
+
+``` emacs-lisp
+;; install missing grammars without asking
+(setq prelude-treesit-auto-install 'always)
+;; never install grammars, just use the classic modes
+(setq prelude-treesit-auto-install nil)
+```
+
+`M-x prelude-treesit-install-grammars` installs the grammars for all of your
+enabled modules at once, which is handy before going offline.
 
 ### Configuration per file or directory
 

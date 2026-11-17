@@ -1,4 +1,4 @@
-;;; prelude-dart.el --- Emacs Prelude: Dart programming configuration.
+;;; prelude-dart.el --- Emacs Prelude: Dart programming configuration.  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -30,6 +30,12 @@
 
 ;;; Code:
 
+(defvar dap-launch-configuration-providers)
+(declare-function lsp-dart-define-key "lsp-dart")
+(declare-function lsp-dart-dap-setup "lsp-dart-dap")
+(declare-function lsp-dart-show-outline "lsp-dart-outline")
+(declare-function lsp-dart-show-flutter-outline "lsp-dart-outline")
+
 (require 'prelude-programming)
 
 (defun prelude-dart-mode-defaults ()
@@ -49,12 +55,12 @@
 
 ;; Flutter-specific features on top of lsp-mode (outline views, DAP
 ;; debugging, hot reload, etc.)
-(use-package lsp-dart
-  :ensure t
-  :defer t
-  :if (eq prelude-lsp-client 'lsp-mode))
+(when (eq prelude-lsp-client 'lsp-mode)
+  (use-package lsp-dart
+    :ensure t
+    :defer t))
 
-(setq prelude-dart-mode-hook 'prelude-dart-mode-defaults)
+(add-hook 'prelude-dart-mode-hook #'prelude-dart-mode-defaults)
 
 (provide 'prelude-dart)
 

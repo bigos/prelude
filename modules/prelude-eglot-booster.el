@@ -1,4 +1,4 @@
-;;; prelude-eglot-booster.el --- Emacs Prelude: Eglot performance booster.
+;;; prelude-eglot-booster.el --- Emacs Prelude: Eglot performance booster.  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -42,6 +42,8 @@
 ;; Boston, MA 02110-1301, USA.
 
 ;;; Code:
+
+(declare-function eglot-booster-mode "eglot-booster")
 
 (defvar prelude-eglot-booster-binary "emacs-lsp-booster"
   "Name of the lsp-booster binary, looked up via `executable-find'.")

@@ -1,4 +1,4 @@
-;;; prelude-yaml.el --- Emacs Prelude: YAML programming support.
+;;; prelude-yaml.el --- Emacs Prelude: YAML programming support.  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -32,19 +32,14 @@
 
 ;; Use yaml-ts-mode when the tree-sitter grammar is available,
 ;; otherwise fall back to yaml-mode from MELPA
-(require 'treesit nil t)
-(if (and (fboundp 'treesit-ready-p) (treesit-ready-p 'yaml t))
-    (add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-ts-mode))
-  (use-package yaml-mode
-    :ensure t
-    :defer t))
+(prelude-treesit-auto-mode "\\.ya?ml\\'" 'yaml 'yaml-ts-mode 'yaml-mode 'yaml-mode)
 
 (defun prelude-yaml-mode-defaults ()
   (whitespace-mode +1)
   (subword-mode +1)
   (add-hook 'before-save-hook 'prelude-cleanup-maybe nil t))
 
-(setq prelude-yaml-mode-hook 'prelude-yaml-mode-defaults)
+(add-hook 'prelude-yaml-mode-hook #'prelude-yaml-mode-defaults)
 
 (add-hook 'yaml-mode-hook (lambda ()
                             (run-hooks 'prelude-yaml-mode-hook)))

@@ -1,4 +1,4 @@
-;;; prelude-windows.el --- Emacs Prelude: Windows-specific setup.
+;;; prelude-windows.el --- Emacs Prelude: Windows-specific setup.  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -28,6 +28,13 @@
 ;; Boston, MA 02110-1301, USA.
 
 ;;; Code:
+
+(defvar w32-pass-lwindow-to-system)
+(defvar w32-lwindow-modifier)
+(defvar w32-pass-rwindow-to-system)
+(defvar w32-rwindow-modifier)
+(defvar w32-pass-apps-to-system)
+(defvar w32-apps-modifier)
 
 ;; Teach Emacs how to interpret various modifier keys
 (setq w32-pass-lwindow-to-system nil)

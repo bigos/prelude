@@ -16,11 +16,14 @@
 - Add `prelude-eglot-booster` module: speeds up Eglot via the [emacs-lsp-booster](https://github.com/blahgeek/emacs-lsp-booster) wrapper. The Emacs side ([eglot-booster](https://github.com/jdtsmith/eglot-booster)) is auto-installed via `package-vc-install` when the booster binary is on `PATH`; otherwise the module no-ops.
 - Add `prelude-corfu` module: a modern, lightweight in-buffer completion stack ([corfu](https://github.com/minad/corfu) + [cape](https://github.com/minad/cape)) -- alternative to `prelude-company`. Pairs naturally with the vertico/orderless setup in `prelude-vertico`.
 - Add `prelude-apheleia` module: enables [Apheleia](https://github.com/radian-software/apheleia) globally for async, flicker-free format-on-save (Prettier, Black, Ruff, gofmt, rustfmt, ...). Supersedes the per-language format hooks in modules like `prelude-rust` and `prelude-go`.
+- [#1460](https://github.com/bbatsov/prelude/issues/1460): Load `personal/early-init.el` from Prelude's `early-init.el`, so you can keep your own early startup settings without editing Prelude's files.
+- Warn at startup when modules that do the same job are enabled together (e.g. `prelude-vertico` and `prelude-ivy`, or `prelude-company` and `prelude-corfu`).
+- [#1461](https://github.com/bbatsov/prelude/pull/1461): Add `prelude-smartparens` user option, allowing smartparens support to be disabled.
+- Offer to install a missing tree-sitter grammar the first time a file in that language is opened, and fall back to the classic major mode if it isn't installed. This works the same way on Emacs 29 through 31 and for tree-sitter modes from packages. Control it with `prelude-treesit-auto-install` (`ask`, `always` or `nil`), and install the grammars of all enabled modules with `M-x prelude-treesit-install-grammars`. Prelude's own grammar recipes are pinned to releases close to the ones Emacs 31 picked, and on Emacs 31 Emacs's recipes are used instead.
 
 ### Changes
 
 - Add an `early-init.el` that tunes startup: it raises the GC threshold while Emacs loads (restoring a modest value once startup is over), disables the tool bar via frame parameters so the initial frame is never drawn with one, sets `frame-inhibit-implied-resize`, native-compiles packages at install time (`package-native-compile`), and sets a sane `LANG` for GUI Emacs on macOS (which otherwise starts in the `C` locale and breaks spell-checker dictionaries and subprocess sorting).
-- Populate `treesit-language-source-alist` with recipes for the languages Prelude's modules use, so a missing grammar can be installed with `M-x treesit-install-language-grammar` without hunting down repository URLs.
 - Modernize the Eglot event-log setting to prefer `eglot-events-buffer-config` on newer Eglot, falling back to the obsolete `eglot-events-buffer-size` on older versions.
 - Bridge Eglot diagnostics into Flycheck via [flycheck-eglot](https://github.com/flycheck/flycheck-eglot) when `prelude-lsp-client` is `eglot`, so LSP diagnostics show up in Prelude's Flycheck UI instead of only through Flymake. Installed on demand; lsp-mode users are unaffected (lsp-mode has its own Flycheck integration).
 - Add [Embark](https://github.com/oantolin/embark) (and `embark-consult`) to `prelude-vertico`: a keyboard-driven context menu bound to `C-.` (`embark-act`), `C-;` (`embark-dwim`) and `C-h B` (`embark-bindings`), with `embark-export` into editable grep/occur buffers. In Flyspell buffers those keys keep their Flyspell auto-correct meaning; Embark still works in the minibuffer and elsewhere.
@@ -28,6 +31,12 @@
 - Enable `corfu-history-mode` in `prelude-corfu` so recently chosen completion candidates sort first (persisted across sessions via savehist).
 - Set `consult-narrow-key` to `<` in `prelude-vertico`, so you can narrow consult candidates to a single group (e.g. `< b` for buffers in `consult-buffer`).
 - Tidy up `prelude-common-lisp`: drop stale `slime-autodoc-use-multiline-p` setting (the variable was removed from upstream SLIME; modern autodoc honors `eldoc-echo-area-use-multiline-p`), set `inferior-lisp-program` to `sbcl` so `M-x run-lisp` works without SLIME, and add `slime-quicklisp` to `slime-contribs` for Quicklisp integration.
+- Enable `lexical-binding` in all of Prelude's Emacs Lisp files (including the sample `prelude-modules.el`), which silences the missing-cookie warnings Emacs 31 prints on every startup.
+- Modules now `add-hook` their defaults to Prelude's hooks (`prelude-<lang>-mode-hook`, `prelude-lisp-coding-hook`, etc.) instead of `setq`-ing them, so functions you add to those hooks in `personal/preload` are no longer thrown away when the module loads.
+- Stop installing `gist` (unused), and only install `which-key` and `editorconfig` on Emacs 29, since both are built into Emacs 30+.
+- Replace the unmaintained `smartrep` package with a plain transient keymap for the `C-c .` operate-on-number bindings. They work the same way: after the first operation, the operator keys can be repeated without the prefix.
+- Install all of Prelude's packages with `use-package` and `:ensure t`, and deprecate `prelude-require-package` and `prelude-require-packages` in favour of it. `prelude-packages` now starts out empty and gets filled in with every package Prelude ensures (including ones from modules), so `prelude-update-packages` and `prelude-list-foreign-packages` keep working, and your own `use-package :ensure` forms are tracked the same way.
+- Start up a lot faster (about 1.3s down to 0.4s in a terminal with the default modules): the shell environment is only fetched for GUI frames and daemons, packages are no longer initialized twice, and TRAMP, Eglot, calc, crux and the Perl, shell and XML modes are only loaded when they're actually used.
 
 ### Bugs fixed
 
@@ -42,6 +51,14 @@
 - Add a temporary `eglot-server-programs` entry for `neocaml` so older `neocaml` versions still get `ocamllsp` started. Can be removed once `neocaml >= 20260331` is widely available on MELPA.
 - Drop `M-g e` and `M-g f` from `prelude-vertico`'s consult bindings so they no longer shadow the avy bindings (`avy-goto-word-0`, `avy-goto-line`) set in core. Bind `consult-compile-error` / `consult-flymake` in your personal config if you want them.
 - [#1454](https://github.com/bbatsov/prelude/issues/1454): Drop stale `tide` references from the docs now that `prelude-ts` uses `typescript-ts-mode` + LSP.
+- [#1462](https://github.com/bbatsov/prelude/issues/1462): Don't break the `prelude-ocaml` mode hook (and with it font-locking and line numbers) when `ocaml-eglot` isn't installed.
+- [#1462](https://github.com/bbatsov/prelude/issues/1462): Refresh the package archives and retry once when installing a package fails, so a stale package cache (listing versions MELPA no longer has) no longer leaves packages uninstalled. Covers `use-package` `:ensure` as well as `prelude-require-package`.
+- Replace obsolete APIs flagged by the byte-compiler: `company-show-numbers` (now `company-show-quick-access`), `helm-projectile-on` (now `helm-projectile-mode`), `racket-unicode-input-method-enable` (now `racket-input-mode`), `erc-server-buffer-p` on ERC 5.6+, and the `racket-repl-visit-definition` binding on `M-.` (racket-mode uses xref now, so the global `M-.` already does the right thing). Drop the redundant `uniquify-after-kill-buffer-p` setting, which is on by default and obsolete in Emacs 31.
+- Fix package installs failing for the rest of the session after installing a package whose own code runs `use-package` with `:ensure` at compile time (such as recent SLIME with its `slime-xterm-color` contrib). The package name was recorded with its source position, which broke every later install on Emacs 30 and 31.
+- Don't break `org-mode` in `prelude-literate-programming` when Jupyter isn't installed: `ob-ipython` queried Jupyter for its kernels every time an Org buffer was opened and signaled an error if it wasn't there.
+- Make `prelude-update` stop with an error (showing the `git` output) when the checkout can't be fast-forwarded, instead of reporting success, and stop it from changing the current buffer's directory.
+- Don't install LSP-client-specific packages (`lsp-dart`, `ocaml-eglot`, `eglot-fsharp`) for users of the other LSP client.
+- Keep installing the packages of `use-package :ensure` forms after Prelude gets byte-compiled (as `prelude-update` does). `use-package` ensures packages at compile time when a file is compiled, so the compiled files never installed missing packages (and installed conditional ones regardless of their condition).
 
 ## 2.1.0 (2026-03-29)
 

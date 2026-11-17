@@ -1,4 +1,4 @@
-;;; prelude-python.el --- Emacs Prelude: python.el configuration.
+;;; prelude-python.el --- Emacs Prelude: python.el configuration.  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -37,7 +37,8 @@
 ;; Use python-ts-mode when the tree-sitter grammar is available
 (prelude-treesit-remap 'python 'python-mode 'python-ts-mode)
 
-(when (fboundp 'exec-path-from-shell-copy-env)
+(when (and (fboundp 'exec-path-from-shell-copy-env)
+           (prelude-fetch-shell-environment-p))
   (exec-path-from-shell-copy-env "PYTHONPATH"))
 
 (defun prelude-python-mode-defaults ()
@@ -48,7 +49,7 @@
   (setq-local imenu-create-index-function
               #'python-imenu-create-flat-index))
 
-(setq prelude-python-mode-hook 'prelude-python-mode-defaults)
+(add-hook 'prelude-python-mode-hook #'prelude-python-mode-defaults)
 
 (add-hook 'python-mode-hook (lambda ()
                               (run-hooks 'prelude-python-mode-hook)))

@@ -1,4 +1,4 @@
-;;; prelude-css.el --- Emacs Prelude: css support
+;;; prelude-css.el --- Emacs Prelude: css support  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -44,7 +44,7 @@
   (rainbow-mode +1)
   (run-hooks 'prelude-prog-mode-hook))
 
-(setq prelude-css-mode-hook 'prelude-css-mode-defaults)
+(add-hook 'prelude-css-mode-hook #'prelude-css-mode-defaults)
 
 (add-hook 'css-mode-hook (lambda ()
                            (run-hooks 'prelude-css-mode-hook)))

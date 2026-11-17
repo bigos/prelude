@@ -1,4 +1,4 @@
-;;; prelude-clojure.el --- Emacs Prelude: Clojure programming configuration.
+;;; prelude-clojure.el --- Emacs Prelude: Clojure programming configuration.  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -58,8 +58,8 @@
   :hook (cider-repl-mode . (lambda ()
                               (run-hooks 'prelude-cider-repl-mode-hook))))
 
-(setq prelude-clojure-mode-hook 'prelude-clojure-mode-defaults)
-(setq prelude-cider-repl-mode-hook 'prelude-cider-repl-mode-defaults)
+(add-hook 'prelude-clojure-mode-hook #'prelude-clojure-mode-defaults)
+(add-hook 'prelude-cider-repl-mode-hook #'prelude-cider-repl-mode-defaults)
 
 (provide 'prelude-clojure)
 

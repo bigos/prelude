@@ -1,4 +1,4 @@
-;;; prelude-company.el --- company-mode setup
+;;; prelude-company.el --- company-mode setup  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -29,12 +29,12 @@
 ;; Boston, MA 02110-1301, USA.
 
 ;;; Code:
-(prelude-require-packages '(company))
+(use-package company :ensure t :defer t)
 
 (require 'company)
 
 (setq company-idle-delay 0.5)
-(setq company-show-numbers t)
+(setq company-show-quick-access t)
 (setq company-tooltip-limit 10)
 (setq company-minimum-prefix-length 2)
 (setq company-tooltip-align-annotations t)

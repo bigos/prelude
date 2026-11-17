@@ -1,4 +1,4 @@
-;;; prelude-custom.el --- Emacs Prelude: Prelude's customizable variables.
+;;; prelude-custom.el --- Emacs Prelude: Prelude's customizable variables.  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -117,7 +117,7 @@ in the desired elisp file."
 (defcustom prelude-indent-sensitive-modes
   '(conf-mode haml-mode python-mode slim-mode yaml-mode)
   "Modes for which auto-indenting is suppressed."
-  :type 'list
+  :type '(repeat symbol)
   :group 'prelude)
 
 (defcustom prelude-format-on-save t
@@ -129,7 +129,7 @@ Currently only applies to TypeScript files."
 (defcustom prelude-yank-indent-modes '(LaTeX-mode TeX-mode)
   "Modes in which to indent regions that are yanked (or yank-popped).
 Only modes that don't derive from `prog-mode' should be listed here."
-  :type 'list
+  :type '(repeat symbol)
   :group 'prelude)
 
 (defcustom prelude-yank-indent-threshold 1000
@@ -157,6 +157,23 @@ arguments (e.g. `emacs foo.rb')."
 (defcustom prelude-hippie-expand t
   "Non-nil values enable Prelude's hippie-expand support."
   :type 'boolean
+  :group 'prelude)
+
+(defcustom prelude-smartparens t
+  "Non-nil values enable Prelude's smartparens integration.
+Set this in `personal/preload', since it takes effect when the core loads."
+  :type 'boolean
+  :group 'prelude)
+
+(defcustom prelude-treesit-auto-install 'ask
+  "Whether to install missing tree-sitter grammars when they're needed.
+When you open a file whose mode has a tree-sitter variant and the
+grammar for its language isn't installed, Prelude can install it:
+`ask' asks first, `always' installs it right away and nil never does.
+Without the grammar the classic major mode is used."
+  :type '(choice (const :tag "Ask first" ask)
+                 (const :tag "Always" always)
+                 (const :tag "Never" nil))
   :group 'prelude)
 
 (defcustom prelude-lsp-client 'eglot

@@ -1,4 +1,4 @@
-;;; prelude-shell.el --- Emacs Prelude: sh-mode configuration.
+;;; prelude-shell.el --- Emacs Prelude: sh-mode configuration.  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -30,8 +30,6 @@
 
 ;;; Code:
 
-(require 'sh-script)
-
 ;; Use bash-ts-mode when the tree-sitter grammar is available
 (prelude-treesit-remap 'bash 'sh-mode 'bash-ts-mode)
 
@@ -49,7 +47,7 @@
              (member (file-name-nondirectory buffer-file-name) prelude-prezto-files))
     (sh-set-shell "zsh")))
 
-(setq prelude-sh-mode-hook 'prelude-sh-mode-defaults)
+(add-hook 'prelude-sh-mode-hook #'prelude-sh-mode-defaults)
 
 (add-hook 'sh-mode-hook (lambda ()
                           (run-hooks 'prelude-sh-mode-hook)))

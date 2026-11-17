@@ -1,4 +1,4 @@
-;;; prelude-erlang.el --- Emacs Prelude: Erlang programming support.
+;;; prelude-erlang.el --- Emacs Prelude: Erlang programming support.  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Gleb Peregud
 ;;
@@ -29,6 +29,8 @@
 
 ;;; Code:
 
+(defvar erlang-compile-function)
+
 (require 'prelude-programming)
 
 (defun prelude-erlang-mode-defaults ()
@@ -46,7 +48,7 @@
   :hook (erlang-mode . (lambda ()
                          (run-hooks 'prelude-erlang-mode-hook))))
 
-(setq prelude-erlang-mode-hook 'prelude-erlang-mode-defaults)
+(add-hook 'prelude-erlang-mode-hook #'prelude-erlang-mode-defaults)
 
 (provide 'prelude-erlang)
 

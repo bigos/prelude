@@ -1,4 +1,4 @@
-;;; prelude-wsl.el --- Emacs Prelude: WSL-specific setup.
+;;; prelude-wsl.el --- Emacs Prelude: WSL-specific setup.  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -28,6 +28,8 @@
 ;; Boston, MA 02110-1301, USA.
 
 ;;; Code:
+
+(defvar search-web-default-browser)
 
 ;; teach Emacs how to open links with your default browser
 (let ((cmd-exe "/mnt/c/Windows/System32/cmd.exe")

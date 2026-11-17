@@ -1,4 +1,4 @@
-;;; prelude-ruby.el --- Emacs Prelude: A nice setup for Ruby (and Rails) devs.
+;;; prelude-ruby.el --- Emacs Prelude: A nice setup for Ruby (and Rails) devs.  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -30,6 +30,8 @@
 
 ;;; Code:
 
+(defvar ruby-insert-encoding-magic-comment)
+
 (require 'prelude-programming)
 
 ;; Use ruby-ts-mode when the tree-sitter grammar is available
@@ -58,7 +60,7 @@
   :defer t
   :bind (:map help-map ("R" . yari)))
 
-(setq prelude-ruby-mode-hook 'prelude-ruby-mode-defaults)
+(add-hook 'prelude-ruby-mode-hook #'prelude-ruby-mode-defaults)
 
 (add-hook 'ruby-mode-hook (lambda ()
                             (run-hooks 'prelude-ruby-mode-hook)))

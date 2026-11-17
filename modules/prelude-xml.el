@@ -1,4 +1,4 @@
-;;; prelude-xml.el --- Emacs Prelude: XML editing configuration.
+;;; prelude-xml.el --- Emacs Prelude: XML editing configuration.  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -30,7 +30,11 @@
 
 ;;; Code:
 
-(require 'nxml-mode)
+(defvar nxml-child-indent)
+(defvar nxml-attribute-indent)
+(defvar nxml-auto-insert-xml-declaration-flag)
+(defvar nxml-bind-meta-tab-to-complete-flag)
+(defvar nxml-slash-auto-complete-flag)
 
 (add-to-list 'magic-mode-alist '("<\\?xml" . nxml-mode))
 
@@ -46,7 +50,7 @@
 (defun prelude-xml-mode-defaults ()
   (subword-mode +1))
 
-(setq prelude-xml-mode-hook 'prelude-xml-mode-defaults)
+(add-hook 'prelude-xml-mode-hook #'prelude-xml-mode-defaults)
 
 (add-hook 'nxml-mode-hook (lambda ()
                             (run-hooks 'prelude-xml-mode-hook)))

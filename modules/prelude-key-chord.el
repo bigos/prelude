@@ -1,4 +1,4 @@
-;;; prelude-key-chord.el --- Key chord setup
+;;; prelude-key-chord.el --- Key chord setup  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -30,7 +30,7 @@
 ;; Boston, MA 02110-1301, USA.
 
 ;;; Code:
-(prelude-require-package 'key-chord)
+(use-package key-chord :ensure t :defer t)
 
 (require 'key-chord)
 

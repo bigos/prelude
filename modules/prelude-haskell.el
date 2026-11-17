@@ -1,4 +1,4 @@
-;;; prelude-haskell.el --- Emacs Prelude: Nice config for Haskell programming.
+;;; prelude-haskell.el --- Emacs Prelude: Nice config for Haskell programming.  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -48,7 +48,7 @@
   :hook (haskell-mode . (lambda ()
                           (run-hooks 'prelude-haskell-mode-hook))))
 
-(setq prelude-haskell-mode-hook 'prelude-haskell-mode-defaults)
+(add-hook 'prelude-haskell-mode-hook #'prelude-haskell-mode-defaults)
 
 (provide 'prelude-haskell)
 

@@ -1,4 +1,4 @@
-;;; prelude-swift.el --- Emacs Prelude: Swift programming support.
+;;; prelude-swift.el --- Emacs Prelude: Swift programming support.  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -49,12 +49,14 @@
   (subword-mode +1)
   (prelude-lsp-enable))
 
-(setq prelude-swift-mode-hook 'prelude-swift-mode-defaults)
+(add-hook 'prelude-swift-mode-hook #'prelude-swift-mode-defaults)
 
 ;; Tree-sitter based major mode for Swift (requires the swift grammar)
+(prelude-treesit-auto-mode "\\.swift\\'" 'swift 'swift-ts-mode)
+
 (use-package swift-ts-mode
   :ensure t
-  :mode "\\.swift\\'"
+  :defer t
   :hook (swift-ts-mode . (lambda () (run-hooks 'prelude-swift-mode-hook))))
 
 (provide 'prelude-swift)

@@ -1,4 +1,4 @@
-;;; init.el --- Prelude's configuration entry point.
+;;; init.el --- Prelude's configuration entry point.  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2011-2026 Bozhidar Batsov
 ;;
@@ -65,13 +65,15 @@ Users of Emacs Prelude are encouraged to keep their personal configuration
 changes in this directory.  All Emacs Lisp files there are loaded automatically
 by Prelude.")
 (defvar prelude-personal-preload-dir (expand-file-name "preload" prelude-personal-dir)
-  "This directory is for your personal configuration, that you want loaded before Prelude.")
+  "This directory is for personal configuration that's loaded before Prelude.")
 (defvar prelude-vendor-dir (expand-file-name "vendor" prelude-dir)
   "This directory houses packages that are not yet available in ELPA (or MELPA).")
 (defvar prelude-savefile-dir (expand-file-name "savefile" user-emacs-directory)
   "This folder stores all the automatically generated save/history-files.")
 (defvar prelude-modules-file (expand-file-name "prelude-modules.el" prelude-personal-dir)
   "This file contains a list of modules that will be loaded by Prelude.")
+(defvar prelude-personal-early-init-file (expand-file-name "early-init.el" prelude-personal-dir)
+  "Your personal early init file, loaded from Prelude's early-init.el.")
 (defvar prelude-override-package-user-dir t
   "By default prelude installs downloaded packages in <prelude-dir>/elpa.
    Set to nil to override this behaviour")
@@ -112,6 +114,7 @@ by Prelude.")
 (require 'prelude-custom)  ;; Needs to be loaded before core, editor and ui
 (require 'prelude-ui)
 (require 'prelude-core)
+(require 'prelude-treesit)
 (require 'prelude-mode)
 (require 'prelude-editor)
 (require 'prelude-global-keybindings)
@@ -143,15 +146,17 @@ by Prelude.")
   (message "[Prelude] You should copy this file to your personal configuration folder and tweak it to your liking")
   (load (expand-file-name "sample/prelude-modules.el" prelude-dir)))
 
+(prelude-check-module-conflicts)
+
 ;; config changes made through the customize UI will be stored here
 (setq custom-file (expand-file-name "custom.el" prelude-personal-dir))
 
 ;; load the personal settings (this includes `custom-file')
 (when (file-exists-p prelude-personal-dir)
   (message "[Prelude] Loading personal configuration files in %s..." prelude-personal-dir)
-  (mapc 'load (delete
-               prelude-modules-file
-               (directory-files prelude-personal-dir 't "^[^#\.].*\\.el$"))))
+  (mapc 'load (seq-difference
+               (directory-files prelude-personal-dir 't "^[^#\.].*\\.el$")
+               (list prelude-modules-file prelude-personal-early-init-file))))
 
 (message "[Prelude] Prelude is ready to do thy bidding, Master %s!" prelude-user)
 

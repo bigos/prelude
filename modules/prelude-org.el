@@ -1,4 +1,4 @@
-;;; prelude-org.el --- Emacs Prelude: org-mode configuration.
+;;; prelude-org.el --- Emacs Prelude: org-mode configuration.  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -54,7 +54,7 @@
     (make-local-variable 'minor-mode-overriding-map-alist)
     (push `(prelude-mode . ,newmap) minor-mode-overriding-map-alist)))
 
-(setq prelude-org-mode-hook 'prelude-org-mode-defaults)
+(add-hook 'prelude-org-mode-hook #'prelude-org-mode-defaults)
 
 (add-hook 'org-mode-hook (lambda () (run-hooks 'prelude-org-mode-hook)))
 

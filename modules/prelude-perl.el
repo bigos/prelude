@@ -1,4 +1,4 @@
-;;; prelude-perl.el --- Emacs Prelude: decent Perl coding settings.
+;;; prelude-perl.el --- Emacs Prelude: decent Perl coding settings.  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -30,6 +30,18 @@
 
 ;;; Code:
 
+(defvar cperl-indent-level)
+(defvar cperl-continued-statement-offset)
+(defvar cperl-font-lock)
+(defvar cperl-electric-lbrace-space)
+(defvar cperl-electric-parens)
+(defvar cperl-electric-linefeed)
+(defvar cperl-electric-keywords)
+(defvar cperl-info-on-command-no-prompt)
+(defvar cperl-clobber-lisp-bindings)
+(defvar cperl-lazy-help-time)
+(defvar cperl-invalid-face)
+
 (require 'prelude-programming)
 
 ;; Prefer cperl-mode over perl-mode for all Perl files
@@ -55,10 +67,14 @@
   ;; Remove distracting background colors on array/hash variables
   (set-face-background 'cperl-array-face nil)
   (set-face-background 'cperl-hash-face nil)
-  (setq cperl-invalid-face nil)
+  ;; Don't highlight trailing whitespace (Emacs 30+ cperl-mode follows
+  ;; `show-trailing-whitespace' instead, which is off by default)
+  (when (< emacs-major-version 30)
+    (with-suppressed-warnings ((obsolete cperl-invalid-face))
+      (setq cperl-invalid-face nil)))
   (subword-mode +1))
 
-(setq prelude-cperl-mode-hook 'prelude-cperl-mode-defaults)
+(add-hook 'prelude-cperl-mode-hook #'prelude-cperl-mode-defaults)
 
 (add-hook 'cperl-mode-hook (lambda ()
                              (run-hooks 'prelude-cperl-mode-hook)) t)

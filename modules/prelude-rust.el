@@ -1,4 +1,4 @@
-;;; prelude-rust.el --- Emacs Prelude: Rust programming support.
+;;; prelude-rust.el --- Emacs Prelude: Rust programming support.  -*- lexical-binding: t; -*-
 ;;
 ;; Authors: Doug MacEachern, Manoel Vilela, Ben Alex, Daniel Gerlach
 
@@ -27,6 +27,8 @@
 
 ;;; Code:
 
+(defvar rust-format-on-save)
+
 (require 'prelude-programming)
 
 ;; You may need to install the following packages on your system:
@@ -54,6 +56,9 @@
   (prelude-lsp-enable))
 
 ;; Built-in tree-sitter mode for Rust (requires rust grammar)
+;; (rust-mode is only used if it's installed, e.g. from older Preludes)
+(prelude-treesit-auto-mode "\\.rs\\'" 'rust 'rust-ts-mode 'rust-mode)
+
 (use-package rust-ts-mode
   :ensure t
   :hook (rust-ts-mode . (lambda () (run-hooks 'prelude-rust-mode-hook))))
@@ -73,7 +78,7 @@
   :ensure t
   :defer t)
 
-(setq prelude-rust-mode-hook 'prelude-rust-mode-defaults)
+(add-hook 'prelude-rust-mode-hook #'prelude-rust-mode-defaults)
 
 (provide 'prelude-rust)
 ;;; prelude-rust.el ends here

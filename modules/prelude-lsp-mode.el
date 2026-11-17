@@ -1,4 +1,4 @@
-;;; prelude-lsp-mode.el --- lsp-mode setup
+;;; prelude-lsp-mode.el --- lsp-mode setup  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -30,8 +30,16 @@
 
 ;;; Code:
 
-(prelude-require-packages '(lsp-mode
-                            lsp-ui))
+(defvar lsp-ui-mode-map)
+(defvar lsp-ui-sideline-enable)
+(defvar lsp-ui-doc-enable)
+(defvar lsp-ui-doc-position)
+(defvar lsp-ui-doc-delay)
+(defvar lsp-ui-peek-enable)
+(defvar lsp-ui-peek-always-show)
+
+(use-package lsp-mode :ensure t :defer t)
+(use-package lsp-ui :ensure t :defer t)
 
 (setq lsp-keymap-prefix "C-c C-l")
 (setq lsp-keep-workspace-alive nil)

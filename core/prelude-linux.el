@@ -1,4 +1,4 @@
-;;; prelude-linux.el --- Emacs Prelude: linux specific settings.
+;;; prelude-linux.el --- Emacs Prelude: linux specific settings.  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -32,10 +32,13 @@
 
 ;; On Linux Emacs doesn't use the shell PATH if it's not started from
 ;; the shell. Let's fix that:
-(prelude-require-packages '(exec-path-from-shell))
-
-(require 'exec-path-from-shell)
-(exec-path-from-shell-initialize)
+;; (Emacs started from a terminal inherits the shell's environment already.)
+(use-package exec-path-from-shell
+  :ensure t
+  :defer t
+  :init
+  (when (prelude-fetch-shell-environment-p)
+    (exec-path-from-shell-initialize)))
 
 (provide 'prelude-linux)
 ;;; prelude-linux.el ends here

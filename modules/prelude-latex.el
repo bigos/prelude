@@ -1,4 +1,4 @@
-;;; prelude-latex.el --- Emacs Prelude: Sane setup for LaTeX writers.
+;;; prelude-latex.el --- Emacs Prelude: Sane setup for LaTeX writers.  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -30,7 +30,10 @@
 
 ;;; Code:
 
-(require 'smartparens-latex)
+(declare-function LaTeX-math-mode "latex")
+
+(when prelude-smartparens
+  (require 'smartparens-latex))
 
 ;; AUCTeX: the de facto standard LaTeX editing environment for Emacs
 (use-package auctex
@@ -87,12 +90,13 @@
   (turn-on-auto-fill)
   (abbrev-mode +1)
   (subword-mode +1)
-  (smartparens-mode +1)
+  (when prelude-smartparens
+    (smartparens-mode +1))
   (pcase prelude-latex-fast-math-entry
     ('LaTeX-math-mode (LaTeX-math-mode 1))
     ('cdlatex (turn-on-cdlatex))))
 
-(setq prelude-latex-mode-hook 'prelude-latex-mode-defaults)
+(add-hook 'prelude-latex-mode-hook #'prelude-latex-mode-defaults)
 
 (add-hook 'LaTeX-mode-hook (lambda ()
                              (run-hooks 'prelude-latex-mode-hook)))

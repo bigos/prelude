@@ -1,4 +1,4 @@
-;;; prelude-scss.el --- Emacs Prelude: scss support
+;;; prelude-scss.el --- Emacs Prelude: scss support  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -43,7 +43,7 @@
   (scss-compile-at-save nil)
   :hook (scss-mode . (lambda () (run-hooks 'prelude-scss-mode-hook))))
 
-(setq prelude-scss-mode-hook 'prelude-scss-mode-defaults)
+(add-hook 'prelude-scss-mode-hook #'prelude-scss-mode-defaults)
 
 (provide 'prelude-scss)
 ;;; prelude-scss.el ends here

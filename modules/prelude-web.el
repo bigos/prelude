@@ -1,4 +1,4 @@
-;;; prelude-web.el --- Emacs Prelude: web template support
+;;; prelude-web.el --- Emacs Prelude: web template support  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -58,24 +58,25 @@
   (web-mode-css-indent-offset 2)
   (web-mode-code-indent-offset 2)
   ;; Let smartparens handle pairing instead of web-mode's built-in
-  (web-mode-enable-auto-pairing nil)
+  (web-mode-enable-auto-pairing (not prelude-smartparens))
   :hook (web-mode . (lambda ()
                       (run-hooks 'prelude-web-mode-hook))))
 
-;; smartparens integration for ERB/EJS-style template tags
-(with-eval-after-load 'web-mode
-  (sp-with-modes '(web-mode)
-    (sp-local-pair "%" "%"
-                   :unless '(sp-in-string-p)
-                   :post-handlers '(((lambda (&rest _ignored)
-                                       (just-one-space)
-                                       (save-excursion (insert " ")))
-                                     "SPC" "=" "#")))
-    (sp-local-tag "%" "<% "  " %>")
-    (sp-local-tag "=" "<%= " " %>")
-    (sp-local-tag "#" "<%# " " %>")))
+(when prelude-smartparens
+  ;; smartparens integration for ERB/EJS-style template tags
+  (with-eval-after-load 'web-mode
+    (sp-with-modes '(web-mode)
+      (sp-local-pair "%" "%"
+                     :unless '(sp-in-string-p)
+                     :post-handlers '(((lambda (&rest _ignored)
+                                         (just-one-space)
+                                         (save-excursion (insert " ")))
+                                       "SPC" "=" "#")))
+      (sp-local-tag "%" "<% "  " %>")
+      (sp-local-tag "=" "<%= " " %>")
+      (sp-local-tag "#" "<%# " " %>"))))
 
-(setq prelude-web-mode-hook 'prelude-web-mode-defaults)
+(add-hook 'prelude-web-mode-hook #'prelude-web-mode-defaults)
 
 (provide 'prelude-web)
 ;;; prelude-web.el ends here

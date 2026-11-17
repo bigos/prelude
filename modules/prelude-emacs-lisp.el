@@ -1,4 +1,4 @@
-;;; prelude-emacs-lisp.el --- Emacs Prelude: Nice config for Elisp programming.
+;;; prelude-emacs-lisp.el --- Emacs Prelude: Nice config for Elisp programming.  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -30,8 +30,10 @@
 
 ;;; Code:
 
+(defvar ielm-map)
+
 (require 'prelude-lisp)
-(require 'crux)
+(declare-function crux-start-or-switch-to "crux")
 
 (defun prelude-recompile-elc-on-save ()
   "Recompile your elc when saving an elisp file."
@@ -69,7 +71,7 @@ Start `ielm' if it's not already running."
   (setq mode-name "EL")
   (prelude-conditional-emacs-lisp-checker))
 
-(setq prelude-emacs-lisp-mode-hook 'prelude-emacs-lisp-mode-defaults)
+(add-hook 'prelude-emacs-lisp-mode-hook #'prelude-emacs-lisp-mode-defaults)
 
 (add-hook 'emacs-lisp-mode-hook (lambda ()
                                   (run-hooks 'prelude-emacs-lisp-mode-hook)))
@@ -85,7 +87,7 @@ Start `ielm' if it's not already running."
   (run-hooks 'prelude-interactive-lisp-coding-hook)
   (eldoc-mode +1))
 
-(setq prelude-ielm-mode-hook 'prelude-ielm-mode-defaults)
+(add-hook 'prelude-ielm-mode-hook #'prelude-ielm-mode-defaults)
 
 (add-hook 'ielm-mode-hook (lambda ()
                             (run-hooks 'prelude-ielm-mode-hook)))
@@ -106,16 +108,18 @@ Start `ielm' if it's not already running."
 (with-eval-after-load "eldoc"
   (diminish 'eldoc-mode))
 
-(with-eval-after-load "ielm"
-  (define-key ielm-map (kbd "M-(") (prelude-wrap-with "("))
-  (define-key ielm-map (kbd "M-\"") (prelude-wrap-with "\"")))
+(when prelude-smartparens
+  (with-eval-after-load "ielm"
+    (define-key ielm-map (kbd "M-(") (prelude-wrap-with "("))
+    (define-key ielm-map (kbd "M-\"") (prelude-wrap-with "\""))))
 
-(defun prelude-conditionally-enable-smartparens-mode ()
-  "Enable `smartparens-mode' in the minibuffer during `eval-expression'."
-  (if (eq this-command 'eval-expression)
-      (smartparens-mode 1)))
+(when prelude-smartparens
+  (defun prelude-conditionally-enable-smartparens-mode ()
+    "Enable `smartparens-mode' in the minibuffer during `eval-expression'."
+    (if (eq this-command 'eval-expression)
+        (smartparens-mode 1)))
 
-(add-hook 'minibuffer-setup-hook 'prelude-conditionally-enable-smartparens-mode)
+  (add-hook 'minibuffer-setup-hook 'prelude-conditionally-enable-smartparens-mode))
 
 (provide 'prelude-emacs-lisp)
 

@@ -1,4 +1,4 @@
-;;; prelude-ido.el --- Ido setup
+;;; prelude-ido.el --- Ido setup  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -29,7 +29,9 @@
 ;; Boston, MA 02110-1301, USA.
 
 ;;; Code:
-(prelude-require-packages '(flx-ido ido-completing-read+ smex))
+(use-package flx-ido :ensure t :defer t)
+(use-package ido-completing-read+ :ensure t :defer t)
+(use-package smex :ensure t :defer t)
 
 (require 'ido)
 (require 'ido-completing-read+)

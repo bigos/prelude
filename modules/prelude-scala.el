@@ -1,4 +1,4 @@
-;;; prelude-scala.el --- Emacs Prelude: scala-mode configuration.
+;;; prelude-scala.el --- Emacs Prelude: scala-mode configuration.  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -43,7 +43,7 @@
   :hook (scala-mode . (lambda ()
                         (run-hooks 'prelude-scala-mode-hook))))
 
-(setq prelude-scala-mode-hook 'prelude-scala-mode-defaults)
+(add-hook 'prelude-scala-mode-hook #'prelude-scala-mode-defaults)
 
 (provide 'prelude-scala)
 

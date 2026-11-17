@@ -1,4 +1,4 @@
-;;; prelude-c.el --- Emacs Prelude: cc-mode configuration.
+;;; prelude-c.el --- Emacs Prelude: cc-mode configuration.  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -32,6 +32,10 @@
 
 (require 'prelude-programming)
 
+(defvar c-default-style)
+(defvar c-basic-offset)
+(defvar c-ts-mode-indent-style)
+
 ;; Use tree-sitter modes when grammars are available
 (prelude-treesit-remap 'c 'c-mode 'c-ts-mode)
 (prelude-treesit-remap 'cpp 'c++-mode 'c++-ts-mode)
@@ -48,7 +52,7 @@
   (subword-mode +1)
   (prelude-lsp-enable))
 
-(setq prelude-c-mode-common-hook 'prelude-c-mode-common-defaults)
+(add-hook 'prelude-c-mode-common-hook #'prelude-c-mode-common-defaults)
 
 ;; this will affect all modes derived from cc-mode, like
 ;; java-mode, php-mode, etc

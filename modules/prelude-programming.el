@@ -1,4 +1,4 @@
-;;; prelude-programming.el --- Emacs Prelude: prog-mode configuration
+;;; prelude-programming.el --- Emacs Prelude: prog-mode configuration  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2011-2026 Bozhidar Batsov
 ;;
@@ -37,7 +37,10 @@
 (which-function-mode 1)
 
 ;; font-lock annotations like TODO in source code
-(global-hl-todo-mode 1)
+(use-package hl-todo
+  :ensure t
+  :config
+  (global-hl-todo-mode 1))
 
 ;; in Emacs 24 programming major modes generally derive from a common
 ;; mode named prog-mode; for others, we'll arrange for our mode
@@ -49,13 +52,18 @@
 ;;
 ;; (the final optional t sets the *append* argument)
 
-;; smart curly braces
-(sp-pair "{" nil :post-handlers
-         '(((lambda (&rest _ignored)
-              (crux-smart-open-line-above)) "RET")))
+(when prelude-smartparens
+  ;; smart curly braces
+  (sp-pair "{" nil :post-handlers
+           '(((lambda (&rest _ignored)
+                (crux-smart-open-line-above)) "RET"))))
 
 ;; enlist a more liberal guru
-(setq guru-warn-only t)
+(use-package guru-mode
+  :ensure t
+  :defer t
+  :init
+  (setq guru-warn-only t))
 
 (defun prelude-prog-mode-defaults ()
   "Default coding hook, useful with any programming language."
@@ -66,35 +74,39 @@
   (when prelude-guru
     (guru-mode +1)
     (diminish 'guru-mode))
-  (smartparens-mode +1)
+  (when prelude-smartparens
+    (smartparens-mode +1))
   (prelude-enable-whitespace)
   (prelude-local-comment-auto-fill))
 
-(setq prelude-prog-mode-hook 'prelude-prog-mode-defaults)
+(add-hook 'prelude-prog-mode-hook #'prelude-prog-mode-defaults)
 
 (add-hook 'prog-mode-hook (lambda ()
                             (run-hooks 'prelude-prog-mode-hook)))
 
 ;; enable on-the-fly syntax checking
-(if (fboundp 'global-flycheck-mode)
-    (global-flycheck-mode +1)
-  (add-hook 'prog-mode-hook 'flycheck-mode))
+(use-package flycheck
+  :ensure t
+  :config
+  (global-flycheck-mode +1))
 
 ;; When Eglot is the LSP client, route its diagnostics through Flycheck
 ;; as well.  On its own Eglot reports only via Flymake, so without this
 ;; bridge LSP diagnostics wouldn't show up in Prelude's Flycheck UI.
 ;; (lsp-mode has its own Flycheck integration, so this is Eglot-only.)
 (when (eq prelude-lsp-client 'eglot)
-  (prelude-require-package 'flycheck-eglot)
-  (require 'flycheck-eglot)
-  (global-flycheck-eglot-mode +1))
+  (use-package flycheck-eglot
+    :ensure t
+    :after eglot
+    :config
+    (global-flycheck-eglot-mode +1)))
 
 ;; Makefiles require tabs for indentation
 (defun prelude-makefile-mode-defaults ()
   (whitespace-toggle-options '(tabs))
   (setq indent-tabs-mode t))
 
-(setq prelude-makefile-mode-hook 'prelude-makefile-mode-defaults)
+(add-hook 'prelude-makefile-mode-hook #'prelude-makefile-mode-defaults)
 
 (add-hook 'makefile-mode-hook (lambda ()
                                 (run-hooks 'prelude-makefile-mode-hook)))

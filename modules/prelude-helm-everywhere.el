@@ -1,4 +1,4 @@
-;;; prelude-helm-everywhere.el --- Enable Helm everywhere
+;;; prelude-helm-everywhere.el --- Enable Helm everywhere  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2014-2026 Tu, Do Hoang
 ;;
@@ -34,6 +34,8 @@
 (require 'prelude-helm)
 (require 'helm-eshell)
 
+(defvar eshell-mode-map)
+
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x C-m") 'helm-M-x)
 (global-set-key (kbd "M-y") 'helm-show-kill-ring)
@@ -58,7 +60,10 @@
 
 (when prelude-projectile
       ;; enable Helm version of Projectile with replacment commands
-      (helm-projectile-on))
+      (if (fboundp 'helm-projectile-mode) ; helm-projectile 1.7.0+
+          (helm-projectile-mode +1)
+        (with-suppressed-warnings ((obsolete helm-projectile-on))
+          (helm-projectile-on))))
 
 (provide 'prelude-helm-everywhere)
 ;; prelude-helm-everywhere.el ends here.

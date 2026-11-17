@@ -1,4 +1,4 @@
-;;; early-init.el --- Prelude's early configuration.
+;;; early-init.el --- Prelude's early configuration.  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2011-2026 Bozhidar Batsov
 ;;
@@ -64,5 +64,15 @@
 ;; like spell-checker dictionaries and subprocess sorting.
 (when (and (eq system-type 'darwin) (not (getenv "LANG")))
   (setenv "LANG" "en_US.UTF-8"))
+
+;; Load your own early settings from personal/early-init.el, if you
+;; have any (e.g. `default-frame-alist' tweaks that must be in place
+;; before the first frame is created).  It's loaded last, so it can
+;; also override anything above.
+(let ((personal-early-init
+       (expand-file-name "personal/early-init.el"
+                         (file-name-directory load-file-name))))
+  (when (file-exists-p personal-early-init)
+    (load personal-early-init)))
 
 ;;; early-init.el ends here
