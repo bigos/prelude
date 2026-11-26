@@ -98,7 +98,7 @@
   (add-hook 'slime-repl-mode-hook (lambda ()
                                     ;; (smartparens-strict-mode +1)
                                     (paredit-mode +1)
-                                    (whitespace-mode -1))))
+                                    (whitespace-mode -1)))
 
 (add-hook 'slime-repl-mode-hook #'prelude-slime-repl-setup -50)
 

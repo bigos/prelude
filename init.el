@@ -92,6 +92,8 @@ by Prelude.")
 
 ;; add Prelude's directories to Emacs's `load-path'
 (add-to-list 'load-path prelude-core-dir)
+
+
 (add-to-list 'load-path prelude-modules-dir)
 (add-to-list 'load-path prelude-vendor-dir)
 (prelude-add-subfolders-to-load-path prelude-vendor-dir)
@@ -106,6 +108,9 @@ by Prelude.")
 (when (file-directory-p prelude-personal-preload-dir)
   (message "[Prelude] Loading personal configuration files from files and directories in %s..." prelude-personal-preload-dir)
   (mapc 'load (directory-files-recursively prelude-personal-preload-dir "^[^#\.].*el$")))
+
+;; (load "~/.emacs.d/personal/organised.el")
+(message "my personal/oranised.el should be loaded =======================")
 
 ;; config changes made through the customize UI will be stored here
 (setq custom-file (expand-file-name "custom.el" prelude-personal-dir))

@@ -4,6 +4,8 @@
 ;;; fix graph drawing ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; https://emacs.stackexchange.com/questions/81211/how-do-i-write-an-advice-to-override-an-org-roam-function
 
+(message "======================== loading personal/organised.el")
+
 ;;; t for debugging, to find misbehaving configuration of package
 (setq debug-on-error nil)
 
@@ -94,7 +96,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 
 (global-set-key (kbd "C-z SPC") 'fixup-whitespace)
 ;;; Also for F7 note C-c C-o - ivy-occur - for all options
-(global-set-key (kbd "C-z <f7>") 'counsel-load-theme)
+(global-set-key (kbd "C-z <f7>") 'load-theme)
 
 ;; (global-set-key (kbd "C-z L") 'ef-themes-select-light)
 ;; (global-set-key (kbd "C-z D") 'ef-themes-select-dark)
@@ -822,7 +824,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
         ;; (message "going to skip exclusion file %s" file)
         nil))))
 
-(add-to-list 'recentf-exclude 'recentf-exclude-ocaml-temp-p)
+;; (add-to-list 'recentf-exclude 'recentf-exclude-ocaml-temp-p)
 
 (defun correct-ocaml-env ()
   (interactive)
@@ -1207,10 +1209,10 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
       (setq lightvals (if (bg-light)
                           (list (list (hval 255) 1.0 0.70) ; H S L
                                 (list (hval 160) 1.0 0.40)
-                                (list (hval  40) 1.0 0.40)
-                                (list (hval  10) 1.0 0.40)
-                                (list (hval 245) 1.0 0.60) ; H S L
-                                (list (hval 150) 1.0 0.40)
+                                (list (hval  50) 1.0 0.40)
+                                (list (hval  20) 1.0 0.40)
+                                (list (hval 235) 1.0 0.60) ; H S L
+                                (list (hval 140) 1.0 0.40)
                                 (list (hval  30) 1.0 0.40)
                                 (list (hval   0) 1.0 0.40))
                         (list (list .70 1.0 0.68) ; H S L
