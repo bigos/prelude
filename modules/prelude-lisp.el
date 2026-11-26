@@ -49,8 +49,7 @@
 (defun prelude-lisp-coding-setup ()
   "Set up a buffer of Lisp code."
   (when prelude-smartparens
-    ;; (smartparens-strict-mode +1)
-    (paredit-mode +1))
+    (smartparens-strict-mode +1))
   (rainbow-delimiters-mode +1)
   (run-hooks 'prelude-lisp-coding-hook))
 
@@ -61,8 +60,7 @@
 (defun prelude-interactive-lisp-coding-setup ()
   "Set up a Lisp REPL buffer, which doesn't need whitespace checks."
   (when prelude-smartparens
-    ;; (smartparens-strict-mode +1)
-    (paredit-mode +1))
+    (smartparens-strict-mode +1))
   (rainbow-delimiters-mode +1)
   (whitespace-mode -1)
   (run-hooks 'prelude-interactive-lisp-coding-hook))

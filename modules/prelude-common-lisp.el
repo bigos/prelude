@@ -88,8 +88,8 @@
 (defun prelude-slime-repl-setup ()
   "Set up a SLIME REPL buffer."
   (when prelude-smartparens
-    ;; (smartparens-strict-mode +1)
-    (paredit-mode +1))
+    (smartparens-strict-mode +1))
+
   (whitespace-mode -1))
 
 (add-hook 'slime-repl-mode-hook #'prelude-slime-repl-setup -50)

@@ -58,7 +58,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (defun acl2-goodies ()
     (interactive)
     (rainbow-delimiters-mode)
-    (paredit-mode)
+    (paredit-mode +1)
     (setq *acl2-doc-link-color* "#aaff00")
 
     (let ((scriptBuf (get-buffer-create "script")))
