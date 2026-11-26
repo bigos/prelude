@@ -120,7 +120,7 @@
            (long-books (-map 'car (verse-books)))
            (link-book (if (member book-name long-books)
                           book-name
-                        (ivy-completing-read (format "select correction for %S" book-name)
+                        (completing-read (format "select correction for %S" book-name)
                                               long-books
                                               nil
                                               t
