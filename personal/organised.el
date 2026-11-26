@@ -565,6 +565,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (use-package yafolding
   :ensure t
   :bind (("C-x y f" . yafolding-mode)))
+;; we need yafolding mode global
+(global-set-key (kbd "C-z y f") 'yafolding-mode)
 
 ;;; *** vscode interaction
 (defun open-buffer-in-vscode ()
