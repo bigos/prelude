@@ -43,20 +43,12 @@
   ;;(define-key lisp-mode-shared-map (kbd "M-[") (prelude-wrap-with "["))
   (define-key lisp-mode-shared-map (kbd "M-\"") (prelude-wrap-with "\"")))
 
-;; a great lisp coding hook
-(defun prelude-lisp-coding-defaults ()
-  ;; (smartparens-strict-mode +1)
-  (paredit-mode +1)
-  (rainbow-delimiters-mode +1))
+;; The setups of the Lisp modes call these two
 
-(add-hook 'prelude-lisp-coding-hook #'prelude-lisp-coding-defaults)
-
-;; interactive modes don't need whitespace checks
-(defun prelude-interactive-lisp-coding-defaults ()
-  ;; (smartparens-strict-mode +1)
-  (paredit-mode +1)
-
-
+(defun prelude-lisp-coding-setup ()
+  "Set up a buffer of Lisp code."
+  (when prelude-smartparens
+    (smartparens-strict-mode +1))
   (rainbow-delimiters-mode +1)
   (run-hooks 'prelude-lisp-coding-hook))
 

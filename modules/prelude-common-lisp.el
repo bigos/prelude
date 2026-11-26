@@ -91,17 +91,7 @@
     (smartparens-strict-mode +1))
   (whitespace-mode -1))
 
-
-  ;; rainbow-delimiters messes up colors in slime-repl, so we
-  ;; configure the REPL hooks directly instead of using
-  ;; prelude-lisp-coding-defaults.
-  (add-hook 'slime-repl-mode-hook (lambda ()
-                                    ;; (smartparens-strict-mode +1)
-                                    (paredit-mode +1)
-                                    (whitespace-mode -1)))
-
 (add-hook 'slime-repl-mode-hook #'prelude-slime-repl-setup -50)
-
 
 (provide 'prelude-common-lisp)
 ;;; prelude-common-lisp.el ends here
