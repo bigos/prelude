@@ -37,18 +37,20 @@
 (define-key read-expression-map (kbd "TAB") 'completion-at-point)
 
 ;; wrap keybindings
-(when prelude-smartparens
-  (define-key lisp-mode-shared-map (kbd "M-(") (prelude-wrap-with "("))
-  ;; FIXME: Pick terminal-friendly binding.
-  ;;(define-key lisp-mode-shared-map (kbd "M-[") (prelude-wrap-with "["))
-  (define-key lisp-mode-shared-map (kbd "M-\"") (prelude-wrap-with "\"")))
+(when nil
+  (when prelude-smartparens
+    (define-key lisp-mode-shared-map (kbd "M-(") (prelude-wrap-with "("))
+    ;; FIXME: Pick terminal-friendly binding.
+    ;;(define-key lisp-mode-shared-map (kbd "M-[") (prelude-wrap-with "["))
+    (define-key lisp-mode-shared-map (kbd "M-\"") (prelude-wrap-with "\""))))
 
 ;; The setups of the Lisp modes call these two
 
 (defun prelude-lisp-coding-setup ()
   "Set up a buffer of Lisp code."
   (when prelude-smartparens
-    (smartparens-strict-mode +1))
+    ;; (smartparens-strict-mode +1)
+    (paredit-mode +1))
   (rainbow-delimiters-mode +1)
   (run-hooks 'prelude-lisp-coding-hook))
 
@@ -59,7 +61,8 @@
 (defun prelude-interactive-lisp-coding-setup ()
   "Set up a Lisp REPL buffer, which doesn't need whitespace checks."
   (when prelude-smartparens
-    (smartparens-strict-mode +1))
+    ;; (smartparens-strict-mode +1)
+    (paredit-mode +1))
   (rainbow-delimiters-mode +1)
   (whitespace-mode -1)
   (run-hooks 'prelude-interactive-lisp-coding-hook))
