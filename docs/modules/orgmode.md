@@ -1,17 +1,24 @@
-# Prelude OrgMode
+# Prelude Org
 
 !!! Note
-    This module builds on the Emacs OrgMode Functionality
 
-## OrgMode
+    This module builds on the built-in [Org mode](https://orgmode.org).
 
-The module establishes some sensible defaults for `orgmode`
+    This module is enabled by default.
 
-It establishes a few extra keybidings:
+## Org Mode
 
-- `C-c l` (`org-store-link`)
-- `C-c a` (`org-agenda`)
-- `C-c b` (`org-switchb`)
+The module adds the global key bindings that the Org manual suggests:
+
+| Key | Command | Description |
+| --- | ------- | ----------- |
+| <kbd>C-c l</kbd> | `org-store-link` | Store a link to the current location |
+| <kbd>C-c a</kbd> | `org-agenda` | Open the agenda dispatcher |
+| <kbd>C-c c</kbd> | `org-capture` | Capture a note or a task |
+
+In Org buffers `org-indent-mode` is enabled, and <kbd>C-a</kbd> does
+what Org wants it to do, instead of what Prelude binds it to everywhere
+else.
 
 ## org-habits
 

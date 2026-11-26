@@ -7,7 +7,6 @@
       '(
         (ace-window . "melpa-stable")
         (avy . "melpa-stable")
-        (browse-kill-ring . "melpa-stable")
         (cargo . "melpa-stable")
         (cask-mode . "melpa-stable")
         (cdlatex . "melpa-stable")
@@ -22,7 +21,6 @@
         (dart-mode . "melpa-stable")
         (diff-hl . "melpa-stable")
         (diminish . "melpa-stable")
-        (discover-my-major . "melpa-stable")
         (dockerfile-mode . "melpa-stable")
         (easy-kill . "melpa-stable")
         (editorconfig . "melpa-stable")
@@ -85,6 +83,7 @@
         (super-save . "melpa-stable")
         (swift-mode . "melpa-stable")
         (thrift . "melpa-stable")
+        (tokyo-night . "melpa-stable")
         (utop . "melpa-stable")
         (volatile-highlights . "melpa-stable")
         (web-mode . "melpa-stable")

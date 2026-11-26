@@ -1,6 +1,7 @@
 ;;; prelude-fsharp.el --- Emacs Prelude: F# programming support.  -*- lexical-binding: t; -*-
 ;;
 ;; Author: Andre Boechat <andre.boechat@tutanota.com>
+;; URL: https://github.com/bbatsov/prelude
 
 ;; This file is not part of GNU Emacs.
 
@@ -31,18 +32,25 @@
 
 (require 'prelude-programming)
 
-(defun prelude-fsharp-mode-defaults ()
-  ;; Use the .NET CLI to run the F# interactive REPL
-  (setq inferior-fsharp-program "dotnet fsi --readline-")
+;; Use the .NET CLI to run the F# interactive REPL
+(setq inferior-fsharp-program "dotnet fsi --readline-")
+
+(defun prelude-fsharp-setup ()
+  "Set up an F# buffer."
   (subword-mode +1)
+  ;; a failed install shouldn't break the whole mode hook
   (when (eq prelude-lsp-client 'eglot)
-    (require 'eglot-fsharp))
-  (prelude-lsp-enable))
+    (require 'eglot-fsharp nil t))
+  (prelude-lsp-enable)
+  (run-hooks 'prelude-fsharp-mode-hook))
+
+(make-obsolete-variable 'prelude-fsharp-mode-hook
+                        "use `fsharp-mode-hook' instead."
+                        "2.2.0")
 
 (use-package fsharp-mode
   :ensure t
-  :hook (fsharp-mode . (lambda ()
-                         (run-hooks 'prelude-fsharp-mode-hook))))
+  :defer t)
 
 ;; Auto-configures Eglot to use FsAutoComplete as the F# language
 ;; server.  Only needed when Eglot is the LSP client.
@@ -51,8 +59,7 @@
     :ensure t
     :defer t))
 
-(add-hook 'prelude-fsharp-mode-hook #'prelude-fsharp-mode-defaults)
+(add-hook 'fsharp-mode-hook #'prelude-fsharp-setup -50)
 
 (provide 'prelude-fsharp)
-
 ;;; prelude-fsharp.el ends here

@@ -32,6 +32,15 @@
 
 (declare-function LaTeX-math-mode "latex")
 
+;; AUCTeX is loaded only when a TeX file is opened
+(defvar TeX-auto-save)
+(defvar TeX-parse-self)
+(defvar TeX-close-quote)
+(defvar TeX-open-quote)
+(defvar TeX-master)
+(defvar TeX-view-program-selection)
+(defvar TeX-view-program-list)
+
 (when prelude-smartparens
   (require 'smartparens-latex))
 
@@ -44,13 +53,6 @@
 (use-package cdlatex
   :ensure t
   :defer t)
-
-;; Company completion for AUCTeX (labels, citations, macros, etc.)
-(use-package company-auctex
-  :ensure t
-  :defer t
-  :after company
-  :config (company-auctex-init))
 
 (defcustom prelude-latex-fast-math-entry 'LaTeX-math-mode
   "Method used for fast math symbol entry in LaTeX."
@@ -65,7 +67,7 @@
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
 
-;; Disable smart quote insertion -- many users prefer to manage
+;; Disable smart quote insertion: many users prefer to manage
 ;; quotes manually or via a snippet system
 (setq TeX-close-quote "")
 (setq TeX-open-quote "")
@@ -85,8 +87,8 @@
           ("PDF Viewer" "open %o")
           ("HTML Viewer" "open %o"))))
 
-(defun prelude-latex-mode-defaults ()
-  "Default Prelude hook for `LaTeX-mode'."
+(defun prelude-latex-setup ()
+  "Set up a LaTeX buffer."
   (turn-on-auto-fill)
   (abbrev-mode +1)
   (subword-mode +1)
@@ -94,13 +96,14 @@
     (smartparens-mode +1))
   (pcase prelude-latex-fast-math-entry
     ('LaTeX-math-mode (LaTeX-math-mode 1))
-    ('cdlatex (turn-on-cdlatex))))
+    ('cdlatex (turn-on-cdlatex)))
+  (run-hooks 'prelude-latex-mode-hook))
 
-(add-hook 'prelude-latex-mode-hook #'prelude-latex-mode-defaults)
+(make-obsolete-variable 'prelude-latex-mode-hook
+                        "use `LaTeX-mode-hook' instead."
+                        "2.2.0")
 
-(add-hook 'LaTeX-mode-hook (lambda ()
-                             (run-hooks 'prelude-latex-mode-hook)))
+(add-hook 'LaTeX-mode-hook #'prelude-latex-setup -50)
 
 (provide 'prelude-latex)
-
 ;;; prelude-latex.el ends here

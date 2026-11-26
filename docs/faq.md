@@ -7,33 +7,18 @@ powerful as the legendary sports car
 [Honda Prelude](https://en.wikipedia.org/wiki/Honda_Prelude).
 I also wanted a name with `el` in it. :-)
 
-## Why doesn't Prelude use `use-package`?
+## Does Prelude use `use-package`?
 
-While `use-package` provides a nice way of structuring your
-configuration (especially if you're into single-file setups),
-it also adds a layer of complexity as it's just a macro
-that expands to some "traditional" configuration code. One
-aspect of `use-package` that's a bit tricky is where to place
-cross-package configuration, as it can potentially go to
-different configuration blocks.
+It does. For a long time it didn't: `use-package` wasn't a part of
+Emacs, and Prelude's modules were small enough to get by without it.
+That changed when `use-package` was included in Emacs 29. Prelude's
+core and modules install and configure their packages with it now, and
+you're encouraged to do the same in your personal config:
 
-Given how modular the structure of Prelude is, there's
-relatively little to be gained by adopting `use-package`
-everywhere, but end users are free to use `use-package` for
-their personal configuration.
-
-!!! Note
-
-    I have a stripped-down version of Prelude for personal
-    use, based on `use-package`
-    [in this repo](https://github.com/bbatsov/emacs.d).
-    I guess it might be of interest to some of you.
-
-**Update (2023):** There are now plans to include
-`use-package` in Emacs 29, which will likely increase its
-prominence. Prelude 1.2 auto-installs `use-package` and
-newer Prelude modules might make use of `use-package`.
-`prelude-vertico` is one such example.
+```emacs-lisp
+(use-package some-package
+  :ensure t)
+```
 
 ## Why does Prelude use MELPA instead of MELPA Stable by default?
 
@@ -42,9 +27,14 @@ the habit to cut "stable" releases of their projects. It seems
 that's changing for the better in recent years, so Prelude's
 defaults might change down the road.
 
-## Why is Zenburn the default color theme?
+## Why is Tokyo Night the default color theme?
 
 No particular reason other than the fact that I like it a lot
-and happen to maintain its Emacs port. I believe it's pretty
-nice improvement over the default Emacs theme, but your
+and happen to maintain its Emacs port. It comes with a light
+variant as well, so Prelude can use that one during the day (or when
+your system is in light mode) and the dark one at night. I believe
+it's pretty nice improvement over the default Emacs theme, but your
 perspective might be different.
+
+Prelude's default used to be Zenburn (another theme I maintain). See
+[Color Themes](configuration.md#color-themes) if you want it back.

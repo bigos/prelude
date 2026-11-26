@@ -30,6 +30,13 @@
 
 (require 'prelude-programming)
 
+(defvar go-ts-mode-map)
+(defvar gofmt-command)
+
+;; go-mode doesn't autoload these, and go-ts-mode buffers need them too
+(autoload 'gofmt "go-mode" nil t)
+(autoload 'godoc-at-point "go-mode" nil t)
+
 ;; Use go-ts-mode when the tree-sitter grammar is available
 (prelude-treesit-remap 'go 'go-mode 'go-ts-mode)
 
@@ -40,24 +47,39 @@
 ;; certain things, triggering lsp-format-buffer. This causes, inter alia,
 ;; commas to disappear when typing go function invocations
 (add-to-list 'super-save-predicates
-             (lambda () (not (eq major-mode 'go-mode))))
+             (lambda () (not (derived-mode-p 'go-mode 'go-ts-mode))))
 
-(defun prelude-go-mode-defaults ()
-  ;; Add to default go-mode key bindings
-  (let ((map go-mode-map))
-    (define-key map (kbd "C-c a") 'go-test-current-project) ;; current package, really
-    (define-key map (kbd "C-c m") 'go-test-current-file)
-    (define-key map (kbd "C-c .") 'go-test-current-test)
-    (define-key map (kbd "C-c b") 'go-run)
-    (define-key map (kbd "C-h f") 'godoc-at-point))
+(defun prelude-go--define-keys (map)
+  "Add Prelude's Go key bindings to MAP.
+The test keys are the ones that `go-ts-mode' has had since Emacs 31."
+  (define-key map (kbd "C-c C-t t") #'go-test-current-test)
+  (define-key map (kbd "C-c C-t f") #'go-test-current-file)
+  ;; the current package, really
+  (define-key map (kbd "C-c C-t p") #'go-test-current-project)
+  (define-key map (kbd "C-c C-r") #'go-run))
 
-  ;; Prefer goimports to gofmt if installed
-  (let ((goimports (executable-find "goimports")))
-    (when goimports
-      (setq gofmt-command goimports)))
+;; go-ts-mode has a keymap of its own
+(with-eval-after-load 'go-mode
+  (prelude-go--define-keys go-mode-map))
+(with-eval-after-load 'go-ts-mode
+  (prelude-go--define-keys go-ts-mode-map))
+
+(defun prelude-go-format-buffer ()
+  "Format the buffer with gofmt (or goimports), see `prelude-format-on-save-p'.
+Unlike `gofmt-before-save', this works in `go-ts-mode' as well."
+  (when (prelude-format-on-save-p)
+    (gofmt)))
+
+;; Prefer goimports to gofmt if installed
+(let ((goimports (executable-find "goimports")))
+  (when goimports
+    (setq gofmt-command goimports)))
+
+(defun prelude-go-setup ()
+  "Set up a Go buffer."
 
   ;; format before save
-  (add-hook 'before-save-hook #'gofmt-before-save nil t)
+  (add-hook 'before-save-hook #'prelude-go-format-buffer nil t)
 
   ;; Go uses tabs for indentation, so don't highlight them as problems
   (whitespace-toggle-options '(tabs))
@@ -65,7 +87,12 @@
   ;; CamelCase aware editing operations
   (subword-mode +1)
 
-  (prelude-lsp-enable))
+  (prelude-lsp-enable)
+  (run-hooks 'prelude-go-mode-hook))
+
+(make-obsolete-variable 'prelude-go-mode-hook
+                        "use `go-mode-hook' and `go-ts-mode-hook' instead."
+                        "2.2.0")
 
 ;; Major mode for Go; also provides gofmt integration.
 ;; go-ts-mode (built-in) is used when the tree-sitter grammar is
@@ -73,16 +100,15 @@
 (use-package go-mode
   :ensure t
   :defer t
-  :bind (:map help-map ("G" . godoc))
-  :hook ((go-mode . (lambda () (run-hooks 'prelude-go-mode-hook)))
-         (go-ts-mode . (lambda () (run-hooks 'prelude-go-mode-hook)))))
+  :bind (:map help-map ("G" . godoc)))
 
-;; Run Go tests from Emacs (C-c a/m/.)
+;; Run Go tests from Emacs (C-c C-t t/f/p)
 (use-package gotest
   :ensure t
   :defer t)
 
-(add-hook 'prelude-go-mode-hook #'prelude-go-mode-defaults)
+(add-hook 'go-mode-hook #'prelude-go-setup -50)
+(add-hook 'go-ts-mode-hook #'prelude-go-setup -50)
 
 (provide 'prelude-go)
 ;;; prelude-go.el ends here

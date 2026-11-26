@@ -40,14 +40,21 @@
 ;; We never want to edit Rubinius bytecode
 (add-to-list 'completion-ignored-extensions ".rbc")
 
-(defun prelude-ruby-mode-defaults ()
-  ;; Don't auto-insert encoding comments
-  ;; Those are almost never needed in Ruby 2+
-  (setq ruby-insert-encoding-magic-comment nil)
+;; Don't auto-insert encoding comments
+;; Those are almost never needed in Ruby 2+
+(setq ruby-insert-encoding-magic-comment nil)
+
+(defun prelude-ruby-setup ()
+  "Set up a Ruby buffer."
   (inf-ruby-minor-mode +1)
   ;; CamelCase aware editing operations
   (subword-mode +1)
-  (prelude-lsp-enable))
+  (prelude-lsp-enable)
+  (run-hooks 'prelude-ruby-mode-hook))
+
+(make-obsolete-variable 'prelude-ruby-mode-hook
+                        "use `ruby-mode-hook' and `ruby-ts-mode-hook' instead."
+                        "2.2.0")
 
 ;; Run a Ruby REPL (IRB/Pry) inside Emacs and send code to it
 (use-package inf-ruby
@@ -60,12 +67,8 @@
   :defer t
   :bind (:map help-map ("R" . yari)))
 
-(add-hook 'prelude-ruby-mode-hook #'prelude-ruby-mode-defaults)
-
-(add-hook 'ruby-mode-hook (lambda ()
-                            (run-hooks 'prelude-ruby-mode-hook)))
-(add-hook 'ruby-ts-mode-hook (lambda ()
-                               (run-hooks 'prelude-ruby-mode-hook)))
+(add-hook 'ruby-mode-hook #'prelude-ruby-setup -50)
+(add-hook 'ruby-ts-mode-hook #'prelude-ruby-setup -50)
 
 (provide 'prelude-ruby)
 ;;; prelude-ruby.el ends here

@@ -30,9 +30,16 @@
 
 ;;; Code:
 
-(defun prelude-web-mode-defaults ()
+(require 'prelude-programming)
+
+(defun prelude-web-setup ()
+  "Set up a `web-mode' buffer."
   (subword-mode +1)
-  (run-hooks 'prelude-prog-mode-hook))
+  (run-hooks 'prelude-web-mode-hook))
+
+(make-obsolete-variable 'prelude-web-mode-hook
+                        "use `web-mode-hook' instead."
+                        "2.2.0")
 
 ;; web-mode: major mode for editing web templates (HTML, PHP, ERB,
 ;; Jinja, Mustache, JSP, Vue, Svelte, etc.)
@@ -58,9 +65,7 @@
   (web-mode-css-indent-offset 2)
   (web-mode-code-indent-offset 2)
   ;; Let smartparens handle pairing instead of web-mode's built-in
-  (web-mode-enable-auto-pairing (not prelude-smartparens))
-  :hook (web-mode . (lambda ()
-                      (run-hooks 'prelude-web-mode-hook))))
+  (web-mode-enable-auto-pairing (not prelude-smartparens)))
 
 (when prelude-smartparens
   ;; smartparens integration for ERB/EJS-style template tags
@@ -76,7 +81,7 @@
       (sp-local-tag "=" "<%= " " %>")
       (sp-local-tag "#" "<%# " " %>"))))
 
-(add-hook 'prelude-web-mode-hook #'prelude-web-mode-defaults)
+(add-hook 'web-mode-hook #'prelude-web-setup -50)
 
 (provide 'prelude-web)
 ;;; prelude-web.el ends here

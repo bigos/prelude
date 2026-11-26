@@ -30,34 +30,38 @@
 
 ;;; Code:
 
+(defvar org-log-done)
+(defvar org-log-into-drawer)
+(declare-function org-indent-mode "org-indent")
+
 ;; a few useful global keybindings for org-mode
 (global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c c") 'org-capture)
-(global-set-key (kbd "C-c b") 'org-switchb)
 
 (with-eval-after-load 'org
   (require 'org-habit)
   (setq org-log-done t)
   (setq org-log-into-drawer t))
 
-(defun prelude-org-mode-defaults ()
+(defun prelude-org-setup ()
+  "Set up an Org buffer."
   ;; clean visual indentation
   (org-indent-mode +1)
-  ;; let org-mode handle C-c +, C-c - and C-a
+  ;; let org-mode handle C-a
   (let ((oldmap (cdr (assoc 'prelude-mode minor-mode-map-alist)))
         (newmap (make-sparse-keymap)))
     (set-keymap-parent newmap oldmap)
-    (define-key newmap (kbd "C-c +") nil)
-    (define-key newmap (kbd "C-c -") nil)
     (define-key newmap (kbd "C-a") 'org-beginning-of-line)
     (make-local-variable 'minor-mode-overriding-map-alist)
-    (push `(prelude-mode . ,newmap) minor-mode-overriding-map-alist)))
+    (push `(prelude-mode . ,newmap) minor-mode-overriding-map-alist))
+  (run-hooks 'prelude-org-mode-hook))
 
-(add-hook 'prelude-org-mode-hook #'prelude-org-mode-defaults)
+(make-obsolete-variable 'prelude-org-mode-hook
+                        "use `org-mode-hook' instead."
+                        "2.2.0")
 
-(add-hook 'org-mode-hook (lambda () (run-hooks 'prelude-org-mode-hook)))
+(add-hook 'org-mode-hook #'prelude-org-setup -50)
 
 (provide 'prelude-org)
-
 ;;; prelude-org.el ends here

@@ -2,37 +2,79 @@
 
 !!! Note
 
-    This module builds on top of the shared [Programming](programming.md) module.
+    This module builds on top of the shared [Programming](programming.md)
+    module and the [LSP](lsp.md) module.
 
-## cc-mode
+    This module is enabled by default.
 
-Emacs comes with powerful C/C++ programming support through the built-in
-`cc-mode`. This module provides sensible defaults for `cc-mode` and all modes
-derived from it (e.g. `java-mode`, `php-mode`, etc.).
+## Package Prerequisites
 
-Prelude configures the following defaults:
+You'll need a compiler and a language server. Eglot looks for
+[clangd](https://clangd.llvm.org/) and
+[ccls](https://github.com/MaskRay/ccls), in that order.
 
-- **Indentation style**: K&R (`c-default-style` set to `"k&r"`)
-- **Indent offset**: 4 spaces (`c-basic-offset` set to `4`)
-- **Substatement opening braces** are not indented
-  (`substatement-open` offset set to `0`)
+## C and C++ Modes
 
-You can override any of these in your personal config:
+The module uses the tree-sitter powered `c-ts-mode` and `c++-ts-mode`
+that come with Emacs. Prelude offers to install the `c` and `cpp`
+grammars the first time you open a file that needs them (see
+`prelude-treesit-auto-install`). Without the grammars you get the
+classic `c-mode` and `c++-mode`.
 
-```emacs-lisp
-(setq prelude-c-mode-common-hook
-      (lambda ()
-        (setq c-default-style "linux"
-              c-basic-offset 8)))
+`subword-mode` is enabled, so the editing commands understand
+`CamelCase`. The module also installs `cmake-mode` for CMake files.
+
+## Indentation
+
+C, C++ and Objective-C code is indented in the K&R style, with 4
+spaces, in the tree-sitter modes as well as in the classic ones:
+
+```c
+int main(void)
+{
+    if (x) {
+        foo();
+    }
+    return 0;
+}
 ```
 
-## Makefile Mode
+For the tree-sitter modes that's done with `c-ts-mode-indent-style`
+and `c-ts-mode-indent-offset` (called `c-ts-indent-offset` in Emacs
+31). The classic modes get a style called `prelude`, which is the
+`k&r` style of `cc-mode` with `c-basic-offset` set to 4. The other
+modes built on `cc-mode`, like `java-mode`, keep their usual styles.
 
-The module also provides configuration for `makefile-mode`:
+Prelude changes these only if they still have Emacs's default values,
+so to use something else just set them, in your personal config or with
+<kbd>M-x customize</kbd>:
 
-- Tabs are allowed in Makefiles (since they are syntactically required)
-- `indent-tabs-mode` is enabled
+```emacs-lisp
+;; the tree-sitter modes (c-ts-indent-offset in Emacs 31)
+(setq c-ts-mode-indent-style 'linux
+      c-ts-mode-indent-offset 8)
+;; the classic modes
+(setq c-default-style '((c-mode . "linux")
+                        (c++-mode . "linux")
+                        (java-mode . "java")
+                        (awk-mode . "awk")
+                        (other . "gnu")))
+```
+
+The rest of the C setup (`subword-mode` and the language server) is
+in `prelude-c-setup`, which runs from the hooks of the C, C++ and
+Objective-C modes, before the functions you add to them. Add your own
+to change it:
+
+```emacs-lisp
+(defun my-c-setup ()
+  (subword-mode -1))
+
+(dolist (hook '(c-mode-hook c++-mode-hook c-ts-mode-hook c++-ts-mode-hook))
+  (add-hook hook #'my-c-setup))
+```
 
 ## Key Bindings
 
-Run <kbd>C-h m</kbd> in any C/C++ buffer to see all available key bindings.
+See the [LSP](lsp.md) module for the available LSP key bindings. Run
+<kbd>C-h m</kbd> in any C/C++ buffer to see all available key bindings.

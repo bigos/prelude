@@ -62,10 +62,61 @@ to the active region."
 (prelude-install-search-engine "github"     "https://github.com/search?q="                 "Search GitHub: ")
 (prelude-install-search-engine "duckduckgo" "https://duckduckgo.com/?t=lm&q="              "Search DuckDuckGo: ")
 
-(defun prelude-recompile-init ()
-  "Byte-compile all your dotfiles again."
+(defun prelude-delete-init-bytecode ()
+  "Delete the compiled versions of Prelude's init.el and early-init.el.
+Return the ones that were older than their sources.
+
+Emacs loads init.elc and early-init.elc in preference to the sources,
+even when those are newer.  `load-prefer-newer' is of no help there, as
+it's set by the very files in question.  A compiled init file left
+behind by an older Prelude (or by an update that didn't go through
+`prelude-update') would therefore shadow the current one forever, so
+Prelude doesn't keep them around at all."
+  (let ((stale nil))
+    (dolist (name '("init" "early-init"))
+      (let ((source (expand-file-name (concat name ".el") prelude-dir))
+            (compiled (expand-file-name (concat name ".elc") prelude-dir)))
+        (when (file-exists-p compiled)
+          (when (file-newer-than-file-p source compiled)
+            (push compiled stale))
+          ;; We might not be allowed to, e.g. in a system-wide install.
+          ;; That's no reason to fail to start.
+          (condition-case err
+              (delete-file compiled)
+            (file-error
+             (display-warning
+              'prelude
+              (format "Couldn't delete %s, which Emacs loads instead of %s: %s"
+                      compiled (file-name-nondirectory source)
+                      (error-message-string err))))))))
+    (nreverse stale)))
+
+;; This runs on every startup.  Even if a stale init.elc was loaded, it
+;; has `load-prefer-newer' set, so we get here through the current
+;; source of this file.
+(let ((stale (prelude-delete-init-bytecode)))
+  (when stale
+    (display-warning
+     'prelude
+     (format "Removed outdated byte-code that Emacs was loading instead of Prelude's current init files (%s).  Restart Emacs to start with the right ones."
+             (mapconcat #'file-name-nondirectory stale ", ")))))
+
+(defun prelude-find-user-init-file ()
+  "Open your personal configuration in another window.
+That's `prelude-user-init-file', by default the personal folder."
   (interactive)
-  (byte-recompile-directory prelude-dir 0))
+  (find-file-other-window prelude-user-init-file))
+
+(defun prelude-recompile-init ()
+  "Byte-compile Prelude's core, modules and vendored code again.
+init.el and early-init.el are never compiled, see
+`prelude-delete-init-bytecode'.  Your personal config isn't either, as
+it's loaded from its source files."
+  (interactive)
+  (prelude-delete-init-bytecode)
+  (dolist (dir (list prelude-core-dir prelude-modules-dir prelude-vendor-dir))
+    (when (file-directory-p dir)
+      (byte-recompile-directory dir 0))))
 
 (defvar prelude-tips
   '("Press <C-c o> to open a file with external program."
@@ -173,13 +224,119 @@ See `prelude-conflicting-modules'."
                  (mapconcat #'symbol-name enabled ", ")
                  prelude-modules-file))))))
 
-(defun prelude-lsp-enable ()
-  "Enable the LSP client configured via `prelude-lsp-client'."
+(defvar eglot-server-programs)
+(defvar lsp-enable-suggest-server-download)
+(defvar lsp-warn-no-matched-clients)
+
+(defvar prelude-lsp--reported-modes nil
+  "Major modes we've already reported a missing language server for.")
+
+(defun prelude-lsp--eglot-contact ()
+  "Return the `eglot-server-programs' entry for the current major mode."
+  (seq-some
+   (pcase-lambda (`(,modes . ,contact))
+     ;; MODES is a mode, a (MODE :language-id ID) spec, or a list of those
+     (when (seq-some (lambda (mode)
+                       (derived-mode-p (if (consp mode) (car mode) mode)))
+                     (if (or (symbolp modes) (keywordp (cadr modes)))
+                         (list modes)
+                       modes))
+       contact))
+   eglot-server-programs))
+
+(defun prelude-lsp--eglot-missing-server ()
+  "Return a description of what's missing if Eglot can't start a server here.
+Return nil if the language server of the current buffer seems to be
+installed, or if there's no way to tell without starting it."
+  (require 'eglot)
+  (let ((contact (prelude-lsp--eglot-contact)))
+    (condition-case err
+        (progn
+          ;; `eglot-alternatives' gives us a function that picks the
+          ;; first of several servers that's installed, and signals an
+          ;; error if none of them is.  Named functions are the entry
+          ;; points of packages that install the server on demand, so
+          ;; those are left alone.
+          (when (and (functionp contact) (not (symbolp contact)))
+            (setq contact
+                  (if (eql (cdr (func-arity contact)) 1)
+                      (funcall contact nil)
+                    ;; Eglot 1.17+ passes the project as well
+                    (funcall contact nil
+                             (or (project-current)
+                                 (cons 'transient default-directory))))))
+          ;; skip the class of the server
+          (when (and (consp contact) (symbolp (car contact))
+                     (not (keywordp (car contact))))
+            (setq contact (cdr contact)))
+          (cond
+           ((null contact)
+            (format-message "Eglot doesn't know a language server for `%s'"
+                            major-mode))
+           ;; (PROGRAM ARGS...), as opposed to (HOST PORT)
+           ((and (consp contact) (stringp (car contact))
+                 (not (integerp (cadr contact)))
+                 (not (executable-find (car contact))))
+            (format-message "`%s' isn't installed" (car contact)))))
+      ;; Only a plain error (which is what `eglot-alternatives' signals)
+      ;; tells us something.  If the function failed in any other way
+      ;; we can't tell, and it's Eglot's job to deal with that.
+      (error (and (eq (car err) 'error)
+                  (error-message-string err))))))
+
+(defun prelude-lsp--eglot-ensure (&optional quiet)
+  "Start Eglot in the current buffer, unless its server isn't installed.
+Eglot would complain about that for every file you open, while we
+mention it just once for a major mode, and not at all if QUIET is
+non-nil."
+  (when buffer-file-name
+    ;; looking for programs on a remote host is slow, so that's left to
+    ;; Eglot, which does it only once you start working with the buffer
+    (let ((missing (unless (file-remote-p default-directory)
+                     (prelude-lsp--eglot-missing-server))))
+      (cond
+       ((not missing) (eglot-ensure))
+       ((not (or quiet (memq major-mode prelude-lsp--reported-modes)))
+        (push major-mode prelude-lsp--reported-modes)
+        (message "[Prelude] No language server for `%s' buffers: %s"
+                 major-mode missing))))))
+
+(defun prelude-lsp-enable (&optional quiet)
+  "Enable the LSP client configured via `prelude-lsp-client'.
+With Eglot nothing happens when the language server of the buffer isn't
+installed, apart from a message the first time that's noticed.
+
+If QUIET is non-nil a missing language server isn't mentioned at all.
+That's for the kinds of files that people edit all the time without
+having any use for a language server (configuration files, shell
+scripts, etc)."
   (pcase prelude-lsp-client
-    ('eglot (eglot-ensure))
+    ('eglot (prelude-lsp--eglot-ensure quiet))
     ('lsp-mode
      (require 'prelude-lsp-mode)
+     (when quiet
+       (setq-local lsp-warn-no-matched-clients nil
+                   lsp-enable-suggest-server-download nil))
      (lsp-deferred))))
+
+(defun prelude-format-on-save-p ()
+  "Return non-nil if a module should format the buffer when it's saved.
+That's not the case when `prelude-format-on-save' is off, or when
+Apheleia is already taking care of the formatting."
+  (and prelude-format-on-save
+       (not (bound-and-true-p apheleia-mode))))
+
+(defun prelude-lsp-format-on-save ()
+  "Format the buffer with its language server, if there's one running.
+Meant for `before-save-hook'.  See `prelude-format-on-save-p'."
+  (when (prelude-format-on-save-p)
+    ;; a failed request shouldn't get in the way of saving the file
+    (with-demoted-errors "[Prelude] Couldn't format the buffer: %S"
+      (cond
+       ((and (fboundp 'eglot-managed-p) (eglot-managed-p))
+        (eglot-format-buffer))
+       ((bound-and-true-p lsp-mode)
+        (lsp-format-buffer))))))
 
 ;; Eglot configuration
 (defvar eglot-autoshutdown)
@@ -189,6 +346,8 @@ See `prelude-conflicting-modules'."
 (declare-function eglot-code-action-organize-imports "eglot")
 (declare-function eglot-code-actions "eglot")
 (declare-function eglot-format-buffer "eglot")
+(declare-function eglot-managed-p "eglot")
+(declare-function lsp-format-buffer "lsp-mode")
 (declare-function eglot-rename "eglot")
 
 (with-eval-after-load 'eglot

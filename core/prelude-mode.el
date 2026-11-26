@@ -59,7 +59,7 @@
     (define-key map (kbd "C-c t") 'crux-visit-term-buffer)
     (define-key map (kbd "C-c k") 'crux-kill-other-buffers)
     (define-key map (kbd "C-c TAB") 'crux-indent-rigidly-and-copy-to-clipboard)
-    (define-key map (kbd "C-c I") 'crux-find-user-init-file)
+    (define-key map (kbd "C-c I") 'prelude-find-user-init-file)
     (define-key map (kbd "C-c S") 'crux-find-shell-init-file)
     (define-key map (kbd "C-c i") 'imenu-anywhere)
     (when prelude-projectile
@@ -91,6 +91,7 @@
          ["Re-open as root" crux-reopen-as-root]
          ["Delete file and buffer" crux-delete-file-and-buffer]
          ["Rename buffer and file" crux-rename-buffer-and-file]
+         ["Find personal config" prelude-find-user-init-file]
          ["Find init file" crux-find-user-init-file]
          ["Find custom file" crux-find-user-custom-file]
          ["Find shell config file" crux-find-shell-init-file])
@@ -128,6 +129,34 @@
   :keymap prelude-mode-map
   :global t
   :group 'prelude)
+
+(defvar prelude-mode-terminal-keys
+  (list (kbd "C-a") (kbd "M-o") (kbd "C-M-z")
+        [(shift return)] [(control shift return)]
+        [(control shift up)] [(control shift down)]
+        [(meta shift up)] [(meta shift down)])
+  "The keys of `prelude-mode' that edit text.
+They mean something else to the program running in a terminal, see
+`prelude-mode-yield-to-terminal'.")
+
+(defun prelude-mode-yield-to-terminal ()
+  "Let the terminal in the current buffer have the editing keys of `prelude-mode'.
+A minor mode's bindings come before those of the major mode, so
+`prelude-mode' would keep keys like \\`C-a' from ever reaching the shell
+in a terminal emulator.  The rest of its bindings (\\`C-c p' and
+friends) keep working."
+  (let ((map (make-sparse-keymap)))
+    (set-keymap-parent map prelude-mode-map)
+    ;; an explicit nil hides the binding of the parent, so the lookup
+    ;; moves on to the keymaps of the terminal
+    (dolist (key prelude-mode-terminal-keys)
+      (define-key map key nil))
+    (setq-local minor-mode-overriding-map-alist
+                (cons (cons 'prelude-mode map)
+                      (assq-delete-all 'prelude-mode minor-mode-overriding-map-alist)))))
+
+(dolist (hook '(term-mode-hook vterm-mode-hook eat-mode-hook))
+  (add-hook hook #'prelude-mode-yield-to-terminal))
 
 (provide 'prelude-mode)
 ;;; prelude-mode.el ends here

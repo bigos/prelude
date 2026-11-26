@@ -7,6 +7,12 @@ library to the mix. The final product offers an easy to use Emacs
 configuration for Emacs newcomers and lots of additional power for
 Emacs power users.
 
+<!-- markdownlint-disable MD013 -->
+
+![The welcome screen Prelude shows on startup, with links to the personal config, recent files, projects and a tip of the day](welcome-screen.png)
+
+<!-- markdownlint-enable MD013 -->
+
 !!! Important
 
     Prelude is compatible **ONLY with GNU Emacs 29.1+**. In general you're
@@ -17,6 +23,9 @@ You can support the development of Prelude via
 [ko-fi](https://www.ko-fi.com/bbatsov),
 [PayPal](https://www.paypal.me/bbatsov) and
 [Patreon](https://www.patreon.com/bbatsov).
+
+New here? [Install Prelude](installation.md) and then head over to
+[Getting Started](getting-started.md).
 
 ## Features
 
@@ -61,7 +70,7 @@ Here are some of the essential 3rd party packages that Prelude adds to Emacs:
   (auto-save buffers when moving around)
 - [which-key](https://github.com/justbur/emacs-which-key)
   (shows you possible keybindings when you type a partial keybinding)
-- [zenburn-theme](https://github.com/bbatsov/zenburn-emacs)
+- [tokyo-night](https://github.com/bbatsov/tokyo-night-emacs)
   (Prelude's default color theme)
 - [undo-tree](https://elpa.gnu.org/packages/undo-tree.html)
   (A powerful way to navigate your editing history)
@@ -74,6 +83,7 @@ many more packages available via optional modules.
 The following programming languages have enhanced support in Prelude:
 
 - [C/C++](modules/c.md)
+- [C#](modules/csharp.md)
 - [Clojure](modules/clojure.md)
 - [Common Lisp](modules/common_lisp.md)
 - [CSS](modules/css.md)
@@ -84,12 +94,18 @@ The following programming languages have enhanced support in Prelude:
 - [F#](modules/fsharp.md)
 - [Go](modules/go.md)
 - [Haskell](modules/haskell.md)
+- [Java](modules/java.md)
 - [JavaScript](modules/js.md)
+- [Julia](modules/julia.md)
+- [Kotlin](modules/kotlin.md)
 - [LaTeX](modules/latex.md)
 - [Lua](modules/lua.md)
+- [Nix](modules/nix.md)
 - [OCaml](modules/ocaml.md)
 - [Perl](modules/perl.md)
+- [PHP](modules/php.md)
 - [Python](modules/python.md)
+- [R](modules/r.md)
 - [Racket](modules/racket.md)
 - [Ruby](modules/ruby.md)
 - [Rust](modules/rust.md)
@@ -97,10 +113,14 @@ The following programming languages have enhanced support in Prelude:
 - [Scheme](modules/scheme.md)
 - [SCSS](modules/scss.md)
 - [Shell](modules/shell.md)
+- [SQL](modules/sql.md)
+- [Swift](modules/swift.md)
+- [Terraform](modules/terraform.md)
 - [TypeScript](modules/ts.md)
 - [Web/HTML](modules/web.md)
 - [XML](modules/xml.md)
 - [YAML](modules/yaml.md)
+- [Zig](modules/zig.md)
 
 On top of this - basic support for many other programming languages
 will be auto-installed when needed (e.g. the first time you open a

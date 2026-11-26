@@ -2,7 +2,8 @@
 
 !!! Note
 
-    This module builds on top of the shared [Programming](programming.md) module.
+    This module builds on top of the shared [Programming](programming.md)
+    module and the [LSP](lsp.md) module.
 
 ## Package Prerequisites
 
@@ -14,18 +15,23 @@ your system:
 
 ## Swift Mode
 
-The module uses the tree-sitter powered `swift-ts-mode` for editing
-Swift code, so you'll need the `swift` tree-sitter grammar installed.
-Prelude ships a recipe for it, so `M-x treesit-install-language-grammar
-RET swift` will fetch and build it for you.
-
-Whenever you are editing Swift code run <kbd>C-h m</kbd> to look at the
-Swift mode key bindings.
+The module uses the tree-sitter powered
+[swift-ts-mode](https://github.com/rechsteiner/swift-ts-mode) for
+editing Swift code. Prelude offers to install the `swift` grammar the
+first time you open a Swift file (see `prelude-treesit-auto-install`).
+There's no classic mode to fall back to, so without the grammar Swift
+files open in `fundamental-mode`.
 
 ## LSP support
 
 The module starts an LSP session automatically via Prelude's
 `prelude-lsp-enable`, using whichever client `prelude-lsp-client`
 selects (Eglot by default). Eglot has no built-in entry for Swift, so
-the module registers `sourcekit-lsp` for it. lsp-mode users get Swift
-support through the `lsp-sourcekit` package.
+the module registers `sourcekit-lsp` for it. With lsp-mode the module
+installs and loads [lsp-sourcekit](https://github.com/emacs-lsp/lsp-sourcekit),
+lsp-mode's client for `sourcekit-lsp`.
+
+## Key Bindings
+
+See the [LSP](lsp.md) module for the available LSP key bindings. Run
+<kbd>C-h m</kbd> in a Swift buffer for all key bindings.

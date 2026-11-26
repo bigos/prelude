@@ -70,6 +70,7 @@
 (require 'prelude-c)
 ;; (require 'prelude-clojure)
 ;; (require 'prelude-common-lisp)
+;; (require 'prelude-csharp)
 (require 'prelude-css)
 ;; (require 'prelude-dart)
 (require 'prelude-emacs-lisp)
@@ -78,15 +79,21 @@
 ;; (require 'prelude-fsharp)
 ;; (require 'prelude-go)
 ;; (require 'prelude-haskell)
+;; (require 'prelude-java)
 (require 'prelude-js)
+;; (require 'prelude-julia)
+;; (require 'prelude-kotlin)
 ;; (require 'prelude-latex)
 (require 'prelude-lisp) ;; Common setup for Lisp-like languages
 ;; (require 'prelude-literate-programming) ;; Setup for Literate Programming
 ;; (require 'prelude-lsp-mode) ;; lsp-mode and lsp-ui setup (loaded on demand when prelude-lsp-client is 'lsp-mode)
 ;; (require 'prelude-lua)
+;; (require 'prelude-nix)
 ;; (require 'prelude-ocaml)
 (require 'prelude-perl)
+;; (require 'prelude-php)
 ;; (require 'prelude-python)
+;; (require 'prelude-r)
 ;; (require 'prelude-racket)
 ;; (require 'prelude-ruby)
 ;; (require 'prelude-rust)
@@ -94,11 +101,14 @@
 ;; (require 'prelude-scheme)
 (require 'prelude-shell)
 ;; (require 'prelude-scss)
+;; (require 'prelude-sql)
 ;; (require 'prelude-swift)
+;; (require 'prelude-terraform)
 ;; (require 'prelude-ts)
 (require 'prelude-web) ;; Emacs mode for web templates
 (require 'prelude-xml)
 (require 'prelude-yaml)
+;; (require 'prelude-zig)
 
 ;;; Misc
 ;; (require 'prelude-ai) ;; LLM-backed chat via gptel

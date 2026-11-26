@@ -67,6 +67,12 @@
 
 ;; revert buffers automatically when underlying files are changed externally
 (global-auto-revert-mode t)
+;; and keep Dired buffers and the like up to date as well
+(setq global-auto-revert-non-file-buffers t)
+
+;; follow symlinks to files under version control without asking, so
+;; that the version control commands work on them (e.g. in dotfiles)
+(setq vc-follow-symlinks t)
 
 ;; hippie expand is dabbrev expand on steroids
 (when prelude-hippie-expand
@@ -111,6 +117,10 @@
 ;; disable annoying blink-matching-paren
 (setq blink-matching-paren nil)
 
+;; files with very long lines (e.g. minified JavaScript) can make Emacs
+;; crawl; open them with the expensive modes turned off
+(global-so-long-mode +1)
+
 ;; diminish keeps the modeline tidy
 (use-package diminish
   :ensure t)
@@ -124,6 +134,10 @@
 (setq save-place-file (expand-file-name "saveplace" prelude-savefile-dir))
 ;; activate it for all buffers
 (save-place-mode 1)
+;; save the places every 5 minutes, and not only when Emacs exits,
+;; which it doesn't do cleanly when it crashes (Emacs 31+)
+(when (boundp 'save-place-autosave-interval)
+  (setopt save-place-autosave-interval 300))
 
 ;; savehist keeps track of some history
 (require 'savehist)
@@ -134,13 +148,15 @@
       savehist-autosave-interval 60
       ;; keep the home clean
       savehist-file (expand-file-name "savehist" prelude-savefile-dir))
-;; strip text properties from kill-ring entries before saving to disk --
-;; propertized strings cause errors and bloat the savehist file
-(add-hook 'savehist-save-hook
-          (lambda ()
-            (setq kill-ring
-                  (mapcar #'substring-no-properties
-                          (cl-remove-if-not #'stringp kill-ring)))))
+(defun prelude-strip-kill-ring ()
+  "Leave only strings without text properties in the kill ring.
+That's what savehist should save, as propertized strings cause errors
+and bloat the savehist file."
+  (setq kill-ring
+        (mapcar #'substring-no-properties
+                (cl-remove-if-not #'stringp kill-ring))))
+
+(add-hook 'savehist-save-hook #'prelude-strip-kill-ring)
 (savehist-mode +1)
 
 ;; save recent files
@@ -162,6 +178,10 @@
 (add-to-list 'recentf-exclude 'prelude-recentf-exclude-p)
 
 (recentf-mode +1)
+;; save the list every 5 minutes as well, and quietly (Emacs 31+)
+(when (boundp 'recentf-autosave-interval)
+  (setopt recentf-show-messages nil
+          recentf-autosave-interval 300))
 
 ;; use shift + arrow keys to switch between visible buffers
 (require 'windmove)
@@ -175,7 +195,8 @@
   :config
   ;; add integration with ace-window
   (add-to-list 'super-save-triggers 'ace-window)
-  (super-save-mode +1))
+  (when prelude-auto-save
+    (super-save-mode +1)))
 
 (define-advice set-buffer-major-mode (:after (buffer) prelude-set-major-mode)
   "Set buffer major mode according to `auto-mode-alist'."
@@ -208,7 +229,9 @@
 Used as advice around `kill-region', with ARGS being its arguments."
   (interactive
    (if mark-active
-       (list (region-beginning) (region-end))
+       ;; the third argument says that it's the region we're killing,
+       ;; which is how non-contiguous regions (rectangles) get handled
+       (list (region-beginning) (region-end) 'region)
      (list (line-beginning-position) (line-beginning-position 2))))
   (apply orig-fn args))
 
@@ -306,7 +329,6 @@ Does nothing when `prelude-spell-checker' is set to something else
   (use-package projectile
     :ensure t
     :config
-    (setq projectile-cache-file (expand-file-name  "projectile.cache" prelude-savefile-dir))
     (projectile-mode t)))
 
 ;; avy allows us to effectively navigate to visible things
@@ -342,23 +364,29 @@ Does nothing when `prelude-spell-checker' is set to something else
   :init
   (setq ediff-window-setup-function 'ediff-setup-windows-plain))
 
-;; clean up obsolete buffers automatically
-(require 'midnight)
-
-;; smarter kill-ring navigation
-(use-package browse-kill-ring
-  :ensure t
-  :bind (("M-y" . browse-kill-ring)
-         ("s-y" . browse-kill-ring)))
-
 ;; after C-u C-SPC, keep popping the mark ring with just C-SPC
 ;; instead of having to repeat the C-u prefix each time
 (setq set-mark-command-repeat-pop t)
 
-(define-advice exchange-point-and-mark (:before (&rest _) prelude-deactivate-mark)
-  "When called with no active region, do not activate mark."
+;; some commands can be repeated by pressing just the last key of
+;; their binding again: C-x } } } keeps widening a window, C-x <right>
+;; <right> keeps switching buffers, M-g n n n keeps going to the next
+;; error
+(repeat-mode +1)
+
+;; C-x C-x without an active region swaps point and mark, but doesn't
+;; activate the region
+(defun prelude-exchange-point-and-mark-advice (&rest _)
+  "Make `exchange-point-and-mark' leave an inactive region inactive.
+Used as :before advice, for Emacsen older than 31."
   (interactive
    (list (not (region-active-p)))))
+
+(defvar exchange-point-and-mark-highlight-region)
+(if (boundp 'exchange-point-and-mark-highlight-region)
+    ;; Emacs 31+
+    (setq exchange-point-and-mark-highlight-region nil)
+  (advice-add 'exchange-point-and-mark :before #'prelude-exchange-point-and-mark-advice))
 
 (require 'tabify)
 (defmacro with-region-or-buffer (func)
@@ -381,9 +409,9 @@ Does nothing when `prelude-spell-checker' is set to something else
 (defun prelude-yank-indent-advice (&rest _args)
   "Indent yanked text if in a programming mode.
 Does not indent if the mode is in `prelude-indent-sensitive-modes'."
-  (when (and (not (member major-mode prelude-indent-sensitive-modes))
+  (when (and (not (apply #'derived-mode-p prelude-indent-sensitive-modes))
              (or (derived-mode-p 'prog-mode)
-                 (member major-mode prelude-yank-indent-modes)))
+                 (apply #'derived-mode-p prelude-yank-indent-modes)))
     (let ((transient-mark-mode nil))
       (prelude-yank-indent-function (region-beginning) (region-end)))))
 
@@ -394,9 +422,19 @@ Does not indent if the mode is in `prelude-indent-sensitive-modes'."
 (add-hook 'text-mode-hook 'abbrev-mode)
 (diminish 'abbrev-mode)
 
+(defun prelude-make-script-executable ()
+  "Make the file of the current buffer executable if it's a script.
+Rust files often start with an inner attribute (#![...]), which looks
+like a shebang, but isn't one."
+  (unless (save-excursion
+            (save-restriction
+              (widen)
+              (goto-char (point-min))
+              (looking-at-p "#!\\[")))
+    (executable-make-buffer-file-executable-if-script-p)))
+
 ;; make a shell script executable automatically on save
-(add-hook 'after-save-hook
-          'executable-make-buffer-file-executable-if-script-p)
+(add-hook 'after-save-hook #'prelude-make-script-executable)
 
 ;; .zsh file is shell script too
 (add-to-list 'auto-mode-alist '("\\.zsh\\'" . shell-script-mode))
@@ -435,6 +473,12 @@ Does not indent if the mode is in `prelude-indent-sensitive-modes'."
 ;; defer fontification while there is input pending -- this keeps
 ;; typing responsive in large/complex buffers where font-lock is slow
 (setq redisplay-skip-fontification-on-input t)
+
+;; search with ripgrep when it's installed: it's a lot faster than grep
+;; for finding references (e.g. M-? without a language server) and in
+;; project-find-regexp
+(when (executable-find "rg")
+  (setq xref-search-program 'ripgrep))
 
 ;; Compilation from Emacs
 (use-package compile
@@ -497,7 +541,6 @@ Does not indent if the mode is in `prelude-indent-sensitive-modes'."
 ;; in prelude-mode.el and prelude-global-keybindings.el
 (use-package ace-window :ensure t :defer t)
 (use-package ag :ensure t :defer t)
-(use-package discover-my-major :ensure t :defer t)
 (use-package git-modes :ensure t :defer t)
 (use-package git-timemachine :ensure t :defer t)
 (use-package imenu-anywhere :ensure t :defer t)

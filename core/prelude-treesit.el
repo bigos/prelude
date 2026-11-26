@@ -40,33 +40,61 @@
 
 (require 'treesit nil t)
 
+;; bound in `prelude-treesit--recipe', most likely before warnings.el
+;; has been loaded
+(defvar warning-minimum-level)
+(defvar warning-minimum-log-level)
+
 (defvar prelude-treesit-language-sources
-  '((bash "https://github.com/tree-sitter/tree-sitter-bash" "v0.23.3")
+  `((bash "https://github.com/tree-sitter/tree-sitter-bash" "v0.23.3")
     (c "https://github.com/tree-sitter/tree-sitter-c" "v0.23.4")
+    (c-sharp "https://github.com/tree-sitter/tree-sitter-c-sharp"
+             ;; csharp-ts-mode in Emacs 29 can't handle newer grammars
+             ,(if (< emacs-major-version 30) "v0.20.0" "v0.23.1"))
     (cpp "https://github.com/tree-sitter/tree-sitter-cpp" "v0.23.4")
     (css "https://github.com/tree-sitter/tree-sitter-css" "v0.23.1")
     (elixir "https://github.com/elixir-lang/tree-sitter-elixir" "v0.3.3")
-    (go "https://github.com/tree-sitter/tree-sitter-go" "v0.23.4")
+    (go "https://github.com/tree-sitter/tree-sitter-go"
+        ,(if (< emacs-major-version 31) "v0.20.0" "v0.23.4"))
     (gomod "https://github.com/camdencheek/tree-sitter-go-mod" "v1.1.0")
     (heex "https://github.com/phoenixframework/tree-sitter-heex" "v0.7.0")
-    (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "v0.23.1")
+    (java "https://github.com/tree-sitter/tree-sitter-java" "v0.23.5")
+    (javascript "https://github.com/tree-sitter/tree-sitter-javascript"
+                ,(cond ((< emacs-major-version 30) "v0.19.0")
+                       ((< emacs-major-version 31) "v0.20.1")
+                       (t "v0.23.1")))
     (json "https://github.com/tree-sitter/tree-sitter-json" "v0.24.8")
     (python "https://github.com/tree-sitter/tree-sitter-python" "v0.23.6")
     (ruby "https://github.com/tree-sitter/tree-sitter-ruby" "v0.23.1")
     (rust "https://github.com/tree-sitter/tree-sitter-rust" "v0.23.2")
-    (swift "https://github.com/alex-pinkus/tree-sitter-swift" "with-generated-files")
-    (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "tsx/src")
-    (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "typescript/src")
-    (yaml "https://github.com/ikatyang/tree-sitter-yaml" "v0.5.0"))
+    ;; the last release swift-ts-mode can work with
+    (swift "https://github.com/alex-pinkus/tree-sitter-swift" "0.7.1-with-generated-files")
+    (tsx "https://github.com/tree-sitter/tree-sitter-typescript"
+         ,(if (< emacs-major-version 30) "v0.20.3" "v0.23.2") "tsx/src")
+    (typescript "https://github.com/tree-sitter/tree-sitter-typescript"
+                ,(if (< emacs-major-version 30) "v0.20.3" "v0.23.2") "typescript/src")
+    (yaml "https://github.com/tree-sitter-grammars/tree-sitter-yaml" "v0.7.0"))
   "Grammar recipes for the languages Prelude's modules use.
 The format is the same as for `treesit-language-source-alist'.  A recipe
 from here is only used when that variable has none for the language:
 Emacs 31 ships recipes for the grammars of its own tree-sitter modes,
 pinned to versions its tree-sitter library can load.  The versions here
-are the releases closest to those (and the grammars the tree-sitter
-modes of older Emacsen were written against), as automatically
-installing whatever is the latest version of a grammar can easily
-produce one that doesn't work.")
+are the releases closest to those, or the newest ones the tree-sitter
+modes of older Emacsen can work with, which is why some of them depend
+on the Emacs version.  Automatically installing whatever is the latest
+version of a grammar can easily produce one that doesn't work.
+
+test/prelude-grammar-test.el checks all of them, and CI runs it on
+every supported Emacs.")
+
+(defvar prelude-treesit-companion-grammars
+  '((javascript jsdoc))
+  "Alist of (LANG . GRAMMARS) for the extra grammars a language needs.
+A companion grammar counts only in the Emacs versions whose tree-sitter
+modes install the grammars they need themselves, and only if Emacs has
+a recipe for it.  That's how we know that the mode can't do without it:
+`js-ts-mode' in Emacs 31 doesn't start without the jsdoc grammar, while
+older versions get by without it.")
 
 (defvar prelude-treesit--languages nil
   "Alist of (LANG . TS-MODE) for every language set up by Prelude.")
@@ -112,31 +140,52 @@ Return non-nil if the grammar is available afterwards."
                 lang (error-message-string err))
        nil))))
 
+(defun prelude-treesit--grammars (lang ts-mode)
+  "Return the grammars TS-MODE needs: LANG and its companions.
+See `prelude-treesit-companion-grammars'."
+  (let ((companions (and (fboundp 'treesit-ensure-installed) ; Emacs 31+
+                         (alist-get lang prelude-treesit-companion-grammars))))
+    (when companions
+      ;; this loads the mode, so we know which recipes Emacs has
+      (prelude-treesit--recipe lang ts-mode))
+    (cons lang
+          (seq-filter (lambda (companion)
+                        (assq companion treesit-language-source-alist))
+                      companions))))
+
 (defun prelude-treesit--ensure-grammar (lang ts-mode)
   "Return non-nil if the tree-sitter grammar for LANG can be used.
 Install it first if it's missing, as configured by
-`prelude-treesit-auto-install'.  TS-MODE is the mode that needs it."
-  (cond
-   ((not (and (prelude-treesit--supported-p) (fboundp ts-mode))) nil)
-   ((treesit-language-available-p lang) t)
-   ((memq lang prelude-treesit--declined) nil)
-   ;; Only install grammars when visiting a file, not when a mode
-   ;; function gets called for other reasons (e.g. when Org fontifies
-   ;; a source block, or for a new buffer named like a file).
-   ((not buffer-file-name) nil)
-   ((eq prelude-treesit-auto-install 'always)
-    (prelude-treesit--try-install lang ts-mode))
-   ((and (eq prelude-treesit-auto-install 'ask) (not noninteractive))
-    (if (y-or-n-p (format "Install the tree-sitter grammar for %s? " lang))
-        (prelude-treesit--try-install lang ts-mode)
-      (push lang prelude-treesit--declined)
-      nil))))
+`prelude-treesit-auto-install'.  TS-MODE is the mode that needs it.
+The same goes for the companion grammars of LANG."
+  (when (and (prelude-treesit--supported-p) (fboundp ts-mode))
+    (let ((missing (seq-remove #'treesit-language-available-p
+                               (prelude-treesit--grammars lang ts-mode))))
+      (cond
+       ((null missing) t)
+       ((seq-intersection missing prelude-treesit--declined) nil)
+       ;; Only install grammars when visiting a file, not when a mode
+       ;; function gets called for other reasons (e.g. when Org fontifies
+       ;; a source block, or for a new buffer named like a file).
+       ((not buffer-file-name) nil)
+       ((eq prelude-treesit-auto-install 'always)
+        (prelude-treesit--try-install missing ts-mode))
+       ((and (eq prelude-treesit-auto-install 'ask) (not noninteractive))
+        (if (y-or-n-p (format "Install the tree-sitter %s for %s? "
+                              (if (cdr missing) "grammars" "grammar")
+                              (mapconcat #'symbol-name missing " and ")))
+            (prelude-treesit--try-install missing ts-mode)
+          (setq prelude-treesit--declined
+                (append missing prelude-treesit--declined))
+          nil))))))
 
-(defun prelude-treesit--try-install (lang ts-mode)
-  "Install the grammar for LANG, used by TS-MODE, remembering a failure.
-Return non-nil if it got installed."
-  (or (prelude-treesit--install-grammar lang ts-mode)
-      (progn (push lang prelude-treesit--declined) nil)))
+(defun prelude-treesit--try-install (langs ts-mode)
+  "Install the grammars for LANGS, used by TS-MODE, remembering a failure.
+Return non-nil if all of them got installed."
+  (seq-every-p (lambda (lang)
+                 (or (prelude-treesit--install-grammar lang ts-mode)
+                     (progn (push lang prelude-treesit--declined) nil)))
+               langs))
 
 (defun prelude-treesit-mode-function (lang ts-mode &optional fallback-mode fallback-package)
   "Return a major mode function that picks TS-MODE or FALLBACK-MODE.
@@ -181,12 +230,13 @@ FALLBACK-MODE and FALLBACK-PACKAGE are as for
   (unless (prelude-treesit--supported-p)
     (user-error "This Emacs was built without tree-sitter support"))
   (let ((installed nil))
-    (pcase-dolist (`(,lang . ,ts-mode) prelude-treesit--languages)
-      (when (and (fboundp ts-mode)
-                 (not (treesit-language-available-p lang))
-                 (prelude-treesit--install-grammar lang ts-mode))
-        (setq prelude-treesit--declined (delq lang prelude-treesit--declined))
-        (push lang installed)))
+    (pcase-dolist (`(,main . ,ts-mode) prelude-treesit--languages)
+      (when (fboundp ts-mode)
+        (dolist (lang (prelude-treesit--grammars main ts-mode))
+          (when (and (not (treesit-language-available-p lang))
+                     (prelude-treesit--install-grammar lang ts-mode))
+            (setq prelude-treesit--declined (delq lang prelude-treesit--declined))
+            (push lang installed)))))
     (message "[Prelude] %s"
              (if installed
                  (format "Installed tree-sitter grammars: %s"

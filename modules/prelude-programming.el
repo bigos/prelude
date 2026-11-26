@@ -42,16 +42,6 @@
   :config
   (global-hl-todo-mode 1))
 
-;; in Emacs 24 programming major modes generally derive from a common
-;; mode named prog-mode; for others, we'll arrange for our mode
-;; defaults function to run prelude-prog-mode-hook directly.  To
-;; augment and/or counteract these defaults your own function
-;; to prelude-prog-mode-hook, using:
-;;
-;;     (add-hook 'prelude-prog-mode-hook 'my-prog-mode-defaults t)
-;;
-;; (the final optional t sets the *append* argument)
-
 (when prelude-smartparens
   ;; smart curly braces
   (sp-pair "{" nil :post-handlers
@@ -65,8 +55,8 @@
   :init
   (setq guru-warn-only t))
 
-(defun prelude-prog-mode-defaults ()
-  "Default coding hook, useful with any programming language."
+(defun prelude-prog-setup ()
+  "Set up a buffer of any programming language."
   (when (and prelude-flyspell
              (eq prelude-spell-checker 'flyspell)
              (executable-find ispell-program-name))
@@ -74,42 +64,55 @@
   (when prelude-guru
     (guru-mode +1)
     (diminish 'guru-mode))
-  (when prelude-smartparens
-    (smartparens-mode +1))
+  ;; auto-pairing of delimiters, the built-in way when smartparens is off
+  (if prelude-smartparens
+      (smartparens-mode +1)
+    (electric-pair-local-mode +1))
   (prelude-enable-whitespace)
-  (prelude-local-comment-auto-fill))
+  (prelude-local-comment-auto-fill)
+  (run-hooks 'prelude-prog-mode-hook))
 
-(add-hook 'prelude-prog-mode-hook #'prelude-prog-mode-defaults)
+(make-obsolete-variable 'prelude-prog-mode-hook
+                        "use `prog-mode-hook' instead."
+                        "2.2.0")
 
-(add-hook 'prog-mode-hook (lambda ()
-                            (run-hooks 'prelude-prog-mode-hook)))
+;; Programming major modes derive from prog-mode, so that's where the
+;; setup above goes.  It runs ahead of the functions you add to
+;; `prog-mode-hook' (as do the setups of the language modules on the
+;; hooks of their modes), so that those can change anything it did.
+(add-hook 'prog-mode-hook #'prelude-prog-setup -50)
 
 ;; enable on-the-fly syntax checking
 (use-package flycheck
   :ensure t
   :config
-  (global-flycheck-mode +1))
-
-;; When Eglot is the LSP client, route its diagnostics through Flycheck
-;; as well.  On its own Eglot reports only via Flymake, so without this
-;; bridge LSP diagnostics wouldn't show up in Prelude's Flycheck UI.
-;; (lsp-mode has its own Flycheck integration, so this is Eglot-only.)
-(when (eq prelude-lsp-client 'eglot)
-  (use-package flycheck-eglot
-    :ensure t
-    :after eglot
-    :config
-    (global-flycheck-eglot-mode +1)))
+  (global-flycheck-mode +1)
+  ;; When Eglot is the LSP client, route its diagnostics through Flycheck
+  ;; as well.  On its own Eglot reports only via Flymake, so without this
+  ;; LSP diagnostics wouldn't show up in Prelude's Flycheck UI.
+  ;; (lsp-mode has its own Flycheck integration, so this is Eglot-only.)
+  (when (eq prelude-lsp-client 'eglot)
+    ;; Flycheck has had the `eglot-check' checker since version 39.  It
+    ;; used to take the flycheck-eglot package.
+    (if (flycheck-valid-checker-p 'eglot-check)
+        (global-flycheck-eglot-mode +1)
+      (display-warning
+       'prelude
+       "This Flycheck is too old to show the diagnostics of language servers.
+Update your packages with M-x prelude-update and restart Emacs."))))
 
 ;; Makefiles require tabs for indentation
-(defun prelude-makefile-mode-defaults ()
+(defun prelude-makefile-setup ()
+  "Set up a Makefile buffer."
   (whitespace-toggle-options '(tabs))
-  (setq indent-tabs-mode t))
+  (setq indent-tabs-mode t)
+  (run-hooks 'prelude-makefile-mode-hook))
 
-(add-hook 'prelude-makefile-mode-hook #'prelude-makefile-mode-defaults)
+(make-obsolete-variable 'prelude-makefile-mode-hook
+                        "use `makefile-mode-hook' instead."
+                        "2.2.0")
 
-(add-hook 'makefile-mode-hook (lambda ()
-                                (run-hooks 'prelude-makefile-mode-hook)))
+(add-hook 'makefile-mode-hook #'prelude-makefile-setup -50)
 
 (provide 'prelude-programming)
 ;;; prelude-programming.el ends here

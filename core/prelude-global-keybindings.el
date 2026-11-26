@@ -33,10 +33,12 @@
 ;; Align your code in a pretty way.
 (global-set-key (kbd "C-x \\") 'align-regexp)
 
-;; Window switching. (C-x o goes to the next window)
-(global-set-key (kbd "C-x O") (lambda ()
-                                (interactive)
-                                (other-window -1))) ;; back one
+;; Window switching. (C-x o goes to the next window, and C-x O back to
+;; the previous one, which Emacs 31 does on its own)
+(unless (fboundp 'other-window-backward)
+  (global-set-key (kbd "C-x O") (lambda ()
+                                  (interactive)
+                                  (other-window -1))))
 
 ;; Indentation help
 (global-set-key (kbd "C-^") 'crux-top-join-line)
@@ -55,9 +57,6 @@
 
 ;; A complementary binding to the apropos-command (C-h a)
 (define-key 'help-command "A" 'apropos)
-
-;; A quick major mode help with discover-my-major
-(define-key 'help-command (kbd "C-m") 'discover-my-major)
 
 (define-key 'help-command (kbd "C-f") 'find-function)
 (define-key 'help-command (kbd "C-k") 'find-function-on-key)

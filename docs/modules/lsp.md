@@ -30,8 +30,29 @@ It uses standard Emacs facilities (xref, eldoc, flymake,
 completion-at-point) rather than introducing its own UI.
 
 Prelude configures eglot to shut down language servers
-automatically when the last project buffer is closed and
-extends xref navigation across the whole project.
+automatically when the last project buffer is closed, and to keep
+managing the files outside of the project that xref takes you to
+(e.g. the source of a library), so you can keep jumping around from
+there.
+
+Here's a Go buffer with `gopls` attached. The candidates in the
+completion popup come from the language server, and so does the
+signature in the echo area:
+
+<!-- markdownlint-disable MD013 -->
+
+![Completion candidates for the methods of a Go struct, with their signatures](../images/lsp-go-completion.png)
+
+<!-- markdownlint-enable MD013 -->
+
+Problems are underlined as you type. Move the cursor to one of them
+to see what the language server (or the compiler) has to say:
+
+<!-- markdownlint-disable MD013 -->
+
+![An unused variable underlined in a Go buffer, with the error message in the echo area](../images/lsp-go-diagnostic.png)
+
+<!-- markdownlint-enable MD013 -->
 
 ### Key Bindings
 
@@ -86,10 +107,20 @@ All lsp-mode key bindings use the <kbd>C-c C-l</kbd> prefix:
 ## Installing Language Servers
 
 Regardless of which client you use, you need the appropriate
-language server installed on your system. Common examples:
+language server installed on your system. When it's missing Prelude
+doesn't start Eglot at all, and tells you so the first time you open a
+file of that kind:
+
+```text
+[Prelude] No language server for ‘zig-mode’ buffers: ‘zls’ isn't installed
+```
+
+Once the server is installed, run <kbd>M-x eglot</kbd> (or reopen the file).
+Common examples:
 
 - **Go**: `gopls` (`go install golang.org/x/tools/gopls@latest`)
 - **Rust**: `rust-analyzer`
 - **Scala**: `metals`
 - **Python**: `pyright` or `pylsp`
 - **Dart**: Dart SDK includes its analysis server
+- **Java**: installed automatically by the [Java](java.md) module

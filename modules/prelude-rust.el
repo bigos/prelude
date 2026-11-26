@@ -1,6 +1,7 @@
 ;;; prelude-rust.el --- Emacs Prelude: Rust programming support.  -*- lexical-binding: t; -*-
 ;;
 ;; Authors: Doug MacEachern, Manoel Vilela, Ben Alex, Daniel Gerlach
+;; URL: https://github.com/bbatsov/prelude
 
 ;; This file is not part of GNU Emacs.
 
@@ -27,8 +28,6 @@
 
 ;;; Code:
 
-(defvar rust-format-on-save)
-
 (require 'prelude-programming)
 
 ;; You may need to install the following packages on your system:
@@ -38,35 +37,43 @@
 ;; * rust-analyzer as lsp server needs to be in global path, see:
 ;; https://rust-analyzer.github.io/manual.html#rust-analyzer-language-server-binary
 
-;; Disable super-save in Rust buffers -- auto-saving triggers
-;; lsp-format-buffer which causes severe hangs during autocomplete
+;; Disable super-save in Rust buffers: auto-saving triggers
+;; lsp-format-buffer, which causes severe hangs during autocomplete
 (add-to-list 'super-save-predicates
-             (lambda () (not (eq major-mode 'rust-ts-mode))))
-
-(defun prelude-rust-mode-defaults ()
-  (setq rust-format-on-save t)
-
-  ;; Rust files start with #![...] (inner attributes), which looks
-  ;; like a shebang to Emacs -- prevent auto-chmod on save
-  (remove-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
-
-  ;; CamelCase aware editing operations
-  (subword-mode +1)
-
-  (prelude-lsp-enable))
+             (lambda () (not (derived-mode-p 'rust-ts-mode 'rust-mode))))
 
 ;; Built-in tree-sitter mode for Rust (requires rust grammar)
 ;; (rust-mode is only used if it's installed, e.g. from older Preludes)
 (prelude-treesit-auto-mode "\\.rs\\'" 'rust 'rust-ts-mode 'rust-mode)
 
-(use-package rust-ts-mode
-  :ensure t
-  :hook (rust-ts-mode . (lambda () (run-hooks 'prelude-rust-mode-hook))))
-
 ;; Interface to Cargo commands (C-c C-c C-b to build, etc.)
 (use-package cargo
   :ensure t
-  :hook (rust-ts-mode . cargo-minor-mode))
+  :defer t)
+
+(defun prelude-rust-setup ()
+  "Set up a Rust buffer."
+  (cargo-minor-mode +1)
+  ;; format before save (rust-analyzer runs rustfmt)
+  (add-hook 'before-save-hook #'prelude-lsp-format-on-save nil t)
+  ;; CamelCase aware editing operations
+  (subword-mode +1)
+  (prelude-lsp-enable)
+  (run-hooks 'prelude-rust-mode-hook))
+
+(make-obsolete-variable 'prelude-rust-mode-hook
+                        "use `rust-ts-mode-hook' (or `rust-mode-hook' for rust-mode) instead."
+                        "2.2.0")
+
+(defun prelude-rust-fallback-setup ()
+  "Set up a `rust-mode' buffer, unless it's built on `rust-ts-mode'.
+`rust-mode' can be, and then the setup has run from the hook of
+`rust-ts-mode' already."
+  (unless (derived-mode-p 'rust-ts-mode)
+    (prelude-rust-setup)))
+
+(add-hook 'rust-ts-mode-hook #'prelude-rust-setup -50)
+(add-hook 'rust-mode-hook #'prelude-rust-fallback-setup -50)
 
 ;; Configures Flycheck to use cargo/clippy for Rust diagnostics
 (use-package flycheck-rust
@@ -77,8 +84,6 @@
 (use-package ron-mode
   :ensure t
   :defer t)
-
-(add-hook 'prelude-rust-mode-hook #'prelude-rust-mode-defaults)
 
 (provide 'prelude-rust)
 ;;; prelude-rust.el ends here

@@ -6,7 +6,7 @@
 unified format-on-save framework for Emacs. On save, it runs the
 appropriate external formatter (Prettier, Black, Ruff, gofmt,
 rustfmt, ...) asynchronously, then patches the buffer with the
-result. The patching is point-preserving and flicker-free -- it
+result. The patching is point-preserving and flicker-free - it
 feels like the formatter ran instantly with no visible buffer
 churn.
 
@@ -16,30 +16,22 @@ many major modes out of the box. Look at `apheleia-formatters` and
 
 ## What this module does
 
-Just two things:
+Not much:
 
 1. Installs the `apheleia` package.
 2. Enables `apheleia-global-mode`.
+3. Formats Go code with `goimports` instead of `gofmt` when
+   `goimports` is installed.
 
-That's it -- no further setup required for the languages Apheleia
+That's it - no further setup required for the languages Apheleia
 already knows about.
 
 ## Relationship to language modules
 
-Several Prelude language modules install their own format-on-save
-hooks (e.g. `rust-format-on-save` in `prelude-rust`,
-`gofmt-before-save` in `prelude-go`). These keep working with
-Apheleia enabled -- they just run redundantly. If you enable this
-module you can safely drop them from your personal config, or
-disable them with hooks like:
-
-```emacs-lisp
-(with-eval-after-load 'rust-ts-mode
-  (setq rust-format-on-save nil))
-
-(with-eval-after-load 'go-mode
-  (remove-hook 'before-save-hook 'gofmt-before-save))
-```
+A couple of Prelude's language modules format on save themselves
+([Go](go.md) with `gofmt`, [Rust](rust.md) with `rust-analyzer`). They
+step aside in the buffers where Apheleia is enabled, so the code isn't
+formatted twice.
 
 ## Adding a formatter
 
@@ -59,5 +51,5 @@ for the formatter spec and built-in entries you can copy from.
 ## Disabling per buffer
 
 If you need to skip formatting for a specific buffer, run
-`M-x apheleia-mode` to toggle it off locally. To skip a whole
+<kbd>M-x apheleia-mode</kbd> to toggle it off locally. To skip a whole
 project, set a directory-local `apheleia-inhibit` to `t`.

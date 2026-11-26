@@ -4,8 +4,9 @@
 
 Obviously to use the Emacs Prelude you have to install Emacs
 first. We'll assume you can manage this part on your own.
-Aim for the newest stable Emacs release, although as a rule of
-thumb Prelude aims to support the last 2-3 stable releases.
+Prelude needs Emacs 29.1 or newer, and refuses to start on anything
+older. Aim for the newest stable Emacs release; as a rule of thumb
+Prelude supports the last 2-3 stable releases.
 
 For spell-checking to work you should install `aspell`, together with its
 dictionaries for the languages you wish to check.
@@ -41,9 +42,32 @@ The installer script will do the following:
 - Create any additional folders if necessary (e.g. for storing
   package-specific data)
 
-If you have a `.emacs` file it will backed up as `.emacs.pre-prelude`
+If you have a `.emacs` file it will be backed up as `.emacs.pre-prelude`
 and if you have a `.emacs.d` folder, it will be backed up as
-`.emacs.d.pre-prelude.tar`.
+`.emacs.d.pre-prelude.tar`. The files of your old `.emacs.d` that
+Prelude doesn't have a counterpart of (e.g. your snippets) are put back
+in place afterwards.
+
+The installer takes a few options. To pass them on, download it first
+or use `sh -s`:
+
+```shell
+curl -L https://github.com/bbatsov/prelude/raw/master/utils/installer.sh |
+  sh -s -- -d "$HOME/prelude"
+```
+
+<!-- markdownlint-disable MD013 -->
+
+| Option | What it does |
+| ------ | ------------ |
+| `-d`, `--directory DIR` | Install Prelude in `DIR` instead of `~/.emacs.d`. Your `~/.emacs` and `~/.emacs.d` are left alone in that case; start Emacs with `emacs --init-directory DIR`. |
+| `-s`, `--source URL` | Clone Prelude from `URL` (e.g. your own fork). |
+| `-i`, `--into` | Keep the existing `~/.emacs.d` and install Prelude in its `prelude` subdirectory. |
+| `-c`, `--colors` | Colorize the output. |
+| `-v`, `--verbose` | Show what's going on. |
+| `-h`, `--help` | Show the options. |
+
+<!-- markdownlint-enable MD013 -->
 
 #### Via Curl
 
@@ -120,6 +144,8 @@ By default most of the modules that ship with Prelude are not
 loaded. For more information on the functionality provided by these
 modules visit the [docs](modules/index.md).
 
+<!-- markdownlint-disable MD013 -->
+
 ```lisp
 ;;; Uncomment the modules you'd like to use and restart Prelude afterwards
 
@@ -131,7 +157,10 @@ modules visit the [docs](modules/index.md).
 ;; (require 'prelude-helm) ;; Interface for narrowing and search
 ;; (require 'prelude-helm-everywhere) ;; Enable Helm everywhere
 (require 'prelude-company)
+;; (require 'prelude-corfu) ;; Lightweight modern alternative to Company (mutually exclusive with prelude-company)
+;; (require 'prelude-apheleia) ;; Async, unified format-on-save
 ;; (require 'prelude-key-chord) ;; Binds useful features to key combinations
+;; (require 'prelude-eglot-booster) ;; Speeds up Eglot via emacs-lsp-booster (requires the binary)
 
 ;;; Vim emulation
 ;;
@@ -151,21 +180,30 @@ modules visit the [docs](modules/index.md).
 (require 'prelude-c)
 ;; (require 'prelude-clojure)
 ;; (require 'prelude-common-lisp)
+;; (require 'prelude-csharp)
 (require 'prelude-css)
 ;; (require 'prelude-dart)
 (require 'prelude-emacs-lisp)
 ;; (require 'prelude-erlang)
 ;; (require 'prelude-elixir)
+;; (require 'prelude-fsharp)
 ;; (require 'prelude-go)
 ;; (require 'prelude-haskell)
+;; (require 'prelude-java)
 (require 'prelude-js)
+;; (require 'prelude-julia)
+;; (require 'prelude-kotlin)
 ;; (require 'prelude-latex)
 (require 'prelude-lisp) ;; Common setup for Lisp-like languages
-;; (require 'prelude-lsp-mode) ;; lsp-mode and lsp-ui setup
+;; (require 'prelude-literate-programming) ;; Setup for Literate Programming
+;; (require 'prelude-lsp-mode) ;; lsp-mode and lsp-ui setup (loaded on demand when prelude-lsp-client is 'lsp-mode)
 ;; (require 'prelude-lua)
+;; (require 'prelude-nix)
 ;; (require 'prelude-ocaml)
 (require 'prelude-perl)
+;; (require 'prelude-php)
 ;; (require 'prelude-python)
+;; (require 'prelude-r)
 ;; (require 'prelude-racket)
 ;; (require 'prelude-ruby)
 ;; (require 'prelude-rust)
@@ -173,16 +211,23 @@ modules visit the [docs](modules/index.md).
 ;; (require 'prelude-scheme)
 (require 'prelude-shell)
 ;; (require 'prelude-scss)
+;; (require 'prelude-sql)
 ;; (require 'prelude-swift)
+;; (require 'prelude-terraform)
 ;; (require 'prelude-ts)
 (require 'prelude-web) ;; Emacs mode for web templates
 (require 'prelude-xml)
 (require 'prelude-yaml)
+;; (require 'prelude-zig)
 
 ;;; Misc
-(require 'prelude-erc) ;; A popular Emacs IRC client
-;; (require 'prelude-mistty) ;; MisTTY terminal (pure elisp, no native module)
+;; (require 'prelude-ai) ;; LLM-backed chat via gptel
+;; (require 'prelude-erc) ;; A popular Emacs IRC client
+;; (require 'prelude-forge) ;; GitHub/GitLab/Gitea PRs and issues via Magit
+;; (require 'prelude-mistty) ;; MisTTY terminal (pure elisp, no native module; rebinds C-c t)
 ```
+
+<!-- markdownlint-enable MD013 -->
 
 You'll need to adjust your `prelude-modules.el` file once the
 installation is done.
@@ -191,8 +236,9 @@ In case of an automated installation, you'll find this file in the
 `personal` directory of your Emacs installation.
 
 If you are doing a manual install then you first need to copy the
-`prelude-modules.el` available in the sample directory to the root of
-`path/to/prelude/installation` and then adjust that one.
+`prelude-modules.el` available in the sample directory to the
+`personal` directory of `path/to/prelude/installation` and then adjust
+that one. Until you do, Prelude uses the sample file as is.
 
 After you've uncommented a module you should either restart Emacs or
 evaluate the module `require` expression with <kbd>C-x C-e</kbd>.

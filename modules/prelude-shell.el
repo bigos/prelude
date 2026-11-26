@@ -30,29 +30,41 @@
 
 ;;; Code:
 
+(require 'prelude-programming)
+
+(defvar sh-shell)
+
 ;; Use bash-ts-mode when the tree-sitter grammar is available
 (prelude-treesit-remap 'bash 'sh-mode 'bash-ts-mode)
 
 ;; recognize prezto files as zsh scripts
 (defvar prelude-prezto-files '("zlogin" "zlogout" "zpreztorc" "zprofile" "zshenv" "zshrc"))
 
-(mapc (lambda (file)
-        (add-to-list 'auto-mode-alist `(,(format "\\%s\\'" file) . sh-mode)))
-      prelude-prezto-files)
+(dolist (file prelude-prezto-files)
+  ;; the file itself, as found in prezto's runcoms directory, or a link
+  ;; to it in the home directory, e.g. ~/.zshrc
+  (add-to-list 'auto-mode-alist
+               (cons (concat "/\\.?" (regexp-quote file) "\\'") 'sh-mode)))
 
-(defun prelude-sh-mode-defaults ()
+(defun prelude-shell-setup ()
+  "Set up a shell script buffer."
   (subword-mode +1)
   ;; Auto-detect zsh for prezto files
   (when (and buffer-file-name
              (member (file-name-nondirectory buffer-file-name) prelude-prezto-files))
-    (sh-set-shell "zsh")))
+    (sh-set-shell "zsh"))
+  ;; the language server only understands sh and bash
+  (when (or (derived-mode-p 'bash-ts-mode)
+            (memq sh-shell '(sh bash)))
+    (prelude-lsp-enable 'quiet))
+  (run-hooks 'prelude-sh-mode-hook))
 
-(add-hook 'prelude-sh-mode-hook #'prelude-sh-mode-defaults)
+(make-obsolete-variable 'prelude-sh-mode-hook
+                        "use `sh-mode-hook' and `bash-ts-mode-hook' instead."
+                        "2.2.0")
 
-(add-hook 'sh-mode-hook (lambda ()
-                          (run-hooks 'prelude-sh-mode-hook)))
-(add-hook 'bash-ts-mode-hook (lambda ()
-                               (run-hooks 'prelude-sh-mode-hook)))
+(add-hook 'sh-mode-hook #'prelude-shell-setup -50)
+(add-hook 'bash-ts-mode-hook #'prelude-shell-setup -50)
 
 (provide 'prelude-shell)
 ;;; prelude-shell.el ends here

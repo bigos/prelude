@@ -55,11 +55,26 @@
 (defun prelude-interactive-lisp-coding-defaults ()
   ;; (smartparens-strict-mode +1)
   (paredit-mode +1)
-  (rainbow-delimiters-mode +1)
-  (whitespace-mode -1))
 
-(add-hook 'prelude-interactive-lisp-coding-hook #'prelude-interactive-lisp-coding-defaults)
+
+  (rainbow-delimiters-mode +1)
+  (run-hooks 'prelude-lisp-coding-hook))
+
+(make-obsolete-variable 'prelude-lisp-coding-hook
+                        "use the hooks of the Lisp modes instead."
+                        "2.2.0")
+
+(defun prelude-interactive-lisp-coding-setup ()
+  "Set up a Lisp REPL buffer, which doesn't need whitespace checks."
+  (when prelude-smartparens
+    (smartparens-strict-mode +1))
+  (rainbow-delimiters-mode +1)
+  (whitespace-mode -1)
+  (run-hooks 'prelude-interactive-lisp-coding-hook))
+
+(make-obsolete-variable 'prelude-interactive-lisp-coding-hook
+                        "use the hooks of the Lisp REPL modes instead."
+                        "2.2.0")
 
 (provide 'prelude-lisp)
-
 ;;; prelude-lisp.el ends here

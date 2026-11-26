@@ -50,35 +50,40 @@
 ;; C-h P to look up Perl documentation
 (define-key 'help-command (kbd "P") 'cperl-perldoc)
 
-(defun prelude-cperl-mode-defaults ()
-  (setq cperl-indent-level 4)
-  (setq cperl-continued-statement-offset 8)
-  ;; Fine-grained control over electric behavior instead of the
-  ;; all-or-nothing cperl-hairy option
-  (setq cperl-font-lock t)
-  (setq cperl-electric-lbrace-space t)
-  (setq cperl-electric-parens nil)
-  (setq cperl-electric-linefeed nil)
-  (setq cperl-electric-keywords nil)
-  (setq cperl-info-on-command-no-prompt t)
-  (setq cperl-clobber-lisp-bindings t)
-  (setq cperl-lazy-help-time 3)
+(setq cperl-indent-level 4)
+(setq cperl-continued-statement-offset 8)
+;; Fine-grained control over electric behavior instead of the
+;; all-or-nothing cperl-hairy option
+(setq cperl-font-lock t)
+(setq cperl-electric-lbrace-space t)
+(setq cperl-electric-parens nil)
+(setq cperl-electric-linefeed nil)
+(setq cperl-electric-keywords nil)
+(setq cperl-info-on-command-no-prompt t)
+(setq cperl-clobber-lisp-bindings t)
+(setq cperl-lazy-help-time 3)
 
-  ;; Remove distracting background colors on array/hash variables
+;; Don't highlight trailing whitespace (Emacs 30+ cperl-mode follows
+;; `show-trailing-whitespace' instead, which is off by default)
+(when (< emacs-major-version 30)
+  (with-suppressed-warnings ((obsolete cperl-invalid-face))
+    (setq cperl-invalid-face nil)))
+
+;; Remove distracting background colors on array/hash variables
+(with-eval-after-load 'cperl-mode
   (set-face-background 'cperl-array-face nil)
-  (set-face-background 'cperl-hash-face nil)
-  ;; Don't highlight trailing whitespace (Emacs 30+ cperl-mode follows
-  ;; `show-trailing-whitespace' instead, which is off by default)
-  (when (< emacs-major-version 30)
-    (with-suppressed-warnings ((obsolete cperl-invalid-face))
-      (setq cperl-invalid-face nil)))
-  (subword-mode +1))
+  (set-face-background 'cperl-hash-face nil))
 
-(add-hook 'prelude-cperl-mode-hook #'prelude-cperl-mode-defaults)
+(defun prelude-perl-setup ()
+  "Set up a Perl buffer."
+  (subword-mode +1)
+  (run-hooks 'prelude-cperl-mode-hook))
 
-(add-hook 'cperl-mode-hook (lambda ()
-                             (run-hooks 'prelude-cperl-mode-hook)) t)
+(make-obsolete-variable 'prelude-cperl-mode-hook
+                        "use `cperl-mode-hook' instead."
+                        "2.2.0")
+
+(add-hook 'cperl-mode-hook #'prelude-perl-setup -50)
 
 (provide 'prelude-perl)
-
 ;;; prelude-perl.el ends here

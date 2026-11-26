@@ -3,6 +3,7 @@
 ;; Copyright © 2014-2026 Samuel Tonini
 ;;
 ;; Author: Samuel Tonini <tonini.samuel@gmail.com>
+;; URL: https://github.com/bbatsov/prelude
 
 ;; This file is not part of GNU Emacs.
 
@@ -35,25 +36,26 @@
 
 ;; elixir-ts-mode is built-in since Emacs 30.  On Emacs 29,
 ;; fall back to the third-party elixir-mode package.
-(dolist (regexp '("\\.ex\\'" "\\.exs\\'" "mix\\.lock"))
+(dolist (regexp '("\\.ex\\'" "\\.exs\\'" "/mix\\.lock\\'"))
   (prelude-treesit-auto-mode regexp 'elixir 'elixir-ts-mode 'elixir-mode 'elixir-mode))
 
-;; HEEx template support (Phoenix); built into Emacs 30+
-(use-package heex-ts-mode
-  :ensure t
-  :defer t)
+;; HEEx template support (Phoenix).  heex-ts-mode comes with Emacs 30+,
+;; and there's no package to install it from for older versions.
+(when (fboundp 'heex-ts-mode)
+  (prelude-treesit-auto-mode "\\.[hl]?eex\\'" 'heex 'heex-ts-mode))
 
-(defun prelude-elixir-mode-defaults ()
+(defun prelude-elixir-setup ()
+  "Set up an Elixir buffer."
   (subword-mode +1)
-  (prelude-lsp-enable))
+  (prelude-lsp-enable)
+  (run-hooks 'prelude-elixir-mode-hook))
 
-(add-hook 'prelude-elixir-mode-hook #'prelude-elixir-mode-defaults)
+(make-obsolete-variable 'prelude-elixir-mode-hook
+                        "use `elixir-mode-hook' and `elixir-ts-mode-hook' instead."
+                        "2.2.0")
 
-(add-hook 'elixir-mode-hook (lambda ()
-                              (run-hooks 'prelude-elixir-mode-hook)))
-(add-hook 'elixir-ts-mode-hook (lambda ()
-                                 (run-hooks 'prelude-elixir-mode-hook)))
+(add-hook 'elixir-mode-hook #'prelude-elixir-setup -50)
+(add-hook 'elixir-ts-mode-hook #'prelude-elixir-setup -50)
 
 (provide 'prelude-elixir)
-
 ;;; prelude-elixir.el ends here

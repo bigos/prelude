@@ -68,7 +68,10 @@
 (define-derived-mode prelude-welcome-mode special-mode "Prelude Welcome"
   "Major mode for the Prelude welcome screen."
   (setq-local cursor-type nil)
-  (setq-local truncate-lines t))
+  (setq-local truncate-lines t)
+  ;; there's no code here, and `global-display-line-numbers-mode' won't
+  ;; turn them back on after this
+  (display-line-numbers-mode -1))
 
 (defun prelude-welcome--heading (text)
   "Insert a section heading TEXT."
@@ -121,11 +124,20 @@
                                (lambda () (find-file file)))
       (insert "\n"))))
 
+(defun prelude-welcome--known-projects ()
+  "Return Projectile's known projects, if Projectile is loaded.
+Newer versions of Projectile read them from their file only when
+they're first asked for, with the function `projectile-known-projects'."
+  (when (featurep 'projectile)
+    (if (fboundp 'projectile-known-projects)
+        (projectile-known-projects)
+      (bound-and-true-p projectile-known-projects))))
+
 (defun prelude-welcome--insert-projects (n)
   "Insert up to N known projects."
-  (when (bound-and-true-p projectile-known-projects)
+  (when-let* ((projects (prelude-welcome--known-projects)))
     (prelude-welcome--heading "Projects")
-    (dolist (project (seq-take projectile-known-projects n))
+    (dolist (project (seq-take projects n))
       (insert "  ")
       (prelude-welcome--button (abbreviate-file-name project)
                                (format "Switch to project %s" project)
@@ -185,21 +197,29 @@
   (interactive)
   (switch-to-buffer (prelude-welcome--render)))
 
-(defun prelude-welcome--file-args-p ()
-  "Non-nil if Emacs was launched with existing-file arguments."
-  (seq-some (lambda (arg)
-              (and (not (string-prefix-p "-" arg))
-                   (file-exists-p arg)))
-            (cdr command-line-args)))
+(defvar prelude-welcome--startup-done nil
+  "Non-nil once Emacs has finished starting up.")
 
-;;; trying to disable it, because the documented place did not make sense
-(setq prelude-welcome-screen nil)
+(defun prelude-welcome--note-startup-done ()
+  "Note that Emacs has finished starting up."
+  (setq prelude-welcome--startup-done t))
 
-;; Show the welcome screen on startup, unless it's been disabled or
-;; Emacs was launched to open specific files.
-(when (and prelude-welcome-screen
-           (not (prelude-welcome--file-args-p)))
-  (setq initial-buffer-choice #'prelude-welcome--render))
+(add-hook 'emacs-startup-hook #'prelude-welcome--note-startup-done)
+
+(defun prelude-welcome--initial-buffer ()
+  "Return the buffer to show in a new frame, for `initial-buffer-choice'.
+That's the welcome screen, unless Emacs was started to edit a file.  We
+can tell by the current buffer: the files named on the command line
+have been visited by the time this is called, whether they exist or
+not."
+  (if (and (not prelude-welcome--startup-done)
+           buffer-file-name)
+      (current-buffer)
+    (prelude-welcome--render)))
+
+;; Show the welcome screen on startup, unless it's been disabled.
+(when prelude-welcome-screen
+  (setq initial-buffer-choice #'prelude-welcome--initial-buffer))
 
 (provide 'prelude-welcome)
 ;;; prelude-welcome.el ends here
