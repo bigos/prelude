@@ -547,7 +547,7 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (define-key org-mode-map (kbd "C-z t") 'better-org-open-and-search)
 
 (require 'org-protocol)
-(require 'org-roam-protocol)
+;; (require 'org-roam-protocol)
 
 (use-package websocket
   :ensure t
@@ -729,8 +729,6 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
                                     (replace-regexp-in-string ivy--old-re "" c))
                             ivy--old-cands))
             :test (lambda (x y) (or (null y) (equal x y))))))
-
-(global-set-key [f7] 'ivy-debug-candidates)
 
 ;;; *** Indent bars
 (use-package indent-bars
