@@ -42,6 +42,7 @@ ac-comphist.dat
 
 eww-bookmarks
 smex-items
+tutorial
 
 # tree-sitter grammars installed by treesit
 tree-sitter/
