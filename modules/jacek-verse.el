@@ -128,7 +128,7 @@
       (goto-char cpoint)
 
       (let ((startpoint (search-backward (plist-get parsed :all)))
-            (vpl (verse-page-link link-book chapter verse
+            (vpl (jworg-verse-page-link link-book chapter verse
                                   (plist-get parsed :initial-spaces)
                                   (plist-get parsed :final-spaces))))
         ;(print (format "going to replace with >%S<" vpl))
@@ -139,9 +139,9 @@
       (search-forward "]]")
       (forward-char (length (plist-get parsed :final-spaces))))))
 
-(defun verse-page-link (book-name chapter verse initial-spaces final-spaces)
+(defun jworg-verse-page-link (book-name chapter verse initial-spaces final-spaces)
   "Take strings BOOK-NAME CHAPTER and VERSE to create a string for org link.
-And maintain the INITIAL-SPACES and FINAL-SPACES."
+  And maintain the INITIAL-SPACES and FINAL-SPACES."
   (let ((book-name-number (caar (-filter (lambda (x)
                                            (cl-equalp book-name (cadr x)))
                                          (verse-books-numbered)))))
