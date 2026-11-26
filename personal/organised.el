@@ -1260,6 +1260,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
 (global-set-key (kbd "M-s-l") 'buf-move-up)
 (global-set-key (kbd "M-s-;") 'buf-move-right)
 
+(message "======================== finished loading personal/organised.el")
+
 ;;; *** Conclusion
 (provide 'personal)
 ;;; personal ends here
