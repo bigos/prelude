@@ -37,12 +37,11 @@
 (define-key read-expression-map (kbd "TAB") 'completion-at-point)
 
 ;; wrap keybindings
-(when nil
-  (when prelude-smartparens
-    (define-key lisp-mode-shared-map (kbd "M-(") (prelude-wrap-with "("))
-    ;; FIXME: Pick terminal-friendly binding.
-    ;;(define-key lisp-mode-shared-map (kbd "M-[") (prelude-wrap-with "["))
-    (define-key lisp-mode-shared-map (kbd "M-\"") (prelude-wrap-with "\""))))
+(when prelude-smartparens
+  (define-key lisp-mode-shared-map (kbd "M-(") (prelude-wrap-with "("))
+  ;; FIXME: Pick terminal-friendly binding.
+  ;;(define-key lisp-mode-shared-map (kbd "M-[") (prelude-wrap-with "["))
+  (define-key lisp-mode-shared-map (kbd "M-\"") (prelude-wrap-with "\"")))
 
 ;; The setups of the Lisp modes call these two
 
