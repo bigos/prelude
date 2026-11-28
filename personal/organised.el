@@ -508,9 +508,8 @@ Handles both Org-roam nodes, and string nodes (e.g. urls)."
   (interactive)
   (dired org-roam-my-folder))
 
-;;; fix needed in file
-;;; file:~/.emacs.d/elpa/org-roam-20241007.1704/org-roam.el::84
-;;; comment out: (require 'emacsql-sqlite)
+;;; fix needed in folder: ~/.emacs.d/elpa/emacsql-*
+;;; remove the *.elc files
 
 (use-package org-roam
   :ensure t
